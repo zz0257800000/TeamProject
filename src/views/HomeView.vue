@@ -1,7 +1,10 @@
 <script setup>
-
+import navbar from '../components/navbar.vue';
 </script>
 
 <template>
-<h1>home.vue</h1>
+  <navbar/>
+
+
+                
 </template>

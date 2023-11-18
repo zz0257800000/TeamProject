@@ -1,11 +1,9 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 //匯入導覽列
-import navbar from './components/navbar.vue';
 </script>
 
 <template>
-  <navbar/>
 
 
   <RouterView />
