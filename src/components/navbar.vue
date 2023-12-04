@@ -1,9 +1,24 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from 'vue-router'
-import { useDisplayStore } from "../stores/popStore.js";
-const displayStore = useDisplayStore();
+
+export default {
+    data() {
+        return {
+        
+        }
+    },
+
+    methods: {
+
+      
+
+    },
 
 
+    components: {
+        RouterLink
+    }
+}
 </script>
 <template>
     <div class="askUserPage"> <img src="../views/askAllPage/askHome.vue" alt="">
@@ -15,16 +30,13 @@ const displayStore = useDisplayStore();
                 <input class="searchText" type="text" placeholder="請輸入搜尋內容……">
                 <button><i class="fa-solid fa-magnifying-glass searchicon"></i></button>
             </div>
-            <div>
-                
-                <!-- <RouterLink class="btn" to="/signUp">註冊</RouterLink> -->
-                
-                <div class="showLoginDai" @:click="showLoginDai"><i class="fa-solid fa-user usericon "> 會員</i></div>
-                <button style="user-select: none;" class="tyty" @click="closeDialog">X</button>
 
-                &nbsp;
-                <i class="fa-solid fa-cart-shopping usericon"> 購物車</i>
-            </div>
+            <div> <i class="fa-solid fa-user usericon "></i><RouterLink class="btn" to="/loginPage">會員</RouterLink></div>
+
+              
+              
+            <div>   <i class="fa-solid fa-cart-shopping usericon"> </i><RouterLink class="btn" to="/">購物車</RouterLink></div>
+            
         </div>
         
             
