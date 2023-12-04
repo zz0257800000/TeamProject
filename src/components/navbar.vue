@@ -1,17 +1,9 @@
-<script>
+<script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { useDisplayStore } from "../stores/popStore.js";
+const displayStore = useDisplayStore();
 
-export default {
-    data() {
-        return {
-        
-        }
-    },
 
-    components: {
-        RouterLink
-    }
-}
 </script>
 <template>
     <div class="askUserPage"> <img src="../views/askAllPage/askHome.vue" alt="">
@@ -27,7 +19,10 @@ export default {
                 
                 <!-- <RouterLink class="btn" to="/signUp">註冊</RouterLink> -->
                 
-                <i class="fa-solid fa-user usericon "> 會員</i>&nbsp;
+                <div class="showLoginDai" @:click="showLoginDai"><i class="fa-solid fa-user usericon "> 會員</i></div>
+                <button style="user-select: none;" class="tyty" @click="closeDialog">X</button>
+
+                &nbsp;
                 <i class="fa-solid fa-cart-shopping usericon"> 購物車</i>
             </div>
         </div>
@@ -45,6 +40,123 @@ export default {
     </div>
 </template>
 <style lang="scss" scoped>
+.ShowWriteDai {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+
+    z-index: 999;
+
+    .dialog1 {
+        width: 60vw;
+        height: 80vh;
+        background: white;
+        color: #000000;
+        text-align: left;
+        padding: 50px 100px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgb(0, 0, 0);
+        overflow: auto;
+
+        
+
+        .dispalyset {
+            display: flex;
+            border: 0px solid rgb(0, 0, 0);
+            width: 50vw;
+
+            .askheadtitle {
+                font-size: 18pt;
+                width: 40vw;
+            }
+
+        }
+
+        .dialog1first {
+            display: flex;
+            border: 0px solid rgb(0, 0, 0);
+
+            .dialog1firstbutton {
+                position: relative;
+                left: 10vw;
+            }
+
+        }
+
+        .dialog1content {
+            border: 1px solid rgb(0, 0, 0);
+            height: 30vh;
+
+            .asktitle {
+                display: flex;
+
+            }
+
+            .askcont {
+                display: flex;
+                border: 1px solid rgb(0, 0, 0);
+                height: 25vh;
+
+            }
+        }
+
+        .tyty {
+            position: relative;
+            font-size: 25pt;
+            left: 105%;
+            bottom: 5%;
+            border: 0px solid rgb(0, 0, 0);
+            width: 3vw;
+
+        }
+        .createQuest {
+        margin-top: 15px;
+        width: 900px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #fff;
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        input[type="radio"] {
+            margin-right: 29px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
+    }
+
+    .continuebutton {
+        position: relative;
+        left: 85%;
+    }
+}
 .searchicon {
     font-size: 28pt;
 
