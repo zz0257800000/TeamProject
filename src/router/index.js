@@ -24,7 +24,11 @@ const router = createRouter({
       name: 'shoppingCart',
       component: () => import('../views/UserPage/shoppingCart.vue')
     }, 
-
+    {
+      path: '/UserPage/ForgotPasswordPage',
+      name: 'ForgotPasswordPage',
+      component: () => import('../views/UserPage/ForgotPasswordPage.vue')
+    }, 
   ]
 })
 
