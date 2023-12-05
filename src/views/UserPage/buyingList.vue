@@ -30,13 +30,13 @@ export default {
       
       <div class="leftAdmin">
         
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-bars-staggered"></i> 購買清單</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-wrench"></i> 訂單狀態</RouterLink>
+        <RouterLink class="btn" to="/"><i class="fa-solid fa-bars-staggered"></i> &nbsp;購買清單</RouterLink>
+        <RouterLink class="btn" to="/"><i class="fa-solid fa-heart"></i>  &nbsp; 收藏 </RouterLink>
 
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-envelope-open"></i> 訂單已完成</RouterLink>
+        <RouterLink class="btn" to="/"><i class="fa-solid fa-envelope-open"></i>   &nbsp;訂單已完成</RouterLink>
 
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-gear"></i> 設定</RouterLink>
+        <RouterLink class="btn" to="/"><i class="fa-solid fa-chart-line"></i>   &nbsp;報表及分析</RouterLink>
+        <RouterLink class="btn" to="/"><i class="fa-solid fa-gear"></i>   &nbsp;設定</RouterLink>
 
       </div>
 
@@ -88,7 +88,9 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: 170vh;
+  border: 0px solid rgb(255, 0, 0);
+
 }
 
 .actionPageLeft {
@@ -147,6 +149,7 @@ export default {
   .productManagement {
     height: 42vw;
     background-color: rgb(231, 231, 231);
+    height: 161vh;
 
     .productCreate {
       display: flex;

@@ -86,7 +86,7 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 100vh;
+
 }
 
 .actionPageLeft {
@@ -145,6 +145,7 @@ export default {
   .productManagement {
     height: 42vw;
     background-color: rgb(231, 231, 231);
+    height: 170vh;
 
     .productCreate {
       display: flex;
@@ -177,6 +178,7 @@ export default {
     .productAdmimList {
       height: 39vw;
       padding: 20px;
+      height: 170vh;
 
       table {
         width: 100%;

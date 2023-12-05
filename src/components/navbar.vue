@@ -31,12 +31,14 @@ export default {
     <div class="memberInformation"> 
      <div class="POP">
       <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
+      <RouterLink class="btn" to="/">注意事項</RouterLink>
 
 
      </div>
     <div>
       
-     
+      <RouterLink class="btn" to="/">開發人員</RouterLink>
+
         <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
       
       
@@ -62,7 +64,7 @@ export default {
       </div>
 
       <div> 
-        <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-brands fa-rocketchat"></i> 聊聊訊息</RouterLink>
+        <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
       </div>
       <div>
         <RouterLink class="btn" to="/UserPage/shoppingCart"> <i class="fa-solid fa-cart-shopping usericon"> </i> 購物車</RouterLink>
