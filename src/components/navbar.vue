@@ -47,19 +47,18 @@ export default {
 
         </div>
 
-
         <div class="announcement">
             <p>重要公告：這是第四組！</p>
         </div>
 
-     
+
 
 
     </div>
    
 </template>
 <style lang="scss" scoped>
-.btn {
+.btn{
     text-decoration: none;
     color: white;
 }
