@@ -45,14 +45,88 @@ export default {
 
         </div>
 
-
         <div class="announcement">
             <p>重要公告：這是第四組！</p>
         </div>
 
+    <div class="type">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="false">
+            產品分類
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        食品專區
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        零食
+      </div>
+      <div class="accordion-body">
+        泡麵
+      </div>
+      <div class="accordion-body">
+        生鮮食品
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        精品服飾
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        全部
+      </div>
+      <div class="accordion-body">
+        男性服飾
+      </div>
+      <div class="accordion-body">
+        女性服飾
+      </div>
+      <div class="accordion-body">
+        嬰幼服飾
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        日常用品
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+    <div class="accordion-body">
+        洗浴用品
+      </div>
+      <div class="accordion-body">
+        生活小物
+      </div>
+    </div>
+  </div>
+</div>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+        </div>
 
 
-       
     </div>
     <div class="footer">
 
@@ -60,6 +134,19 @@ export default {
     </div>
 </template>
 <style lang="scss" scoped>
+.type{
+    width:150px;
+    .dropdown-menu{
+        width:250px;
+        margin-top: 8px;
+        margin-left: -10px;
+    }
+    .accordion-body{
+        height: 50px;
+        margin-bottom: 2px;
+        background-color: #e3e3e3;
+    }
+}
 .btn{
     text-decoration: none;
     color: white;
