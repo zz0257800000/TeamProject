@@ -64,7 +64,7 @@ export default {
 <style lang="scss" scoped>
 
 .mainLoginShow {
-  border: 1px solid red;
+  border: 0px solid red;
   height: 80vh;
   display: flex;
   align-items: center;

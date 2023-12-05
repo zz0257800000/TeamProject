@@ -92,7 +92,7 @@ export default {
 </template>
 <style lang="scss" scoped>
 .mainShowDetail{
-  border: 1px solid rgb(255, 0, 0);
+  border: 0px solid rgb(255, 0, 0);
   height: 100vh;
   display: flex;
   align-items: center;
