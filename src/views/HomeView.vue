@@ -3,7 +3,7 @@ import navbar from '../components/navbar.vue';
 </script>
 
 <template>
-  <navbar />
+
   <div class="mainshow">
     
     <div class="productAll">

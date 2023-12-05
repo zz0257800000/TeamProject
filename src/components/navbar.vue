@@ -4,13 +4,13 @@ import { RouterLink, RouterView } from 'vue-router'
 export default {
     data() {
         return {
-        
+
         }
     },
 
     methods: {
 
-      
+
 
     },
 
@@ -21,30 +21,36 @@ export default {
 }
 </script>
 <template>
+
     <div class="askUserPage"> <img src="../views/askAllPage/askHome.vue" alt="">
 
         <div class="askHeader">
-            <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i>
-            </h1>
+            <RouterLink class="btn" to="/"><h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i>
+            </h1></RouterLink>
+
             <div class="search">
                 <input class="searchText" type="text" placeholder="請輸入搜尋內容……">
                 <button><i class="fa-solid fa-magnifying-glass searchicon"></i></button>
             </div>
 
-            <div> <i class="fa-solid fa-user usericon "></i><RouterLink class="btn" to="/loginPage">會員</RouterLink></div>
-
-              
-              
-            <div>   <i class="fa-solid fa-cart-shopping usericon"> </i><RouterLink class="btn" to="/">購物車</RouterLink></div>
-            
-        </div>
-        
-            
-            <div class="announcement">
-                <p>重要公告：這是第四組！</p>
+            <div> <i class="fa-solid fa-user usericon "></i>
+                <RouterLink class="btn" to="/UserPage/loginPage">會員</RouterLink>
             </div>
-           
-       
+
+
+
+            <div> <i class="fa-solid fa-cart-shopping usericon"> </i>
+                <RouterLink class="btn" to="/">購物車</RouterLink>
+            </div>
+
+        </div>
+
+
+        <div class="announcement">
+            <p>重要公告：這是第四組！</p>
+        </div>
+
+
 
         <div class="otherPage">
 
@@ -52,6 +58,10 @@ export default {
     </div>
 </template>
 <style lang="scss" scoped>
+.btn{
+    text-decoration: none;
+    color: white;
+}
 .ShowWriteDai {
     position: fixed;
     top: 0;
@@ -76,7 +86,7 @@ export default {
         border: 1px solid rgb(0, 0, 0);
         overflow: auto;
 
-        
+
 
         .dispalyset {
             display: flex;
@@ -127,41 +137,42 @@ export default {
             width: 3vw;
 
         }
+
         .createQuest {
-        margin-top: 15px;
-        width: 900px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-        background-color: #fff;
-
-        label {
-            font-weight: bold;
-        }
-
-        input[type="text"] {
             margin-top: 15px;
-            margin-bottom: 15px;
-            width: 80%;
-            padding: 10px;
+            width: 900px;
             border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 15px;
-        }
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
 
-        input[type="radio"] {
-            margin-right: 29px;
-        }
+            label {
+                font-weight: bold;
+            }
 
-        button {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            input[type="text"] {
+                margin-top: 15px;
+                margin-bottom: 15px;
+                width: 80%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin-right: 15px;
+            }
+
+            input[type="radio"] {
+                margin-right: 29px;
+            }
+
+            button {
+                background-color: #007BFF;
+                color: #fff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
         }
-    }
     }
 
     .continuebutton {
@@ -169,6 +180,7 @@ export default {
         left: 85%;
     }
 }
+
 .searchicon {
     font-size: 28pt;
 
@@ -184,7 +196,7 @@ export default {
     display: flex;
     flex-direction: column;
     border: 0px solid rgb(255, 0, 0);
-     color: white;
+    color: white;
 
     .askHeader {
         justify-content: space-around;
@@ -209,7 +221,7 @@ export default {
         }
     }
 
-   
+
 
     .announcement {
         position: absolute;
