@@ -1,5 +1,6 @@
 <script setup>
 import navbar from '../src/components/navbar.vue';
+import navbar1 from '../src/components/navbar1.vue';
 
 import { RouterLink, RouterView } from 'vue-router'
 //匯入導覽列
@@ -8,14 +9,10 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <navbar />
 
-<div class="page">
   <RouterView />
-</div>
+  <navbar1/>
+
 
 </template>
 
-<style scoped>
-.page{
-  margin-top: 20px;
-}
-</style>
+<style scoped></style>

@@ -48,7 +48,7 @@ export default {
                 <button>Log in</button>
             </div>
             <div class="u-form-group">
-                <RouterLink class="btn" to="/UserPage/signUp">Forgot password?</RouterLink>
+                <RouterLink class="btn" to="/UserPage/ForgotPasswordPage">Forgot password?</RouterLink>
                 &nbsp;
                 <RouterLink class="btn" to="/UserPage/signUp">Sign Up</RouterLink>
 
