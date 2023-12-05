@@ -47,16 +47,12 @@ export default {
 
         </div>
 
-<<<<<<< HEAD
         <!-- 跑馬燈 -->
-=======
 
->>>>>>> a45b6baa4992739d148db0074e0d357b775a5c44
         <div class="announcement">
             <p>重要公告：這是第四組！</p>
         </div>
 
-<<<<<<< HEAD
         <!-- 產品分類下拉式選單 -->
           <div class="type">
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -134,15 +130,14 @@ export default {
         </div>
       </nav>
               </div>
-=======
-     
->>>>>>> a45b6baa4992739d148db0074e0d357b775a5c44
-
 
     </div>
    
 </template>
 <style lang="scss" scoped>
+.type{
+  width: 150px;
+}
 .btn {
     text-decoration: none;
     color: white;
