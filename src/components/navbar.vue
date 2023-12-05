@@ -40,7 +40,7 @@ export default {
 
 
             <div> <i class="fa-solid fa-cart-shopping usericon"> </i>
-                <RouterLink class="btn" to="/">購物車</RouterLink>
+                <RouterLink class="btn" to="/UserPage/shoppingCart">購物車</RouterLink>
             </div>
 
         </div>
@@ -52,9 +52,7 @@ export default {
 
 
 
-        <div class="otherPage">
-
-        </div>
+       
     </div>
 </template>
 <style lang="scss" scoped>
@@ -260,4 +258,5 @@ export default {
 
 
     }
-}</style>
+}
+</style>
