@@ -56,6 +56,7 @@ export default {
 </script>
 
 <template>
+  <div class="mainShowDetail">
   <div id="app">
     <div class="container">
       <div class="item_header">
@@ -84,12 +85,19 @@ export default {
           </div>
         </div>
       </div>
-
+    </div>
 
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
+.mainShowDetail{
+  border: 1px solid rgb(255, 0, 0);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .item_header {
   display: flex;
   width: 1000px;
