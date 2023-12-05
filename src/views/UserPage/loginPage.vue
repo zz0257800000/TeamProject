@@ -24,8 +24,7 @@ export default {
     </div>
     <div class="login-box">
         <div class="lb-header">
-            <RouterLink class="btn" to="/">Login</RouterLink>
-
+                <h5>Login</h5>
         </div>
         <div class="social-login">
             <a href="#">
@@ -45,7 +44,8 @@ export default {
                 <input type="password" placeholder="Password" />
             </div>
             <div class="u-form-group">
-                <button>Log in</button>
+                <RouterLink class="loginBtn" to="/">Login</RouterLink>
+
             </div>
             <div class="u-form-group">
                 <RouterLink class="btn" to="/UserPage/forgotPasswordPage">Forgot password?</RouterLink>
@@ -63,14 +63,14 @@ export default {
   
 <style lang="scss" scoped>
 
-.mainLoginShow{
-    
-    border: 1px solid red;
-    height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .leftShow{
+.mainLoginShow {
+  border: 1px solid red;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .leftShow {
     background-color: rgb(0, 0, 0);
     height: 70vh;
     width: 30vw;
@@ -78,22 +78,20 @@ export default {
     align-items: center;
     justify-content: center;
     color: white;
-}
-.login-box {
+  }
+
+  .login-box {
     position: relative;
-    margin: 10px ;
+    margin: 10px;
     width: 500px;
     height: 67vh;
     background-color: #fff;
     padding: 10px;
     border-radius: 3px;
-    -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
-    -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
-   
-}
+  }
 
-.lb-header {
+  .lb-header {
     position: relative;
     color: #00415d;
     margin: 5px 5px 10px 5px;
@@ -101,118 +99,106 @@ export default {
     border-bottom: 1px solid #eee;
     text-align: center;
     height: 28px;
-}
 
-.lb-header a {
-    margin: 0 25px;
-    padding: 0 20px;
-    text-decoration: none;
-    color: #666;
-    font-weight: bold;
-    font-size: 15px;
-    -webkit-transition: all 0.1s linear;
-    -moz-transition: all 0.1s linear;
-    transition: all 0.1s linear;
-}
+    a {
+      margin: 0 25px;
+      padding: 0 20px;
+      text-decoration: none;
+      color: #666;
+      font-weight: bold;
+      font-size: 15px;
+      transition: all 0.1s linear;
 
-.lb-header .active {
-    color: #029f5b;
-    font-size: 18px;
-}
+      &.active {
+        color: #029f5b;
+        font-size: 18px;
+      }
+    }
+  }
 
-.social-login {
+  .social-login {
     position: relative;
     float: left;
     width: 100%;
     height: auto;
     padding: 10px 0 15px 0;
     border-bottom: 1px solid #eee;
-}
 
-.social-login a {
-    position: relative;
-    float: left;
-    width: calc(40% - 8px);
-    text-decoration: none;
-    color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    padding: 12px;
-    border-radius: 2px;
-    font-size: 12px;
-    text-transform: uppercase;
-    margin: 0 3%;
-    text-align: center;
-}
+    a {
+      position: relative;
+      float: left;
+      width: calc(40% - 8px);
+      text-decoration: none;
+      color: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 12px;
+      border-radius: 2px;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin: 0 3%;
+      text-align: center;
 
-.social-login a i {
-    position: relative;
-    float: left;
-    width: 20px;
-    top: 2px;
-}
+      i {
+        position: relative;
+        float: left;
+        width: 20px;
+        top: 2px;
+      }
 
-.social-login a:first-child {
-    background-color: #49639F;
-}
+      &:first-child {
+        background-color: #49639F;
+      }
 
-.social-login a:last-child {
-    background-color: #DF4A32;
-}
+      &:last-child {
+        background-color: #DF4A32;
+      }
+    }
+  }
 
-.email-login,
-.email-signup {
+  .email-login,
+  .email-signup {
     position: relative;
     float: left;
     width: 100%;
     height: auto;
     margin-top: 20px;
     text-align: center;
-}
+  }
 
-.u-form-group {
+  .u-form-group {
     width: 100%;
     margin-bottom: 10px;
-}
 
-.u-form-group input[type="email"],
-.u-form-group input[type="password"] {
-    width: calc(50% - 22px);
-    height: 45px;
-    outline: none;
-    border: 1px solid #ddd;
-    padding: 0 10px;
-    border-radius: 2px;
-    color: #333;
-    font-size: 0.8rem;
-    -webkit-transition: all 0.1s linear;
-    -moz-transition: all 0.1s linear;
-    transition: all 0.1s linear;
-}
+    input[type="email"],
+    input[type="password"] {
+      width: 75%;
+      height: 45px;
+      outline: none;
+      border: 1px solid #9c9c9c;
+      padding: 0 10px;
+      border-radius: 2px;
+      color: #000000;
+      font-size: 0.8rem;
+      transition: all 0.1s linear;
 
-.u-form-group input:focus {
-    border-color: #358efb;
-}
+      &:focus {
+        border-color: #358efb;
+      }
+    }
+  }
 
-.u-form-group button {
-    width: 50%;
+  .loginBtn {
     background-color: #1CB94E;
-    border: none;
-    outline: none;
     color: #fff;
-    font-size: 14px;
-    font-weight: normal;
-    padding: 14px 0;
-    border-radius: 2px;
-    text-transform: uppercase;
-}
-
-.forgot-password {
-    width: 50%;
-    text-align: left;
-    text-decoration: underline;
-    color: #888;
-    font-size: 0.75rem;
-}
+    font-size: 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    width: calc(75% + 20px);  // 考慮到 padding
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    margin-top: 20px;
+  }
 }
 
 

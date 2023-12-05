@@ -39,6 +39,16 @@ const router = createRouter({
       name: 'addNewProduct',
       component: () => import('../views/UserActionShop/addNewProduct.vue')
     },  
+    {
+      path: '/UserPage/complainService',
+      name: 'complainService',
+      component: () => import('../views/UserPage/complainService.vue')
+    }, 
+    {
+      path: '/UserPage/buyingList',
+      name: 'buyingList',
+      component: () => import('../views/UserPage/buyingList.vue')
+    },   
   ]
 })
 

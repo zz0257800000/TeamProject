@@ -1,5 +1,4 @@
 <script setup>
-import navbar from '../components/navbar.vue';
 
 </script>
 
@@ -19,7 +18,6 @@ import navbar from '../components/navbar.vue';
       </div>
     </div>
   </div>
-  <div id="scrollToTopBtn" onclick="scrollToTop()">↑</div>
 
 </template>
 <style lang="scss" scoped>
@@ -80,20 +78,5 @@ import navbar from '../components/navbar.vue';
   }
 }
 }
-#scrollToTopBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  background-color: #007bff;
-  color: #fff;
-  font-size: 24px;
-  text-align: center;
-  line-height: 40px;
-  cursor: pointer;
-  border-radius: 50%;
-  display: none; /* Initially hidden */
-  /* Add additional styles for the button as needed */
-}
+
 </style>

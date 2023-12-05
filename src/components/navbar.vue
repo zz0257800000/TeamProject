@@ -25,12 +25,23 @@ export default {
 </script>
 <template>
   
-  <div class="askUserPage"> <img src="../views/askAllPage/askHome.vue" alt="">
+  <div class="askUserPage"> 
+    
+    <img src="../views/askAllPage/askHome.vue" alt="">
     <div class="memberInformation"> 
-     <div class="POP"></div>
+     <div class="POP">
+      <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
+
+
+     </div>
     <div>
-      <i class="fa-solid fa-user usericon "></i>
-        <RouterLink class="btn" to="/UserPage/loginPage">會員</RouterLink></div>
+      
+     
+        <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
+      
+      
+        <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員</RouterLink>
+      </div>
       </div>
 
     <div class="askHeader">
@@ -45,15 +56,15 @@ export default {
       </div>
 
       
-      <div> <i class="fa-solid fa-shop"></i>
-        <RouterLink class="btn" to="/UserPage/actionShop">我的拍賣</RouterLink>
+      <div> 
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-store"></i> 我的拍賣</RouterLink>
       </div>
 
-      <div> <i class="fa-brands fa-rocketchat"></i>
-        <RouterLink class="btn" to="/UserPage/loginPage">聊聊訊息</RouterLink>
+      <div> 
+        <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-brands fa-rocketchat"></i> 聊聊訊息</RouterLink>
       </div>
-      <div> <i class="fa-solid fa-cart-shopping usericon"> </i>
-        <RouterLink class="btn" to="/UserPage/shoppingCart">購物車</RouterLink>
+      <div>
+        <RouterLink class="btn" to="/UserPage/shoppingCart"> <i class="fa-solid fa-cart-shopping usericon"> </i> 購物車</RouterLink>
       </div>
 
     </div>
@@ -155,7 +166,6 @@ export default {
 <style lang="scss" scoped>
 .type {
   position: relative;
-
   top: 15%;
   width: 150px;
 }
@@ -163,6 +173,13 @@ export default {
 .btn {
   text-decoration: none;
   color: white;
+  
+  font-size: 20pt;
+  &:hover{
+  
+    background-color: gray;
+  }
+
 }
 
 
