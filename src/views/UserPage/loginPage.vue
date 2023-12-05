@@ -17,6 +17,11 @@ export default {
 </script>
 
 <template>
+
+<div class="mainLoginShow">
+    <div class="leftShow">
+        <h1>Hello word!!</h1>
+    </div>
     <div class="login-box">
         <div class="lb-header">
             <a href="#" class="active" id="login-box-link">Login</a>
@@ -43,7 +48,7 @@ export default {
                 <button>Log in</button>
             </div>
             <div class="u-form-group">
-                <a href="#" class="forgot-password">Forgot password?</a>
+                <RouterLink class="btn" to="/UserPage/signUp">Forgot password?</RouterLink>
                 &nbsp;
                 <RouterLink class="btn" to="/UserPage/signUp">Sign Up</RouterLink>
 
@@ -51,26 +56,41 @@ export default {
         </form>
 
     </div>
+    </div>
 </template>
   
  
   
-<style scoped>
-body {
-    background-color: #1cbb9b;
-}
+<style lang="scss" scoped>
 
+.mainLoginShow{
+    
+    border: 1px solid red;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .leftShow{
+    background-color: rgb(0, 0, 0);
+    height: 70vh;
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
 .login-box {
     position: relative;
-    margin: 10px auto;
+    margin: 10px ;
     width: 500px;
-    height: 380px;
+    height: 67vh;
     background-color: #fff;
     padding: 10px;
     border-radius: 3px;
     -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
     -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
+   
 }
 
 .lb-header {
@@ -192,5 +212,9 @@ body {
     text-decoration: underline;
     color: #888;
     font-size: 0.75rem;
-}</style>
+}
+}
+
+
+</style>
   
