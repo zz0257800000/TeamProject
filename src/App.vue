@@ -8,7 +8,14 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <navbar />
 
+<div class="page">
   <RouterView />
+</div>
+
 </template>
 
-<style scoped></style>
+<style scoped>
+.page{
+  margin-top: 20px;
+}
+</style>
