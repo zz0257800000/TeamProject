@@ -52,6 +52,7 @@ export default {
         </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div class="type">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
@@ -157,6 +158,15 @@ export default {
         background-color: #e3e3e3;
     }
 }
+=======
+
+
+
+    </div>
+   
+</template>
+<style lang="scss" scoped>
+>>>>>>> 137faf1a8a710d95b1601e636001d6df529ebd15
 .btn{
 =======
 .btn {
