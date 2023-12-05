@@ -25,10 +25,20 @@ const router = createRouter({
       component: () => import('../views/UserPage/shoppingCart.vue')
     }, 
     {
-      path: '/UserPage/ForgotPasswordPage',
-      name: 'ForgotPasswordPage',
-      component: () => import('../views/UserPage/ForgotPasswordPage.vue')
+      path: '/UserPage/forgotPasswordPage',
+      name: 'forgotPasswordPage',
+      component: () => import('../views/UserPage/forgotPasswordPage.vue')
     }, 
+    {
+      path: '/UserPage/actionShop',
+      name: 'actionShop',
+      component: () => import('../views/UserActionShop/actionShop.vue')
+    },  
+    {
+      path: '/UserPage/addNewProduct',
+      name: 'addNewProduct',
+      component: () => import('../views/UserActionShop/addNewProduct.vue')
+    },  
   ]
 })
 

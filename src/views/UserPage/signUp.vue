@@ -25,6 +25,7 @@ export default {
 </script>
 
 <template>
+    
     <div class="signup-container">
         <RouterLink class="btn" to="/UserPage/loginPage">返回首頁</RouterLink>
 
@@ -85,14 +86,18 @@ export default {
     border: 1px solid red;
     width: 100vw;
     height: 100vh;
-
+   
 }
 
 .signup {
     display: flex;
     justify-content: space-around;
-    margin: 10px;
+    width: 100vw;
+    border: 1px solid red;
 
+    display: flex;
+    justify-content: space-around;
+align-items: center;
     .signupRIG {
         border: 1px solid black;
         padding: 20px;

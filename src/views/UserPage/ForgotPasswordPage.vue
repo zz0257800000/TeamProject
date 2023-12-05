@@ -53,6 +53,7 @@ export default {
   padding: 10px;
   margin: 5px 0 15px 0;
   box-sizing: border-box;
+  
 }
 
 .submit-button {
