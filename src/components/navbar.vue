@@ -168,9 +168,11 @@ export default {
 </template>
 <style lang="scss" scoped>
 .type {
+  margin-top: -12px;
   position: relative;
   top: 15%;
   width: 150px;
+  margin-left: -10px;
 }
 
 .btn {
