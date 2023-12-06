@@ -33,10 +33,12 @@ export default {
         <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
         <RouterLink class="btn" to="/">注意事項</RouterLink>
         </div>
+     <div class="POP">
+      <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
 
       <div>
       
-      <RouterLink class="btn" to="/">開發人員</RouterLink>
+      <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
 
       <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
       
@@ -72,6 +74,7 @@ export default {
     <div class="announcement">
       <p>重要公告：這是第四組！</p>
     </div>
+  </div>
 
     <!-- 產品分類下拉式選單 -->
     <div class="type">
