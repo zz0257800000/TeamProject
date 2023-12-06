@@ -48,7 +48,12 @@ const router = createRouter({
       path: '/UserPage/buyingList',
       name: 'buyingList',
       component: () => import('../views/UserPage/buyingList.vue')
-    },   
+    },  
+    {
+      path: '/UserPage/developerPage',
+      name: 'developerPage',
+      component: () => import('../views/UserPage/developerPage.vue')
+    },  
   ]
 })
 

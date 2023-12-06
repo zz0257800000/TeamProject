@@ -23,8 +23,9 @@ export default {
 
 </div>
 <div class="secondtitle2">
-  <h3></h3>
-  <h6><a href="./../index.html">Home</a> > <a href="">聯絡我們</a></h6>
+  <h3>       
+</h3>
+  <h6>  <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">聯絡我們</a></h6>
 
 </div>
 <br>

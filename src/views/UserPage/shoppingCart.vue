@@ -88,15 +88,18 @@ export default {
     </div>
 
     </div>
+    <RouterLink class="btn" to="/"> 結帳</RouterLink>
+
   </div>
 </template>
 <style lang="scss" scoped>
 .mainShowDetail{
-  border: 0px solid rgb(255, 0, 0);
+  border: 1px solid rgb(255, 0, 0);
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 .item_header {
   display: flex;
