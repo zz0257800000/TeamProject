@@ -9,6 +9,15 @@ export default{
           "../../public/clothes4.jpg",
           1,2,3,4,5,6,7,8,
           ],
+          productName:[
+            "黑/白色素T",
+            "紅色素T",
+            "灰色素T",
+            "粉色素T"
+          ],
+          productPrice:[
+            "200","250","200","180"
+          ],
 
         }
       }
@@ -16,24 +25,20 @@ export default{
 </script>
 
 <template>
-
   <div class="mainshow">
-    
     <div class="productAll">
-      <div class="product" style="width: 18rem ; height:20rem;" v-for="item in productArr">
+      <div class="product" style="width: 18rem ; height:18rem;" v-for="(item, index) in productArr" :key="index">
         <RouterLink class="btn" to="UserPage/productPage">
-        <img :src="item" class="card-img-top" alt="..."></RouterLink>
+          <img :src="item" class="card-img-top" alt="...">
+          <p class="productName">{{ productName[index] }}</p>
+          <p class="productPrice">{{ productPrice[index] }}</p>
+        </RouterLink>
+        <div class="product-body"></div>
       </div>
-<!--       
-      <div class="product">
-      </div>
-
-      <div class="product">
-      </div> -->
     </div>
   </div>
-
 </template>
+
 <style lang="scss" scoped>
 .mainshow {
   position: relative;
@@ -62,6 +67,9 @@ export default{
     border: 1px solid #ddd;
     border-radius: 8px;
     transition: transform 0.2s ease-in-out;
+    .productName{
+      margin-top: 10px;
+    }
 
     &:hover {
       transform: scale(1.05);

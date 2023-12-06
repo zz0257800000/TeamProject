@@ -29,28 +29,25 @@ export default {
     
     <img src="../views/askAllPage/askHome.vue" alt="">
     <div class="memberInformation"> 
-     <div class="POP">
-      <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
-      <RouterLink class="btn" to="/">注意事項</RouterLink>
+      <div class="POP">
+        <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
+        <RouterLink class="btn" to="/">注意事項</RouterLink>
+        </div>
 
-
-     </div>
-    <div>
+      <div>
       
       <RouterLink class="btn" to="/">開發人員</RouterLink>
 
-        <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
+      <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
       
-      
-        <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員</RouterLink>
+      <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員</RouterLink>
       </div>
       </div>
 
     <div class="askHeader">
       
       <RouterLink class="btn" to="/">
-        <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i>
-        </h1>
+        <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i></h1>
       </RouterLink>
 
       <div class="search">
@@ -58,7 +55,6 @@ export default {
         <button><i class="fa-solid fa-magnifying-glass searchicon"></i></button>
       </div>
 
-      
       <div> 
         <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-store"></i> 我的拍賣</RouterLink>
       </div>
@@ -73,7 +69,6 @@ export default {
     </div>
 
     <!-- 跑馬燈 -->
-
     <div class="announcement">
       <p>重要公告：這是第四組！</p>
     </div>
@@ -167,8 +162,7 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
-.type {
-  margin-top: -12px;
+.type { 
   position: relative;
   top: 15%;
   width: 150px;
@@ -198,8 +192,9 @@ export default {
 
 }
 .memberInformation{
-display: flex;
-justify-content: space-between;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .askUserPage {
@@ -208,9 +203,9 @@ justify-content: space-between;
   flex-direction: column;
   border: 0px solid rgb(255, 0, 0);
   color: white;
-padding: 10px;
-height: 35vh;
-width: 100vw;
+  padding: 10px;
+  height: 35vh;
+  width: 100vw;
 
   .askHeader {
     justify-content: space-around;
