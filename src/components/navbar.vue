@@ -68,9 +68,12 @@ export default {
 
     </div>
 
-    <!-- 跑馬燈 -->
+   
+  
+  </div>
+  <div class="Marquee">
     <div class="announcement">
-      <p>重要公告：這是第四組！</p>
+      <p>變數使用小駝峰命名統一 不要底線XD！</p>
     </div>
  
 
@@ -159,15 +162,15 @@ export default {
         </div>
       </nav>
     </div>
-
-  </div>
+</div>
 </template>
 <style lang="scss" scoped>
 .type { 
   position: relative;
-  top: 15%;
+  top: 45%;
   width: 150px;
   margin-left: -10px;
+  border: 0;
 }
 
 .btn {
@@ -205,7 +208,7 @@ export default {
   border: 0px solid rgb(255, 0, 0);
   color: white;
   padding: 10px;
-  height: 35vh;
+  height: 20vh;
   width: 100vw;
 .headerfirst{
   display: flex;
@@ -242,6 +245,14 @@ export default {
   }
 
 
+}
+.Marquee{
+  width: 100vw;
+
+height: 15vh;
+background-color: rgb(48, 48, 48);
+
+
   //跑馬燈
   .announcement {
     position: absolute;
@@ -272,7 +283,5 @@ export default {
       right: 0;
     }
   }
-
-
 }
 </style>

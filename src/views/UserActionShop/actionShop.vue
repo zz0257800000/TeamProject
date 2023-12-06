@@ -42,7 +42,14 @@ export default {
 
     <div class="actionPageRight">
       <div class="RightHeader">
+        <div class="secondtitle2">
+      <h3>
+      </h3>
+      <h6>
+        <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">賣場管理</a>
+      </h6>
 
+    </div>
 
       </div>
 
@@ -86,6 +93,8 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
+  height: 173vh;
+
 
 }
 
@@ -94,6 +103,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: rgb(243, 243, 243);
+  height: 178vh;
 
   .lefttHeader {
     height: 4vw;
@@ -140,6 +150,29 @@ export default {
   .RightHeader {
     height: 4vw;
     background-color: rgb(209, 209, 209);
+    .secondtitle2 {
+    justify-content: space-between;
+    display: flex;
+    border: 0px solid rgb(255, 0, 0);
+    width: 75vw;
+    height: 10vh;
+    align-items: center;
+
+    a {
+
+      border-radius: 10px;
+      padding: 5px;
+      transition: all 0.5s ease;
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        color: red;
+        background-color: rgba(118, 118, 117, 0.5);
+      }
+    }
+
+  }
   }
 
   .productManagement {

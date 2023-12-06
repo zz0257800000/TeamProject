@@ -17,8 +17,17 @@ export default {
 </script>
 
 <template>
+ <div class="secondtitle2">
+      <h3>
+      </h3>
+      <h6>
+        <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">登入</a>
+      </h6>
 
+    </div>
 <div class="mainLoginShow">
+  
+  
     <div class="leftShow">
       <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i>
         </h1>
@@ -67,13 +76,56 @@ export default {
  
   
 <style lang="scss" scoped>
+ .secondtitle2 {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    border: 0px solid rgb(255, 0, 0);
+    width: 95vw;
+    height: 15vh;
 
+    a {
+
+      border-radius: 10px;
+      padding: 5px;
+      transition: all 0.5s ease;
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        color: red;
+        background-color: rgba(118, 118, 117, 0.5);
+      }
+    }
+
+  }
 .mainLoginShow {
   border: 0px solid red;
   height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  .secondtitle2 {
+    justify-content: space-between;
+    display: flex;
+    border: 0px solid rgb(255, 0, 0);
+    width: 90vw;
+
+    a {
+
+      border-radius: 10px;
+      padding: 5px;
+      transition: all 0.5s ease;
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        color: red;
+        background-color: rgba(118, 118, 117, 0.5);
+      }
+    }
+
+  }
 
   .leftShow {
     background-color: rgb(0, 0, 0);

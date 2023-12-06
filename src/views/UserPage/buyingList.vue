@@ -44,7 +44,14 @@ export default {
 
     <div class="actionPageRight">
       <div class="RightHeader">
+        <div class="secondtitle2">
+      <h3>
+      </h3>
+      <h6>
+        <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">購買清單</a>
+      </h6>
 
+    </div>
 
       </div>
 
@@ -88,13 +95,14 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 170vh;
+  height: 164vh;
   border: 0px solid rgb(255, 0, 0);
 
 }
 
 .actionPageLeft {
   width: 20vw;
+  height: 170vh;
   display: flex;
   flex-direction: column;
   background-color: rgb(243, 243, 243);
@@ -144,6 +152,29 @@ export default {
   .RightHeader {
     height: 4vw;
     background-color: rgb(209, 209, 209);
+    .secondtitle2 {
+    justify-content: space-between;
+    display: flex;
+    border: 0px solid rgb(255, 0, 0);
+    width: 75vw;
+    height: 10vh;
+    align-items: center;
+
+    a {
+
+      border-radius: 10px;
+      padding: 5px;
+      transition: all 0.5s ease;
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        color: red;
+        background-color: rgba(118, 118, 117, 0.5);
+      }
+    }
+
+  }
   }
 
   .productManagement {
@@ -210,6 +241,8 @@ export default {
       .action-btns {
         display: flex;
         justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
 
         .edit-btn,
         .delete-btn {

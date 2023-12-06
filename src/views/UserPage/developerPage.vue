@@ -51,6 +51,7 @@ export default {
     </div>
     <div class="flip-box-back">
       <h2>Back Side</h2>
+      
     </div>
   </div>
 </div>
@@ -80,6 +81,7 @@ export default {
             </div>
             <div class="flip-box-back">
               <img src="../../../public/武弄組的圖/18.jpg" alt="" class="backImg">
+          
             </div>
           </div>
         </div>
@@ -178,7 +180,7 @@ export default {
 <style lang="scss" scoped>
 .mainShowDetail {
   border: 0px solid rgb(255, 0, 0);
-  height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,14 +247,7 @@ export default {
           }
         }
 
-        .informationTopLink {
-          width: 15vw;
-
-          justify-content: space-around;
-          display: flex;
-          border: 0px solid black;
-          font-size: 30pt;
-        }
+       
 
         .informationTop {
           background-color: dodgerblue;
@@ -297,10 +292,16 @@ export default {
       .backImg {
         transform: scale(0.5)translate(-700px, -650px);
         /* 调整缩放比例和位置，可以根据需要调整值 */
-
         position: relative;
 
-      }
+      } 
+      .informationTopLink {
+          width: 15vw;
+          justify-content: space-around;
+          display: flex;
+          border: 0px solid black;
+          font-size: 30pt;
+        }
     }
 
     .flip-box-front {
@@ -310,7 +311,7 @@ export default {
 
     .flip-box-back {
       overflow: hidden;
-      background-color: dodgerblue;
+      background-color: rgb(65, 65, 65);
       color: white;
       transform: rotateY(180deg);
     }
