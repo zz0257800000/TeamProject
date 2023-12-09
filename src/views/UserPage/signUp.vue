@@ -25,7 +25,9 @@ export default {
 </script>
 
 <template>
-<div class="backbtn">
+
+    <div class="signup-container">
+        <div class="backbtn">
         <RouterLink class="btn" to="/UserPage/loginPage">返回登入面</RouterLink>
         <h3>
       </h3>
@@ -33,8 +35,6 @@ export default {
         <RouterLink class="btn1" to="/"> Home</RouterLink> > <a href="">註冊</a>
       </h6>
     </div>
-    <div class="signup-container">
-        
         <div class="signup">
 
             <img src="../../../public/1.jpg" width="700" height="500" alt="">
@@ -109,24 +109,32 @@ export default {
   
 <style lang="scss" scoped>
 .btn {
-    font-size: 16pt;
-    margin: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    width: 10vw;
-    background-color: rgb(223, 223, 223);
+  font-size: 16pt;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  width: 10vw;
+  background-color: rgb(223, 223, 223);
 }
-.backbtn{
+
+.signup-container {
+  border: 1px solid red;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(156, 156, 156);
+  display: flex;
+  flex-direction: column;
+
+  .backbtn {
     border: 0px solid red;
     background-color: rgb(156, 156, 156);
     justify-content: space-between;
     display: flex;
     align-items: center;
-    width: 100vw;
+    width: 97vw;
     height: 15vh;
 
     a {
-
       border-radius: 10px;
       padding: 5px;
       transition: all 0.5s ease;
@@ -138,44 +146,78 @@ export default {
         background-color: rgba(118, 118, 117, 0.5);
       }
     }
-}
-
-.signup-container {
-    border: 0px solid red;
-    width: 100vw;
-    height: 70vh;
-   background-color: rgb(156, 156, 156);
-   display: flex;
-   align-items: center;
-    justify-content: center;
+  }
 }
 
 .signup {
-    display: flex;
-    width: 70vw;
+  display: flex;
+  width: 90vw;
+  border: 0px solid red;
+  align-items: center;
+  background-color: rgb(156, 156, 156);
+  justify-content: space-around;
+
+  .signupRIG {
+    border: 1px solid black;
+    padding: 20px;
+
+    .form-group {
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333; /* Dark text color */
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        border: 1px solid #ddd; /* Light border color */
+        border-radius: 5px;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          border-color: #4CAF50; /* Focus border color */
+        }
+      }
+    }
+
+    .submitBtn {
+      border: 0px solid red;
+      display: flex;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+
+      .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #45a049; /* Hover background color */
+        }
+      }
+    }
+  }
+
+  .signupRight {
     border: 0px solid red;
-align-items: center;
-    justify-content: space-between;
-    .signupRIG {
-        border: 1px solid black;
-        padding: 20px;
-        
-    }
-    .signupRight{
-        border: 0px solid red;
-        width: 50vw;
+  }
 
-    }
-    .form-control{
-        width: 27vw;
-
-    }
-    .submitBtn{
-        border: 0px solid red;
-        display: flex;
-  position: relative;
-  left: 50%;
-    }
+  .form-control {
+    width:27vw;
+  }
 }
 </style>
+
   

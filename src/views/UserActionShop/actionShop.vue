@@ -1,14 +1,14 @@
 <script>
 export default {
   data() {
-    return {
-      products: [
-        { name: '商品1', category: '分類A', price: '$50.00' },
-        { name: '商品2', category: '分類B', price: '$40.00' },
-        // 添加更多商品數據
-      ]
-    };
-  },
+  return {
+    products: [
+      { name: '商品1', category: '分類A', price: '$50.00', shelfTime: '2023-12-10' },
+      { name: '商品2', category: '分類B', price: '$40.00', shelfTime: '2023-12-11' },
+      // Add more products with shelfTime
+    ]
+  };
+},
   methods: {
     editProduct(index) {
       // 添加編輯商品的邏輯
@@ -25,16 +25,16 @@ export default {
   <div class="actionPage">
     <div class="actionPageLeft">
       <div class="lefttHeader">
-        <h1>你的賣場管理</h1>
+        <h2>賣場管理</h2>
       </div>
       
       <div class="leftAdmin">
         
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
         <RouterLink class="btn" to="/"><i class="fa-solid fa-bars-staggered"></i> 訂單管理</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-envelope-open"></i> 訊息中心</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-gear"></i> 設定</RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-solid fa-envelope-open"></i> 訊息中心</RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
 
       </div>
 
@@ -62,10 +62,11 @@ export default {
           <table>
             <thead>
               <tr>
-                <th>商品圖片</th>
-                <th>名稱</th>
+                <th class="productPic">商品圖片</th>
+                <th class="productTitle">名稱</th>
                 <th>分類</th>
                 <th>售價</th>
+                <th>上架時間</th>
                 <th>操作</th>
               </tr>
             </thead>
@@ -75,6 +76,8 @@ export default {
                 <td>{{ product.name }}</td>
                 <td>{{ product.category }}</td>
                 <td>{{ product.price }}</td>
+                <td>{{ product.shelfTime }}</td> <!-- Display the shelf time -->
+
                 <td class="action-btns">
                   <button class="edit-btn" @click="editProduct(index)">編輯</button>
                   <button class="delete-btn" @click="deleteProduct(index)">刪除</button>
@@ -93,33 +96,31 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 173vh;
-
-
+  height: 172vh;
 }
 
 .actionPageLeft {
   width: 20vw;
   display: flex;
   flex-direction: column;
-  background-color: rgb(243, 243, 243);
+  background-color: #37474f; /* Dark teal background color */
   height: 178vh;
 
   .lefttHeader {
     height: 4vw;
-    background-color: rgb(156, 156, 156);
+    background-color: #3b4c53; /* Teal background color */
     display: flex;
     align-items: center;
     justify-content: center;
 
     h2 {
-      color: white;
+      color: #eceff1; /* Light text color */
       margin: 0;
     }
   }
 
   .leftAdmin {
-    background-color: rgb(243, 243, 243);
+    background-color: #546e7a; /* Teal background color */
     height: 42vw;
     flex-direction: column;
     display: flex;
@@ -129,8 +130,8 @@ export default {
       align-items: center;
       justify-content: center;
       width: 80%;
-      color: white;
-      background-color: black;
+      color: #eceff1; /* Light text color */
+      background-color: #263238; /* Darker teal */
       padding: 10px;
       margin: 10px auto;
       border-radius: 5px;
@@ -138,7 +139,7 @@ export default {
       text-align: center;
 
       &:hover {
-        background-color: #333;
+        background-color: #37474f; /* Dark teal on hover */
       }
     }
   }
@@ -149,45 +150,44 @@ export default {
 
   .RightHeader {
     height: 4vw;
-    background-color: rgb(209, 209, 209);
+    background-color: #bdbdbd; /* Light gray background color */
     .secondtitle2 {
-    justify-content: space-between;
-    display: flex;
-    border: 0px solid rgb(255, 0, 0);
-    width: 75vw;
-    height: 10vh;
-    align-items: center;
+      justify-content: space-between;
+      display: flex;
+      border: 0px solid #e74c3c; /* Border color */
+      width: 75vw;
+      height: 10vh;
+      align-items: center;
 
-    a {
+      a {
+        border-radius: 10px;
+        padding: 5px;
+        transition: all 0.5s ease;
+        text-decoration: none;
+        color: #37474f; /* Dark teal text color */
 
-      border-radius: 10px;
-      padding: 5px;
-      transition: all 0.5s ease;
-      text-decoration: none;
-      color: black;
-
-      &:hover {
-        color: red;
-        background-color: rgba(118, 118, 117, 0.5);
+        &:hover {
+          color: #e74c3c; /* Hover color */
+          background-color: rgba(118, 118, 117, 0.5);
+        }
       }
     }
-
-  }
   }
 
   .productManagement {
     height: 42vw;
-    background-color: rgb(231, 231, 231);
+    background-color: #f5f5f5; /* Light gray background color */
     height: 170vh;
 
     .productCreate {
       display: flex;
       justify-content: space-between;
-      width: 75vw;
+      width: 79vw;
       padding: 20px;
 
       h1 {
         margin: 0;
+        color: #37474f; /* Dark teal heading color */
       }
 
       .btn {
@@ -195,15 +195,15 @@ export default {
         align-items: center;
         justify-content: center;
         width: 20%;
-        color: white;
-        background-color: black;
+        color: #eceff1; /* Light text color */
+        background-color: #263238; /* Dark teal */
         padding: 10px;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;
 
         &:hover {
-          background-color: #333;
+          background-color: #37474f; /* Dark teal on hover */
         }
       }
     }
@@ -211,7 +211,6 @@ export default {
     .productAdmimList {
       height: 39vw;
       padding: 20px;
-      height: 170vh;
 
       table {
         width: 100%;
@@ -225,22 +224,32 @@ export default {
         text-align: left;
         height: 30vh;
       }
+      .productPic {
+        width: 25vw;
+      }
+
+      .productTitle {
+        width: 25vw;
+      }
 
       th {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
-        background-color: #acacac;
+        background-color: #b0bec5; /* Light teal background color */
       }
 
       tr:hover {
-        background-color: #f5f5f5;
+        background-color: #e0e0e0; /* Lighter gray on hover */
       }
 
       .action-btns {
         display: flex;
-        justify-content: space-around;
-
+        flex-direction: column;
+        justify-content: space-around; /* Separate buttons vertically */
+        align-items: center;
+        border: 0px solid red;
+        
         .edit-btn,
         .delete-btn {
           display: flex;
@@ -250,8 +259,8 @@ export default {
           width: 5vw;
           padding: 5px 10px;
           cursor: pointer;
-          background-color: #4CAF50;
-          color: white;
+          background-color: #37474f; /* Dark teal */
+          color: #eceff1; /* Light text color */
           border: none;
           border-radius: 4px;
 
@@ -261,7 +270,8 @@ export default {
         }
 
         .delete-btn {
-          background-color: #f44336;
+          color: #263238; /* Darker teal color */
+          background-color: #ef5350; /* Stylish red color */
         }
       }
     }

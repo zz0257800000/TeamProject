@@ -17,10 +17,11 @@ export default {
 </script>
 <template>
     <div class="secondtitle2">
-      <h3>
+        <RouterLink class="backbtn" to="/UserPage/loginPage">返回登入面</RouterLink>
+        <h3>
       </h3>
       <h6>
-        <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">重新設定密碼</a>
+        <RouterLink class="btn1" to="/"> Home</RouterLink> > <a href="">重新設定密碼</a>
       </h6>
 
     </div>
@@ -54,7 +55,8 @@ export default {
         <label for="newPassword">新密碼:</label>&nbsp; &nbsp; 
         <input type="password" v-model="newPassword" required class="input-field">
       </div>
-        <button type="submit" class="submit-button">確定</button>
+        <RouterLink class="submit-button" to="/"> 確定</RouterLink> 
+
       </form>
     </div>
        
@@ -66,11 +68,24 @@ export default {
 .secondtitle2 {
     justify-content: space-between;
     display: flex;
+
     border: 0px solid rgb(255, 0, 0);
     width: 98vw;
     height: 10vh;
     align-items: center;
+.backbtn{
+  font-size: 16pt;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  width: 10vw;
+  justify-content: center;
+    display: flex;
+    align-items: center;
 
+  background-color: rgb(223, 223, 223);
+
+}
     a {
 
       border-radius: 10px;

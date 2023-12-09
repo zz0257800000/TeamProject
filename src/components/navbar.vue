@@ -33,14 +33,18 @@ export default {
      <div class="POP">
       <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
       <RouterLink class="btn" to="/">注意事項</RouterLink>
+      <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
+
     </div>
       <div>
       
-      <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
 
-      <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
+      <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-store"></i> 我的拍賣</RouterLink>
+      <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員資料</RouterLink>
+
+
       
-      <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員</RouterLink>
+      <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員登入</RouterLink>
     </div>
       </div>
 
@@ -56,7 +60,7 @@ export default {
       </div>
 
       <div> 
-        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-store"></i> 我的拍賣</RouterLink>
+        <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
       </div>
 
       <div> 
@@ -167,7 +171,7 @@ export default {
 <style lang="scss" scoped>
 .type { 
   position: relative;
-  top: 45%;
+  top: 15%;
   width: 150px;
   margin-left: -10px;
   border: 0;
@@ -249,14 +253,14 @@ export default {
 .Marquee{
   width: 100vw;
 
-height: 15vh;
+height: 10vh;
 background-color: rgb(48, 48, 48);
 
 
   //跑馬燈
   .announcement {
     position: absolute;
-    top: 20%;
+    top: 23%;
     right: 100%;
     /* 初始位置在页面右侧外部 */
     background-color: #ff9800;

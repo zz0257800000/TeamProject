@@ -3,8 +3,8 @@ export default {
   data() {
     return {
       products: [
-        { name: '商品1', category: '分類A', price: '$50.00' },
-        { name: '商品2', category: '分類B', price: '$40.00' },
+        { name: '商品1', category: '分類A', price: '$50.00', shelfTime: '2023-12-10' },
+        { name: '商品2', category: '分類B', price: '$40.00', shelfTime: '2023-12-11' },
         // 添加更多商品數據
       ]
     };
@@ -27,16 +27,17 @@ export default {
       <div class="lefttHeader">
         <h1>你的購買清單</h1>
       </div>
-      
+
       <div class="leftAdmin">
-        
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-bars-staggered"></i> &nbsp;購買清單</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-heart"></i>  &nbsp; 收藏 </RouterLink>
 
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-envelope-open"></i>   &nbsp;訂單已完成</RouterLink>
+        <RouterLink class="btn" to="/UserPage/buyingList"><i class="fa-solid fa-bars-staggered"></i> &nbsp;購買清單
+        </RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-solid fa-heart"></i> &nbsp; 收藏 </RouterLink>
 
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-chart-line"></i>   &nbsp;報表及分析</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-gear"></i>   &nbsp;設定</RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-solid fa-envelope-open"></i> &nbsp;訂單已完成</RouterLink>
+
+        <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> &nbsp;報表及分析</RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> &nbsp;設定</RouterLink>
 
       </div>
 
@@ -45,13 +46,13 @@ export default {
     <div class="actionPageRight">
       <div class="RightHeader">
         <div class="secondtitle2">
-      <h3>
-      </h3>
-      <h6>
-        <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">購買清單</a>
-      </h6>
+          <h3>
+          </h3>
+          <h6>
+            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">購買清單</a>
+          </h6>
 
-    </div>
+        </div>
 
       </div>
 
@@ -64,10 +65,11 @@ export default {
           <table>
             <thead>
               <tr>
-                <th>商品圖片</th>
-                <th>名稱</th>
+                <th class="productPic">商品圖片</th>
+                <th class="productTitle">名稱</th>
                 <th>分類</th>
                 <th>售價</th>
+                <th>上架時間</th>
                 <th>操作</th>
               </tr>
             </thead>
@@ -77,9 +79,10 @@ export default {
                 <td>{{ product.name }}</td>
                 <td>{{ product.category }}</td>
                 <td>{{ product.price }}</td>
+                <td>{{ product.shelfTime }}</td> <!-- Display the shelf time -->
+
                 <td class="action-btns">
-                  <button class="edit-btn" @click="editProduct(index)">編輯</button>
-                  <button class="delete-btn" @click="deleteProduct(index)">刪除</button>
+                  <button class="delete-btn" @click="deleteProduct(index)">取消訂單</button>
                 </td>
               </tr>
             </tbody>
@@ -95,9 +98,8 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 164vh;
+  height: 163vh;
   border: 0px solid rgb(255, 0, 0);
-
 }
 
 .actionPageLeft {
@@ -105,23 +107,23 @@ export default {
   height: 170vh;
   display: flex;
   flex-direction: column;
-  background-color: rgb(243, 243, 243);
+  background-color: #2c3e50; /* Stylish dark background color */
 
   .lefttHeader {
     height: 4vw;
-    background-color: rgb(156, 156, 156);
+    background-color: rgb(100, 119, 148); /* Slightly lighter shade */
     display: flex;
     align-items: center;
     justify-content: center;
 
     h2 {
-      color: white;
+      color: #56b3ca; /* Light text color */
       margin: 0;
     }
   }
 
   .leftAdmin {
-    background-color: rgb(243, 243, 243);
+    background-color: #34495e;
     height: 42vw;
     flex-direction: column;
     display: flex;
@@ -131,8 +133,8 @@ export default {
       align-items: center;
       justify-content: center;
       width: 80%;
-      color: white;
-      background-color: black;
+      color: #ecf0f1;
+      background-color: #2c3e50;
       padding: 10px;
       margin: 10px auto;
       border-radius: 5px;
@@ -140,7 +142,7 @@ export default {
       text-align: center;
 
       &:hover {
-        background-color: #333;
+        background-color: #1d2b3a; /* Darker shade on hover */
       }
     }
   }
@@ -151,45 +153,45 @@ export default {
 
   .RightHeader {
     height: 4vw;
-    background-color: rgb(209, 209, 209);
+    background-color: #bdc3c7; /* Light gray background color */
+
     .secondtitle2 {
-    justify-content: space-between;
-    display: flex;
-    border: 0px solid rgb(255, 0, 0);
-    width: 75vw;
-    height: 10vh;
-    align-items: center;
+      justify-content: space-between;
+      display: flex;
+      border: 0px solid #e74c3c; /* Border color */
+      width: 75vw;
+      height: 10vh;
+      align-items: center;
 
-    a {
+      a {
+        border-radius: 10px;
+        padding: 5px;
+        transition: all 0.5s ease;
+        text-decoration: none;
+        color: #34495e; /* Dark text color */
 
-      border-radius: 10px;
-      padding: 5px;
-      transition: all 0.5s ease;
-      text-decoration: none;
-      color: black;
-
-      &:hover {
-        color: red;
-        background-color: rgba(118, 118, 117, 0.5);
+        &:hover {
+          color: #e74c3c; /* Hover color */
+          background-color: rgba(118, 118, 117, 0.5);
+        }
       }
     }
-
-  }
   }
 
   .productManagement {
     height: 42vw;
-    background-color: rgb(231, 231, 231);
+    background-color: #ecf0f1; /* Light background color */
     height: 161vh;
 
     .productCreate {
       display: flex;
       justify-content: space-between;
-      width: 75vw;
+      width: 78vw;
       padding: 20px;
 
       h1 {
         margin: 0;
+        color: #2c3e50; /* Dark heading color */
       }
 
       .btn {
@@ -197,15 +199,15 @@ export default {
         align-items: center;
         justify-content: center;
         width: 20%;
-        color: white;
-        background-color: black;
+        color: #ecf0f1;
+        background-color: #3498db; /* Stylish blue color */
         padding: 10px;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;
 
         &:hover {
-          background-color: #333;
+          background-color: #2980b9; /* Darker blue on hover */
         }
       }
     }
@@ -224,18 +226,27 @@ export default {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
-        height: 30vh;
+        height: 35vh;
+        width: 7vw;
+      }
+
+      .productPic {
+        width: 25vw;
+      }
+
+      .productTitle {
+        width: 25vw;
       }
 
       th {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
-        background-color: #acacac;
+        background-color: #bdc3c7;
       }
 
       tr:hover {
-        background-color: #f5f5f5;
+        background-color: #ecf0f1;
       }
 
       .action-btns {
@@ -253,8 +264,7 @@ export default {
           width: 5vw;
           padding: 5px 10px;
           cursor: pointer;
-          background-color: #4CAF50;
-          color: white;
+          color: #ecf0f1;
           border: none;
           border-radius: 4px;
 
@@ -264,11 +274,10 @@ export default {
         }
 
         .delete-btn {
-          background-color: #f44336;
+          background-color: #f44336; /* Stylish red color */
         }
       }
     }
   }
 }
-
 </style>
