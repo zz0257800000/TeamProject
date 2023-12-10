@@ -4,6 +4,7 @@ export default {
         return {
             productName: "黑白素T",
             productPrice: "200",
+            updateTime:"2023-12-10",
             sizeArr: ["S", "M", "L"],
             selectedSize: null,
             quantity: 1, // 初始購買數量為1
@@ -70,6 +71,8 @@ export default {
             <button @click="addToCart">加入購物車</button>
             <button @click="buyNow">立即購買</button>
             </div>
+
+        <div class="updateTime"><p>商品更新日期：{{ updateTime }}</p></div>
         
         </div>
     </div>
@@ -136,5 +139,11 @@ export default {
         border: 0;
         }
         }
+    .updateTime{
+        margin-top: 20px;
+        p {
+        font-size: 10pt;
+        }
+    }
     }
 </style>
