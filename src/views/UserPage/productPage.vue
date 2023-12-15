@@ -1,90 +1,104 @@
 <script>
+import axios from 'axios';
+
 export default {
+    
     data() {
         return {
-            productName: "黑白素T",
-            productPrice: "200",
-            updateTime:"2023-12-10",
-            sizeArr: ["S", "M", "L"],
-            selectedSize: null,
-            quantity: 1, // 初始購買數量為1
-            suggestArr:[
-            "../../public/clothes2.jpg",
-            "../../public/clothes1.jpg",
-            "../../public/clothes2.jpg",
-            "../../public/clothes1.jpg",
-            "../../public/clothes2.jpg",
-            ],
+            product: {
+                product_name: '',
+      description: '',
+      price: 0,
+      inventory: 0,
+            },
+      quantity: 1,
+      suggestArr: [], // 你的相關商品數據
+      relatedProducts: [], // 你的相關商品數據
+      updateTime: '', // 你的更新時間數據
         };
-    },
+    }, 
+    mounted() {
+     
+  this.fetchProductDetails();
+  },
     methods: {
-        selectSize(size) {
-            this.selectedSize = size;
-        },
-        addToCart() {
-            // 在這裡處理將商品加入購物車的邏輯
-            console.log("商品已加入購物車");
-            alert("商品已加入購物車");
-        },
-        buyNow() {
-            // 在這裡處理立即購買的邏輯
-            console.log("立即購買");
-            this.$router.push({ name: 'shoppingCart' })
-        },
-        incrementQuantity() {
-            this.quantity += 1;
-        },
-        decrementQuantity() {
-            if (this.quantity > 1) {
-        this.quantity -= 1;}
-        },
+        fetchProductDetails() {
+  // 使用 this.$route.params.productId 获取路由中的 ID 参数
+  const productId = this.$route.params.productId;
+  console.log('productId:', productId);
+
+  // 调用 API 获取商品详情
+  axios.get(`http://localhost:8080/product/get/info?id=${productId}`)
+    .then(response => {
+        this.product = response.data.product;
+      console.log('Fetched product:', this.product);    })
+    .catch(error => {
+      console.error('Error fetching product details:', error);
+    });
+},
+decrementQuantity() {
+      if (this.quantity > 1) {
+        this.quantity--;
+      }
+    },
+    incrementQuantity() {
+      this.quantity++;
+    },
+    addToCart() {
+      console.log('Adding to cart:', this.product, 'Quantity:', this.quantity);
+    },
+    buyNow() {
+      console.log('Buying now:', this.product, 'Quantity:', this.quantity);
+    },
+
+
     },
 };
 </script>
 
 
 <template>
-    <div class="bg">
-        <div class="product Area">
-        <img src="../../../public/clothes1.jpg" alt="" srcset="" style="width: 50rem; height: 35rem;">
 
-        <div class="productText">
 
-        <div class="title"><p>商品名稱：{{ productName }}</p></div>
+<div class="bg">
+  <div class="product Area">
+    <img src="../../../public/clothes1.jpg" alt="" srcset="" style="width: 50rem; height: 35rem;">
 
-        <div class="price"><p>價格：${{ productPrice }}</p></div>
+    <div class="productText">
+      <div class="title"><p>商品名稱：{{ product.product_name }}</p></div>
+      <p>{{ product.description }}</p>
 
-        <div class="size">
-            <p>規格：</p>
-            <button type="button" v-for="item in sizeArr" :key="item" :class="{ 'selected': selectedSize === item }"
-            @click="selectSize(item)">{{ item }}</button>
-            </div>
-        
-        <div class="quantity">
-            <p>數量：</p>
-            <button @click="decrementQuantity">-</button>
-            <input v-model="quantity" type="text" min="1" inputmode="numeric" pattern="[0-9]*" />
-            <button @click="incrementQuantity">+</button>
-            </div>
+      <div class="price"><p>價格：${{product.price }}</p></div>
 
-        <div class="buttons">
-            <button @click="addToCart">加入購物車</button>
-            <button @click="buyNow">立即購買</button>
-            </div>
+      
+      <div class="price"><p>庫存：{{ product.inventory }}</p></div>
 
-        <div class="updateTime"><p>商品更新日期：{{ updateTime }}</p></div>
-        
-        </div>
+      <div class="quantity">
+        <p>數量：</p>
+        <button @click="decrementQuantity">-</button>
+        <input v-model="quantity" type="text" min="1" inputmode="numeric" pattern="[0-9]*" />
+        <button @click="incrementQuantity">+</button>
+      </div>
+
+      <div class="buttons">
+        <button @click="addToCart">加入購物車</button>
+        <button @click="buyNow">立即購買</button>
+      </div>
+
+      <div class="updateTime"><p>商品更新日期：{{ updateTime }}</p></div>
     </div>
-    <h2>相關商品</h2>
-    <div class="suggest Area">
-        <div class="suggest" style="width: 16rem ; height:20rem;" v-for="item in suggestArr">
-            <RouterLink class="btn" to="/UserPage/productPage">
-        <img :src="item" class="card-img-top" alt="..."></RouterLink>
-        </div>
-
-        </div>
+  </div>
+  <h2>相關商品</h2>
+  <div class="suggest Area">
+    <div class="suggest" style="width: 16rem ; height:20rem;" v-for="item in suggestArr">
+        <RouterLink v-for="relatedProduct in relatedProducts" :key="relatedProduct.productId" 
+                :to="'/UserPage/productPage/' + relatedProduct.productId" class="btn">
+      <img :src="relatedProduct.photo" class="card-img-top" alt="...">
+    </RouterLink>
     </div>
+  </div>
+</div>
+
 
 
 </template>
