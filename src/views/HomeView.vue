@@ -86,7 +86,7 @@ export default {
 
     <div class="productAll">
       <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
-        <router-link class="btn" to="UserPage/productPage">
+        <router-link class="btn" to="UserPage/productPage"   + product.id>
           <img :src="product.photo" class="card-img-top" alt="...">
           <p class="productName">{{ product.product_name }}</p>
           <p class="productPrice">{{ product.price }}</p>
