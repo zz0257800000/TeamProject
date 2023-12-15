@@ -57,55 +57,107 @@ export default {
 
 <template>
   <div class="mainShowDetail">
-  <div id="app">
-    <div class="container">
-      <div class="item_header">
-        <div class="item_detail">商品</div>
-        <div class="price">單價</div>
-        <div class="count">數量</div>
-        <div class="amount">總計</div>
-        <div class="operate">操作</div>
-      </div>
-      <div class="item_container" v-for="(item, index) in itemList" :key="item.id">
-        <div class="item_header item_body">
-          <div class="item_detail">
-            <img v-bind:src="item.imgUrl" alt="">
-            <div class="name">{{ item.itemName }}</div>
-          </div>
+    <br>
+    <br>
+    <div class="secondtitle2">
+      <h3>
+      </h3>
+      <h6>
+        <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">購物車</a>
+      </h6>
 
-          <div class="price"><span>$</span>{{ item.price }}</div>
-          <div class="count">
-            <button @click="handleSub(item)">-</button>
-            {{ item.count }}
-            <button @click="handlePlus(item)">+</button>
-          </div>
-          <div class="amount">{{ item.price * item.count }}</div>
-          <div class="operate">
-            <button @click="handledelete(index)">刪除</button>
+    </div>
+    <div id="app">
+      <div class="container">
+        <div class="item_header">
+          <div class="item_detail">商品</div>
+          <div class="price">單價</div>
+          <div class="count">數量</div>
+          <div class="amount">總計</div>
+          <div class="operate">操作</div>
+        </div>
+        <div class="item_container" v-for="(item, index) in itemList" :key="item.id">
+          <div class="item_header item_body">
+            <div class="item_detail">
+              <img v-bind:src="item.imgUrl" alt="">
+              <div class="name">{{ item.itemName }}</div>
+            </div>
+
+            <div class="price"><span>$</span>{{ item.price }}</div>
+            <div class="count">
+              <button @click="handleSub(item)">-</button>
+              {{ item.count }}
+              <button @click="handlePlus(item)">+</button>
+            </div>
+            <div class="amount">{{ item.price * item.count }}</div>
+            <div class="operate">
+              <button @click="handledelete(index)">刪除</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
     </div>
+    <br>
+    <RouterLink class="submitbtn" to="/"> 結帳</RouterLink>
+
   </div>
 </template>
 <style lang="scss" scoped>
-.mainShowDetail{
-  border: 1px solid rgb(255, 0, 0);
-  height: 100vh;
+.mainShowDetail {
+  border: 0px solid rgb(255, 0, 0);
+  height: 120vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  top: 10%;
+
+  .secondtitle2 {
+    justify-content: space-between;
+    display: flex;
+    border: 0px solid rgb(255, 0, 0);
+    width: 90vw;
+
+    a {
+
+      border-radius: 10px;
+      padding: 5px;
+      transition: all 0.5s ease;
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        color: red;
+        background-color: rgba(118, 118, 117, 0.5);
+      }
+    }
+
+  }
+
+  .submitbtn {
+    background-color: rgba(118, 118, 117, 0.5);
+    font-size: 24pt;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
+
 .item_header {
   display: flex;
-  width: 1000px;
+  width: 50vw;
   margin: 0 auto;
   height: 30px;
   background-color: #fff;
   border-radius: 3px;
   padding-left: 10px;
+  border: 0px solid rgb(255, 0, 0);
+
 }
 
 .item_header div {
@@ -135,4 +187,5 @@ export default {
 .item_detail .name {
   margin-left: 100px;
   margin-top: 20px;
-}</style>
+}
+</style>
