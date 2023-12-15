@@ -14,6 +14,49 @@ const router = createRouter({
       name: "signUp",
       component: () => import("../views/UserPage/signUp.vue"),
     },
+<<<<<<< HEAD
+    {
+      path: "/UserPage/loginPage",
+      name: "loginPage",
+      component: () => import("../views/UserPage/loginPage.vue"),
+    },
+    {
+      path: "/UserPage/shoppingCart",
+      name: "shoppingCart",
+      component: () => import("../views/UserPage/shoppingCart.vue"),
+    },
+    {
+      path: "/UserPage/forgotPasswordPage",
+      name: "forgotPasswordPage",
+      component: () => import("../views/UserPage/forgotPasswordPage.vue"),
+    },
+    {
+      path: "/UserPage/actionShop",
+      name: "actionShop",
+      component: () => import("../views/UserActionShop/actionShop.vue"),
+    },
+    {
+      path: "/UserPage/addNewProduct",
+      name: "addNewProduct",
+      component: () => import("../views/UserActionShop/addNewProduct.vue"),
+    },
+    {
+      path: "/UserPage/complainService",
+      name: "complainService",
+      component: () => import("../views/UserPage/complainService.vue"),
+    },
+    {
+      path: "/UserPage/buyingList",
+      name: "buyingList",
+      component: () => import("../views/UserPage/buyingList.vue"),
+    },
+    {
+      path: "/UserPage/developerPage",
+      name: "developerPage",
+      component: () => import("../views/UserPage/developerPage.vue"),
+    },
+    {
+=======
     {
       path: "/UserPage/loginPage",
       name: "loginPage",
@@ -68,6 +111,7 @@ const router = createRouter({
   ]
 })
 =======
+>>>>>>> main
       path: "/UserPage/productPage",
       name: "productPage",
       component: () => import("../views/UserPage/productPage.vue"),
@@ -79,6 +123,9 @@ const router = createRouter({
     },
   ],
 });
+<<<<<<< HEAD
+=======
 >>>>>>> ceebf6b39d6894b1b99580488a231bf0b118dcf7
+>>>>>>> main
 
 export default router;
