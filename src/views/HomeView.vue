@@ -30,7 +30,7 @@ export default {
       axios.get('http://localhost:8080/product/get')
         .then(response => {
           // Save the fetched products to the data property
-          this.products = response.data.products;
+          this.products = response.data.products.filter(product => product.shelves);
           console.log('Fetched products:', this.products);
         })
         .catch(error => {
@@ -85,14 +85,15 @@ export default {
     </div>
 
     <div class="productAll">
-      <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
-        <router-link class="btn" to="UserPage/productPage">
-          <img :src="product.photo" class="card-img-top" alt="...">
-          <p class="productName">{{ product.product_name }}</p>
-          <p class="productPrice">{{ product.price }}</p>
-        </router-link>
-      </div>
-    </div>
+  <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
+    <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
+
+    <img :src="product.photo" class="card-img-top" alt="...">
+      <p class="productPrice">{{ product.price }}</p>
+      <p>{{ product.product_name }}</p>
+</router-link>
+  </div>
+</div>
    
 
     <div class="pagination-container">
@@ -110,6 +111,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.productPageRoutBtn{
+  text-decoration: none;
+  color: white;
+  font-size: 14pt;
+}
 .pagination-container {
   display: flex;
   align-items: center;
@@ -162,7 +168,6 @@ export default {
     border: 1px solid #ddd;
     width: 70vw;
     height: 150vh;
-
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -173,6 +178,7 @@ export default {
   }
 
   .product {
+    
     height: 30vh;
     /* 调整为适当的高度，以确保九宫格布局 */
     width: 20vw;
