@@ -37,7 +37,7 @@ export default {
     </div>
         <div class="signup">
 
-            <img src="../../../public/1.jpg" width="700" height="500" alt="">
+            <img src="../../../public/9.jpg" width="700" height="500" alt="">
 
       
         <div class="signupRight">
