@@ -82,14 +82,10 @@ export default {
         </div>
 
         <div class="form-group">
-          <label for="inventory">庫存:</label>
+          <label for="inventory">新增數量:</label>
           <input type="number" id="inventory" v-model="inventory" required />
         </div>
 
-        <div class="form-group">
-          <label for="sale_count">銷售數量:</label>
-          <input type="number" id="sale_count" v-model="sale_count" required />
-        </div>
 
         <div class="form-group">
           <label for="shelves">是否開啟商品:</label>
