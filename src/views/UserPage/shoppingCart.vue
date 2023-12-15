@@ -99,7 +99,11 @@ export default {
 
     </div>
     <br>
+<<<<<<< HEAD
     <RouterLink class="submitbtn" to="/"> 結帳</RouterLink>
+=======
+    <RouterLink class="submitbtn" to="/UserPage/checkoutPage"> 結帳</RouterLink>
+>>>>>>> main
 
   </div>
 </template>
