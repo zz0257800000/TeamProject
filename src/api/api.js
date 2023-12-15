@@ -31,7 +31,40 @@ const login = (req) => {
     });
 };
 
+//加入購物車
+const cartCreat = (req) => {
+  return axios({
+    method: "post",
+    url: `http://localhost:8080/cart/create`,
+    data: req,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+//刪除購物車
+const cartDelete = (req) => {
+  return axios({
+    method: "post",
+    url: `http://localhost:8080/cart/delete`,
+    data: req,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+
 export default {
   signUp,
   login,
+  cartCreat,
+  cartDelete,
 };

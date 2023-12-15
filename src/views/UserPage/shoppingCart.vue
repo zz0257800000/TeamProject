@@ -1,31 +1,32 @@
 <script>
+import api from "../../api/api";
 export default {
   data() {
     return {
       itemList: [
         {
-          id: '1',
+          productId: '1',
           itemName: '優質短袖白T',
           imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
           price: '500',
           count: '2'
         },
         {
-          id: '2',
+          productId: '2',
           itemName: '骷髏手短黑T',
           imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
           price: '790',
           count: '3'
         },
         {
-          id: '3',
-          itemName: '超時尚牛仔庫',
+          productId: '3',
+          itemName: '超時尚牛仔褲',
           imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
           price: '1200',
           count: '1'
         },
         {
-          id: '4',
+          productId: '4',
           itemName: '質感褐色系大衣服',
           imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
           price: '2300',
@@ -44,9 +45,26 @@ export default {
       }
     },
     handledelete: function (index) {
-      console.log(this);
-      this.itemList.splice(index, 1);
-    }
+    // 获取要删除的项目
+    const deletedItem = this.itemList[index];
+
+    // 从前端中删除项目
+    this.itemList.splice(index, 1);
+
+    // 打印被删除项目的id
+    console.log('Deleted item id:', deletedItem.productId);
+
+    // 调用API删除购物车中的项目
+    api.cartDelete(deletedItem.productId)
+      .then(response => {
+        // 处理API响应，如果需要的话
+        console.log('cartDelete:', response);
+      })
+      .catch(error => {
+        // 处理错误，如果需要的话
+        console.error('Error deleting item from cart:', error);
+      });
+  },
   },
   computed: {
 
