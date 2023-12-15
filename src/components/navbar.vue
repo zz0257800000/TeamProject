@@ -6,11 +6,14 @@ import { RouterLink, RouterView } from 'vue-router'
 export default {
   data() {
     return {
+<<<<<<< HEAD
 
 
       showChat: false, messages: [],
       newMessage: '',
 
+=======
+>>>>>>> main
 
     }
   },
@@ -18,6 +21,7 @@ export default {
   methods: {
 
 
+<<<<<<< HEAD
 
 
     toggleChat() {
@@ -31,6 +35,8 @@ export default {
       }
     },
 
+=======
+>>>>>>> main
 
   },
 
@@ -82,10 +88,14 @@ export default {
       </div>
 
       <div> 
+<<<<<<< HEAD
 
 
         <RouterLink class="btn" @click="toggleChat" to=""><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
 
+=======
+        <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
+>>>>>>> main
       </div>
       <div>
         <RouterLink class="btn" to="/UserPage/shoppingCart"> <i class="fa-solid fa-cart-shopping usericon"> </i> 購物車</RouterLink>
@@ -188,6 +198,7 @@ export default {
       </nav>
     </div>
 </div>
+<<<<<<< HEAD
 
 =======
 <div class="chat-box" :class="{ 'show': showChat }">
@@ -204,6 +215,8 @@ export default {
     </div>
   </div>
 >>>>>>> main
+=======
+>>>>>>> main
 </template>
 <style lang="scss" scoped>
 .type { 
@@ -212,9 +225,12 @@ export default {
   width: 150px;
   margin-left: -10px;
   border: 0;
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> main
 }
 
 .btn {
@@ -266,10 +282,13 @@ export default {
     padding: 5px;
     border: 0px solid rgb(255, 0, 0);
     height: 15vh;
+<<<<<<< HEAD
 
 
     
 
+=======
+>>>>>>> main
 
     .search {
       width: 40vw;
@@ -281,19 +300,25 @@ export default {
       i {
         font-size: 20pt;
         margin: 0 10px;
+<<<<<<< HEAD
 
 
         
 
+=======
+>>>>>>> main
       }
 
       .searchText {
         padding: 10px;
         width: 50vw;
         font-size: 16pt;
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> main
       }
     }
 
@@ -302,6 +327,7 @@ export default {
 
 }
 .Marquee{
+<<<<<<< HEAD
 
   width: 100vw;
 
@@ -310,6 +336,11 @@ height: 10vh;
   border: 0px solid rgb(255, 0, 0);
 height: 12vh;
 
+=======
+  width: 100vw;
+
+height: 10vh;
+>>>>>>> main
 background-color: rgb(48, 48, 48);
 
 
@@ -324,10 +355,13 @@ background-color: rgb(48, 48, 48);
     color: #fff;
     /* 文字颜色 */
     padding: 10px;
+<<<<<<< HEAD
 
 
     
 
+=======
+>>>>>>> main
     white-space: nowrap;
     /* 不换行 */
     animation: scrollFromRight 10s linear infinite;
@@ -348,6 +382,7 @@ background-color: rgb(48, 48, 48);
     }
   }
 }
+<<<<<<< HEAD
 .chat-box {
   position: fixed;
   bottom: 20px;
@@ -414,4 +449,6 @@ background-color: rgb(48, 48, 48);
 .chat-input button:hover {
   background-color: #45a049;
 }
+=======
+>>>>>>> main
 </style>

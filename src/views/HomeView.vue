@@ -79,10 +79,6 @@ export default{
 
 .carousel{
   width: 70vw;
-<<<<<<< HEAD
-=======
-  
->>>>>>> main
   margin-bottom: 20px;
   background-color: aqua;
 }
