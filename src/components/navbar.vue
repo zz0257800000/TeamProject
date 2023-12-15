@@ -6,31 +6,13 @@ import { RouterLink, RouterView } from 'vue-router'
 export default {
   data() {
     return {
-<<<<<<< HEAD
-=======
-      showChat: false, messages: [],
-      newMessage: '',
->>>>>>> main
 
     }
   },
 
   methods: {
 
-<<<<<<< HEAD
 
-=======
-    toggleChat() {
-      this.showChat = !this.showChat;
-    },  sendMessage() {
-      if (this.newMessage.trim() !== '') {
-        this.messages.push(this.newMessage);
-        this.newMessage = '';
-
-        // You can send the message to the server or perform other actions here
-      }
-    },
->>>>>>> main
 
   },
 
@@ -82,11 +64,7 @@ export default {
       </div>
 
       <div> 
-<<<<<<< HEAD
         <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
-=======
-        <RouterLink class="btn" @click="toggleChat" to=""><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
->>>>>>> main
       </div>
       <div>
         <RouterLink class="btn" to="/UserPage/shoppingCart"> <i class="fa-solid fa-cart-shopping usericon"> </i> 購物車</RouterLink>
@@ -189,22 +167,6 @@ export default {
       </nav>
     </div>
 </div>
-<<<<<<< HEAD
-=======
-<div class="chat-box" :class="{ 'show': showChat }">
-    <div class="chat-header">
-      <h2>Chat</h2>
-      <button @click="toggleChat">Toggle</button>
-    </div>
-    <div class="chat-messages">
-      <div v-for="(message, index) in messages" :key="index" class="message">{{ message }}</div>
-    </div>
-    <div class="chat-input">
-      <input v-model="newMessage" type="text" placeholder="Type a message...">
-      <button @click="sendMessage">Send</button>
-    </div>
-  </div>
->>>>>>> main
 </template>
 <style lang="scss" scoped>
 .type { 
@@ -213,10 +175,6 @@ export default {
   width: 150px;
   margin-left: -10px;
   border: 0;
-<<<<<<< HEAD
-=======
-  
->>>>>>> main
 }
 
 .btn {
@@ -268,10 +226,6 @@ export default {
     padding: 5px;
     border: 0px solid rgb(255, 0, 0);
     height: 15vh;
-<<<<<<< HEAD
-=======
-    
->>>>>>> main
 
     .search {
       width: 40vw;
@@ -283,20 +237,12 @@ export default {
       i {
         font-size: 20pt;
         margin: 0 10px;
-<<<<<<< HEAD
-=======
-        
->>>>>>> main
       }
 
       .searchText {
         padding: 10px;
         width: 50vw;
         font-size: 16pt;
-<<<<<<< HEAD
-=======
-        
->>>>>>> main
       }
     }
 
@@ -305,14 +251,9 @@ export default {
 
 }
 .Marquee{
-<<<<<<< HEAD
   width: 100vw;
 
 height: 10vh;
-=======
-  border: 0px solid rgb(255, 0, 0);
-height: 12vh;
->>>>>>> main
 background-color: rgb(48, 48, 48);
 
 
@@ -327,10 +268,6 @@ background-color: rgb(48, 48, 48);
     color: #fff;
     /* 文字颜色 */
     padding: 10px;
-<<<<<<< HEAD
-=======
-    
->>>>>>> main
     white-space: nowrap;
     /* 不换行 */
     animation: scrollFromRight 10s linear infinite;
@@ -351,73 +288,4 @@ background-color: rgb(48, 48, 48);
     }
   }
 }
-<<<<<<< HEAD
-=======
-.chat-box {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 300px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: none;
-}
-
-.chat-box.show {
-  display: block;
-  z-index: 99;
-}
-
-.chat-header {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.chat-messages {
-  padding: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.message {
-  margin-bottom: 10px;
-}
-
-.chat-input {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #ccc;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 8px;
-  margin-right: 10px;
-}
-
-.chat-input button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.chat-input button:hover {
-  background-color: #45a049;
-}
->>>>>>> main
 </style>
