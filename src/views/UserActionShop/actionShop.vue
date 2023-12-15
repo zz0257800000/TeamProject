@@ -25,24 +25,49 @@ export default {
     },
   },
   mounted() {
-    // 在組件被加載後，發送HTTP GET請求獲取商品數據
+     // 在组件被挂载后，调用 fetchProducts 方法获取商品数据
+  this.fetchProducts();
+   
+  },
+  methods: {
+
+    fetchProducts() {
+    // 发送获取产品列表的请求
     axios.get('http://localhost:8080/product/get')
       .then(response => {
-        // 成功獲取數據，將數據保存到products數組中
+        // 成功获取数据，将数据保存到 products 数组中
         this.products = response.data.products;
+        console.log('Fetched products:', this.products);
+
       })
       .catch(error => {
         console.error('Error:', error);
-        // 處理錯誤，例如顯示錯誤消息給用戶
+        // 处理错误，例如显示错误消息给用户
       });
   },
-  methods: {
+
     editProduct(index) {
       // 在這裡添加編輯商品的邏輯
     },
-    deleteProduct(index) {
-      // 在這裡添加刪除商品的邏輯
-    },
+
+
+    deleteProduct(productId) {
+    // 发送删除请求，并将 productId 作为参数传递
+    axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
+      .then(response => {
+        // 删除成功后，刷新产品列表或者做其他操作
+        console.log('Product deleted successfully:', response.data);
+        
+        // 刷新产品列表，可以重新调用获取产品列表的方法
+        this.fetchProducts();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // 处理错误，例如显示错误消息给用户
+      });
+  },
+
+
     handlePageChange(newPage) {
       this.currentPage = newPage;
     },
@@ -110,7 +135,7 @@ export default {
                 <td>{{ product.shelfTime }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
                 <td class="action-btns">
                   <button class="edit-btn" @click="editProduct(index)">編輯</button>
-                  <button class="delete-btn" @click="deleteProduct(index)">刪除</button>
+                  <button class="delete-btn" @click="deleteProduct(product.productId)">刪除</button>
                 </td>
               </tr>
             </tbody>
