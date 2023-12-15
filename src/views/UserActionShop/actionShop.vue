@@ -68,8 +68,13 @@ export default {
   },
 
 
-    handlePageChange(newPage) {
-      this.currentPage = newPage;
+  handleSizeChange(size) {
+      // Handle page size change
+      this.perPage = size;
+    },
+    handleCurrentChange(currentPage) {
+      // Handle current page change
+      this.currentPage = currentPage;
     },
   },
 
@@ -118,8 +123,10 @@ export default {
               <tr>
                 <th class="productPic">商品圖片</th>
                 <th class="productTitle">名稱</th>
-                <th>描述</th>
+                <th>庫存</th>
                 <th>售價</th>
+                <th>銷售數量</th>
+                <th>商品狀態</th>
                 <th>上架時間</th>
                 <th>操作</th>
               </tr>
@@ -130,8 +137,13 @@ export default {
                   <img :src="product.photo" alt="商品圖片" style="width: 50px; height: 50px;">
                 </td>
                 <td>{{ product.product_name }}</td>
-                <td>{{ product.description }}</td>
+                <td>{{ product.inventory }}</td>
                 <td>{{ product.price }}</td>
+                <td>{{ product.sale_count }}</td>
+                <td :style="{ 'color': product.shelves ? 'green' : 'red' }">{{ product.shelves ? '上架中' : '下架中' }}</td>
+
+
+
                 <td>{{ product.shelfTime }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
                 <td class="action-btns">
                   <button class="edit-btn" @click="editProduct(index)">編輯</button>
@@ -140,11 +152,15 @@ export default {
               </tr>
             </tbody>
           </table>
-          <paginate :page-count="pageCount" :click-handler="handlePageChange" :prev-text="'上一頁'" :next-text="'下一頁'"
-  :container-class="'pagination'" :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'"
-  :page-link-class="'page-link'" :prev-link-class="'page-link'" :next-link-class="'page-link'" :clickable="'true'"
-  :disable-ellipsis="'true'" v-if="pageCount > 1">
-</paginate>
+          <div class="pagination-container">
+    <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
+      上一页
+    </button>
+    <span class="pagination-current-page">第 {{ currentPage }} 页</span>
+    <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)" :disabled="currentPage === pageCount">
+      下一页
+    </button>
+  </div>
         </div>
 
       </div>
@@ -155,6 +171,36 @@ export default {
   
 </template>
 <style lang="scss" scoped>
+.pagination-container {
+  display: flex;
+  align-items: center;
+justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  background-color: #409eff;
+  color: #fff;
+  border: 1px solid #409eff;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination-button:hover {
+  background-color: #66b1ff;
+}
+
+.pagination-button:disabled {
+  background-color: #d3dce6;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+.pagination-current-page {
+  margin: 0 10px;
+  font-size: 16px;
+}
 .actionPage {
   display: flex;
   width: 100vw;
