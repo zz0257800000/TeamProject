@@ -85,14 +85,15 @@ export default {
     </div>
 
     <div class="productAll">
-  <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
-    <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
-
+      <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
+  <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
     <img :src="product.photo" class="card-img-top" alt="...">
-      <p class="productPrice">{{ product.price }}</p>
-      <p>{{ product.product_name }}</p>
-</router-link>
-  </div>
+    <p class="productPrice">{{ product.price }}</p>
+    <p>{{ product.product_name }}</p>
+  </router-link>
+  <router-link :to="'/UserPage/shoppingCart/' + product.productId" class="productPageRoutBtn"> 加入購物車 </router-link>
+
+</div>
 </div>
    
 

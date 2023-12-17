@@ -6,24 +6,31 @@ export default {
     return {
       productName: '',
       productDescription: '',
-      productPrice: 0,
-      inventory: 0,
+      productPrice: 1,
+      inventory: 1,
       sale_count: 0,
-      shelves: false,
+      shelves: true,
       productImagePreview: null,
+      isImageModalOpen: false,
       photo: null,
-      user_id: 1, // Update this with the actual user_id or fetch it dynamically
     };
   },
   methods: {
     handleImageChange(event) {
-      // Handle image change and preview logic here
+      // 处理图像更改和预览逻辑
+      const file = event.target.files[0];
+      this.productImagePreview = URL.createObjectURL(file);
+      this.photo = file;
+    },
+    cancelImageUpload() {
+      this.productImagePreview = null;
+      this.photo = null;
     },
     submitForm() {
-      if (!this.productName || !this.productDescription || !this.productPrice || !this.inventory || !this.sale_count) {
-    alert('請填寫所有必填欄位');
-    return;
-  }
+      if (!this.productName || !this.productDescription || !this.productPrice) {
+        alert('請填寫所有必填欄位');
+        return;
+      }
       const formData = {
         product_name: this.productName,
         description: this.productDescription,
@@ -51,10 +58,21 @@ export default {
           // Handle error, show error message to the user
         });
     },
+    openImageModal() {
+      this.isImageModalOpen = true;
+    },
+
+    closeImageModal() {
+      this.isImageModalOpen = false;
+    },
+    toggleShelves() {
+      this.shelves = !this.shelves;
+    },
   },
 };
 </script>
 <template>
+   <div class="actionPage">
   <div class="mainShowDetail">
     <div class="addProductPage">
       <br>
@@ -63,9 +81,13 @@ export default {
         <div class="form-group">
           <label for="productImage">商品圖片:</label>
           <input type="file" id="productImage" accept="image/*" @change="handleImageChange" />
-          <img v-if="productImagePreview" :src="productImagePreview" alt="商品圖片預覽" />
-        </div>
+          <img v-if="productImagePreview" :src="productImagePreview" alt="商品圖片預覽" class="preview-image"
+            @click="openImageModal" />
 
+        </div>
+        <div class="form-group">
+          <button type="button" class="button" @click="cancelImageUpload">取消上傳圖片</button>
+        </div>
         <div class="form-group">
           <label for="productName">商品名稱:</label>
           <input type="text" id="productName" v-model="productName" required />
@@ -88,20 +110,64 @@ export default {
 
 
         <div class="form-group">
-          <label for="shelves">是否開啟商品:</label>
-          <input type="checkbox" id="shelves" v-model="shelves" />
+          <label>是否開啟商品:</label>
+          <button type="button" @click="toggleShelves"
+            :style="{ backgroundColor: shelves ? 'red' : 'green', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px', transition: 'background-color 0.3s ease' }">
+            {{ shelves ? '關閉商品' : '開啟商品' }}
+          </button>
         </div>
-
         <button type="submit" class="button">上架商品</button>
+
       </form>
     </div>
+  </div></div>
+  <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
+    <img :src="productImagePreview" alt="商品圖片" class="modal-image" />
   </div>
+  
 </template>
 
 <style lang="scss" scoped>
+
+.preview-image {
+  max-width: 100px;
+  /* 设置最大宽度 */
+  max-height: 100px;
+  /* 设置最大高度 */
+  margin-top: 10px;
+  /* 设置上边距 */
+  cursor: pointer;
+
+}
+
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-image {
+  max-width: 80%;
+  max-height: 80%;
+}
+.actionPage {
+  display: flex;
+  width: 100vw;
+  height: 125vh;
+  border: 0;
+
 .mainShowDetail {
   border: 0px solid rgb(255, 0, 0);
-  height: 130vh;
+  height: 132vh;  
+  width: 100vw;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,4 +228,5 @@ export default {
       }
     }
   }
-}</style>
+}}
+</style>

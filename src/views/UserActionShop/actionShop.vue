@@ -25,26 +25,26 @@ export default {
     },
   },
   mounted() {
-     // 在组件被挂载后，调用 fetchProducts 方法获取商品数据
-  this.fetchProducts();
-   
+    // 在组件被挂载后，调用 fetchProducts 方法获取商品数据
+    this.fetchProducts();
+
   },
   methods: {
 
     fetchProducts() {
-    // 发送获取产品列表的请求
-    axios.get('http://localhost:8080/product/get')
-      .then(response => {
-        // 成功获取数据，将数据保存到 products 数组中
-        this.products = response.data.products;
-        console.log('Fetched products:', this.products);
+      // 发送获取产品列表的请求
+      axios.get('http://localhost:8080/product/get')
+        .then(response => {
+          // 成功获取数据，将数据保存到 products 数组中
+          this.products = response.data.products;
+          console.log('Fetched products:', this.products);
 
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        // 处理错误，例如显示错误消息给用户
-      });
-  },
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // 处理错误，例如显示错误消息给用户
+        });
+    },
 
     editProduct(index) {
       // 在這裡添加編輯商品的邏輯
@@ -52,23 +52,23 @@ export default {
 
 
     deleteProduct(productId) {
-    // 发送删除请求，并将 productId 作为参数传递
-    axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
-      .then(response => {
-        // 删除成功后，刷新产品列表或者做其他操作
-        console.log('Product deleted successfully:', response.data);
-        
-        // 刷新产品列表，可以重新调用获取产品列表的方法
-        this.fetchProducts();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        // 处理错误，例如显示错误消息给用户
-      });
-  },
+      // 发送删除请求，并将 productId 作为参数传递
+      axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
+        .then(response => {
+          // 删除成功后，刷新产品列表或者做其他操作
+          console.log('Product deleted successfully:', response.data);
+
+          // 刷新产品列表，可以重新调用获取产品列表的方法
+          this.fetchProducts();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // 处理错误，例如显示错误消息给用户
+        });
+    },
 
 
-  handleSizeChange(size) {
+    handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
     },
@@ -121,6 +121,8 @@ export default {
           <table>
             <thead>
               <tr>
+                <th>商品編號</th>
+
                 <th class="productPic">商品圖片</th>
                 <th class="productTitle">名稱</th>
                 <th>庫存</th>
@@ -133,6 +135,8 @@ export default {
             </thead>
             <tbody>
               <tr v-for="(product, index) in paginatedProducts" :key="index">
+                <td>{{ product.productId }}
+                </td>
                 <td>
                   <img :src="product.photo" alt="商品圖片" style="width: 50px; height: 50px;">
                 </td>
@@ -153,28 +157,28 @@ export default {
             </tbody>
           </table>
           <div class="pagination-container">
-    <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
-      上一页
-    </button>
-    <span class="pagination-current-page">第 {{ currentPage }} 页</span>
-    <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)" :disabled="currentPage === pageCount">
-      下一页
-    </button>
-  </div>
+            <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
+              上一页
+            </button>
+            <span class="pagination-current-page">第 {{ currentPage }} 页</span>
+            <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)"
+              :disabled="currentPage === pageCount">
+              下一页
+            </button>
+          </div>
         </div>
 
       </div>
-    
+
     </div>
 
   </div>
-  
 </template>
 <style lang="scss" scoped>
 .pagination-container {
   display: flex;
   align-items: center;
-justify-content: center;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -201,10 +205,12 @@ justify-content: center;
   margin: 0 10px;
   font-size: 16px;
 }
+
 .actionPage {
   display: flex;
   width: 100vw;
   height: 172vh;
+  border: 0;
 }
 
 .actionPageLeft {
@@ -213,7 +219,7 @@ justify-content: center;
   flex-direction: column;
   background-color: #37474f;
   /* Dark teal background color */
-  height: 178vh;
+  height: 179vh;
 
   .lefttHeader {
     height: 4vw;
@@ -262,6 +268,7 @@ justify-content: center;
 
 .actionPageRight {
   width: 80vw;
+  height: 179vh;
 
   .RightHeader {
     height: 4vw;
@@ -409,4 +416,5 @@ justify-content: center;
       }
     }
   }
-}</style>
+}
+</style>
