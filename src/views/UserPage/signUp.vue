@@ -1,209 +1,120 @@
+  
 <script>
-import axios from "axios";
 export default {
-  data() {
-    return {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      phone_number: "",
-      phoneError: "", // 用于显示电话号码错误信息
-      message: "", // 用於顯示訊息
-      showMessage: false, // 控制顯示註冊成功提示的變數
-      showPassword: false, // 控制密码输入框的可见性
-      showConfirmPassword: false, // 控制确认密码输入框的可见性
-    };
-  },
-  methods: {
-    registerUser() {
-      const userData = {
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        confirmPassword: this.confirmPassword,
-        phone_number: this.phone_number,
-      };
-      // 使用 Axios 發送 POST 請求
-      axios
-        .post("http://localhost:8080/user/sign_up", userData)
-        .then((response) => {
-          console.log(response.data);
-          this.showMessage = true;
-          this.message = "註冊成功";
-          setTimeout(() => {
-            this.message = ""; // 一段时间后隐藏消息
-            this.showMessage = false;
-            this.$router.push("/UserPage/loginPage"); // 导航到登陆页面
-          }, 3000);
-        })
-        .catch((error) => {
-          console.error(error);
-          // 處理錯誤，顯示錯誤訊息等
-        });
+    data() {
+        return {
+            email: "",
+            password: "",
+            name: "",
+            birthday: "",
+            address: "",
+        };
     },
-    validateEmail() {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const isValidEmail = emailRegex.test(this.email);
-      if (!isValidEmail) {
-        // 非有效的電子郵件格式時，設定錯誤訊息
-        this.$refs.errEmail.innerText = "請輸入有效的電子郵件";
-      } else {
-        // 驗證成功時，清除錯誤訊息
-        this.$refs.errEmail.innerText = "";
-      }
+    methods: {
+        registerUser() {
+            // 在這裡添加註冊邏輯，例如發送 API 請求
+            console.log("Email:", this.email);
+            console.log("Password:", this.password);
+            console.log("Name:", this.name);
+            console.log("Birthday:", this.birthday);
+            console.log("Address:", this.address);
+            // 可以使用 Axios 或 Fetch 發送註冊請求
+        },
     },
-    validatePhoneNumber() {
-      const phoneRegex = /^09\d{8}$/;
-      if (!phoneRegex.test(this.phone_number)) {
-        this.phoneError = "請輸入有效的電話號碼";
-      } else {
-        this.phoneError = "";
-      }
-    },
-    // showMessageListener() {
-    //   // 監聽 showMessage 事件
-    //   this.$on("showMessage", (msg) => {
-    //     this.message = msg; // 將接收到的訊息顯示在畫面上
-    //     setTimeout(() => {
-    //       this.message = ""; // 一段時間後清除訊息
-    //     }, 3000); // 設定時間（3秒）後清除訊息
-    //   });
-    // },
-  },
 };
 </script>
 
 <template>
-  <div class="signup-container">
-    <div class="backbtn">
-      <RouterLink class="btn" to="/UserPage/loginPage">返回登入面</RouterLink>
-      <h3></h3>
+  <div class="actionPage">
+
+
+    <div class="signup-container">
+        <div class="backbtn">
+        <RouterLink class="btn" to="/UserPage/loginPage">返回登入面</RouterLink>
+        <h3>
+      </h3>
       <h6>
         <RouterLink class="btn1" to="/"> Home</RouterLink> > <a href="">註冊</a>
       </h6>
     </div>
-    <div class="signup">
-      <img src="../../../public/1.jpg" width="700" height="500" alt="" />
+        <div class="signup">
 
-      <div class="signupRight">
-        <form
-          role="form"
-          action=""
-          class="form-horizontal container jumbotron"
-          name="regForm"
-        >
-          <div class="form-group">
-            <label for="userName" class="control-label col-sm-2">姓名:</label>
-            <div class="col-sm-4">
-              <input
-                v-model="name"
-                type="text"
-                class="form-control"
-                name="userName"
-                maxlength="7"
-                placeholder="Enter user name"
-              />
-            </div>
-            <span class="col-sm-6"><p id="errUName"></p></span>
-            <div>{{ message }}</div>
-          </div>
+            <img src="../../../public/9.jpg" width="700" height="500" alt="">
 
-          <div class="form-group">
-            <label for="email" class="control-label col-sm-2">信箱:</label>
-            <div class="col-sm-4">
-              <input
-                v-model="email"
-                @input="validateEmail"
-                type="email"
-                class="form-control"
-                name="email"
-                placeholder="someone@example.com"
-              />
+      
+        <div class="signupRight">
+        <form role="form" action="" class=" form-horizontal container jumbotron" name="regForm">
+            
+           
+            <div class="form-group">
+                <label for="userName" class="control-label col-sm-2">姓名:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="userName" maxlength="7" placeholder="Enter user name">
+                </div>
+                 <span class="col-sm-6"><p id="errUName"> </p></span>
             </div>
-            <!-- 在這裡加入錯誤訊息的顯示 -->
-            <span class="col-sm-6"><p id="errEmail" ref="errEmail"></p></span>
-          </div>
+            
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-2">信箱:</label>
+                <div class="col-sm-4">
+                    <input type="email" class="form-control" name="email" placeholder="someone@example.com">
+                </div>
+                 <span class="col-sm-6" ><p id="errEmail"> </p></span>
+            </div>
+            <div class="form-group">
+                <label for="phone" class="control-label col-sm-2">電話號碼:</label>
+                <div class="col-sm-4">
+                     <input type="tel" class="form-control" name="phone" placeholder="0912345678">
+                </div>
+                <span class="col-sm-6" ><p id="errPhone"> </p></span>
+            </div>
+           
+            <div class="form-group">
+                <label for="pwd" class="control-label col-sm-2">密碼:</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="password" maxlength="6" placeholder="Enter password">
+                </div>
+                 <span class="col-sm-6" ><p id="errPwd"> </p></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="cnfrmPwd" class="control-label col-sm-2">確認密碼:</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" name="confirmPassword" maxlength="6" placeholder="Re-type password">
+                </div>
+                 <span class="col-sm-6" ><p id="errConfirmPwd"> </p></span>
+            </div>
+            
+            <div class="radiogroup">
+                <label for="gender" class="control-label col-sm-2">性別:</label>
+                <div class="radio btn col-sm-1">
+                    <label class="radio-inline"><input type="radio" name="optGender">男</label>
+                </div>
+                <div class="radio btn col-sm-3">
+                    <label class="radio-inline"><input type="radio" name="optGender">女 </label>
+                </div>
+            </div>
+            
+            <div class="submitBtn">
+                
+                <RouterLink class="btn" to="/UserPage/loginPage">送出</RouterLink>
 
-          <div class="form-group">
-            <label for="phone" class="control-label col-sm-2">電話號碼:</label>
-            <div class="col-sm-4">
-              <input
-                v-model="phone_number"
-                @input="validatePhoneNumber"
-                type="tel"
-                class="form-control"
-                name="phone"
-                placeholder="0912345678"
-              />
             </div>
-            <span class="col-sm-6"
-              ><p id="errPhone" :style="{ color: phoneError ? 'red ' : '' }">
-                {{ phoneError }}
-              </p></span
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="pwd" class="control-label col-sm-2">密碼:</label>
-            <div class="col-sm-4">
-              <div class="input-form-control">
-                <input
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  class="form-control"
-                  name="password"
-                  placeholder="Enter password"
-                />
-                <i class="fa-solid fa-eye A" @click="showPassword = !showPassword"></i>
-              </div>
-            </div>
-            <span class="col-sm-6"><p id="errPwd"></p></span>
-          </div>
-
-          <div class="form-group">
-            <label for="cnfrmPwd" class="control-label col-sm-2"
-              >確認密碼:</label
-            >
-            <div class="col-sm-4">
-              <div class="input-form-control">
-                <input
-                  v-model="confirmPassword"
-                  :type="showConfirmPassword ? 'text' : 'password'"
-                  class="form-control"
-                  name="confirmPassword" placeholder="Re-type password"/>
-                <i class="fa-solid fa-eye A" @click="showConfirmPassword = !showConfirmPassword"></i>
-              </div>
-            </div>
-            <span class="col-sm-6"><p id="errConfirmPwd"></p></span>
-          </div>
-
-          <div class="form-group">
-            <label for="gender" class="control-label col-sm-2">性別:</label>
-            <div class="radio btn col-sm-1">
-              <label class="radio-inline">
-                <input type="radio" name="optGender" />男
-              </label>
-            </div>
-            <div class="radio btn col-sm-3">
-              <label class="radio-inline">
-                <input type="radio" name="optGender" />女
-              </label>
-            </div>
-            <span class="col-sm-6"><p id="errGender"></p></span>
-          </div>
-
-          <div class="submitBtn">
-            <!-- 透過表單的 submit 事件呼叫註冊方法 -->
-            <button @click.prevent="registerUser" class="btn">送出</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+        </form></div>
+        </div>
+    </div>  </div>
 </template>
 
+
+
+  
 <style lang="scss" scoped>
+.actionPage {
+  display: flex;
+  width: 100vw;
+  height:100vh;
+  border: 0;
+}
 .btn {
   font-size: 16pt;
   margin: 10px;
@@ -214,7 +125,7 @@ export default {
 }
 
 .signup-container {
-  border: 1px solid red;
+  border: 0px solid red;
   width: 100vw;
   height: 100vh;
   background-color: rgb(156, 156, 156);
@@ -277,7 +188,7 @@ export default {
         transition: border-color 0.3s ease;
 
         &:focus {
-          border-color: #4caf50; /* Focus border color */
+          border-color: #4CAF50; /* Focus border color */
         }
       }
     }
@@ -290,7 +201,7 @@ export default {
       transform: translateX(-50%);
 
       .btn {
-        background-color: #4caf50;
+        background-color: #4CAF50;
         color: white;
         padding: 10px;
         border: none;
@@ -311,15 +222,13 @@ export default {
   }
 
   .form-control {
-    width: 27vw;
+    width:27vw;
+  }
+  .radiogroup{
+    display: flex;
+    align-items: center;
   }
 }
-.input-form-control{
-        position: relative;
-        
-        .A {
-          position: absolute;
-          
-        }
-      }
 </style>
+
+  

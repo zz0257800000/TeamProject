@@ -98,7 +98,7 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 163vh;
+  height: 170vh;
   border: 0px solid rgb(255, 0, 0);
 }
 
