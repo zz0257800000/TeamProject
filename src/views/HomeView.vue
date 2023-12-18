@@ -7,7 +7,7 @@ export default {
     return {
       products: [], // Save products data from the API
       currentPage: 1,
-      perPage: 12, // Number of products per page
+      perPage: 9, // Number of products per page
     };
   },
   computed: {
@@ -87,11 +87,18 @@ export default {
     <div class="productAll">
   <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
     <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
+      <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
+    </router-link>
+      <div class="productInfo">
+        <p class="productName">{{ product.product_name }}</p>
+        <p class="productPrice">${{ product.price }}</p>
+      </div>
 
-    <img :src="product.photo" class="card-img-top" alt="...">
-      <p class="productPrice">{{ product.price }}</p>
-      <p>{{ product.product_name }}</p>
-</router-link>
+      <div class="productIcons">
+        <button @click="addToFavorites(product.productId)" class="addToFavoritesBtn"><i class="fas fa-heart"></i></button>
+        <button @click="addToCart(product.productId)" class="addToCartBtn"><i class="fas fa-shopping-cart"></i></button>
+      </div>
+    
   </div>
 </div>
    
@@ -111,29 +118,36 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.productPageRoutBtn{
+.fixed-size-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.productPageRoutBtn {
   text-decoration: none;
-  color: white;
+  color: #3498db; /* 時尚科技風格的主要顏色 */
   font-size: 14pt;
 }
+
 .pagination-container {
   display: flex;
   align-items: center;
-  justify-content: center; // 这一行使得子元素在水平方向上居中
+  justify-content: center;
   margin-top: 20px;
 }
 
 .pagination-button {
-  background-color: #409eff;
+  background-color: #3498db; /* 時尚科技風格的主要顏色 */
   color: #fff;
-  border: 1px solid #409eff;
+  border: 1px solid #3498db; /* 時尚科技風格的主要顏色 */
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .pagination-button:hover {
-  background-color: #66b1ff;
+  background-color: #5aa6e0; /* 更亮的色調 */
 }
 
 .pagination-button:disabled {
@@ -146,71 +160,92 @@ export default {
   margin: 0 10px;
   font-size: 16px;
 }
+
 .mainshow {
   position: relative;
-  border: 0px solid rgb(255, 0, 0);
-  height: 100%;
+  border: 1px solid rgb(255, 0, 0);
+  height: 240vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgb(255, 255, 255);
-
-  /* 添加背景颜色 */
+  background-color: #f5f5f5; /* 時尚科技風格的背景色 */
 
   .carousel {
     width: 70vw;
     margin-bottom: 20px;
-    background-color: aqua;
+    background-color: #3498db; /* 時尚科技風格的主要顏色 */
   }
 
   .productAll {
-    border: 1px solid #ddd;
-    width: 70vw;
-    height: 150vh;
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: rgb(0, 0, 0);
-    overflow: hidden;
+  border: 1px solid #ddd;
+  width: 70vw;
+  height: 170vh;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #2c3e50; /* 時尚科技風格的主要背景色 */
+  overflow: hidden;
+}
+
+.product {
+  
+  position: relative;
+  border: 1px solid #fff;
+  height: 51vh;
+  width: 20vw;
+  margin: 10px;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+  background-color: #34495e; /* 時尚科技風格的次要背景色 */
+
+  &:hover {
+    transform: scale(1.05);
   }
 
-  .product {
-    
-    height: 30vh;
-    /* 调整为适当的高度，以确保九宫格布局 */
-    width: 20vw;
-    /* 调整为适当的宽度，以确保九宫格布局 */
-    margin: 10px;
-    border: 1px solid #ddd;
+  img {
+    width: 100%;
+    object-fit: cover;
     border-radius: 8px;
-    transition: transform 0.2s ease-in-out;
+  }
 
-    .productName {
-      margin-top: 10px;
-    }
+  .productInfo {
+    border: 0px solid rgb(255, 0, 0);
 
-    &:hover {
-      transform: scale(1.05);
-    }
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(52, 73, 94, 0.7); /* 半透明背景 */
+    color: #ecf0f1; /* 時尚科技風格的文字顏色 */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
 
-    img {
-      width: 100%;
-      object-fit: cover;
-      border-radius: 8px;
-    }
+  .productName {
+    margin-top: 10px;
+  }
 
-    h3 {
-      margin: 10px 0;
-      font-size: 1.2rem;
-      color: #fff;
-    }
+  .productIcons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
 
-    p {
-      color: #ccc;
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ecf0f1; /* 時尚科技風格的文字顏色 */
+
+      i {
+        font-size: 24px;
+      }
     }
   }
+}
 }
 </style>

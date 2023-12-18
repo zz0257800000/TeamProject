@@ -12,6 +12,8 @@ export default {
       products: [], // 保存從API獲取的商品數據
       currentPage: 1,
       perPage: 4, // 每頁顯示的商品數量
+      isImageModalOpen: false,
+      selectedImage: null, // 新增 selectedImage 屬性
     };
   },
   computed: {
@@ -25,26 +27,26 @@ export default {
     },
   },
   mounted() {
-     // 在组件被挂载后，调用 fetchProducts 方法获取商品数据
-  this.fetchProducts();
-   
+    // 在组件被挂载后，调用 fetchProducts 方法获取商品数据
+    this.fetchProducts();
+
   },
   methods: {
 
     fetchProducts() {
-    // 发送获取产品列表的请求
-    axios.get('http://localhost:8080/product/get')
-      .then(response => {
-        // 成功获取数据，将数据保存到 products 数组中
-        this.products = response.data.products;
-        console.log('Fetched products:', this.products);
+      // 发送获取产品列表的请求
+      axios.get('http://localhost:8080/product/get')
+        .then(response => {
+          // 成功获取数据，将数据保存到 products 数组中
+          this.products = response.data.products;
+          console.log('Fetched products:', this.products);
 
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        // 处理错误，例如显示错误消息给用户
-      });
-  },
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // 处理错误，例如显示错误消息给用户
+        });
+    },
 
     editProduct(index) {
       // 在這裡添加編輯商品的邏輯
@@ -52,23 +54,23 @@ export default {
 
 
     deleteProduct(productId) {
-    // 发送删除请求，并将 productId 作为参数传递
-    axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
-      .then(response => {
-        // 删除成功后，刷新产品列表或者做其他操作
-        console.log('Product deleted successfully:', response.data);
-        
-        // 刷新产品列表，可以重新调用获取产品列表的方法
-        this.fetchProducts();
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        // 处理错误，例如显示错误消息给用户
-      });
-  },
+      // 发送删除请求，并将 productId 作为参数传递
+      axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
+        .then(response => {
+          // 删除成功后，刷新产品列表或者做其他操作
+          console.log('Product deleted successfully:', response.data);
+
+          // 刷新产品列表，可以重新调用获取产品列表的方法
+          this.fetchProducts();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // 处理错误，例如显示错误消息给用户
+        });
+    },
 
 
-  handleSizeChange(size) {
+    handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
     },
@@ -76,6 +78,16 @@ export default {
       // Handle current page change
       this.currentPage = currentPage;
     },
+    openImageModal(product) {
+      this.selectedImage = product.photo;
+      this.isImageModalOpen = true;
+    },
+
+    closeImageModal() {
+      this.isImageModalOpen = false;
+    },
+
+
   },
 
 };
@@ -121,6 +133,8 @@ export default {
           <table>
             <thead>
               <tr>
+                <th>商品編號</th>
+
                 <th class="productPic">商品圖片</th>
                 <th class="productTitle">名稱</th>
                 <th>庫存</th>
@@ -133,8 +147,11 @@ export default {
             </thead>
             <tbody>
               <tr v-for="(product, index) in paginatedProducts" :key="index">
+                <td>{{ product.productId }}
+                </td>
                 <td>
-                  <img :src="product.photo" alt="商品圖片" style="width: 50px; height: 50px;">
+                  <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
+                    @click="() => openImageModal(product)">
                 </td>
                 <td>{{ product.product_name }}</td>
                 <td>{{ product.inventory }}</td>
@@ -144,8 +161,9 @@ export default {
 
 
 
-                <td>{{ product.shelfTime }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
+                <td>{{ product.upload_time }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
                 <td class="action-btns">
+                  
                   <button class="edit-btn" @click="editProduct(index)">編輯</button>
                   <button class="delete-btn" @click="deleteProduct(product.productId)">刪除</button>
                 </td>
@@ -153,28 +171,59 @@ export default {
             </tbody>
           </table>
           <div class="pagination-container">
-    <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
-      上一页
-    </button>
-    <span class="pagination-current-page">第 {{ currentPage }} 页</span>
-    <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)" :disabled="currentPage === pageCount">
-      下一页
-    </button>
-  </div>
+            <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
+              上一页
+            </button>
+            <span class="pagination-current-page">第 {{ currentPage }} 页</span>
+            <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)"
+              :disabled="currentPage === pageCount">
+              下一页
+            </button>
+          </div>
         </div>
 
       </div>
-    
-    </div>
 
+    </div>
+    <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
+      <img :src="selectedImage" alt="商品圖片" class="modal-image">
+    </div>
   </div>
-  
 </template>
 <style lang="scss" scoped>
+.fixed-size-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  /* 確保模態框處於最上層 */
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* 保持圖片原始比例並使其完全顯示 */
+}
+
 .pagination-container {
   display: flex;
   align-items: center;
-justify-content: center;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -201,10 +250,12 @@ justify-content: center;
   margin: 0 10px;
   font-size: 16px;
 }
+
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 172vh;
+  height: 202.3vh;
+  border: 0;
 }
 
 .actionPageLeft {
@@ -213,7 +264,7 @@ justify-content: center;
   flex-direction: column;
   background-color: #37474f;
   /* Dark teal background color */
-  height: 178vh;
+  height: 202.3vh;
 
   .lefttHeader {
     height: 4vw;
@@ -262,6 +313,8 @@ justify-content: center;
 
 .actionPageRight {
   width: 80vw;
+  height: 202.3vh;
+  border: 0px solid rgb(255, 0, 0);
 
   .RightHeader {
     height: 4vw;
@@ -289,16 +342,19 @@ justify-content: center;
           color: #e74c3c;
           /* Hover color */
           background-color: rgba(118, 118, 117, 0.5);
+
         }
       }
     }
   }
 
   .productManagement {
+    border: 0px solid rgb(255, 0, 0);
+
     height: 42vw;
     background-color: #f5f5f5;
     /* Light gray background color */
-    height: 170vh;
+    height: 193.7vh;
 
     .productCreate {
       display: flex;
@@ -343,7 +399,7 @@ justify-content: center;
         margin-bottom: 20px;
       }
 
-      td {
+      action-btns , td {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
@@ -351,7 +407,7 @@ justify-content: center;
       }
 
       .productPic {
-        width: 25vw;
+        width: 20vw;
       }
 
       .productTitle {
@@ -378,6 +434,7 @@ justify-content: center;
         /* Separate buttons vertically */
         align-items: center;
         border: 0px solid red;
+        height:40vh;
 
         .edit-btn,
         .delete-btn {

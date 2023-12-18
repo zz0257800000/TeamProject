@@ -25,6 +25,8 @@ export default {
 </script>
 
 <template>
+  <div class="actionPage">
+
 
     <div class="signup-container">
         <div class="backbtn">
@@ -83,7 +85,7 @@ export default {
                  <span class="col-sm-6" ><p id="errConfirmPwd"> </p></span>
             </div>
             
-            <div class="form-group">
+            <div class="radiogroup">
                 <label for="gender" class="control-label col-sm-2">性別:</label>
                 <div class="radio btn col-sm-1">
                     <label class="radio-inline"><input type="radio" name="optGender">男</label>
@@ -91,7 +93,6 @@ export default {
                 <div class="radio btn col-sm-3">
                     <label class="radio-inline"><input type="radio" name="optGender">女 </label>
                 </div>
-                 <span class="col-sm-6" ><p id="errGender"> </p></span>
             </div>
             
             <div class="submitBtn">
@@ -101,13 +102,19 @@ export default {
             </div>
         </form></div>
         </div>
-    </div>
+    </div>  </div>
 </template>
 
 
 
   
 <style lang="scss" scoped>
+.actionPage {
+  display: flex;
+  width: 100vw;
+  height:100vh;
+  border: 0;
+}
 .btn {
   font-size: 16pt;
   margin: 10px;
@@ -118,7 +125,7 @@ export default {
 }
 
 .signup-container {
-  border: 1px solid red;
+  border: 0px solid red;
   width: 100vw;
   height: 100vh;
   background-color: rgb(156, 156, 156);
@@ -216,6 +223,10 @@ export default {
 
   .form-control {
     width:27vw;
+  }
+  .radiogroup{
+    display: flex;
+    align-items: center;
   }
 }
 </style>
