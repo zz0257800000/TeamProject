@@ -1,8 +1,11 @@
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
             showLogin: true,
+            email: "",
+            password: "",
         };
     },
     methods: {
@@ -12,6 +15,24 @@ export default {
         switchToSignup() {
             this.showLogin = false;
         },
+        LoginUser() {
+      const userData = {
+        email: this.email,
+        password: this.password,
+      };
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post("http://localhost:8080/user/login", userData)
+        .then((response) => {
+          console.log(response.data);
+           // 登录成功后导航回首页
+      this.$router.push('/');
+        })
+        .catch((error) => {
+          console.error(error);
+          // 處理錯誤，顯示錯誤訊息等
+        });
+    },
     },
 };
 </script>
@@ -41,18 +62,18 @@ export default {
         
         <form class="email-login">
             <div class="u-form-group">
-              <i class="fa-solid fa-user"></i> &nbsp;<input type="email" placeholder="Email" />
+              <i class="fa-solid fa-user"></i> &nbsp;<input type="email" placeholder="Email" v-model="email"/>
             </div>
             <div class="u-form-group">
-              <i class="fa-solid fa-lock"></i> &nbsp; <input type="password" placeholder="Password" />
+              <i class="fa-solid fa-lock"></i> &nbsp; <input type="password" placeholder="Password" v-model="password"/>
             </div>
           <div class="passwordright">
             <h1></h1>
             <RouterLink class="btn" to="/UserPage/forgotPasswordPage">忘記密碼</RouterLink>
           </div>
             <div class="u-form-group">
-                <RouterLink class="loginBtn" to="/">Login</RouterLink>
-
+                <!-- <RouterLink class="loginBtn" to="/">Login</RouterLink> -->
+                <button @click="LoginUser" class="loginBtn" type="button">登入</button>
             </div>
             <div class="u-form-group">
              
