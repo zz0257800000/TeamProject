@@ -38,26 +38,38 @@ export default {
         inventory: this.inventory,
         sale_count: this.sale_count,
         shelves: this.shelves,
-        photo: this.photo,
         user_id: this.user_id,
-      };
+        upload_time: new Date(),  // 设置上传时间为当前时间
 
-      axios.post('http://localhost:8080/product/create', JSON.stringify(formData), {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => {
-          console.log('Response:', response.data);
-          alert('商品新增成功');
-          this.$router.push('/UserPage/actionShop');
+      };  // 如果有選擇圖片，將其轉換為 Base64 字符串
+  if (this.photo) {
+    const reader = new FileReader();
+    reader.readAsDataURL(this.photo);
+    reader.onload = () => {
+      formData.photo = reader.result;
+      this.sendData(formData);
+    };
+  } else {
+    this.sendData(formData);
+  }
+},
 
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          // Handle error, show error message to the user
-        });
+sendData(data) {
+  axios.post('http://localhost:8080/product/create', JSON.stringify(data), {
+    headers: {
+      'Content-Type': 'application/json',
     },
+  })
+    .then(response => {
+      console.log('Response:', response.data);
+      alert('商品新增成功');
+      this.$router.push('/UserPage/actionShop');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // 處理錯誤，向使用者顯示錯誤訊息
+    });
+},
     openImageModal() {
       this.isImageModalOpen = true;
     },

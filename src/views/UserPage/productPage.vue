@@ -14,7 +14,8 @@ export default {
       quantity: 1,
       suggestArr: [], // 你的相關商品數據
       relatedProducts: [], // 你的相關商品數據
-      updateTime: '', // 你的更新時間數據
+
+
     };
   },
   mounted() {
@@ -50,7 +51,8 @@ export default {
     },
     buyNow() {
       console.log('Buying now:', this.product, 'Quantity:', this.quantity);
-    },
+    },  
+   
 
 
   },
@@ -59,25 +61,40 @@ export default {
 
 
 <template>
+   <div class="mainshow">
+    <div class="sellinfo">
+      <div class="sellinfHeader">
+<h3>賣場資訊</h3>
+</div>
+<h4>賣家id：          <router-link :to="'/UserPage/sellerStore/' " class="productPageRoutBtn" title="前往賣家賣場"> 1</router-link>
+</h4>
+
+<h4>全部商品：</h4>
+<h4>賣場評價：</h4>
+
+</div>
   <div class="bg">
+   
     <div class="product Area">
-      <img src="../../../public/clothes1.jpg" alt="" srcset="" style="width: 50rem; height: 35rem;">
+      <img :src="product.photo"  class="card-img-top fixed-size-image" alt="...">
 
       <div class="productText">
         <div class="title">
           <p>商品名稱：{{ product.product_name }}</p>
         </div>
-        <p>{{ product.description }}</p>
+        <p>商品描述：{{ product.description }}</p>
 
         <div class="price">
           <p>價格：${{ product.price }}</p>
         </div>
 
 
-        <div class="price">
+        <div class="title">
           <p>庫存：{{ product.inventory }}</p>
         </div>
-
+        <div class="title">
+          <p>上架時間：{{ product.upload_time }}</p>
+        </div>
         <div class="quantity">
           <p>數量：</p>
           <button @click="decrementQuantity">-</button>
@@ -98,25 +115,89 @@ export default {
       </div>
     </div>
     <h2>相關商品</h2>
-    <div class="suggest Area">
-      <div class="suggest" style="width: 16rem ; height:20rem;" v-for="item in suggestArr">
-        <RouterLink v-for="relatedProduct in relatedProducts" :key="relatedProduct.productId"
-          :to="'/UserPage/productPage/' + relatedProduct.productId" class="btn">
-          <img :src="relatedProduct.photo" class="card-img-top" alt="...">
-        </RouterLink>
-      </div>
-    </div>
+    <div class="Otherproducts">
+      {{ response}} <!-- 在這裡輸出 products，確認是否有相關商品的資料 -->
+
+  <div v-for="(product, index) in products" :key="index" class="related-product-item">
+    <img :src="product.photo" alt="商品圖片" class="related-product-image">
+    <p class="related-product-name">{{ product.product_name }}</p>
+    <p class="related-product-price">${{ product.price }}</p>
+    <!-- 其他相關商品的資訊 -->
+
+    <!-- 你可以在這裡添加更多相關商品的資訊 -->
+  </div>
+</div>
+  </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+
+  .related-product-item {
+    width: 150px; /* 設置正方形橫條的寬度 */
+    height: 200px; /* 設置正方形橫條的高度 */
+    border: 1px solid #ff0000; /* 添加邊框效果，可以根據需要進行調整 */
+    margin: 10px; /* 設置正方形橫條之間的間距 */
+    display: inline-block; /* 使正方形橫條水平排列 */
+    text-align: center; /* 文字居中 */
+  }
+
+  .related-product-image {
+    width: 100%; /* 使商品圖片充滿整個正方形橫條 */
+    height: 100px; /* 設置商品圖片的高度 */
+    object-fit: cover; /* 保持圖片比例，並填滿整個容器 */
+  }
+
+  .related-product-name {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .related-product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff5733; /* 設置價格文字的顏色，可以根據需要進行調整 */
+  }
+.fixed-size-image {
+  width: 30vw; /* Set your desired width */
+  height: 70vh; /* Set your desired height */
+  object-fit: cover; /* This property ensures that the image will cover the specified dimensions */
+}
+.mainshow {
+  display: flex;
+  width: 100vw;
+  height: 150vh;
+  border: 0px solid rgb(255, 0, 0);
+  background-color: rgb(148, 148, 148);
+
+  .sellinfo{
+  width: 30vw; /* 設置正方形橫條的寬度 */
+    height: 70vh; /* 設置正方形橫條的高度 */
+  border: 1px solid #ff0000; /* 添加邊框效果，可以根據需要進行調整 */
+top: 4%;
+left: 8%;
+position: relative;
+background-color: rgb(225, 225, 225);
+.sellinfHeader{
+  background-color: rgb(104, 104, 104);
+  height: 7vh; /* 設置正方形橫條的高度 */
+  display: flex;
+align-items: center;
+left: 5%;
+
+
+}
+
+}
+
+}
 .bg {
+  height: 156vh;
+
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  background-color: rgb(148, 148, 148);
 }
 
 .Area {

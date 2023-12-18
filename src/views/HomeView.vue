@@ -87,12 +87,14 @@ export default {
     <div class="productAll">
       <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
   <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
-    <img :src="product.photo" class="card-img-top" alt="...">
-    <p class="productPrice">{{ product.price }}</p>
-    <p>{{ product.product_name }}</p>
-  </router-link>
-  <router-link :to="'/UserPage/shoppingCart/' + product.productId" class="productPageRoutBtn"> 加入購物車 </router-link>
+    <img :src="product.photo"  class="card-img-top fixed-size-image" alt="...">
+    
+    <p>{{ product.product_name }}  <button @click="addToFavorites(product.productId)" class="addToFavoritesBtn">Add to Favorites</button>
+</p>
 
+    <p class="productPrice">${{ product.price }}</p>
+  </router-link>
+  
 </div>
 </div>
    
@@ -112,6 +114,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.fixed-size-image {
+  width: 300px; /* Set your desired width */
+  height: 300px; /* Set your desired height */
+  object-fit: cover; /* This property ensures that the image will cover the specified dimensions */
+}
 .productPageRoutBtn{
   text-decoration: none;
   color: white;
@@ -168,7 +175,7 @@ export default {
   .productAll {
     border: 1px solid #ddd;
     width: 70vw;
-    height: 150vh;
+    height: 170vh;
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -179,13 +186,13 @@ export default {
   }
 
   .product {
-    
-    height: 30vh;
+    border: 2px solid rgb(255, 0, 0);
+
+    height: 50vh;
     /* 调整为适当的高度，以确保九宫格布局 */
     width: 20vw;
     /* 调整为适当的宽度，以确保九宫格布局 */
     margin: 10px;
-    border: 1px solid #ddd;
     border-radius: 8px;
     transition: transform 0.2s ease-in-out;
 

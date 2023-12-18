@@ -12,6 +12,11 @@ export default {
       products: [], // 保存從API獲取的商品數據
       currentPage: 1,
       perPage: 4, // 每頁顯示的商品數量
+      isImageModalOpen: false,
+      selectedImage: null, // 新增 selectedImage 屬性
+      isEditing: false,
+      editedProduct: null, // 新增 editedProduct 屬性
+
     };
   },
   computed: {
@@ -46,9 +51,7 @@ export default {
         });
     },
 
-    editProduct(index) {
-      // 在這裡添加編輯商品的邏輯
-    },
+   
 
 
     deleteProduct(productId) {
@@ -76,6 +79,39 @@ export default {
       // Handle current page change
       this.currentPage = currentPage;
     },
+    openImageModal(product) {
+      this.selectedImage = product.photo;
+      this.isImageModalOpen = true;
+    },
+
+    closeImageModal() {
+      this.isImageModalOpen = false;
+    },
+    openeditProduct(product) {
+  this.isEditing = true;
+  this.editedProduct = { ...product }; // 使用深拷貝以避免直接修改原始數據
+},
+
+    closeeditProduct() {
+      this.isEditing = false;
+      this.editedProduct = null; // 關閉編輯視窗時清空 editedProduct
+    },
+    saveEditedProduct() {
+    
+      axios.put(`http://localhost:8080/product/create`)
+        .then(response => {
+          console.log('Product edited successfully:', response.data);
+          this.isEditing = false;
+          this.fetchProducts();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // 处理错误，例如显示错误消息给用户
+        });
+    },
+   
+
+
   },
 
 };
@@ -138,7 +174,8 @@ export default {
                 <td>{{ product.productId }}
                 </td>
                 <td>
-                  <img :src="product.photo" alt="商品圖片" style="width: 50px; height: 50px;">
+                  <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
+                    @click="() => openImageModal(product)">
                 </td>
                 <td>{{ product.product_name }}</td>
                 <td>{{ product.inventory }}</td>
@@ -148,9 +185,10 @@ export default {
 
 
 
-                <td>{{ product.shelfTime }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
+                <td>{{ product.upload_time }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
                 <td class="action-btns">
-                  <button class="edit-btn" @click="editProduct(index)">編輯</button>
+                  
+                  <button class="edit-btn" @click="openeditProduct">編輯</button>
                   <button class="delete-btn" @click="deleteProduct(product.productId)">刪除</button>
                 </td>
               </tr>
@@ -171,10 +209,71 @@ export default {
       </div>
 
     </div>
+    <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
+      <img :src="selectedImage" alt="商品圖片" class="modal-image">
+    </div>
+    <div v-if="isEditing" class="modal">
+      <div class="modal-content">
+        <label>商品編號: {{ editedProduct.productId }}</label>
+        <label>商品名稱: {{ editedProduct.product_name }}</label>
+        <label>庫存: {{ editedProduct.inventory }}</label>
+        <label>售價: {{ editedProduct.price }}</label>
+        <label>銷售數量: {{ editedProduct.sale_count }}</label>
+        <label>商品狀態: {{ editedProduct.shelves ? '上架中' : '下架中' }}</label>
+        <label>上架時間: {{ editedProduct.upload_time }}</label>
 
+        <!-- 在这里添加其他产品属性的渲染 -->
+
+        <button @click="saveEditedProduct">保存</button>
+        <button @click="closeeditProduct">取消</button>
+      </div>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
+ .modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    text-align: left;
+  }
+.fixed-size-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  /* 確保模態框處於最上層 */
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /* 保持圖片原始比例並使其完全顯示 */
+}
+
 .pagination-container {
   display: flex;
   align-items: center;
@@ -209,7 +308,7 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 172vh;
+  height: 196vh;
   border: 0;
 }
 
@@ -219,7 +318,7 @@ export default {
   flex-direction: column;
   background-color: #37474f;
   /* Dark teal background color */
-  height: 179vh;
+  height: 202.3vh;
 
   .lefttHeader {
     height: 4vw;
@@ -268,7 +367,8 @@ export default {
 
 .actionPageRight {
   width: 80vw;
-  height: 179vh;
+  height: 202.3vh;
+  border: 0px solid rgb(255, 0, 0);
 
   .RightHeader {
     height: 4vw;
@@ -296,16 +396,19 @@ export default {
           color: #e74c3c;
           /* Hover color */
           background-color: rgba(118, 118, 117, 0.5);
+
         }
       }
     }
   }
 
   .productManagement {
+    border: 0px solid rgb(255, 0, 0);
+
     height: 42vw;
     background-color: #f5f5f5;
     /* Light gray background color */
-    height: 170vh;
+    height: 193.7vh;
 
     .productCreate {
       display: flex;
@@ -350,7 +453,7 @@ export default {
         margin-bottom: 20px;
       }
 
-      td {
+      action-btns , td {
         border: 1px solid #ddd;
         padding: 10px;
         text-align: left;
@@ -358,7 +461,7 @@ export default {
       }
 
       .productPic {
-        width: 25vw;
+        width: 20vw;
       }
 
       .productTitle {
@@ -385,6 +488,7 @@ export default {
         /* Separate buttons vertically */
         align-items: center;
         border: 0px solid red;
+        height:40vh;
 
         .edit-btn,
         .delete-btn {
