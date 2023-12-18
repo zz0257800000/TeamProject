@@ -2,7 +2,9 @@
 export default {
     data() {
         return {
-            showLogin: true,
+          email: "",
+          password: "",
+          showLogin: true,
         };
     },
     methods: {
@@ -12,6 +14,22 @@ export default {
         switchToSignup() {
             this.showLogin = false;
         },
+        registerUser() {
+      const userData = {
+        email: this.email,
+        password: this.password,
+      };
+      // 使用 Axios 發送 POST 請求
+      axios
+        .post("http://localhost:8080/user/login", userData)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          // 處理錯誤，顯示錯誤訊息等
+        });
+    },
     },
 };
 </script>
