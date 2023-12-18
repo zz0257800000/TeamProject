@@ -18,6 +18,11 @@ export default {
     handleSearch() {
       // 调用搜索方法
       this.searchProduct(this.searchKeyword);
+    },    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth', // 平滑滾動效果
+      });
     },
 
   },
@@ -174,9 +179,37 @@ export default {
         </div>
       </nav>
     </div>
+    <button @click="scrollToTop" class="scroll-to-top-btn">
+      <i class="fas fa-arrow-up"></i>
+    </button>
 </div>
 </template>
 <style lang="scss" scoped>
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: #3498db; // 自行調整按鈕背景色
+  color: #fff; // 自行調整按鈕文字顏色
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #2980b9; // 自行調整按鈕hover時的背景色
+  }
+
+  i {
+    margin-top: 1px;
+  }
+}
 .notification-badge {
   background-color: red;
   color: white;
