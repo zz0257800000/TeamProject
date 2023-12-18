@@ -14,9 +14,6 @@ export default {
       perPage: 4, // 每頁顯示的商品數量
       isImageModalOpen: false,
       selectedImage: null, // 新增 selectedImage 屬性
-      isEditing: false,
-      editedProduct: null, // 新增 editedProduct 屬性
-
     };
   },
   computed: {
@@ -51,7 +48,9 @@ export default {
         });
     },
 
-   
+    editProduct(index) {
+      // 在這裡添加編輯商品的邏輯
+    },
 
 
     deleteProduct(productId) {
@@ -87,29 +86,6 @@ export default {
     closeImageModal() {
       this.isImageModalOpen = false;
     },
-    openeditProduct(product) {
-  this.isEditing = true;
-  this.editedProduct = { ...product }; // 使用深拷貝以避免直接修改原始數據
-},
-
-    closeeditProduct() {
-      this.isEditing = false;
-      this.editedProduct = null; // 關閉編輯視窗時清空 editedProduct
-    },
-    saveEditedProduct() {
-    
-      axios.put(`http://localhost:8080/product/create`)
-        .then(response => {
-          console.log('Product edited successfully:', response.data);
-          this.isEditing = false;
-          this.fetchProducts();
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          // 处理错误，例如显示错误消息给用户
-        });
-    },
-   
 
 
   },
@@ -188,7 +164,7 @@ export default {
                 <td>{{ product.upload_time }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
                 <td class="action-btns">
                   
-                  <button class="edit-btn" @click="openeditProduct">編輯</button>
+                  <button class="edit-btn" @click="editProduct(index)">編輯</button>
                   <button class="delete-btn" @click="deleteProduct(product.productId)">刪除</button>
                 </td>
               </tr>
@@ -212,39 +188,9 @@ export default {
     <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
       <img :src="selectedImage" alt="商品圖片" class="modal-image">
     </div>
-    <div v-if="isEditing" class="modal">
-      <div class="modal-content">
-        <label>商品編號: {{ editedProduct.productId }}</label>
-        <label>商品名稱: {{ editedProduct.product_name }}</label>
-        <label>庫存: {{ editedProduct.inventory }}</label>
-        <label>售價: {{ editedProduct.price }}</label>
-        <label>銷售數量: {{ editedProduct.sale_count }}</label>
-        <label>商品狀態: {{ editedProduct.shelves ? '上架中' : '下架中' }}</label>
-        <label>上架時間: {{ editedProduct.upload_time }}</label>
-
-        <!-- 在这里添加其他产品属性的渲染 -->
-
-        <button @click="saveEditedProduct">保存</button>
-        <button @click="closeeditProduct">取消</button>
-      </div>
-    </div>
   </div>
 </template>
 <style lang="scss" scoped>
- .modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    z-index: 1000;
-  }
-
-  .modal-content {
-    text-align: left;
-  }
 .fixed-size-image {
   width: 300px;
   height: 300px;
@@ -308,7 +254,7 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 196vh;
+  height: 202.3vh;
   border: 0;
 }
 
@@ -520,5 +466,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>

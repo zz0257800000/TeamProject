@@ -172,7 +172,7 @@ sendData(data) {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 125vh;
+  height: 132vh;
   border: 0;
 
 .mainShowDetail {

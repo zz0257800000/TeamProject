@@ -112,7 +112,7 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 93vh;
+  height:100vh;
   border: 0;
 }
 .btn {
