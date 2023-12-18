@@ -1,16 +1,19 @@
+User
 <script>
 import api from "../../api/api";
 export default {
   data() {
     return {
       itemList: [
-        {
-          productId: '1',
-          itemName: '優質短袖白T',
-          imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-          price: '500',
-          count: '22'
-        },
+      { 
+    cart_id: 1,
+    cartDate: '2023-12-15T16:30:00',
+    productId: '1',
+    productName: '優質短袖白T',
+    imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
+    cartAmount: 500,
+    cartCount: 2
+  },
         {
           productId: '2',
           itemName: '骷髏手短黑T',
@@ -65,15 +68,45 @@ export default {
         console.error('Error deleting item from cart:', error);
       });
   },
+  cartCreateAPI() {
+    const requestData = {
+        cartList: this.itemList.map(item => {
+            return {
+                cart_date: item.cartDate, // 修改为服务端期望的属性名称
+                cart_count: item.cartCount,
+                cart_amount: item.cartAmount, // 修改为服务端期望的属性名称
+                product_name: item.productName,
+                user_id: 1,
+                produce_id: item.productId, // 修改为服务端期望的属性名称
+                cart_id: item.cart_id, // 添加 cart_id，根据需要修改属性名称
+            };
+        }),
+        
+    };
+    console.log(cartList);
+    api.cartCreat(requestData)
+        .then(response => {
+            console.log('cartCreat API response:', response);
+        })
+        .catch(error => {
+            console.error('Error calling cartCreat API:', error);
+        });
+},
   },
   computed: {
 
-  }
+  },
+  mounted() {
+    // 在 mounted 鉤子中觸發 cartCreate API
+    this.cartCreateAPI();
+  },
 }
 
 </script>
 
 <template>
+  {{ this.cartList }}
+  {{ this.itemList }}
   <div class="mainShowDetail">
     <br>
     <br>
