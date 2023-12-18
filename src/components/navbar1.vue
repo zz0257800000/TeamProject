@@ -59,10 +59,10 @@ export default {
 </template>
 <style lang="scss" scoped>
 .footer {
- 
+    margin-top: 50px;
     height: 60vh;
     width: 100vw;
-    border: 0px solid rgb(255, 0, 0);
+    border: 1px solid black;
     background-image: url("./../../public/9.jpg");
     z-index: -2;
   
