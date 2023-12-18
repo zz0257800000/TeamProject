@@ -2,17 +2,18 @@
 
 <script>
 import { RouterLink, RouterView } from 'vue-router'
+import { mapActions } from 'vuex';
 
 export default {
   data() {
     return {
+      searchKeyword: '',
 
     }
   },
 
   methods: {
 
-<<<<<<< HEAD
     ...mapActions('search', ['searchProduct']),
     handleSearch() {
       // 调用搜索方法
@@ -23,9 +24,6 @@ export default {
         behavior: 'smooth', // 平滑滾動效果
       });
     },
-=======
-
->>>>>>> 59a0d2e9372b58c623b868307a1d9240439fd21e
 
   },
 
@@ -67,10 +65,10 @@ export default {
         <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i></h1>
       </RouterLink>
 
-      <div class="search">
-        <input class="searchText" type="text" placeholder="請輸入搜尋內容……">
-        <button><i class="fa-solid fa-magnifying-glass searchicon"></i></button>
-      </div>
+      <div class="search-container">
+  <input v-model="searchKeyword" placeholder="输入搜索关键字">
+  <button @click="handleSearch">搜索</button>
+</div>
 
       <div> 
         <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
@@ -80,8 +78,10 @@ export default {
         <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
       </div>
       <div>
-        <RouterLink class="btn" to="/UserPage/shoppingCart"> <i class="fa-solid fa-cart-shopping usericon"> </i> 購物車</RouterLink>
-      </div>
+ <RouterLink class="btn" to="/UserPage/shoppingCart">
+      <i class="fa-solid fa-cart-shopping usericon"></i> 购物车
+      <span class="notification-badge">{{ cartTotalQuantity }}</span>
+    </RouterLink>      </div>
 
     </div>
 
@@ -185,7 +185,6 @@ export default {
 </div>
 </template>
 <style lang="scss" scoped>
-
 .scroll-to-top-btn {
   position: fixed;
   bottom: 20px;
@@ -221,8 +220,6 @@ export default {
   top: -8px;
   left: 4px;
 }
-
-
 .type { 
   position: relative;
   top: 15%;
@@ -279,7 +276,6 @@ export default {
     font-size: 16pt;
     padding: 5px;
     border: 0px solid rgb(255, 0, 0);
-    height: 15vh;
 
     .search {
       width: 40vw;

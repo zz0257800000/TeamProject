@@ -7,12 +7,19 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
+  <div class="showmain">
   <navbar />
 
   <RouterView />
   <navbar1/>
 
-
+</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.showmain{
+border: 0;
+width: 100vw;
+
+}
+</style>
