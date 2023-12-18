@@ -61,10 +61,26 @@ const cartDelete = (req) => {
     });
 };
 
+//尋找購物車
+const getCartInfoByUserId = (userId) => {
+  return axios({
+    method: "get",
+    url: `http://localhost:8080/cart/get/user_id?id=${userId}`,
+    data: userId,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
 
 export default {
   signUp,
   login,
   cartCreat,
   cartDelete,
+  getCartInfoByUserId,
 };

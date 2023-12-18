@@ -4,37 +4,38 @@ import api from "../../api/api";
 export default {
   data() {
     return {
+      userId: 1,
       itemList: [
-      { 
-    cart_id: 1,
-    cartDate: '2023-12-15T16:30:00',
-    productId: '1',
-    productName: '優質短袖白T',
-    imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-    cartAmount: 500,
-    cartCount: 2
-  },
-        {
-          productId: '2',
-          itemName: '骷髏手短黑T',
-          imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-          price: '790',
-          count: '3'
+        { 
+          cart_id: 1,
+          cartDate: '2023-12-15T16:30:00',
+          productId: '1',
+          productName: '優質短袖白T',
+          imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
+          cartAmount: 500,
+          cartCount: 2,
         },
-        {
-          productId: '3',
-          itemName: '超時尚牛仔褲',
-          imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
-          price: '1200',
-          count: '1'
-        },
-        {
-          productId: '4',
-          itemName: '質感褐色系大衣服',
-          imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-          price: '2300',
-          count: '1'
-        },
+        // {
+        //   productId: '2',
+        //   itemName: '骷髏手短黑T',
+        //   imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
+        //   price: '790',
+        //   count: '3'
+        // },
+        // {
+        //   productId: '3',
+        //   itemName: '超時尚牛仔褲',
+        //   imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
+        //   price: '1200',
+        //   count: '1'
+        // },
+        // {
+        //   productId: '4',
+        //   itemName: '質感褐色系大衣服',
+        //   imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
+        //   price: '2300',
+        //   count: '1'
+        // },
       ]
     };
   },
@@ -67,46 +68,72 @@ export default {
         // 处理错误，如果需要的话
         console.error('Error deleting item from cart:', error);
       });
-  },
-  cartCreateAPI() {
-    const requestData = {
-        cartList: this.itemList.map(item => {
-            return {
-                cart_date: item.cartDate, // 修改为服务端期望的属性名称
-                cart_count: item.cartCount,
-                cart_amount: item.cartAmount, // 修改为服务端期望的属性名称
-                product_name: item.productName,
-                user_id: 1,
-                produce_id: item.productId, // 修改为服务端期望的属性名称
-                cart_id: item.cart_id, // 添加 cart_id，根据需要修改属性名称
-            };
-        }),
-        
-    };
-    console.log(cartList);
-    api.cartCreat(requestData)
-        .then(response => {
-            console.log('cartCreat API response:', response);
+    },
+    
+  //   getCart() {
+  //   // 从你的用户数据中获取用户ID
+  //   const id = this.itemList.userId; // 你需要替换为实际的用户ID，可以从你的用户数据中获取
+
+  //   // 调用API获取购物车信息
+  //   api.getCartInfoByUserId(id)
+  //     .then(response => {
+  //       // 处理API响应，更新购物车商品列表
+  //       this.itemList = response.data.cartItems; // 假设响应中有一个名为 cartItems 的字段用于存储购物车商品列表
+  //       console.log('Cart Info:', this.itemList); // 打印购物车信息到控制台
+  //     })
+  //     .catch(error => {
+  //       // 处理错误，如果需要的话
+  //       console.error('Error getting cart info:', error);
+  //     });
+  // },
+
+  searchList() {
+      fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
+        .then(response => response.json())
+        .then(data => {
+          // 在迭代之前检查data和data.itemList是否定义
+          if (data && data.itemList && Array.isArray(data.itemList)) {
+            this.itemList = data.itemList;
+            data.itemList.forEach(item => {
+              console.log('item:', item);
+            });
+          } else {
+            console.log(data.cartList);
+          }
         })
-        .catch(error => {
-            console.error('Error calling cartCreat API:', error);
-        });
-},
+        .catch(error => console.error('获取数据时出错:', error));
+    },
+
   },
+  
   computed: {
 
   },
   mounted() {
-    // 在 mounted 鉤子中觸發 cartCreate API
-    this.cartCreateAPI();
+    // 在发送请求之前检查 userId 是否有效
+if (this.userId !== undefined) {
+  fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
+    .then(response => response.json())
+    .then(data => {
+      // 处理响应数据
+    })
+    .catch(error => console.error('Error fetching data:', error));
+} else {
+  console.error('Invalid userId:', this.userId);
+}
+
+    // // 在 mounted 鉤子中觸發 cartCreate API
+    // this.cartCreateAPI();
+    this.searchList();
   },
 }
 
 </script>
 
 <template>
-  {{ this.cartList }}
-  {{ this.itemList }}
+
+  <!-- cartList: {{ this.cartList }} <br> -->
+  itemList: {{ this.itemList }}
   <div class="mainShowDetail">
     <br>
     <br>
