@@ -195,6 +195,7 @@ export default {
   border-radius: 50%;
   background-color: #3498db; // 自行調整按鈕背景色
   color: #fff; // 自行調整按鈕文字顏色
+  z-index: 99;
   font-size: 20px;
   cursor: pointer;
   display: flex;
