@@ -4,10 +4,10 @@ import api from "../../api/api";
 export default {
   data() {
     return {
+      cartList:[],
       userId: 1,
       itemList: [
         { 
-          cart_id: 1,
           cartDate: '2023-12-15T16:30:00',
           productId: '1',
           productName: '優質短袖白T',
@@ -15,27 +15,27 @@ export default {
           cartAmount: 500,
           cartCount: 2,
         },
-        // {
-        //   productId: '2',
-        //   itemName: '骷髏手短黑T',
-        //   imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-        //   price: '790',
-        //   count: '3'
-        // },
-        // {
-        //   productId: '3',
-        //   itemName: '超時尚牛仔褲',
-        //   imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
-        //   price: '1200',
-        //   count: '1'
-        // },
-        // {
-        //   productId: '4',
-        //   itemName: '質感褐色系大衣服',
-        //   imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-        //   price: '2300',
-        //   count: '1'
-        // },
+        {
+          productId: '2',
+          itemName: '骷髏手短黑T',
+          imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
+          price: '790',
+          count: '3'
+        },
+        {
+          productId: '3',
+          itemName: '超時尚牛仔褲',
+          imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
+          price: '1200',
+          count: '1'
+        },
+        {
+          productId: '4',
+          itemName: '質感褐色系大衣服',
+          imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
+          price: '2300',
+          count: '1'
+        },
       ]
     };
   },
@@ -88,21 +88,20 @@ export default {
   // },
 
   searchList() {
-      fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
-        .then(response => response.json())
-        .then(data => {
-          // 在迭代之前检查data和data.itemList是否定义
-          if (data && data.itemList && Array.isArray(data.itemList)) {
-            this.itemList = data.itemList;
-            data.itemList.forEach(item => {
-              console.log('item:', item);
-            });
-          } else {
-            console.log(data.cartList);
-          }
-        })
-        .catch(error => console.error('获取数据时出错:', error));
-    },
+    fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
+      .then(response => response.json())
+      .then(data => {
+        this.cartList = data.cartList;
+
+        // 提取所有的 product_name
+        const productName = data.cartList.map(item => item.product_name);
+
+        // 在这里可以使用 productNames，例如打印到控制台
+        console.log('Product Names:', productName);
+      })
+      .catch(error => console.error('获取数据时出错:', error));
+  },
+
 
   },
   
@@ -110,20 +109,6 @@ export default {
 
   },
   mounted() {
-    // 在发送请求之前检查 userId 是否有效
-if (this.userId !== undefined) {
-  fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
-    .then(response => response.json())
-    .then(data => {
-      // 处理响应数据
-    })
-    .catch(error => console.error('Error fetching data:', error));
-} else {
-  console.error('Invalid userId:', this.userId);
-}
-
-    // // 在 mounted 鉤子中觸發 cartCreate API
-    // this.cartCreateAPI();
     this.searchList();
   },
 }
@@ -131,10 +116,16 @@ if (this.userId !== undefined) {
 </script>
 
 <template>
-
+{{ cartList }}
   <!-- cartList: {{ this.cartList }} <br> -->
-  itemList: {{ this.itemList }}
+  <!-- itemList: {{ this.itemList }} -->
   <div class="mainShowDetail">
+    <div v-for="(cartItem, cartIndex) in cartList" :key="cartIndex">
+      {{ "商品名稱：" + cartItem.product_name }}
+      {{ "單價：" + cartItem.cart_amount }}
+      {{ "數量：" + cartItem.cart_count }}
+  </div>
+
     <br>
     <br>
     <div class="secondtitle2">
@@ -161,6 +152,7 @@ if (this.userId !== undefined) {
               <div class="name">{{ item.itemName }}</div>
             </div>
 
+            <!-- <div class="price"><span>$</span>{{ item.price }}</div> -->
             <div class="price"><span>$</span>{{ item.price }}</div>
             <div class="count">
               <button @click="handleSub(item)">-</button>
