@@ -50,7 +50,7 @@ const cartCreat = (req) => {
 const cartDelete = (req) => {
   return axios({
     method: "post",
-    url: `http://localhost:8080/cart/delete`,
+    url: `http://localhost:8080/cart/delete?id=${this.deletedItem.cartId}`,
     data: req,
   })
     .then((res) => {

@@ -51,16 +51,15 @@ export default {
     },
     handledelete: function (index) {
     // 获取要删除的项目
-    const deletedItem = this.itemList[index];
-
+    const deletedItem = this.cartList[index];
     // 从前端中删除项目
-    this.itemList.splice(index, 1);
+    this.cartList.splice(index, 1);
 
     // 打印被删除项目的id
-    console.log('Deleted item id:', deletedItem.productId);
+    console.log('Deleted item id:', deletedItem.cartId);
 
     // 调用API删除购物车中的项目
-    api.cartDelete(deletedItem.productId)
+    api.cartDelete(deletedItem.cartId)
       .then(response => {
         // 处理API响应，如果需要的话
         console.log('cartDelete:', response);
@@ -71,22 +70,6 @@ export default {
       });
     },
     
-  //   getCart() {
-  //   // 从你的用户数据中获取用户ID
-  //   const id = this.itemList.userId; // 你需要替换为实际的用户ID，可以从你的用户数据中获取
-
-  //   // 调用API获取购物车信息
-  //   api.getCartInfoByUserId(id)
-  //     .then(response => {
-  //       // 处理API响应，更新购物车商品列表
-  //       this.itemList = response.data.cartItems; // 假设响应中有一个名为 cartItems 的字段用于存储购物车商品列表
-  //       console.log('Cart Info:', this.itemList); // 打印购物车信息到控制台
-  //     })
-  //     .catch(error => {
-  //       // 处理错误，如果需要的话
-  //       console.error('Error getting cart info:', error);
-  //     });
-  // },
 
   searchList() {
     fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
@@ -115,8 +98,8 @@ export default {
 </script>
 
 <template>
-<!-- {{ cartList }}
-<div v-for="(item, index) in cartList" :key="item.id">
+{{ cartList }}
+<!-- <div v-for="(item, index) in cartList" :key="item.id">
       {{ "商品名稱：" + item.product_name }}
       {{ "單價：" + item.cart_amount }}
       {{ "數量：" + item.cart_count }}
