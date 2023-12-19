@@ -20,9 +20,12 @@ export default {
           console.log(response.data);
           sessionStorage.setItem('loggedIn', 'TRUE');  // 设置登录状态为TRUE
           sessionStorage.setItem('user_Id', response.data.user.id);  // 设置用户ID，假设用户ID在返回数据的user对象中
+
           alert('登入成功');
 
-          this.$router.push("/");
+      this.$router.push("/");
+
+
         })
         .catch((error) => {
           console.error(error);

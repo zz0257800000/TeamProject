@@ -9,8 +9,8 @@ export default {
   data() {
     return {
       searchKeyword: '',
-      isLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE',
       cartTotalQuantity:"",
+      isUserLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE',
 
     }
   },  
@@ -34,6 +34,8 @@ export default {
           sessionStorage.removeItem('loggedIn');
           sessionStorage.removeItem('user_Id');
           alert('用户已登出');
+          window.location.reload();
+
         })
         .catch(error => {
           console.error(error);
@@ -42,7 +44,14 @@ export default {
     }
 
   },
-
+  computed: {
+  isLoggedIn() {
+    return this.isUserLoggedIn;
+  },
+  hasSomeData() {
+    return sessionStorage.getItem('someData');
+  },
+},
 
   components: {
     RouterLink
@@ -67,20 +76,19 @@ export default {
       
         
 
-    <button @click="logoutUser">登出</button>
-  
-      <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-store"></i> 我的拍賣</RouterLink>
-      <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員資料</RouterLink>
-
-
-      
-      
-    <div v-if="isLoggedIn">
-    </div>
-  
-      <RouterLink class="btn" to="/UserPage/loginPage">
-        <i class="fa-solid fa-user usericon "></i> 會員登入
-      </RouterLink>
+    <div>
+        <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
+        <RouterLink  class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
+  <i class="fa-solid fa-store"></i> 我的拍賣
+</RouterLink>
+<RouterLink  class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
+  <i class="fa-solid fa-user usericon"></i> 會員資料
+</RouterLink>
+        
+        <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
+          <i class="fa-solid fa-user usericon"></i> 會員登入
+        </RouterLink>
+      </div>
 
 
 </div>
