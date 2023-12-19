@@ -9,7 +9,8 @@ export default {
   data() {
     return {
       searchKeyword: '',
-      isLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE'
+      isLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE',
+      cartTotalQuantity:"",
 
     }
   },  
