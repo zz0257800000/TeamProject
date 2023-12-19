@@ -1,22 +1,4 @@
 <script>
-<<<<<<< HEAD
-export default {
-    data() {
-        return {
-          email: "",
-          password: "",
-          showLogin: true,
-        };
-    },
-    methods: {
-        switchToLogin() {
-            this.showLogin = true;
-        },
-        switchToSignup() {
-            this.showLogin = false;
-        },
-        registerUser() {
-=======
 import axios from "axios";
 export default {
   data() {
@@ -27,7 +9,6 @@ export default {
   },
   methods: {
     LoginUser() {
->>>>>>> origin/chen
       const userData = {
         email: this.email,
         password: this.password,
@@ -36,7 +17,6 @@ export default {
       axios.post("http://localhost:8080/user/login", userData)
         .then((response) => {
           console.log(response.data);
-
           // 登入成功後導向首頁
           this.$router.push("/");
         })
@@ -72,43 +52,9 @@ export default {
         <div class="u-form-group">
           <i class="fa-solid fa-user"></i> &nbsp;<input type="email" placeholder="Email" v-model="email"/>
         </div>
-<<<<<<< HEAD
-        <br>
-        
-        <form class="email-login">
-            <div class="u-form-group">
-              <i class="fa-solid fa-user"></i> &nbsp;<input type="email" placeholder="Email" />
-            </div>
-            <div class="u-form-group">
-              <i class="fa-solid fa-lock"></i> &nbsp; <input type="password" placeholder="Password" />
-            </div>
-          <div class="passwordright">
-            <h1></h1>
-            <RouterLink class="btn" to="/UserPage/forgotPasswordPage">忘記密碼</RouterLink>
-          </div>
-            <div class="u-form-group">
-                <RouterLink class="loginBtn" to="/">Login</RouterLink>
-
-            </div>
-            <div class="u-form-group">
-             
-                <RouterLink class="signBtn" to="/UserPage/signUp">註冊</RouterLink>
-
-            </div>
-        </form>
-        <div class="social-login">
-            <a href="#">
-              <i class="fa-brands fa-facebook"></i>
-                Login  facebook
-            </a>
-            <a href="#">
-              <i class="fa-brands fa-google"></i>                Login  Google
-            </a>
-=======
         <div class="u-form-group">
           <i class="fa-solid fa-lock"></i> &nbsp;
           <input type="password" placeholder="Password" v-model="password" />
->>>>>>> origin/chen
         </div>
         <div class="passwordright">
           <h1></h1>
