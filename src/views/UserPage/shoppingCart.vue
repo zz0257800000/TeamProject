@@ -6,46 +6,47 @@ export default {
     return {
       cartList:[],
       userId: 1,
-      itemList: [
-        { 
-          cartDate: '2023-12-15T16:30:00',
-          productId: '1',
-          productName: '優質短袖白T',
-          imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-          cartAmount: 500,
-          cartCount: 2,
-        },
-        {
-          productId: '2',
-          itemName: '骷髏手短黑T',
-          imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-          price: '790',
-          count: '3'
-        },
-        {
-          productId: '3',
-          itemName: '超時尚牛仔褲',
-          imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
-          price: '1200',
-          count: '1'
-        },
-        {
-          productId: '4',
-          itemName: '質感褐色系大衣服',
-          imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-          price: '2300',
-          count: '1'
-        },
-      ]
+      
+      // itemList: [
+      //   { 
+      //     cartDate: '2023-12-15T16:30:00',
+      //     productId: '1',
+      //     productName: '優質短袖白T',
+      //     imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
+      //     cartAmount: 500,
+      //     cartCount: 2,
+      //   },
+      //   {
+      //     productId: '2',
+      //     itemName: '骷髏手短黑T',
+      //     imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
+      //     price: '790',
+      //     count: '3'
+      //   },
+      //   {
+      //     productId: '3',
+      //     itemName: '超時尚牛仔褲',
+      //     imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
+      //     price: '1200',
+      //     count: '1'
+      //   },
+      //   {
+      //     productId: '4',
+      //     itemName: '質感褐色系大衣服',
+      //     imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
+      //     price: '2300',
+      //     count: '1'
+      //   },
+      // ]
     };
   },
   methods: {
     handlePlus: function (item) {
-      item.count++;
+      item.cart_count++;
     },
     handleSub: function (item) {
-      if (item.count > 1) {
-        item.count--;
+      if (item.cart_count > 1) {
+        item.cart_count--;
       }
     },
     handledelete: function (index) {
@@ -101,8 +102,6 @@ export default {
       })
       .catch(error => console.error('获取数据时出错:', error));
   },
-
-
   },
   
   computed: {
@@ -116,16 +115,13 @@ export default {
 </script>
 
 <template>
-{{ cartList }}
-  <!-- cartList: {{ this.cartList }} <br> -->
-  <!-- itemList: {{ this.itemList }} -->
+<!-- {{ cartList }}
+<div v-for="(item, index) in cartList" :key="item.id">
+      {{ "商品名稱：" + item.product_name }}
+      {{ "單價：" + item.cart_amount }}
+      {{ "數量：" + item.cart_count }}
+</div> -->
   <div class="mainShowDetail">
-    <div v-for="(cartItem, cartIndex) in cartList" :key="cartIndex">
-      {{ "商品名稱：" + cartItem.product_name }}
-      {{ "單價：" + cartItem.cart_amount }}
-      {{ "數量：" + cartItem.cart_count }}
-  </div>
-
     <br>
     <br>
     <div class="secondtitle2">
@@ -145,21 +141,20 @@ export default {
           <div class="amount">總計</div>
           <div class="operate">操作</div>
         </div>
-        <div class="item_container" v-for="(item, index) in itemList" :key="item.id">
+        <div class="item_container" v-for="(item, index) in cartList" :key="item.id">
           <div class="item_header item_body">
             <div class="item_detail">
               <img v-bind:src="item.imgUrl" alt="">
-              <div class="name">{{ item.itemName }}</div>
+              <div class="name">{{ item.product_name }}</div>
             </div>
 
-            <!-- <div class="price"><span>$</span>{{ item.price }}</div> -->
-            <div class="price"><span>$</span>{{ item.price }}</div>
+            <div class="price"><span>$</span>{{ item.cart_amount }}</div>
             <div class="count">
               <button @click="handleSub(item)">-</button>
-              {{ item.count }}
+              {{ item.cart_count }}
               <button @click="handlePlus(item)">+</button>
             </div>
-            <div class="amount">{{ item.price * item.count }}</div>
+            <div class="amount">{{ item.cart_amount * item.cart_count }}</div>
             <div class="operate">
               <button @click="handledelete(index)">刪除</button>
             </div>
