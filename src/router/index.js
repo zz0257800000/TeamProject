@@ -20,7 +20,7 @@ const router = createRouter({
       component: () => import("../views/UserPage/loginPage.vue"),
     },
     {
-      path: "/UserPage/shoppingCart",
+      path: "/UserPage/shoppingCart/:productId",
       name: "shoppingCart",
       component: () => import("../views/UserPage/shoppingCart.vue"),
     },
@@ -30,9 +30,14 @@ const router = createRouter({
       component: () => import("../views/UserPage/forgotPasswordPage.vue"),
     },
     {
-      path: "/UserPage/actionShop",
+      path: "/UserPage/actionShop/",
       name: "actionShop",
       component: () => import("../views/UserActionShop/actionShop.vue"),
+    },
+    {
+      path: "/UserPage/sellerStore/",
+      name: "sellerStore",
+      component: () => import("../views/UserActionShop/sellerStore.vue"),
     },
     {
       path: "/UserPage/addNewProduct",
@@ -55,14 +60,9 @@ const router = createRouter({
       component: () => import("../views/UserPage/developerPage.vue"),
     },
     {
-      path: "/UserPage/productPage",
+      path: "/UserPage/productPage/:productId",
       name: "productPage",
       component: () => import("../views/UserPage/productPage.vue"),
-    },
-    {
-      path: "/UserPage/shoppingCart",
-      name: "shoppingCart",
-      component: () => import("../views/UserPage/shoppingCart.vue"),
     },
     {
       path: "/test",
