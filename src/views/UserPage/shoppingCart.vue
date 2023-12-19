@@ -4,9 +4,7 @@ import api from "../../api/api";
 export default {
   data() {
     return {
-<<<<<<< HEAD
 
-=======
       del:"",
       cartTotalQuantity:[],
       cartList:[],
@@ -43,7 +41,6 @@ export default {
       //     count: '1'
       //   },
       // ]
->>>>>>> a0fba05477488a0db67dd3916a56afdb759c5514
     };
   },
   methods: {
@@ -56,11 +53,9 @@ export default {
       }
     },
     handledelete: function (index) {
-<<<<<<< HEAD
    
 
-=======
->>>>>>> a0fba05477488a0db67dd3916a56afdb759c5514
+
   // 获取要删除的项目
   const deletedItem = this.cartList[index];
   // 从前端中删除项目
@@ -108,7 +103,6 @@ export default {
 </script>
 
 <template>
-<<<<<<< HEAD
   <div class="cart-page">
     <div class="page-header">
       <RouterLink class="home-link" to="/">Home</RouterLink>
@@ -117,36 +111,14 @@ export default {
     </div>
 
    
-=======
-  
->>>>>>> a0fba05477488a0db67dd3916a56afdb759c5514
+
   <!-- {{ cartList }}-->
   <!-- <div v-for="(item, index) in cartList" :key="item.id">
         {{ "商品名稱：" + item.product_name }}
         {{ "單價：" + item.cart_amount }}
         {{ "數量：" + item.cart_count }}
   </div> -->
-<<<<<<< HEAD
-  
-=======
-    <div class="cart-page">
-      <div class="page-header">
-        <RouterLink class="home-link" to="/">Home</RouterLink>
-        <span class="breadcrumb-separator">></span>
-        <span class="current-page">購物車</span>
-      </div>
-    </div>
 
-  <div class="container">
-    <div class="item_header">
-            <div class="item_img">商品圖片</div>
-            <div class="item_detail">商品名稱</div>
-            <div class="price">單價</div>
-            <div class="count">數量</div> 
-            <div class="amount">總計</div>
-            <div class="operate">操作</div>
-        </div>
->>>>>>> a0fba05477488a0db67dd3916a56afdb759c5514
       <div class="cart-items">
         <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
           <div class="item-image">
@@ -171,15 +143,7 @@ export default {
         <RouterLink class="checkout-button" to="/">結帳</RouterLink>
       </div>
     </div>
-<<<<<<< HEAD
 
-    <RouterLink class="checkout-button" to="/">結帳</RouterLink>
-  
-=======
-  
-
-    
->>>>>>> a0fba05477488a0db67dd3916a56afdb759c5514
 </template>
 
 <style lang="scss" scoped>
