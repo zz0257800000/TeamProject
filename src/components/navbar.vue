@@ -6,6 +6,11 @@ import { RouterLink, RouterView } from 'vue-router'
 export default {
   data() {
     return {
+<<<<<<< HEAD
+=======
+      cartTotalQuantity:[],
+      searchKeyword: '',
+>>>>>>> 4d487b149bfb78d8e02f7174d136fb39dbe1e20e
 
     }
   },

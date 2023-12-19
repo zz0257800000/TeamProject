@@ -43,8 +43,16 @@ export default {
         </div>
 
         <div class="form-group">
+<<<<<<< HEAD
           <label for="shippingFee">運費:</label>
           <input type="number" id="shippingFee" v-model="shippingFee" required />
+=======
+          <label>是否上架商品:</label>
+          <button type="button" @click="toggleShelves"
+            :style="{ backgroundColor: shelves ? 'red' : 'green', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px', transition: 'background-color 0.3s ease' }">
+            {{ shelves ? '關閉商品' : '開啟商品' }}
+          </button>
+>>>>>>> 4d487b149bfb78d8e02f7174d136fb39dbe1e20e
         </div>
         
         <RouterLink class="button" to="/UserPage/actionShop">上架商品</RouterLink>
