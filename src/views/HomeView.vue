@@ -94,10 +94,16 @@ export default {
         <p class="productPrice">${{ product.price }}</p>
       </div>
 
-      <div class="productIcons">
-        <button @click="addToFavorites(product.productId)" class="addToFavoritesBtn"><i class="fas fa-heart"></i></button>
-        <button @click="addToCart(product.productId)" class="addToCartBtn"><i class="fas fa-shopping-cart"></i></button>
-      </div>
+      <div class="product-icons">
+    <router-link :to="'/UserPage/shoppingCart/' + product.productId" class="cart-button">
+      <i class="fas fa-shopping-cart">加入購物車</i> 
+    </router-link>
+  </div>
+  <div class="product-icons1">
+    <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
+      <i class="fas fa-credit-card"></i> 立即購買
+    </router-link>
+  </div>
     
   </div>
 </div>
@@ -118,6 +124,65 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.product-icons {
+  display: flex;
+  flex-direction: column;
+  width: 8vw;
+  position: relative;
+  bottom: 20%;
+  left: 58%;
+}
+
+.product-icons1 {
+  display: flex;
+  flex-direction: column;
+  width: 8vw;
+  position: relative;
+  bottom: 18%;
+  left: 58%;
+}
+
+.cart-button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #46799b; /* 第一个按钮的颜色 */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #296593; /* 鼠标悬停时的颜色 */
+    transform: scale(1.05);
+  }
+
+  i {
+    margin-right: 5px;
+  }
+}
+
+.buy-now-button {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #319241; /* 第二个按钮的颜色 */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #29b930; /* 鼠标悬停时的颜色 */
+    transform: scale(1.05);
+  }
+
+  i {
+    margin-right: 5px;
+  }
+}
 .fixed-size-image {
   width: 300px;
   height: 300px;

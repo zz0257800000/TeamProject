@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import("../views/UserPage/signUp.vue"),
     },
     {
+      path: "/UserPage/checkoutshopping/:productId",
+      name: "checkoutshopping",
+      component: () => import("../views/UserPage/checkoutshopping.vue"),
+    },
+    {
       path: "/UserPage/memberInfo",
       name: "memberInfo",
       component: () => import("../views/UserPage/memberInfo.vue"),

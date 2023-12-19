@@ -207,6 +207,8 @@ export default {
                 <th>商品編號</th>
 
                 <th class="productPic">商品圖片</th>
+                <th class="">產品分類</th>
+
                 <th class="productTitle">名稱</th>
                 <th>庫存</th>
                 <th>售價</th>
@@ -224,6 +226,8 @@ export default {
                   <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
                     @click="() => openImageModal(product)">
                 </td>
+                <td>{{ product.product_type }}</td>
+
                 <td>{{ product.product_name }}</td>
                 <td>{{ product.inventory }}</td>
                 <td>{{ product.price }}</td>
@@ -277,6 +281,18 @@ export default {
               <label for="productName">商品名称:</label>
               <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" />
             </div>
+            <div class="form-group">
+
+            <label for="productType">產品分類:</label>
+            <select id="productType" v-model="editedProduct.product_type" placeholder="產品分類">
+              <option value="漫畫">漫畫</option>
+              <option value="衣服">衣服</option>
+              <option value="包包">包包</option>
+              <option value="手機">手機</option>
+              <option value="電視">電視</option>
+              <option value="機車零件">機車零件</option>
+            </select>
+          </div>
 
             <div class="form-group">
               <label for="description">商品描述:</label>

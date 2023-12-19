@@ -108,6 +108,8 @@ export default {
         <div class="title">
           <p>商品名稱：{{ product.product_name }}</p>
         </div>
+        <p>產品分類：{{ product.product_type }}</p>
+
         <p>商品描述：{{ product.description }}</p>
 
         <div class="price">
@@ -128,16 +130,16 @@ export default {
           <button @click="incrementQuantity">+</button>
         </div>
 
-        <div class="buttons">
-          <router-link :to="'/UserPage/shoppingCart/' + product.productId" class="productPageRoutBtn"> 加入購物車 </router-link>
+        <div class="product-buttons">
+    <router-link :to="'/UserPage/shoppingCart/' + product.productId" class="cart-button">
+      <i class="fas fa-shopping-cart"></i> 加入購物車
+    </router-link>
 
+    <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
+      <i class="fas fa-credit-card"></i> 立即購買
+    </router-link>
+  </div>
 
-          <button @click="buyNow">立即購買</button>
-        </div>
-
-        <div class="updateTime">
-          <p>商品更新日期：{{ updateTime }}</p>
-        </div>
       </div>
     </div>
     <h2>相關商品</h2>
@@ -163,6 +165,35 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.product-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.cart-button,
+.buy-now-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-button {
+  background-color: #007bff;
+}
+
+.buy-now-button {
+  background-color: #28a745;
+}
+
+.cart-button:hover,
+.buy-now-button:hover {
+  background-color: #0056b3;
+}
  .image-modal-overlay {
     position: fixed;
     top: 0;

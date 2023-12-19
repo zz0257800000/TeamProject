@@ -4,46 +4,7 @@ import api from "../../api/api";
 export default {
   data() {
     return {
-<<<<<<< HEAD
-     
-=======
-      del:"",
-      cartTotalQuantity:[],
-      cartList:[],
-      userId: 1,
-      
-      // itemList: [
-      //   { 
-      //     cartDate: '2023-12-15T16:30:00',
-      //     productId: '1',
-      //     productName: '優質短袖白T',
-      //     imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-      //     cartAmount: 500,
-      //     cartCount: 2,
-      //   },
-      //   {
-      //     productId: '2',
-      //     itemName: '骷髏手短黑T',
-      //     imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-      //     price: '790',
-      //     count: '3'
-      //   },
-      //   {
-      //     productId: '3',
-      //     itemName: '超時尚牛仔褲',
-      //     imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
-      //     price: '1200',
-      //     count: '1'
-      //   },
-      //   {
-      //     productId: '4',
-      //     itemName: '質感褐色系大衣服',
-      //     imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-      //     price: '2300',
-      //     count: '1'
-      //   },
-      // ]
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
+
     };
   },
   methods: {
@@ -56,27 +17,8 @@ export default {
       }
     },
     handledelete: function (index) {
-<<<<<<< HEAD
-    // 获取要删除的项目
-    const deletedItem = this.itemList[index];
+   
 
-    // 从前端中删除项目
-    this.itemList.splice(index, 1);
-
-    // 打印被删除项目的id
-    console.log('Deleted item id:', deletedItem.productId);
-
-    // 调用API删除购物车中的项目
-    api.cartDelete(deletedItem.productId)
-      .then(response => {
-        // 处理API响应，如果需要的话
-        console.log('cartDelete:', response);
-      })
-      .catch(error => {
-        // 处理错误，如果需要的话
-        console.error('Error deleting item from cart:', error);
-      });
-=======
   // 获取要删除的项目
   const deletedItem = this.cartList[index];
   // 从前端中删除项目
@@ -97,10 +39,6 @@ export default {
     });
 },
 
-
-
-    
-
   searchList() {
     fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
       .then(response => response.json())
@@ -114,7 +52,6 @@ export default {
         console.log('Product Names:', productName);
       })
       .catch(error => console.error('获取数据时出错:', error));
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
   },
   },
   computed: {
@@ -125,7 +62,6 @@ export default {
 </script>
 
 <template>
-<<<<<<< HEAD
   <div class="cart-page">
     <div class="page-header">
       <RouterLink class="home-link" to="/">Home</RouterLink>
@@ -133,37 +69,18 @@ export default {
       <span class="current-page">購物車</span>
     </div>
 
-    <div class="cart-items">
-      <div v-for="(item, index) in itemList" :key="item.id" class="cart-item">
-        <div class="item-image">
-          <img :src="item.imgUrl" alt="">
-        </div>
-        <div class="item-details">
-          <div class="item-name">{{ item.itemName }}</div>
-          <div class="item-price">
-            <span class="price-label">單價：</span>
-            <span class="price-value">{{ item.price }}</span>
-=======
-  
+   
   <!-- {{ cartList }}-->
   <!-- <div v-for="(item, index) in cartList" :key="item.id">
         {{ "商品名稱：" + item.product_name }}
         {{ "單價：" + item.cart_amount }}
         {{ "數量：" + item.cart_count }}
   </div> -->
-    <div class="cart-page">
-      <div class="page-header">
-        <RouterLink class="home-link" to="/">Home</RouterLink>
-        <span class="breadcrumb-separator">></span>
-        <span class="current-page">購物車</span>
-      </div>
-    </div>
   
       <div class="cart-items">
         <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
           <div class="item-image">
             <img :src="item.imgUrl" alt="">
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
           </div>
           <div class="item-quantity">
             <button @click="handleSub(item)">-</button>
@@ -177,18 +94,12 @@ export default {
           <button @click="handledelete(index)" class="delete-button">刪除</button>
         </div>
       </div>
-<<<<<<< HEAD
     </div>
 
     <RouterLink class="checkout-button" to="/">結帳</RouterLink>
-  </div>
-</template>
-=======
   
-      <RouterLink class="checkout-button" to="/">結帳</RouterLink>
-    
-  </template>
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
+</template>
+
 <style lang="scss" scoped>
 .cart-page {
   display: flex;

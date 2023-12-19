@@ -9,11 +9,11 @@ export default {
   data() {
     return {
       searchKeyword: '',
-      cartTotalQuantity:"",
+      cartTotalQuantity: "",
       isUserLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE',
 
     }
-  },  
+  },
 
   methods: {
 
@@ -21,7 +21,7 @@ export default {
     handleSearch() {
       // 调用搜索方法
       this.searchProduct(this.searchKeyword);
-    },    scrollToTop() {
+    }, scrollToTop() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth', // 平滑滾動效果
@@ -45,13 +45,13 @@ export default {
 
   },
   computed: {
-  isLoggedIn() {
-    return this.isUserLoggedIn;
+    isLoggedIn() {
+      return this.isUserLoggedIn;
+    },
+    hasSomeData() {
+      return sessionStorage.getItem('someData');
+    },
   },
-  hasSomeData() {
-    return sessionStorage.getItem('someData');
-  },
-},
 
   components: {
     RouterLink
@@ -60,74 +60,74 @@ export default {
 }
 </script>
 <template>
-  
-  <div class="askUserPage"> 
-    
+  <div class="askUserPage">
+
     <img src="../views/askAllPage/askHome.vue" alt="">
-    
-     <div class="headerfirst">
-     <div class="POP">
-      <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
-      <RouterLink class="btn" to="/">注意事項</RouterLink>
-      <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
 
-    </div>
+    <div class="headerfirst">
+      <div class="POP">
+        <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
+        <RouterLink class="btn" to="/">注意事項</RouterLink>
+        <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
+
+      </div>
       <div>
-      
-        
 
-    <div>
-        <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
-        <RouterLink  class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
-  <i class="fa-solid fa-store"></i> 我的拍賣
-</RouterLink>
-<RouterLink  class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
-  <i class="fa-solid fa-user usericon"></i> 會員資料
-</RouterLink>
-        
-        <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
-          <i class="fa-solid fa-user usericon"></i> 會員登入
-        </RouterLink>
+
+
+        <div>
+          <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
+          <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
+            <i class="fa-solid fa-store"></i> 我的拍賣
+          </RouterLink>
+          <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
+            <i class="fa-solid fa-user usericon"></i> 會員資料
+          </RouterLink>
+
+          <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
+            <i class="fa-solid fa-user usericon"></i> 會員登入
+          </RouterLink>
+        </div>
+
+
       </div>
-
-
-</div>
-      </div>
+    </div>
 
     <div class="askHeader">
-      
+
       <RouterLink class="btn" to="/">
         <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i></h1>
       </RouterLink>
 
       <div class="search-container">
-  <input v-model="searchKeyword" placeholder="输入搜索关键字">
-  <button @click="handleSearch">搜索</button>
-</div>
+        <input v-model="searchKeyword" placeholder="输入搜索关键字">
+        <button @click="handleSearch">搜索</button>
+      </div>
 
-      <div> 
+      <div>
         <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
       </div>
 
-      <div> 
+      <div>
         <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
       </div>
       <div>
- <RouterLink class="btn" to="/UserPage/shoppingCart">
-      <i class="fa-solid fa-cart-shopping usericon"></i> 购物车
-      <span class="notification-badge">{{ cartTotalQuantity }}</span>
-    </RouterLink>      </div>
+        <RouterLink class="btn" to="/UserPage/shoppingCart">
+          <i class="fa-solid fa-cart-shopping usericon"></i> 购物车
+          <span class="notification-badge">{{ cartTotalQuantity }}</span>
+        </RouterLink>
+      </div>
 
     </div>
 
-   
-  
+
+
   </div>
   <div class="Marquee">
     <div class="announcement">
       <p>變數使用小駝峰命名統一 不要底線XD！</p>
     </div>
- 
+
 
     <!-- 產品分類下拉式選單 -->
     <div class="type">
@@ -217,7 +217,7 @@ export default {
     <button @click="scrollToTop" class="scroll-to-top-btn">
       <i class="fas fa-arrow-up"></i>
     </button>
-</div>
+  </div>
 </template>
 <style lang="scss" scoped>
 .scroll-to-top-btn {
@@ -246,6 +246,7 @@ export default {
     margin-top: 1px;
   }
 }
+
 .notification-badge {
   background-color: red;
   color: white;
@@ -256,7 +257,8 @@ export default {
   top: -8px;
   left: 4px;
 }
-.type { 
+
+.type {
   position: relative;
   top: 15%;
   width: 150px;
@@ -267,10 +269,11 @@ export default {
 .btn {
   text-decoration: none;
   color: white;
-  
+
   font-size: 20pt;
-  &:hover{
-  
+
+  &:hover {
+
     background-color: gray;
   }
 
@@ -286,7 +289,8 @@ export default {
   font-size: 20pt;
 
 }
-.memberInformation{
+
+.memberInformation {
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
@@ -301,10 +305,12 @@ export default {
   padding: 10px;
   height: 20vh;
   width: 100vw;
-.headerfirst{
-  display: flex;
-  justify-content: space-between;
-}
+
+  .headerfirst {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .askHeader {
     justify-content: space-around;
     align-items: center;
@@ -336,11 +342,12 @@ export default {
 
 
 }
-.Marquee{
+
+.Marquee {
   width: 100vw;
 
-height: 10vh;
-background-color: rgb(48, 48, 48);
+  height: 10vh;
+  background-color: rgb(48, 48, 48);
 
 
   //跑馬燈
@@ -373,5 +380,4 @@ background-color: rgb(48, 48, 48);
       right: 0;
     }
   }
-}
-</style>
+}</style>
