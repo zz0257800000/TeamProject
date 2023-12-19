@@ -8,15 +8,69 @@ export default {
       password: "",
       confirmPassword: "",
       phone_number: "",
-      phoneError: "", // 用于显示电话号码错误信息
-      message: "", // 用於顯示訊息
-      showMessage: false, // 控制顯示註冊成功提示的變數
-      showPassword: false, // 控制密码输入框的可见性
-      showConfirmPassword: false, // 控制确认密码输入框的可见性
+      phoneError: "", // 顯示電話號碼錯誤訊息
+      showPassword: false, // 切換密碼可見性
+      showConfirmPassword: false, // 切換確認密碼可見性
     };
   },
   methods: {
+    //註冊方法&防呆
     registerUser() {
+      // 檢查所有欄位是否為空
+      if (
+        !this.name.trim() ||
+        !this.email.trim() ||
+        !this.phone_number.trim() ||
+        !this.password.trim() ||
+        !this.confirmPassword.trim()
+      ) {
+        alert("請填寫所有欄位的資料!!");
+        return;
+      }
+      // 檢查姓名是否為空
+      if (!this.name.trim()) {
+        alert("請填寫姓名!!");
+        return;
+      }
+      // 檢查電子郵件是否為空且符合格式
+      if (!this.email.trim()) {
+        alert("請填寫電子郵件!!");
+        return;
+      } else {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValidEmail = emailRegex.test(this.email);
+        if (!isValidEmail) {
+          alert("請輸入有效的電子郵件!!");
+          return;
+        }
+      }
+      // 檢查電話號碼是否為空且符合格式
+      if (!this.phone_number.trim()) {
+        alert("請填寫電話號碼!!");
+        return;
+      } else {
+        const phoneRegex = /^09\d{8}$/;
+        const isValidPhone = phoneRegex.test(this.phone_number);
+        if (!isValidPhone) {
+          alert("請輸入有效的電話號碼!!");
+          return;
+        }
+      }
+      // 檢查密碼是否為空
+      if (!this.password.trim()) {
+        alert("請填寫密碼!!");
+        return;
+      }
+      // 密碼正規表達式，密碼至少8字元，要有英文+數字，其中需包含至少一個大寫字母和小寫字母及一個數字。
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+      // 檢查密碼是否符合要求
+      if (!passwordRegex.test(this.password)) {
+        alert(
+          "密碼至少要包含8個字元，要有英文+數字，其中需包含至少一個大寫字母和小寫字母及一個數字!!"
+        );
+        return;
+      }
+      // 若通過所有條件，才可進行註冊
       const userData = {
         name: this.name,
         email: this.email,
@@ -24,24 +78,19 @@ export default {
         confirmPassword: this.confirmPassword,
         phone_number: this.phone_number,
       };
-      // 使用 Axios 發送 POST 請求
       axios
         .post("http://localhost:8080/user/sign_up", userData)
         .then((response) => {
           console.log(response.data);
-          this.showMessage = true;
-          this.message = "註冊成功";
-          setTimeout(() => {
-            this.message = ""; // 一段时间后隐藏消息
-            this.showMessage = false;
-            this.$router.push("/UserPage/loginPage"); // 导航到登陆页面
-          }, 3000);
+          alert("註冊成功，即將幫您導向登入首頁!!");
+          this.$router.push("/UserPage/loginPage"); // 註冊完成導回首頁
         })
         .catch((error) => {
           console.error(error);
           // 處理錯誤，顯示錯誤訊息等
         });
     },
+    //mail防呆，正規表達式
     validateEmail() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const isValidEmail = emailRegex.test(this.email);
@@ -53,6 +102,7 @@ export default {
         this.$refs.errEmail.innerText = "";
       }
     },
+    //電話號碼防呆，正規表達式
     validatePhoneNumber() {
       const phoneRegex = /^09\d{8}$/;
       if (!phoneRegex.test(this.phone_number)) {
@@ -61,15 +111,6 @@ export default {
         this.phoneError = "";
       }
     },
-    // showMessageListener() {
-    //   // 監聽 showMessage 事件
-    //   this.$on("showMessage", (msg) => {
-    //     this.message = msg; // 將接收到的訊息顯示在畫面上
-    //     setTimeout(() => {
-    //       this.message = ""; // 一段時間後清除訊息
-    //     }, 3000); // 設定時間（3秒）後清除訊息
-    //   });
-    // },
   },
 };
 </script>
@@ -106,7 +147,6 @@ export default {
               />
             </div>
             <span class="col-sm-6"><p id="errUName"></p></span>
-            <div>{{ message }}</div>
           </div>
 
           <div class="form-group">
@@ -121,8 +161,14 @@ export default {
                 placeholder="someone@example.com"
               />
             </div>
-            <!-- 在這裡加入錯誤訊息的顯示 -->
-            <span class="col-sm-6"><p id="errEmail" ref="errEmail"></p></span>
+            <!-- Email錯誤訊息的顯示 -->
+            <span class="col-sm-6">
+              <p
+                id="errEmail"
+                :style="{ color: phoneError ? 'red ' : '' }"
+                ref="errEmail"
+              ></p>
+            </span>
           </div>
 
           <div class="form-group">
@@ -137,11 +183,11 @@ export default {
                 placeholder="0912345678"
               />
             </div>
-            <span class="col-sm-6"
-              ><p id="errPhone" :style="{ color: phoneError ? 'red ' : '' }">
+            <span class="col-sm-6">
+              <p id="errPhone" :style="{ color: phoneError ? 'red ' : '' }">
                 {{ phoneError }}
-              </p></span
-            >
+              </p>
+            </span>
           </div>
 
           <div class="form-group">
@@ -155,7 +201,10 @@ export default {
                   name="password"
                   placeholder="Enter password"
                 />
-                <i class="fa-solid fa-eye A" @click="showPassword = !showPassword"></i>
+                <i
+                  class="fa-solid fa-eye A"
+                  @click="showPassword = !showPassword"
+                ></i>
               </div>
             </div>
             <span class="col-sm-6"><p id="errPwd"></p></span>
@@ -171,8 +220,13 @@ export default {
                   v-model="confirmPassword"
                   :type="showConfirmPassword ? 'text' : 'password'"
                   class="form-control"
-                  name="confirmPassword" placeholder="Re-type password"/>
-                <i class="fa-solid fa-eye A" @click="showConfirmPassword = !showConfirmPassword"></i>
+                  name="confirmPassword"
+                  placeholder="Re-type password"
+                />
+                <i
+                  class="fa-solid fa-eye A"
+                  @click="showConfirmPassword = !showConfirmPassword"
+                ></i>
               </div>
             </div>
             <span class="col-sm-6"><p id="errConfirmPwd"></p></span>
@@ -194,7 +248,6 @@ export default {
           </div>
 
           <div class="submitBtn">
-            <!-- 透過表單的 submit 事件呼叫註冊方法 -->
             <button @click.prevent="registerUser" class="btn">送出</button>
           </div>
         </form>
@@ -314,12 +367,24 @@ export default {
     width: 27vw;
   }
 }
-.input-form-control{
-        position: relative;
-        
-        .A {
-          position: absolute;
-          
-        }
-      }
+.input-form-control {
+  position: relative;
+
+  .A {
+    position: absolute;
+  }
+}
+
+/* 模态框样式 */
+.success-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
 </style>
