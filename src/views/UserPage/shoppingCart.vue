@@ -1,9 +1,12 @@
 User
 <script>
+import { arrow } from "@popperjs/core";
 import api from "../../api/api";
 export default {
   data() {
     return {
+      del:"",
+      cartTotalQuantity:[],
       cartList:[],
       userId: 1,
       
@@ -50,25 +53,28 @@ export default {
       }
     },
     handledelete: function (index) {
-    // 获取要删除的项目
-    const deletedItem = this.cartList[index];
-    // 从前端中删除项目
-    this.cartList.splice(index, 1);
+  // 获取要删除的项目
+  const deletedItem = this.cartList[index];
+  // 从前端中删除项目
+  this.cartList.splice(index, 1);
 
-    // 打印被删除项目的id
-    console.log('Deleted item id:', deletedItem.cartId);
+  // 打印被删除项目的id
+  console.log('Deleted item id:', deletedItem.cartId);
 
-    // 调用API删除购物车中的项目
-    api.cartDelete(deletedItem.cartId)
-      .then(response => {
-        // 处理API响应，如果需要的话
-        console.log('cartDelete:', response);
-      })
-      .catch(error => {
-        // 处理错误，如果需要的话
-        console.error('Error deleting item from cart:', error);
-      });
-    },
+  // 调用API删除购物车中的项目
+  api.cartDelete(deletedItem.cartId)
+    .then(response => {
+      // 处理API响应，如果需要的话
+      console.log('cartDelete:', response);
+    })
+    .catch(error => {
+      // 处理错误，如果需要的话
+      console.error('Error deleting item from cart:', error);
+    });
+},
+
+
+
     
 
   searchList() {
@@ -98,6 +104,7 @@ export default {
 </script>
 
 <template>
+  
   <!-- {{ cartList }}-->
   <!-- <div v-for="(item, index) in cartList" :key="item.id">
         {{ "商品名稱：" + item.product_name }}
@@ -110,9 +117,10 @@ export default {
         <span class="breadcrumb-separator">></span>
         <span class="current-page">購物車</span>
       </div>
+    </div>
   
       <div class="cart-items">
-         <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
+        <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
           <div class="item-image">
             <img :src="item.imgUrl" alt="">
           </div>
@@ -137,7 +145,7 @@ export default {
       </div>
   
       <RouterLink class="checkout-button" to="/">結帳</RouterLink>
-    </div>
+    
   </template>
 <style lang="scss" scoped>
 .cart-page {
