@@ -154,7 +154,7 @@ export default {
                 <h3><i class="fa-regular fa-user"></i> :廖佳洪</h3>
                 <h5>B-boy + Developer</h5>
                 <h6>, Taiwan</h6>
-                <h3>職位:??工程師</h3>
+                <h3>職位:簡報工程師</h3>
                 <hr>
                 <div class="informationTopLink">
                   <a href=""> <i class="fa-brands fa-github"></i></a>

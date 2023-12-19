@@ -31,7 +31,6 @@ const login = (req) => {
     });
 };
 
-
 export default {
   signUp,
   login,
