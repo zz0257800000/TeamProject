@@ -122,7 +122,7 @@ sendData(data) {
 
 
         <div class="form-group">
-          <label>是否開啟商品:</label>
+          <label>是否上架商品:</label>
           <button type="button" @click="toggleShelves"
             :style="{ backgroundColor: shelves ? 'red' : 'green', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px', transition: 'background-color 0.3s ease' }">
             {{ shelves ? '關閉商品' : '開啟商品' }}
