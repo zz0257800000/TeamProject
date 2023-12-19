@@ -212,8 +212,7 @@ export default {
 
           <div class="form-group">
             <label for="cnfrmPwd" class="control-label col-sm-2"
-              >確認密碼:</label
-            >
+              >確認密碼:</label>
             <div class="col-sm-4">
               <div class="input-form-control">
                 <input
@@ -221,8 +220,7 @@ export default {
                   :type="showConfirmPassword ? 'text' : 'password'"
                   class="form-control"
                   name="confirmPassword"
-                  placeholder="Re-type password"
-                />
+                  placeholder="Re-type password"/>
                 <i
                   class="fa-solid fa-eye A"
                   @click="showConfirmPassword = !showConfirmPassword"
