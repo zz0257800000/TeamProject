@@ -20,7 +20,7 @@ const router = createRouter({
       component: () => import("../views/UserPage/loginPage.vue"),
     },
     {
-      path: "/UserPage/shoppingCart/:productId",
+      path: "/UserPage/shoppingCart",
       name: "shoppingCart",
       component: () => import("../views/UserPage/shoppingCart.vue"),
     },
