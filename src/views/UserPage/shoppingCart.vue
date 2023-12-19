@@ -4,9 +4,6 @@ import api from "../../api/api";
 export default {
   data() {
     return {
-<<<<<<< HEAD
-     
-=======
       del:"",
       cartTotalQuantity:[],
       cartList:[],
@@ -43,40 +40,18 @@ export default {
       //     count: '1'
       //   },
       // ]
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
     };
   },
   methods: {
     handlePlus: function (item) {
-      item.count++;
+      item.cart_count++;
     },
     handleSub: function (item) {
-      if (item.count > 1) {
-        item.count--;
+      if (item.cart_count > 1) {
+        item.cart_count--;
       }
     },
     handledelete: function (index) {
-<<<<<<< HEAD
-    // 获取要删除的项目
-    const deletedItem = this.itemList[index];
-
-    // 从前端中删除项目
-    this.itemList.splice(index, 1);
-
-    // 打印被删除项目的id
-    console.log('Deleted item id:', deletedItem.productId);
-
-    // 调用API删除购物车中的项目
-    api.cartDelete(deletedItem.productId)
-      .then(response => {
-        // 处理API响应，如果需要的话
-        console.log('cartDelete:', response);
-      })
-      .catch(error => {
-        // 处理错误，如果需要的话
-        console.error('Error deleting item from cart:', error);
-      });
-=======
   // 获取要删除的项目
   const deletedItem = this.cartList[index];
   // 从前端中删除项目
@@ -114,36 +89,20 @@ export default {
         console.log('Product Names:', productName);
       })
       .catch(error => console.error('获取数据时出错:', error));
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
   },
   },
+  
   computed: {
 
-  }
+  },
+  mounted() {
+    this.searchList();
+  },
 }
 
 </script>
 
 <template>
-<<<<<<< HEAD
-  <div class="cart-page">
-    <div class="page-header">
-      <RouterLink class="home-link" to="/">Home</RouterLink>
-      <span class="breadcrumb-separator">></span>
-      <span class="current-page">購物車</span>
-    </div>
-
-    <div class="cart-items">
-      <div v-for="(item, index) in itemList" :key="item.id" class="cart-item">
-        <div class="item-image">
-          <img :src="item.imgUrl" alt="">
-        </div>
-        <div class="item-details">
-          <div class="item-name">{{ item.itemName }}</div>
-          <div class="item-price">
-            <span class="price-label">單價：</span>
-            <span class="price-value">{{ item.price }}</span>
-=======
   
   <!-- {{ cartList }}-->
   <!-- <div v-for="(item, index) in cartList" :key="item.id">
@@ -158,37 +117,45 @@ export default {
         <span class="current-page">購物車</span>
       </div>
     </div>
-  
+
+  <div class="container">
+    <div class="item_header">
+            <div class="item_img">商品圖片</div>
+            <div class="item_detail">商品名稱</div>
+            <div class="price">單價</div>
+            <div class="count">數量</div> 
+            <div class="amount">總計</div>
+            <div class="operate">操作</div>
+        </div>
       <div class="cart-items">
         <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
           <div class="item-image">
             <img :src="item.imgUrl" alt="">
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
           </div>
-          <div class="item-quantity">
-            <button @click="handleSub(item)">-</button>
-            <span class="quantity-value">{{ item.count }}</span>
-            <button @click="handlePlus(item)">+</button>
+          <div class="item-details">
+            <div class="item-name">{{ item.product_name }}</div>
+            <div class="item-price">
+              <span class="price-value">{{ item.cart_amount }}</span>
+            </div>
+            <div class="item-quantity">
+              <button @click="handleSub(item)">-</button>
+              <span class="quantity-value">{{ item.cart_count }}</span>
+              <button @click="handlePlus(item)">+</button>
+            </div>
+            <div class="item-total">
+              <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
+            </div>
+            <button @click="handledelete(index)" class="delete-button">刪除</button>
           </div>
-          <div class="item-total">
-            <span class="total-label">總計：</span>
-            <span class="total-value">{{ item.price * item.count }}</span>
-          </div>
-          <button @click="handledelete(index)" class="delete-button">刪除</button>
         </div>
+        <RouterLink class="checkout-button" to="/">結帳</RouterLink>
       </div>
-<<<<<<< HEAD
     </div>
-
-    <RouterLink class="checkout-button" to="/">結帳</RouterLink>
-  </div>
-</template>
-=======
   
-      <RouterLink class="checkout-button" to="/">結帳</RouterLink>
+
     
-  </template>
->>>>>>> f01f36fe234f52f7643283e478921b1462009666
+</template>
+
 <style lang="scss" scoped>
 .cart-page {
   display: flex;
@@ -198,11 +165,21 @@ export default {
   font-family: 'Roboto', sans-serif;
   color: #333;
 }
-
+.container{
+  margin-bottom: 20px;
+}
 .page-header {
   margin-bottom: 20px;
 }
-
+.item_header{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  margin-left: -90px;
+  .item_detail{
+    margin-left: -65px;
+  }
+}
 .home-link {
   border-radius: 5px;
   padding: 5px;
@@ -243,11 +220,15 @@ export default {
       width: 80px;
       height: 80px;
       border-radius: 5px;
+      margin-left: 5px;
     }
   }
 
   .item-details {
     flex-grow: 1;
+    display: flex;  
+    justify-content: space-around;
+
 
     .item-name {
       font-size: 18px;
