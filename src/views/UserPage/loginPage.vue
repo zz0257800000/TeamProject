@@ -36,11 +36,9 @@ export default {
       axios.post("http://localhost:8080/user/login", userData)
         .then((response) => {
           console.log(response.data);
-<<<<<<< HEAD
-=======
+
           // 登入成功後導向首頁
           this.$router.push("/");
->>>>>>> origin/chen
         })
         .catch((error) => {
           console.error(error);
