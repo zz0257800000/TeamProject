@@ -196,15 +196,12 @@ export default {
               <div class="input-form-control">
                 <input
                   v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
+                  
                   class="form-control"
                   name="password"
                   placeholder="Enter password"
                 />
-                <i
-                  class="fa-solid fa-eye A"
-                  @click="showPassword = !showPassword"
-                ></i>
+               
               </div>
             </div>
             <span class="col-sm-6"><p id="errPwd"></p></span>
@@ -230,20 +227,7 @@ export default {
             <span class="col-sm-6"><p id="errConfirmPwd"></p></span>
           </div>
 
-          <div class="form-group">
-            <label for="gender" class="control-label col-sm-2">性別:</label>
-            <div class="radio btn col-sm-1">
-              <label class="radio-inline">
-                <input type="radio" name="optGender" />男
-              </label>
-            </div>
-            <div class="radio btn col-sm-3">
-              <label class="radio-inline">
-                <input type="radio" name="optGender" />女
-              </label>
-            </div>
-            <span class="col-sm-6"><p id="errGender"></p></span>
-          </div>
+        
 
           <div class="submitBtn">
             <button @click.prevent="registerUser" class="btn">送出</button>

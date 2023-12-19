@@ -8,6 +8,7 @@ export default {
     };
   },
   methods: {
+    
     LoginUser() {
       const userData = {
         email: this.email,
@@ -17,7 +18,10 @@ export default {
       axios.post("http://localhost:8080/user/login", userData)
         .then((response) => {
           console.log(response.data);
-          // 登入成功後導向首頁
+          sessionStorage.setItem('loggedIn', 'TRUE');  // 设置登录状态为TRUE
+          sessionStorage.setItem('user_Id', response.data.user.id);  // 设置用户ID，假设用户ID在返回数据的user对象中
+          alert('登入成功');
+
           this.$router.push("/");
         })
         .catch((error) => {
@@ -50,7 +54,7 @@ export default {
 
       <form class="email-login">
         <div class="u-form-group">
-          <i class="fa-solid fa-user"></i> &nbsp;<input type="email" placeholder="Email" v-model="email"/>
+          <i class="fa-solid fa-user"></i> &nbsp;<input type="email" placeholder="Email" v-model="email" />
         </div>
         <div class="u-form-group">
           <i class="fa-solid fa-lock"></i> &nbsp;
@@ -58,9 +62,7 @@ export default {
         </div>
         <div class="passwordright">
           <h1></h1>
-          <RouterLink class="btn" to="/UserPage/forgotPasswordPage"
-            >忘記密碼</RouterLink
-          >
+          <RouterLink class="btn" to="/UserPage/forgotPasswordPage">忘記密碼</RouterLink>
         </div>
         <div class="u-form-group">
           <!-- <RouterLink class="loginBtn" to="/">Login</RouterLink> -->
@@ -105,12 +107,14 @@ export default {
     }
   }
 }
+
 .mainLoginShow {
   border: 0px solid red;
   height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
+
   .secondtitle2 {
     justify-content: space-between;
     display: flex;
@@ -252,6 +256,7 @@ export default {
       }
     }
   }
+
   .passwordright {
     display: flex;
     justify-content: space-between;

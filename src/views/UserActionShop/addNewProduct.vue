@@ -13,6 +13,8 @@ export default {
       productImagePreview: null,
       isImageModalOpen: false,
       photo: null,
+      user_Id: null,
+
     };
   },
   methods: {
@@ -38,7 +40,7 @@ export default {
         inventory: this.inventory,
         sale_count: this.sale_count,
         shelves: this.shelves,
-        user_id: this.user_id,
+        user_id: this.user_Id,
         upload_time: new Date(),  // 设置上传时间为当前时间
 
       };  // 如果有選擇圖片，將其轉換為 Base64 字符串
@@ -55,12 +57,19 @@ export default {
 },
 
 sendData(data) {
+   // 从 sessionStorage 中获取 user_Id
+   const user_Id = sessionStorage.getItem('user_Id');
+    
+    // 添加 user_Id 到请求数据
+    data.user_id = user_Id;
   axios.post('http://localhost:8080/product/create', JSON.stringify(data), {
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then(response => {
+
+      
       console.log('Response:', response.data);
       alert('商品新增成功');
       this.$router.push('/UserPage/actionShop');

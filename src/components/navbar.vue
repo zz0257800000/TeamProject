@@ -3,14 +3,16 @@
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import { mapActions } from 'vuex';
+import axios from 'axios';
 
 export default {
   data() {
     return {
       searchKeyword: '',
+      isLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE'
 
     }
-  },
+  },  
 
   methods: {
 
@@ -24,6 +26,19 @@ export default {
         behavior: 'smooth', // 平滑滾動效果
       });
     },
+    logoutUser() {
+      axios.post("http://localhost:8080/user/logout")
+        .then(response => {
+          // 清除前端的用户状态
+          sessionStorage.removeItem('loggedIn');
+          sessionStorage.removeItem('user_Id');
+          alert('用户已登出');
+        })
+        .catch(error => {
+          console.error(error);
+          // 处理错误，显示错误消息等
+        });
+    }
 
   },
 
@@ -49,14 +64,25 @@ export default {
     </div>
       <div>
       
+        
 
+    <button @click="logoutUser">登出</button>
+  
       <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-store"></i> 我的拍賣</RouterLink>
       <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員資料</RouterLink>
 
 
       
-      <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-solid fa-user usericon "></i> 會員登入</RouterLink>
+      
+    <div v-if="isLoggedIn">
     </div>
+  
+      <RouterLink class="btn" to="/UserPage/loginPage">
+        <i class="fa-solid fa-user usericon "></i> 會員登入
+      </RouterLink>
+
+
+</div>
       </div>
 
     <div class="askHeader">
