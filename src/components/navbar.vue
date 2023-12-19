@@ -7,6 +7,7 @@ import { mapActions } from 'vuex';
 export default {
   data() {
     return {
+      cartTotalQuantity:[],
       searchKeyword: '',
 
     }
