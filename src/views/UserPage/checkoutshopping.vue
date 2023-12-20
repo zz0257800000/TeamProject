@@ -69,30 +69,30 @@ export default {
             this.quantity++;
         },
         submitOrder() {
- // 檢查是否所有必填項目都已經填寫
- if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
-        alert('請填寫所有必填項目');
+        // 檢查是否所有必填項目都已經填寫
+        if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
+                alert('請填寫所有必填項目');
         return;
-        
-    }            const orderData = {
-                user_id: this.product.user_id,
-                product_id: this.product.productId,  // 使用 this.product.product_id
-                product_name: this.product.product_name,
-                product_count: this.quantity,
-                consumer_name: this.recipientName,
-                consumer_address: this.recipientAddress,
-                consumer_phone: this.recipientPhone,
-                shipping_method: this.selectedShipping,
-                shipping_cost: this.getShippingFee,
-                payment_method: this.paymentMethod,
-                remittance_title: "中國信託",
-                remittance_number: "812-00000087888",
-                remarks_column: this.remarksColumn,
-                product_amount: this.getOrderAmount,
-                record_date: new Date(),
-                status: "準備中",
-                record_type: "購買",
-                valid: true
+        }
+            const orderData = {
+            user_id: this.product.user_id,
+            product_id: this.product.productId,  // 使用 this.product.product_id
+            product_name: this.product.product_name,
+            product_count: this.quantity,
+            consumer_name: this.recipientName,
+            consumer_address: this.recipientAddress,
+            consumer_phone: this.recipientPhone,
+            shipping_method: this.selectedShipping,
+            shipping_cost: this.getShippingFee,
+            payment_method: this.paymentMethod,
+            remittance_title: "中國信託",
+            remittance_number: "812-00000087888",
+            remarks_column: this.remarksColumn,
+            product_amount: this.getOrderAmount,
+            record_date: new Date(),
+            status: "準備中",
+            record_type: "購買",
+            valid: true
 
             };
 
@@ -124,9 +124,9 @@ export default {
     },
 };
 </script>
+
 <template>
     <div class="mainshow">
-
 
         <div class="countAll">
             <div class="leftInfo">

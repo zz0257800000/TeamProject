@@ -234,7 +234,6 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5; /* 時尚科技風格的背景色 */
 
   .carousel {
     width: 70vw;
