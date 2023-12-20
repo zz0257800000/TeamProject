@@ -8,7 +8,7 @@ export default {
       del:"",
       cartTotalQuantity:[],
       cartList:[],
-      userId: 1,
+      userId: 2,
       
       // itemList: [
       //   { 

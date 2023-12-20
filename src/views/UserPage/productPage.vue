@@ -1,5 +1,6 @@
-<script>
+<script >
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
 
@@ -78,6 +79,15 @@ export default {
       // 使用 window.location.href 進行整頁刷新
       window.location.href = `/UserPage/productPage/${productId}`;
     },
+    showSweetAlert() {
+      Swal.fire({
+        title: '商品已加入購物車',
+        text: '請繼續您的購物!',
+        icon: 'success',
+        timer: 1700, // 设置自动关闭的时间，单位是毫秒
+        showConfirmButton: false // 不显示确认按钮
+      });
+    }
 
 
   }, 
@@ -131,13 +141,15 @@ export default {
         </div>
 
         <div class="product-buttons">
-    <router-link :to="'/UserPage/shoppingCart/' + product.productId" class="cart-button">
-      <i class="fas fa-shopping-cart"></i> 加入購物車
-    </router-link>
+          <!-- <router-link :to="'/UserPage/shoppingCart/'" class="cart-button">
+            <i class="fas fa-shopping-cart"></i> 加入購物車
+          </router-link> -->
+          <button class="cart-button" @click="showSweetAlert"><i class="fas fa-shopping-cart"></i>加入購物車</button>
+          
 
-    <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
-      <i class="fas fa-credit-card"></i> 立即購買
-    </router-link>
+          <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
+            <i class="fas fa-credit-card"></i> 立即購買
+          </router-link>
   </div>
 
       </div>
