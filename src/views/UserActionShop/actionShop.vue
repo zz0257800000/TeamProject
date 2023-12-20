@@ -16,6 +16,7 @@ export default {
       selectedImage: null, // 新增 selectedImage 屬性
       isEditModalOpen: false,
       editedProduct: null,
+      userId: null, // 確保在這裡定義 userId
 
     };
   },
@@ -30,19 +31,22 @@ export default {
     },
   },
   mounted() {
-    // 在组件被挂载后，调用 fetchProducts 方法获取商品数据
-    this.fetchProducts();
+    this.userId = sessionStorage.getItem('user_Id');
+  console.log('User ID:', this.userId); // 檢查 userId 是否被設置
+  this.fetchProducts();
+  
 
   },
   methods: {
 
     fetchProducts() {
       // 发送获取产品列表的请求
-      axios.get('http://localhost:8080/product/get')
+      axios.get(`http://localhost:8080/product/get/info/user_id?id=${this.userId}`)
         .then(response => {
-          // 成功获取数据，将数据保存到 products 数组中
-          this.products = response.data.products;
-          console.log('Fetched products:', this.products);
+        // 成功获取数据，将数据保存到 products 数组中
+      this.products = response.data.products;
+      console.log('Fetched products:', this.products);
+
 
         })
         .catch(error => {

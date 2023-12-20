@@ -24,7 +24,8 @@ export default {
   },
   mounted() {
     this.fetchProducts();
-
+    this.userId = sessionStorage.getItem('user_Id');
+  console.log('User ID:', this.userId); // 檢查 userId 是否被設置
     this.fetchProductDetails();
   },
   methods: {

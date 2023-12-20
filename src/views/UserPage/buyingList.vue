@@ -1,23 +1,31 @@
 <script>
+import axios from 'axios'; // 記得這行要加上
+
 export default {
   data() {
     return {
-      products: [
-        { name: '商品1', category: '分類A', price: '$50.00', shelfTime: '2023-12-10' },
-        { name: '商品2', category: '分類B', price: '$40.00', shelfTime: '2023-12-11' },
-        // 添加更多商品數據
-      ]
+      products: [],
+
     };
   },
+  mounted() {
+    this.userId = sessionStorage.getItem('user_Id');  // Get user_Id from sessionStorage
+    this.fetchData();
+  },
   methods: {
-    editProduct(index) {
-      // 添加編輯商品的邏輯
-      console.log('Edit product:', this.products[index]);
+    fetchData() {
+      const userId = this.userId; 
+      const apiUrl = `http://localhost:8080/record/get/user_id?id=${userId}`;
+
+      axios.get(apiUrl)
+  .then(response => {
+    console.log('API Response:', response.data);
+    this.products = response.data;
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
     },
-    deleteProduct(index) {
-      // 添加刪除商品的邏輯
-      this.products.splice(index, 1);
-    }
   },
 };
 </script>
@@ -58,35 +66,12 @@ export default {
 
       <div class="productManagement">
         <div class="productCreate">
-          <h1>購買清單</h1>
+          <h1>訂單明細
+</h1>
           <RouterLink class="btn" to="/">繼續購物</RouterLink>
         </div>
         <div class="productAdmimList">
-          <table>
-            <thead>
-              <tr>
-                <th class="productPic">商品圖片</th>
-                <th class="productTitle">名稱</th>
-                <th>分類</th>
-                <th>售價</th>
-                <th>上架時間</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(product, index) in products" :key="index">
-                <td>{{ }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.shelfTime }}</td> <!-- Display the shelf time -->
-
-                <td class="action-btns">
-                  <button class="delete-btn" @click="deleteProduct(index)">取消訂單</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        
         </div>
 
       </div>

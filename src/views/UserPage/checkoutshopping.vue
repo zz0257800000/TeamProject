@@ -16,6 +16,8 @@ export default {
     },
     mounted() {
         this.fetchProductDetails();
+        this.userId = sessionStorage.getItem('user_Id');  // Get user_Id from sessionStorage
+
     },
     computed: {
         getShippingFee() {
@@ -75,7 +77,7 @@ export default {
         return;
         
     }            const orderData = {
-                user_id: this.product.user_id,
+        user_id: this.userId,  // Use the userId property
                 product_id: this.product.productId,  // 使用 this.product.product_id
                 product_name: this.product.product_name,
                 product_count: this.quantity,
