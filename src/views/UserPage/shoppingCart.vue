@@ -168,6 +168,7 @@ export default {
   justify-content: space-around;
   margin-bottom: 20px;
   margin-left: -90px;
+  
   .item_detail{
     margin-left: -65px;
   }
@@ -204,15 +205,16 @@ export default {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
 
   .item-image {
     margin-right: 20px;
-
     img {
       width: 80px;
       height: 80px;
       border-radius: 5px;
       margin-left: 5px;
+      background-color: #eeeeee;
     }
   }
 
@@ -221,10 +223,10 @@ export default {
     display: flex;  
     justify-content: space-around;
 
-
     .item-name {
+      width: 30vw;
       font-size: 18px;
-      margin-bottom: 10px;
+      background-color: #eeeeee;
     }
 
     .item-price,
