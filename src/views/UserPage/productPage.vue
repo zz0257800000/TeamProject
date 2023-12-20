@@ -1,4 +1,5 @@
 <script >
+import api from "../../api/api";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -77,21 +78,50 @@ export default {
       window.location.href = `/UserPage/productPage/${productId}`;
     },
     addToCartAndShowAlert() {
-      Swal.fire({
-        title: '商品已加入購物車',
-        text: '請繼續您的購物!',
-        icon: 'success',
-        timer: 1700, // 自動關閉
-        showConfirmButton: false // 不顯示確認按鈕
-      });
-      console.log('Adding to cart:', this.product, 'Quantity:', this.quantity);
-    }
-  }, 
-  mounted() {
-    const user_id = sessionStorage.getItem('user_Id');
-    console.log('User ID:', user_id);
+        // 调用 cartCreat 函数
+        // const user_id = sessionStorage.getItem('user_Id');
+
+      const addToCart = async () => {
+        try {
+          // 构建请求参数
+          const req = {
+            produce_id: this.product.productId,
+            // quantity: this.quantity,
+            user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
+            cart_date: "2023-12-15T16:30:00",
+            cart_count: this.quantity,
+            cart_amount: this.product.price * this.quantity ,
+            product_name: this.product.product_name,
+          };
+            console.log('User ID:', this.user_id);
+          // 调用 cartCreat 函数
+          await api.cartCreat(req);
+
+          // 成功添加到购物车后的逻辑
+          Swal.fire({
+            title: '商品已加入購物車',
+            text: '請繼續您的購物!',
+            icon: 'success',
+            timer: 1700,
+            showConfirmButton: false,
+          });
+
+          console.log('Adding to cart:', this.product, 'Quantity:', this.quantity);
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          // 处理错误，例如显示错误提示
+          Swal.fire({
+            title: '加入購物車失敗',
+            text: '請稍後再試!',
+            icon: 'error',
+          });
+        }
+      };
+
+      // 调用 addToCart 函数
+      addToCart();
+    },
   },
-  
 };
 </script>
 

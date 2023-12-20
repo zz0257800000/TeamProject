@@ -8,7 +8,7 @@ export default {
       del:"",
       cartTotalQuantity:[],
       cartList:[],
-      userId: 2,
+      userId: sessionStorage.getItem('user_Id'),
       
       // itemList: [
       //   { 
