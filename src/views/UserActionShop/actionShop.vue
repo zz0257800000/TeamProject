@@ -32,9 +32,9 @@ export default {
   },
   mounted() {
     this.userId = sessionStorage.getItem('user_Id');
-  console.log('User ID:', this.userId); // 檢查 userId 是否被設置
-  this.fetchProducts();
-  
+    console.log('User ID:', this.userId); // 檢查 userId 是否被設置
+    this.fetchProducts();
+
 
   },
   methods: {
@@ -43,9 +43,9 @@ export default {
       // 发送获取产品列表的请求
       axios.get(`http://localhost:8080/product/get/info/user_id?id=${this.userId}`)
         .then(response => {
-        // 成功获取数据，将数据保存到 products 数组中
-      this.products = response.data.products;
-      console.log('Fetched products:', this.products);
+          // 成功获取数据，将数据保存到 products 数组中
+          this.products = response.data.products;
+          console.log('Fetched products:', this.products);
 
 
         })
@@ -287,16 +287,16 @@ export default {
             </div>
             <div class="form-group">
 
-            <label for="productType">產品分類:</label>
-            <select id="productType" v-model="editedProduct.product_type" placeholder="產品分類">
-              <option value="漫畫">漫畫</option>
-              <option value="衣服">衣服</option>
-              <option value="包包">包包</option>
-              <option value="手機">手機</option>
-              <option value="電視">電視</option>
-              <option value="機車零件">機車零件</option>
-            </select>
-          </div>
+              <label for="productType">產品分類:</label>
+              <select id="productType" v-model="editedProduct.product_type" placeholder="產品分類">
+                <option value="漫畫">漫畫</option>
+                <option value="衣服">衣服</option>
+                <option value="包包">包包</option>
+                <option value="手機">手機</option>
+                <option value="電視">電視</option>
+                <option value="機車零件">機車零件</option>
+              </select>
+            </div>
 
             <div class="form-group">
               <label for="description">商品描述:</label>
@@ -455,7 +455,7 @@ export default {
 }
 
 .actionPageLeft {
-  width: 20vw;
+  width: 15vw;
   display: flex;
   flex-direction: column;
   background-color: #37474f;
@@ -508,7 +508,7 @@ export default {
 }
 
 .actionPageRight {
-  width: 80vw;
+  width: 85vw;
   height: 202.3vh;
   border: 0px solid rgb(255, 0, 0);
 
@@ -522,7 +522,7 @@ export default {
       display: flex;
       border: 0px solid #e74c3c;
       /* Border color */
-      width: 75vw;
+      width: 82vw;
       height: 10vh;
       align-items: center;
 
@@ -555,7 +555,7 @@ export default {
     .productCreate {
       display: flex;
       justify-content: space-between;
-      width: 79vw;
+      width: 83vw;
       padding: 20px;
 
       h1 {
