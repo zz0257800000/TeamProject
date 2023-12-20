@@ -97,6 +97,8 @@ export default {
   },
   mounted() {
     this.searchList();
+    const user_id = sessionStorage.getItem('user_Id');
+    console.log('User ID:', user_id);
   },
 }
 

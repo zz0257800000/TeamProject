@@ -69,9 +69,6 @@ export default {
     incrementQuantity() {
       this.quantity++;
     },
-    addToCart() {
-      console.log('Adding to cart:', this.product, 'Quantity:', this.quantity);
-    },
     buyNow() {
       console.log('Buying now:', this.product, 'Quantity:', this.quantity);
     },  
@@ -79,18 +76,21 @@ export default {
       // 使用 window.location.href 進行整頁刷新
       window.location.href = `/UserPage/productPage/${productId}`;
     },
-    showSweetAlert() {
+    addToCartAndShowAlert() {
       Swal.fire({
         title: '商品已加入購物車',
         text: '請繼續您的購物!',
         icon: 'success',
-        timer: 1700, // 设置自动关闭的时间，单位是毫秒
-        showConfirmButton: false // 不显示确认按钮
+        timer: 1700, // 自動關閉
+        showConfirmButton: false // 不顯示確認按鈕
       });
+      console.log('Adding to cart:', this.product, 'Quantity:', this.quantity);
     }
-
-
   }, 
+  mounted() {
+    const user_id = sessionStorage.getItem('user_Id');
+    console.log('User ID:', user_id);
+  },
   
 };
 </script>
@@ -144,9 +144,8 @@ export default {
           <!-- <router-link :to="'/UserPage/shoppingCart/'" class="cart-button">
             <i class="fas fa-shopping-cart"></i> 加入購物車
           </router-link> -->
-          <button class="cart-button" @click="showSweetAlert"><i class="fas fa-shopping-cart"></i>加入購物車</button>
+          <button class="cart-button" @click="addToCartAndShowAlert"><i class="fas fa-shopping-cart"></i>加入購物車</button>
           
-
           <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
             <i class="fas fa-credit-card"></i> 立即購買
           </router-link>
@@ -156,7 +155,8 @@ export default {
     </div>
     <h2>相關商品</h2>
     <div class="Otherproducts">
-      {{ response}} <!-- 在這裡輸出 products，確認是否有相關商品的資料 -->
+      <!-- 在這裡輸出 products，確認是否有相關商品的資料 -->
+      <!-- {{ response}}  -->
 
       <div v-for="(product, index) in products.slice(0, 14)" :key="index" class="related-product-item">
   <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" @click="navigateToProductPage(product.productId)">
