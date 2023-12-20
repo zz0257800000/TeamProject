@@ -10,19 +10,26 @@ export default {
       userId: '', // Add userId to data
       recordList: [],
       productDetails: { product_id: null }, // Provide a default product_id
+      recordId: 29, // 替换为你实际的订单ID
+
     };
   },
   mounted() {
-    this.userId = sessionStorage.getItem('user_Id');  // Get user_Id from sessionStorage
+    this.userId = sessionStorage.getItem('user_Id');
     this.fetchData();
 
 
   },
   computed: {
     paginatedProducts() {
+    // 逆序 recordList
+    const reversedRecordList = [...this.recordList].reverse();
+    
     const start = (this.currentPage - 1) * this.perPage;
     const end = start + this.perPage;
-    return this.recordList.slice(start, end);
+
+    // 返回分页后的逆序记录列表
+    return reversedRecordList.slice(start, end);
   },
   pageCount() {
     return Math.ceil(this.recordList.length / this.perPage);
@@ -31,37 +38,59 @@ export default {
   methods: {
     fetchData() {
       this.fetchRecord();
-      this.fetchProductDetails();
     },
-    fetchProductDetails() {
-      // 使用 this.$route.params.productId 获取路由中的 ID 参数
-      const productId = this.productDetails.product_id;
-      console.log('productId:', productId);
+   // 修改 fetchProductDetails 方法
+   
+    
+fetchRecord() {
+  const userId = this.userId;
+  const apiUrl = `http://localhost:8080/record/get/user_id?id=${userId}`;
 
-      // 调用 API 获取商品详情
-      axios.get(`http://localhost:8080/product/get/info?id=${productId}`)
-        .then(response => {
-          this.productDetails = response.data.product;
-          console.log('Fetched product:', this.productDetails);
+  axios.get(apiUrl)
+      .then(response => {
+        console.log('API Response:', response.data);
+        this.recordList = response.data.recordList;
 
-        })
-        .catch(error => {
-          console.error('Error fetching product details:', error);
+        // 在需要的时候手动调用 fetchProductDetails
+        this.fetchProductDetailsForAllRecords();
+      })
+    
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+},
+
+fetchProductDetailsForAllRecords() {
+  const fetchProductIdPromises = this.recordList.map(record => {
+    const recordId = record.record_id;
+    return this.fetchProductId(recordId);
+    });
+
+    Promise.all(fetchProductIdPromises)
+      .then(productIds => {
+        productIds.forEach(productId => {
+          this.fetchProductDetails(productId);
         });
-    },
-    fetchRecord() {
-      const userId = this.userId;
-      const apiUrl = `http://localhost:8080/record/get/user_id?id=${userId}`;
+      })
+      .catch(error => {
+        console.error('Error fetching product details:', error);
+      });
+  },  fetchProductDetails(productId) {
+    // 添加檢查以確保 productId 有效
+    if (!productId) {
+      console.error('Invalid productId:', productId);
+      return;
+    }
 
-      axios.get(apiUrl)
-        .then(response => {
-          console.log('API Response:', response.data);
-          this.recordList = response.data.recordList;
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    },
+    axios.get(`http://localhost:8080/product/get/info?id=${productId}`)
+      .then(response => {
+        this.productDetails = response.data.product;
+        console.log('Fetched product:', this.productDetails);
+      })
+      .catch(error => {
+        console.error('Error fetching product details:', error);
+      });
+  },
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -69,8 +98,33 @@ export default {
     handleCurrentChange(currentPage) {
   // Handle current page change
   this.currentPage = currentPage;
-  console.log('Current Page:', this.currentPage);
-  console.log('Page Count:', this.pageCount);
+
+},
+deleteOrder(id) {
+  console.log('Deleting order with ID:', id);
+
+  const requestData = { id };
+
+  console.log('Request Data:', requestData);
+
+  axios.post('http://localhost:8080/record/cancel', requestData, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      console.log('Order canceled successfully:', response.data);
+
+      // 输出删除后的 recordList 看是否正确
+      console.log('Updated recordList:', this.recordList);
+
+      // 在这里处理成功取消订单后的逻辑
+    })
+    .catch(error => {
+      console.error('Failed to cancel order:', error);
+
+      // 在这里处理取消订单失败后的逻辑
+    });
 },
   },
 };
@@ -122,10 +176,11 @@ export default {
         <div class="orderDetailsheadleft">
           <h4>訂單編號 : {{ record.record_id }}</h4>
           <h4>結帳時間 : {{ record.record_date }}</h4>
-          <h4>賣家帳號 : {{ record.consumer_name }}</h4>
+          <h4>賣家帳號 : {{ record.user_id }}</h4>
         </div>
         <div class="orderDetailsheadright">
-          <RouterLink class="btn" to="/">取消交易</RouterLink>
+          <button class="btn" @click="deleteOrder(record.record_id)">取消交易</button>
+
         </div>
       </div>
       <div class="orderDetailsSecond">
