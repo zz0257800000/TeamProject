@@ -95,7 +95,7 @@ export default {
       </div>
 
       <div class="product-icons">
-    <router-link :to="'/UserPage/shoppingCart/' + product.productId" class="cart-button">
+    <router-link :to="'/UserPage/shoppingCart/'" class="cart-button">
       <i class="fas fa-shopping-cart">加入購物車</i> 
     </router-link>
   </div>

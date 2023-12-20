@@ -29,11 +29,11 @@ const router = createRouter({
       name: "loginPage",
       component: () => import("../views/UserPage/loginPage.vue"),
     },
-    {
-      path: "/UserPage/shoppingCart/:productId",
-      name: "shoppingCart",
-      component: () => import("../views/UserPage/shoppingCart.vue"),
-    },
+    // {
+    //   path: "/UserPage/shoppingCart/:productId",
+    //   name: "shoppingCart",
+    //   component: () => import("../views/UserPage/shoppingCart.vue"),
+    // },
     {
       path: "/UserPage/forgotPasswordPage",
       name: "forgotPasswordPage",
@@ -78,6 +78,11 @@ const router = createRouter({
       path: "/test",
       name: "test",
       component: () => import("../views/TestView.vue"),
+    },
+    {
+      path: "/UserPage/shoppingCart",
+      name: "shoppingCart",
+      component: () => import("../views/UserPage/shoppingCart.vue"),
     },
   ],
 });
