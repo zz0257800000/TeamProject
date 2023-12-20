@@ -100,7 +100,7 @@ export default {
       </RouterLink>
 
       <div class="search-container">
-        <input v-model="searchKeyword" placeholder="输入搜索关键字">
+        <input v-model="searchKeyword" placeholder="輸入收尋關鍵字">
         <button @click="handleSearch">搜索</button>
       </div>
 
@@ -113,7 +113,7 @@ export default {
       </div>
       <div>
         <RouterLink class="btn" to="/UserPage/shoppingCart">
-          <i class="fa-solid fa-cart-shopping usericon"></i> 购物车
+          <i class="fa-solid fa-cart-shopping usericon"></i> 購物車
           <span class="notification-badge">{{ cartTotalQuantity }}</span>
         </RouterLink>
       </div>
