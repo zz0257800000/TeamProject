@@ -5,7 +5,7 @@ export default {
     data() {
         return {
             product: null,
-            quantity: 1,
+            quantity: '',
             selectedShipping: '', // Initially no option selected
             paymentMethod: '', // Add a payment method property
             remarksColumn: '',
@@ -55,7 +55,9 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     this.product = data.cartList;
-                    this.quantity = data.cartList.cart_count})
+                    this.quantity = data.cartList.cart_count
+                    console.log(this.product)
+                    })
                 .catch(error => console.error('获取数据时出错:', error));
         },
 
@@ -77,10 +79,10 @@ export default {
         return;
         }
             const orderData = {
-            user_id: this.product.user_id,
-            product_id: this.product.productId,  // 使用 this.product.product_id
-            product_name: this.product.product_name,
-            product_count: this.quantity,
+            user_id: this.userId,
+            product_id: 1,  // 使用 this.product.product_id
+            product_name: "測試",
+            product_count: 1,
             consumer_name: this.recipientName,
             consumer_address: this.recipientAddress,
             consumer_phone: this.recipientPhone,
@@ -114,6 +116,7 @@ export default {
                 })
                 .then(data => {
                     console.log('Success:', data);
+                    console.log(orderData)
                     // 處理成功響應
                 })
                 .catch(error => {
