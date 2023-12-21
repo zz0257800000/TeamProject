@@ -142,7 +142,7 @@ export default {
             <div class="orderDetailshead">
               <div class="orderDetailsheadleft">
                 <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
-                <h4>賣家帳號 : {{ record.user_id }} &nbsp; </h4>
+                <h4>賣家帳號 : xx &nbsp; </h4>
                 <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
                   訂單狀態 : {{ record.status }} &nbsp;
                 </h4>
@@ -169,7 +169,8 @@ export default {
                   <!-- 循环遍历商品信息 -->
                   <tr>
                     <td>{{ record.product_id }}</td>
-                    <td>{{ record.product_name }}</td>
+                    <td> <router-link :to="'/UserPage/productPage/' + record.product_id" class="nameRouter">
+                        {{ record.product_name }} </router-link></td>
                     <td>{{ record.product_count }}</td>
                     <td>{{ record.product_amount - record.shipping_cost }}</td>
                     <td>{{ record.record_date }}</td>
@@ -191,8 +192,9 @@ export default {
               </div>
               <div v-if="record.shipping_method !== '貨到付款'" class="orderInfo1">
                 <h6>付款方式 : {{ record.payment_method }}</h6>
-                <h6>銀行 : {{ record.remittance_title }}</h6>
-                <h6>匯款帳號 : {{ record.remittance_number }}</h6>
+                <h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">銀行 : {{ record.remittance_title }}</h6>
+<h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">匯款帳號 : {{ record.remittance_number }}</h6>
+
               </div>
               <div class="totalCount">
                 <h6>商品金額小計 : ${{ record.product_amount - record.shipping_cost }}</h6>
@@ -225,6 +227,10 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
+.nameRouter {
+  text-decoration: none;
+}
+
 .actionPage {
   display: flex;
   width: 100vw;
@@ -404,7 +410,8 @@ export default {
 
             th,
             td {
-              border: 0px solid #ddd;
+              border: 1px solid #aaaaaa;
+              /* 将 border 值更改为 1px，颜色为 #ddd */
               padding: 8px;
               text-align: left;
             }

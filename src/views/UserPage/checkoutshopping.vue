@@ -91,7 +91,7 @@ export default {
                 remittance_number: "812-00000087888",
                 remarks_column: this.remarksColumn,
                 product_amount: this.getOrderAmount,
-                record_date: new Date(),
+                record_date: new Date().toISOString(),
                 status: "準備中",
                 record_type: "購買",
                 valid: true

@@ -77,9 +77,7 @@ export default {
   if (this.userId === this.product.user_id) {
     // 显示提示信息
     Swal.fire({
-      title: '無法購買',
-      text: '您不能購買自己的商品。',
-      icon: 'warning',
+      title: '購買成功',
     });
   } else {
     // 执行购买逻辑
@@ -137,13 +135,7 @@ export default {
       // 调用 addToCart 函数
       addToCart();
     },
-    handleCheckoutClick() {
-    if (this.userId !== this.product.user_id) {
-      // 這裡添加提示，表示不能購買自己的商品
-      alert('您不能購買自己的商品。');
-      // 如果你希望在此處執行其他邏輯，可以添加相應的代碼
-    }
-  },
+  
   },
 };
 </script>
@@ -199,7 +191,7 @@ export default {
           </router-link> -->
             <button v-if="this.userId != product.user_id" class="cart-button" @click="addToCartAndShowAlert"><i class="fas fa-shopping-cart"></i>加入購物車</button>
 
-            <router-link v-if="this.userId != product.user_id" :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" @click.prevent="handleCheckoutClick">
+            <router-link v-if="this.userId != product.user_id" :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" >
   <i class="fas fa-credit-card"></i> 立即購買
 </router-link>
    
