@@ -71,9 +71,9 @@ export default {
             this.quantity++;
         },
         submitOrder() {
-        // 檢查是否所有必填項目都已經填寫
-        if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
-                alert('請填寫所有必填項目');
+ // 檢查是否所有必填項目都已經填寫
+ if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
+        alert('請填寫所有必填項目');
         return;
         
     }            const orderData = {
@@ -126,9 +126,9 @@ export default {
     },
 };
 </script>
-
 <template>
     <div class="mainshow">
+
 
         <div class="countAll">
             <div class="leftInfo">

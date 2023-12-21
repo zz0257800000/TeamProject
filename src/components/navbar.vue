@@ -105,14 +105,14 @@ export default {
       </div>
 
       <div>
-        <RouterLink class="btn" to="/UserPage/buyingList"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
+        <RouterLink class="btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
       </div>
 
       <div>
-        <RouterLink class="btn" to="/UserPage/loginPage"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
+        <RouterLink class="btn" to="/UserPage/loginPage"  v-if="isLoggedIn"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
       </div>
       <div>
-        <RouterLink class="btn" to="/UserPage/shoppingCart">
+        <RouterLink class="btn" to="/UserPage/shoppingCart"  v-if="isLoggedIn">
           <i class="fa-solid fa-cart-shopping usericon"></i> 購物車
           <span class="notification-badge">{{ cartTotalQuantity }}</span>
         </RouterLink>
@@ -327,7 +327,7 @@ export default {
       z-index: 2;
 
       i {
-        font-size: 2pt;
+        font-size: 20pt;
         margin: 0 10px;
       }
 
@@ -345,7 +345,9 @@ export default {
 
 .Marquee {
   width: 100vw;
+
   height: 10vh;
+  background-color: rgb(48, 48, 48);
 
 
   //跑馬燈
@@ -378,6 +380,4 @@ export default {
       right: 0;
     }
   }
-}
-
-</style>
+}</style>

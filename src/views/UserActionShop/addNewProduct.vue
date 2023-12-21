@@ -5,7 +5,7 @@ export default {
   data() {
     return {
       productName: '',
-      productType: "漫畫",
+      productType: "書籍動漫",
 
       productDescription: '',
       productPrice: 1,
@@ -120,11 +120,12 @@ export default {
           <div class="form-group">
             <label for="productType">產品分類:</label>
             <select id="productType" v-model="productType" required>
-              <option value="漫畫">漫畫</option>
-              <option value="衣服">衣服</option>
-              <option value="包包">包包</option>
-              <option value="手機">手機</option>
-              <option value="電視">電視</option>
+              <option value="書籍動漫">書籍動漫</option>
+              <option value="食品專區">食品專區</option>
+              <option value="精品服飾">精品服飾</option>
+              <option value="日常用品">日常用品</option>
+              <option value="3C產品">3C產品</option>
+              <option value="寵物專區">寵物專區</option>
               <option value="機車零件">機車零件</option>
             </select>
           </div>

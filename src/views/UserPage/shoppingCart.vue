@@ -6,7 +6,7 @@ export default {
     return {
 
       del:"",
-      // cartTotalQuantity:[],
+      cartTotalQuantity:[],
       cartList:[],
       userId: sessionStorage.getItem('user_Id'),
       
@@ -53,6 +53,8 @@ export default {
       }
     },
     handledelete: function (index) {
+   
+
 
   // 获取要删除的项目
   const deletedItem = this.cartList[index];
@@ -140,7 +142,7 @@ export default {
             <button @click="handledelete(index)" class="delete-button">刪除</button>
           </div>
         </div>
-        <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
+        <RouterLink class="checkout-button" to="/">結帳</RouterLink>
       </div>
     </div>
 

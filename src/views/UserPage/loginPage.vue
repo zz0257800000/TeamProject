@@ -28,10 +28,15 @@ export default {
 
 
         })
-        .catch((error) => {
-          console.error(error);
-          // 處理錯誤，顯示錯誤訊息等
-        });
+        .catch(error => {
+      console.error(error);
+      if (error.response && error.response.status === 401) {
+        // 401 Unauthorized status typically indicates a password error
+        alert('密碼錯誤請重新登入');
+      } else {
+        alert('密碼錯誤請重新登入');
+      }
+    });
     },
   },
 };
