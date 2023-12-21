@@ -142,7 +142,7 @@ export default {
             <button @click="handledelete(index)" class="delete-button">刪除</button>
           </div>
         </div>
-        <RouterLink class="checkout-button" to="/UserPage/checkoutshopping/">結帳</RouterLink>
+        <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
       </div>
     </div>
 
