@@ -327,7 +327,7 @@ export default {
       z-index: 2;
 
       i {
-        font-size: 20pt;
+        font-size: 2pt;
         margin: 0 10px;
       }
 
@@ -345,9 +345,7 @@ export default {
 
 .Marquee {
   width: 100vw;
-
   height: 10vh;
-  background-color: rgb(48, 48, 48);
 
 
   //跑馬燈
@@ -380,4 +378,6 @@ export default {
       right: 0;
     }
   }
-}</style>
+}
+
+</style>

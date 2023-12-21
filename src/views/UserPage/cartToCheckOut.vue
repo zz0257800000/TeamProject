@@ -12,12 +12,13 @@ export default {
             recipientName: '',
             recipientPhone: '',
             recipientAddress: '',
+
+            userId: sessionStorage.getItem('user_Id'),
+            cartList:[],
         };
     },
     mounted() {
         this.fetchProductDetails();
-        this.userId = sessionStorage.getItem('user_Id');  // Get user_Id from sessionStorage
-
     },
     computed: {
         getShippingFee() {
@@ -36,8 +37,10 @@ export default {
             }
         },
         getTotalAmount() {
-            if (this.product) {
-                return this.product.price * this.quantity;
+            if (this.product && this.product.length > 0) {
+                return this.product.reduce((total, item) => {
+                    return total + (item.cart_amount * item.cart_count);
+                }, 0);
             }
             return 0;
         },
@@ -46,55 +49,52 @@ export default {
         },
     },
     methods: {
+        // 調用 API 獲取商品列表
         fetchProductDetails() {
-            // 使用 this.$route.params.productId 获取路由中的 ID 参数
-            const productId = this.$route.params.productId;
-            console.log('productId:', productId);
+            fetch(`http://localhost:8080/cart/get/user_id?id=${this.userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.product = data.cartList;
+                    this.quantity = data.cartList.cart_count})
+                .catch(error => console.error('获取数据时出错:', error));
+        },
 
-            // 调用 API 获取商品详情
-            axios.get(`http://localhost:8080/product/get/info?id=${productId}`)
-                .then(response => {
-                    this.product = response.data.product;
-                    console.log('Fetched product:', this.product);
-
-                })
-                .catch(error => {
-                    console.error('Error fetching product details:', error);
-                });
-        },
-        decrementQuantity() {
-            if (this.quantity > 1) {
-                this.quantity--;
-            }
-        },
-        incrementQuantity() {
-            this.quantity++;
-        },
+        //控制各品項數量
+        // decrementQuantity(item) {
+        //     if (item.cart_count > 1) {
+        //         item.cart_count--;
+        //     }
+        // },
+        // incrementQuantity(item) {
+        //     item.cart_count++;
+        // },
+        
+        //欄位防呆
         submitOrder() {
         // 檢查是否所有必填項目都已經填寫
         if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
-                alert('請填寫所有必填項目');
+            alert('請填寫所有必填項目');
         return;
-        
-    }            const orderData = {
-        user_id: this.userId,  // Use the userId property
-                product_id: this.product.productId,  // 使用 this.product.product_id
-                product_name: this.product.product_name,
-                product_count: this.quantity,
-                consumer_name: this.recipientName,
-                consumer_address: this.recipientAddress,
-                consumer_phone: this.recipientPhone,
-                shipping_method: this.selectedShipping,
-                shipping_cost: this.getShippingFee,
-                payment_method: this.paymentMethod,
-                remittance_title: "中國信託",
-                remittance_number: "812-00000087888",
-                remarks_column: this.remarksColumn,
-                product_amount: this.getOrderAmount,
-                record_date: new Date(),
-                status: "準備中",
-                record_type: "購買",
-                valid: true
+        }
+            const orderData = {
+            user_id: this.product.user_id,
+            product_id: this.product.productId,  // 使用 this.product.product_id
+            product_name: this.product.product_name,
+            product_count: this.quantity,
+            consumer_name: this.recipientName,
+            consumer_address: this.recipientAddress,
+            consumer_phone: this.recipientPhone,
+            shipping_method: this.selectedShipping,
+            shipping_cost: this.getShippingFee,
+            payment_method: this.paymentMethod,
+            remittance_title: "中國信託",
+            remittance_number: "812-00000087888",
+            remarks_column: this.remarksColumn,
+            product_amount: this.getOrderAmount,
+            record_date: new Date(),
+            status: "準備中",
+            record_type: "購買",
+            valid: true
 
             };
 
@@ -135,18 +135,21 @@ export default {
                 <div class="productsInfo">
                     <h3>XXX小舖</h3>
 
-                    <div class="produtsrow" v-if="product">
-                        <img :src="product.photo" alt="Product Image" class="product-image">
+                    <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
+                        <img :src="cartList.photo" alt="Product Image" class="product-image">
                         <div class="product-details">
-                            <h4>{{ product.product_name }}</h4>
-                            <p>{{ product.product_type }}</p>
-                            <p>${{ product.price }}</p>
+                            <p>{{ item.product_name }}</p>
                         </div>
+                        <p>單價${{ item.cart_amount }}</p>
                         <div class="quantity">
-                            <p>數量：</p>
-                            <button @click="decrementQuantity">-</button>
-                            <input v-model="quantity" type="number" min="1" />
-                            <button @click="incrementQuantity">+</button>
+                            <!-- <p>數量：</p> -->
+                            <p>{{ item.cart_count }}</p>
+                            <!-- <button @click="decrementQuantity(item)">-</button>
+                            <input v-model="item.cart_count" type="number" min="1" />
+                            <button @click="incrementQuantity(item)">+</button> -->
+                        </div>
+                        <div class="item-total">
+                            <span class="total-value">總價：{{ item.cart_amount * item.cart_count }}</span>
                         </div>
                     </div>
                 </div>
