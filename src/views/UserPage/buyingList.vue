@@ -186,14 +186,13 @@ export default {
                 <h5>收件人 : {{ record.consumer_name }}</h5>
                 <h5>手機 : {{ record.consumer_phone }}</h5>
                 <h5>地址 : {{ record.consumer_address }}</h5>
-                <h6>備註 : {{ record.remarks_column }}</h6>
+                <h6 style="color: red;">備註 : {{ record.remarks_column }}</h6>
 
               </div>
-              <div class="orderInfo1">
+              <div v-if="record.shipping_method !== '貨到付款'" class="orderInfo1">
                 <h6>付款方式 : {{ record.payment_method }}</h6>
                 <h6>銀行 : {{ record.remittance_title }}</h6>
                 <h6>匯款帳號 : {{ record.remittance_number }}</h6>
-
               </div>
               <div class="totalCount">
                 <h6>商品金額小計 : ${{ record.product_amount - record.shipping_cost }}</h6>
@@ -499,4 +498,5 @@ export default {
 .pagination-current-page {
   margin: 0 10px;
   font-size: 16px;
-}</style>
+}
+</style>
