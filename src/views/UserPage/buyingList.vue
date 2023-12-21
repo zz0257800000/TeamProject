@@ -66,32 +66,7 @@ export default {
       this.currentPage = currentPage;
 
     },
-    deleteOrder(id) {
-      console.log('Deleting order with ID:', id);
-
-      const requestData = { id };
-
-      console.log('Request Data:', requestData);
-
-      axios.post('http://localhost:8080/record/cancel', requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => {
-          console.log('Order canceled successfully:', response.data);
-
-          // 输出删除后的 recordList 看是否正确
-          console.log('Updated recordList:', this.recordList);
-
-          // 在这里处理成功取消订单后的逻辑
-        })
-        .catch(error => {
-          console.error('Failed to cancel order:', error);
-
-          // 在这里处理取消订单失败后的逻辑
-        });
-    },
+    
   },
 };
 </script>
@@ -106,7 +81,7 @@ export default {
 
         <RouterLink class="btn" to="/UserPage/buyingList"><i class="fa-solid fa-bars-staggered"></i> &nbsp;購買清單
         </RouterLink>
-        <RouterLink class="btn" to=""><i class="fa-solid fa-heart"></i> &nbsp; 收藏 </RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
 
         <RouterLink class="btn" to=""><i class="fa-solid fa-envelope-open"></i> &nbsp;訂單已完成</RouterLink>
 
@@ -148,7 +123,7 @@ export default {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" @click="deleteOrder(record.record_id)">取消交易</button>
+                <button class="btn" @click="cancelOrder">取消交易</button>
               </div>
             </div>
 
