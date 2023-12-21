@@ -86,7 +86,7 @@ export default {
         try {
           // 构建请求参数
           const req = {
-            produce_id: this.product.productId,
+            product_id: this.product.productId,
             // quantity: this.quantity,
             user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
             cart_date: "2023-12-15T16:30:00",
