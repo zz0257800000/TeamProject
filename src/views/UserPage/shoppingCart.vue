@@ -6,7 +6,7 @@ export default {
     return {
 
       del:"",
-      cartTotalQuantity:[],
+      // cartTotalQuantity:[],
       cartList:[],
       userId: sessionStorage.getItem('user_Id'),
       
@@ -53,8 +53,6 @@ export default {
       }
     },
     handledelete: function (index) {
-   
-
 
   // 获取要删除的项目
   const deletedItem = this.cartList[index];
