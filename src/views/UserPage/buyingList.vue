@@ -56,7 +56,7 @@ export default {
         });
     },
 
-  
+
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -138,76 +138,76 @@ export default {
         </div>
         <div class="productAdmimList">
           <div class="orderDetails" v-for="(record, recordIndex) in paginatedProducts" :key="recordIndex">
-  <!-- 订单信息 -->
-  <div class="orderDetailshead">
-    <div class="orderDetailsheadleft">
-      <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
-      <h4>賣家帳號 : {{ record.user_id }} &nbsp; </h4>
-      <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
-  訂單狀態 : {{ record.status }} &nbsp;
-</h4>
-    </div>
-    <div class="orderDetailsheadright">
-      <button class="btn" @click="deleteOrder(record.record_id)">取消交易</button>
-    </div>
-  </div>
-  
-  <!-- 商品信息 -->
-  <div class="orderDetailsSecond">
-    <table>
-      <thead>
-        <tr>
-          <th>商品編號</th>
-          <th class="productTitle">商品名稱</th>
-          <th>訂購數量</th>
-          <th>商品價格</th>
-          <th>結帳時間</th>
+            <!-- 订单信息 -->
+            <div class="orderDetailshead">
+              <div class="orderDetailsheadleft">
+                <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
+                <h4>賣家帳號 : {{ record.user_id }} &nbsp; </h4>
+                <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
+                  訂單狀態 : {{ record.status }} &nbsp;
+                </h4>
+              </div>
+              <div class="orderDetailsheadright">
+                <button class="btn" @click="deleteOrder(record.record_id)">取消交易</button>
+              </div>
+            </div>
 
-        </tr>
-      </thead>
-      <tbody>
-      <!-- 循环遍历商品信息 -->
-      <tr>
-        <td>{{ record.product_id }}</td>
-        <td>{{ record.product_name }}</td>
-        <td>{{ record.product_count }}</td>
-        <td>{{ record.product_amount - record.shipping_cost }}</td>
-        <td>{{ record.record_date }}</td>
+            <!-- 商品信息 -->
+            <div class="orderDetailsSecond">
+              <table>
+                <thead>
+                  <tr>
+                    <th>商品編號</th>
+                    <th class="productTitle">商品名稱</th>
+                    <th>訂購數量</th>
+                    <th>商品價格</th>
+                    <th>結帳時間</th>
 
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <!-- 订单详情和总计信息 -->
-  <div class="orderDetailsThird">
-    <div class="orderInfo">
-      <h5>運送方式 : {{ record.shipping_method }}</h5>
-      <h5>收件人 : {{ record.consumer_name }}</h5>
-      <h5>手機 : {{ record.consumer_phone }}</h5>
-      <h5>地址 : {{ record.consumer_address }}</h5>
-      <h6>備註 : {{ record.remarks_column }}</h6>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- 循环遍历商品信息 -->
+                  <tr>
+                    <td>{{ record.product_id }}</td>
+                    <td>{{ record.product_name }}</td>
+                    <td>{{ record.product_count }}</td>
+                    <td>{{ record.product_amount - record.shipping_cost }}</td>
+                    <td>{{ record.record_date }}</td>
 
-    </div>
-    <div class="orderInfo1">
-      <h6>付款方式 : {{ record.payment_method }}</h6>
-      <h6>銀行 : {{ record.remittance_title }}</h6>
-      <h6>匯款帳號 : {{ record.remittance_number }}</h6>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-    </div>
-    <div class="totalCount">
-      <h6>商品金額小計 : ${{ record.product_amount - record.shipping_cost }}</h6>
-      <h6>運費 : ${{ record.shipping_cost }}</h6>
-      <h6>結帳總金額 : ${{ record.product_amount }}</h6>
-    </div>
-    <div class="orderInfo2">
+            <!-- 订单详情和总计信息 -->
+            <div class="orderDetailsThird">
+              <div class="orderInfo">
+                <h5>運送方式 : {{ record.shipping_method }}</h5>
+                <h5>收件人 : {{ record.consumer_name }}</h5>
+                <h5>手機 : {{ record.consumer_phone }}</h5>
+                <h5>地址 : {{ record.consumer_address }}</h5>
+                <h6>備註 : {{ record.remarks_column }}</h6>
 
-      <RouterLink class="btn" to="/"> 確認收貨</RouterLink> 
+              </div>
+              <div class="orderInfo1">
+                <h6>付款方式 : {{ record.payment_method }}</h6>
+                <h6>銀行 : {{ record.remittance_title }}</h6>
+                <h6>匯款帳號 : {{ record.remittance_number }}</h6>
 
-    </div>
+              </div>
+              <div class="totalCount">
+                <h6>商品金額小計 : ${{ record.product_amount - record.shipping_cost }}</h6>
+                <h6>運費 : ${{ record.shipping_cost }}</h6>
+                <h6>結帳總金額 : ${{ record.product_amount }}</h6>
+              </div>
+              <div class="orderInfo2">
 
-  </div>
-</div>
+                <RouterLink class="btn" to="/"> 確認收貨</RouterLink>
+
+              </div>
+
+            </div>
+          </div>
 
         </div>
         <div class="pagination-container">
@@ -414,11 +414,11 @@ export default {
 
         .orderDetailsThird {
           border: 1px solid #8e8e8e;
-          width: 80vw;
+          width: 81.3vw;
           margin: 10px;
           height: 20vh;
           display: flex;
-        justify-content: space-around;
+          justify-content: space-around;
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
@@ -426,12 +426,14 @@ export default {
             margin: 2px;
 
           }
+
           .orderInfo1 {
             border: 0px solid rgb(255, 0, 0);
             width: 20vw;
             margin: 2px;
 
           }
+
           .orderInfo2 {
             border: 0px solid rgb(255, 0, 0);
             margin: 2px;
@@ -445,13 +447,15 @@ export default {
               color: white;
               transition: 0.5s;
               position: relative;
-              top: 50%;
+              top: 70%;
+              right: 10%;
 
               &:hover {
                 background-color: #517a53;
               }
             }
           }
+
           .totalCount {
             border: 0px solid rgb(255, 0, 0);
 
