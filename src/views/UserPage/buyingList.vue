@@ -9,8 +9,6 @@ export default {
       record: {},
       userId: '', // Add userId to data
       recordList: [],
-      productDetails: { product_id: null }, // Provide a default product_id
-      recordId: 29, // 替换为你实际的订单ID
 
     };
   },
@@ -22,110 +20,78 @@ export default {
   },
   computed: {
     paginatedProducts() {
-    // 逆序 recordList
-    const reversedRecordList = [...this.recordList].reverse();
-    
-    const start = (this.currentPage - 1) * this.perPage;
-    const end = start + this.perPage;
+      // 逆序 recordList
+      const reversedRecordList = [...this.recordList].reverse();
 
-    // 返回分页后的逆序记录列表
-    return reversedRecordList.slice(start, end);
-  },
-  pageCount() {
-    return Math.ceil(this.recordList.length / this.perPage);
-  },
+      const start = (this.currentPage - 1) * this.perPage;
+      const end = start + this.perPage;
+
+      // 返回分页后的逆序记录列表
+      return reversedRecordList.slice(start, end);
+    },
+    pageCount() {
+      return Math.ceil(this.recordList.length / this.perPage);
+    },
   },
   methods: {
     fetchData() {
       this.fetchRecord();
     },
-   // 修改 fetchProductDetails 方法
-   
-    
-fetchRecord() {
-  const userId = this.userId;
-  const apiUrl = `http://localhost:8080/record/get/user_id?id=${userId}`;
+    // 修改 fetchProductDetails 方法
 
-  axios.get(apiUrl)
-      .then(response => {
-        console.log('API Response:', response.data);
-        this.recordList = response.data.recordList;
 
-        // 在需要的时候手动调用 fetchProductDetails
-        this.fetchProductDetailsForAllRecords();
-      })
-    
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-},
+    fetchRecord() {
+      const userId = this.userId;
+      const apiUrl = `http://localhost:8080/record/get/user_id?id=${userId}`;
 
-fetchProductDetailsForAllRecords() {
-  const fetchProductIdPromises = this.recordList.map(record => {
-    const recordId = record.record_id;
-    return this.fetchProductId(recordId);
-    });
+      axios.get(apiUrl)
+        .then(response => {
+          console.log('API Response:', response.data);
+          this.recordList = response.data.recordList;
 
-    Promise.all(fetchProductIdPromises)
-      .then(productIds => {
-        productIds.forEach(productId => {
-          this.fetchProductDetails(productId);
+        })
+
+        .catch(error => {
+          console.error('Error fetching data:', error);
         });
-      })
-      .catch(error => {
-        console.error('Error fetching product details:', error);
-      });
-  },  fetchProductDetails(productId) {
-    // 添加檢查以確保 productId 有效
-    if (!productId) {
-      console.error('Invalid productId:', productId);
-      return;
-    }
+    },
 
-    axios.get(`http://localhost:8080/product/get/info?id=${productId}`)
-      .then(response => {
-        this.productDetails = response.data.product;
-        console.log('Fetched product:', this.productDetails);
-      })
-      .catch(error => {
-        console.error('Error fetching product details:', error);
-      });
-  },
+  
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
     },
     handleCurrentChange(currentPage) {
-  // Handle current page change
-  this.currentPage = currentPage;
+      // Handle current page change
+      this.currentPage = currentPage;
 
-},
-deleteOrder(id) {
-  console.log('Deleting order with ID:', id);
-
-  const requestData = { id };
-
-  console.log('Request Data:', requestData);
-
-  axios.post('http://localhost:8080/record/cancel', requestData, {
-    headers: {
-      'Content-Type': 'application/json',
     },
-  })
-    .then(response => {
-      console.log('Order canceled successfully:', response.data);
+    deleteOrder(id) {
+      console.log('Deleting order with ID:', id);
 
-      // 输出删除后的 recordList 看是否正确
-      console.log('Updated recordList:', this.recordList);
+      const requestData = { id };
 
-      // 在这里处理成功取消订单后的逻辑
-    })
-    .catch(error => {
-      console.error('Failed to cancel order:', error);
+      console.log('Request Data:', requestData);
 
-      // 在这里处理取消订单失败后的逻辑
-    });
-},
+      axios.post('http://localhost:8080/record/cancel', requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          console.log('Order canceled successfully:', response.data);
+
+          // 输出删除后的 recordList 看是否正确
+          console.log('Updated recordList:', this.recordList);
+
+          // 在这里处理成功取消订单后的逻辑
+        })
+        .catch(error => {
+          console.error('Failed to cancel order:', error);
+
+          // 在这里处理取消订单失败后的逻辑
+        });
+    },
   },
 };
 </script>
@@ -172,65 +138,88 @@ deleteOrder(id) {
         </div>
         <div class="productAdmimList">
           <div class="orderDetails" v-for="(record, recordIndex) in paginatedProducts" :key="recordIndex">
-      <div class="orderDetailshead">
-        <div class="orderDetailsheadleft">
-          <h4>訂單編號 : {{ record.record_id }}</h4>
-          <h4>結帳時間 : {{ record.record_date }}</h4>
-          <h4>賣家帳號 : {{ record.user_id }}</h4>
-        </div>
-        <div class="orderDetailsheadright">
-          <button class="btn" @click="deleteOrder(record.record_id)">取消交易</button>
-
-        </div>
-      </div>
-      <div class="orderDetailsSecond">
-        <table>
-          <thead>
-            <tr>
-              <th class="productPic">商品圖片</th>
-              <th>商品編號</th>
-              <th class="productTitle">商品名稱</th>
-              <th>數量</th>
-              <th>商品價格</th>
-              <th>購買時間</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(product, productIndex) in record.products" :key="productIndex">
-              <td>
-                <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
-                  @click="() => openImageModal(product)">
-              </td>
-              <td>{{ product.product_id }}</td>
-              <td>{{ product.product_name }}</td>
-              <td>{{ product.product_count }}</td>
-              <td>{{ product.product_amount }}</td>
-              <td>{{ product.record_date }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="orderDetailsThird">
-        <div class="orderInfo">
-          <RouterLink class="btn" to="">訂單詳情</RouterLink>
-        </div>
-        <div class="totalCount">
-          <h4>商品金額小計 : $ </h4>
-          <h4>運費 : ${{ record.shipping_cost }}</h4>
-          <h4>結帳總金額 : ${{ record.product_amount }}</h4>
-        </div>
-      </div>
+  <!-- 订单信息 -->
+  <div class="orderDetailshead">
+    <div class="orderDetailsheadleft">
+      <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
+      <h4>賣家帳號 : {{ record.user_id }} &nbsp; </h4>
+      <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
+  訂單狀態 : {{ record.status }} &nbsp;
+</h4>
+    </div>
+    <div class="orderDetailsheadright">
+      <button class="btn" @click="deleteOrder(record.record_id)">取消交易</button>
     </div>
   </div>
-  <div class="pagination-container">
-  <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
-    上一页
-  </button>
-  <span class="pagination-current-page">第 {{ currentPage }} 页</span>
-  <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)" :disabled="currentPage === pageCount">
-    下一页
-  </button>
+  
+  <!-- 商品信息 -->
+  <div class="orderDetailsSecond">
+    <table>
+      <thead>
+        <tr>
+          <th>商品編號</th>
+          <th class="productTitle">商品名稱</th>
+          <th>訂購數量</th>
+          <th>商品價格</th>
+          <th>結帳時間</th>
+
+        </tr>
+      </thead>
+      <tbody>
+      <!-- 循环遍历商品信息 -->
+      <tr>
+        <td>{{ record.product_id }}</td>
+        <td>{{ record.product_name }}</td>
+        <td>{{ record.product_count }}</td>
+        <td>{{ record.product_amount - record.shipping_cost }}</td>
+        <td>{{ record.record_date }}</td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- 订单详情和总计信息 -->
+  <div class="orderDetailsThird">
+    <div class="orderInfo">
+      <h5>運送方式 : {{ record.shipping_method }}</h5>
+      <h5>收件人 : {{ record.consumer_name }}</h5>
+      <h5>手機 : {{ record.consumer_phone }}</h5>
+      <h5>地址 : {{ record.consumer_address }}</h5>
+      <h6>備註 : {{ record.remarks_column }}</h6>
+
+    </div>
+    <div class="orderInfo1">
+      <h6>付款方式 : {{ record.payment_method }}</h6>
+      <h6>銀行 : {{ record.remittance_title }}</h6>
+      <h6>匯款帳號 : {{ record.remittance_number }}</h6>
+
+    </div>
+    <div class="totalCount">
+      <h6>商品金額小計 : ${{ record.product_amount - record.shipping_cost }}</h6>
+      <h6>運費 : ${{ record.shipping_cost }}</h6>
+      <h6>結帳總金額 : ${{ record.product_amount }}</h6>
+    </div>
+    <div class="orderInfo2">
+
+      <RouterLink class="btn" to="/"> 確認收貨</RouterLink> 
+
+    </div>
+
+  </div>
 </div>
+
+        </div>
+        <div class="pagination-container">
+          <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
+            上一页
+          </button>
+          <span class="pagination-current-page">第 {{ currentPage }} 页</span>
+          <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)"
+            :disabled="currentPage === pageCount">
+            下一页
+          </button>
+        </div>
       </div>
     </div>
 
@@ -272,6 +261,7 @@ deleteOrder(id) {
     height: 42vw;
     flex-direction: column;
     display: flex;
+
     .btn {
       display: flex;
       align-items: center;
@@ -328,128 +318,151 @@ deleteOrder(id) {
   }
 
   .productManagement {
-  background-color: #ecf0f1;
-  height: 161vh;
+    background-color: #ecf0f1;
+    height: 161vh;
 
-  .productCreate {
-    display: flex;
-    justify-content: space-between;
-    width: 83vw;
-    padding: 20px;
-
-    h1 {
-      margin: 0;
-      color: #3498db; /* 修改标题颜色 */
-    }
-
-    .btn {
+    .productCreate {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 20%;
-      color: #ecf0f1;
-      background-color: #2c3e50; /* 修改按钮颜色 */
-      padding: 10px;
-      border-radius: 5px;
-      text-decoration: none;
-      text-align: center;
+      justify-content: space-between;
+      width: 83vw;
+      padding: 20px;
 
-      &:hover {
-        background-color: #34495e; /* 修改按钮悬停颜色 */
+      h1 {
+        margin: 0;
+        color: #3498db;
+        /* 修改标题颜色 */
+      }
+
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20%;
+        color: #ecf0f1;
+        background-color: #2c3e50;
+        /* 修改按钮颜色 */
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        text-align: center;
+
+        &:hover {
+          background-color: #34495e;
+          /* 修改按钮悬停颜色 */
+        }
       }
     }
-  }
 
-  .productAdmimList {
-    height: 120vh;
-    padding: 20px;
-    border: 0px solid #e74c3c;
-    
-    .orderDetails {
-      height: 55vh;
-      border: 1px solid #808080;
-      background-color: #fbfffc;
-      transition: 0.5s;
-      margin-bottom: 20px; /* 添加20px的底部间隔 */
+    .productAdmimList {
+      height: 120vh;
+      padding: 20px;
+      border: 0px solid #e74c3c;
 
-      &:hover {
-        box-shadow: 0 0 20px rgba(71, 227, 255, 0.8);
-      }
+      .orderDetails {
+        height: 55vh;
+        border: 1px solid #808080;
+        background-color: #fbfffc;
+        transition: 0.5s;
+        margin-bottom: 20px;
+        /* 添加20px的底部间隔 */
 
-      .orderDetailshead {
-        border: 0px solid #e74c3c;
-        margin: 10px;
-        justify-content: space-around;
-        display: flex;
+        &:hover {
+          box-shadow: 0 0 20px rgba(71, 227, 255, 0.8);
+        }
 
-        .orderDetailsheadleft {
-          display: flex;
-          width: 70vw;
+        .orderDetailshead {
           border: 0px solid #e74c3c;
-        }
-
-        .orderDetailsheadright {
+          margin: 10px;
+          justify-content: space-around;
           display: flex;
-          justify-content: center;
-          border-radius: 10px;
-          width: 10vw;
-          background-color: #e74c3c; /* 修改右侧头部背景颜色 */
-          color: rgb(255, 255, 255);
-        }
-      }
 
-      .orderDetailsSecond {
-        border: 1px solid #afafaf;
-        height: 25vh;
-        margin: 10px;
-        overflow: auto;
+          .orderDetailsheadleft {
+            display: flex;
+            width: 70vw;
+            border: 0px solid #e74c3c;
+          }
 
-        table {
-          width: 100%;
-          border-collapse: collapse;
-
-          th, td {
-            border: 0px solid #ddd;
-            padding: 8px;
-            text-align: left;
+          .orderDetailsheadright {
+            display: flex;
+            justify-content: center;
+            border-radius: 10px;
+            width: 10vw;
+            background-color: #e74c3c;
+            /* 修改右侧头部背景颜色 */
+            color: rgb(255, 255, 255);
           }
         }
-      }
 
-      .orderDetailsThird {
-        border: 0px solid #e74c3c;
-        width: 30vw;
-        margin: 10px;
-        height: 20vh;
-        display: flex;
-        position: relative;
-        left: 62%;
+        .orderDetailsSecond {
+          border: 1px solid #afafaf;
+          height: 25vh;
+          margin: 10px;
+          overflow: auto;
 
-        .orderInfo {
-          .btn {
-            font-size: 15pt;
-            width: 10vw;
-            background-color: #54d45b;
-            color: white;
-            transition: 0.5s;
-            position: relative;
-            top: 50%;
+          table {
+            width: 100%;
+            border-collapse: collapse;
 
-            &:hover {
-              background-color: #517a53;
+            th,
+            td {
+              border: 0px solid #ddd;
+              padding: 8px;
+              text-align: left;
             }
           }
         }
 
-        .totalCount {
+        .orderDetailsThird {
+          border: 1px solid #8e8e8e;
+          width: 80vw;
           margin: 10px;
-          padding: 10px;
-          width: 25vw;
+          height: 20vh;
+          display: flex;
+        justify-content: space-around;
+
+          .orderInfo {
+            border: 0px solid rgb(255, 0, 0);
+            width: 40vw;
+            margin: 2px;
+
+          }
+          .orderInfo1 {
+            border: 0px solid rgb(255, 0, 0);
+            width: 20vw;
+            margin: 2px;
+
+          }
+          .orderInfo2 {
+            border: 0px solid rgb(255, 0, 0);
+            margin: 2px;
+
+            .btn {
+              border: 0px solid rgb(255, 0, 0);
+
+              font-size: 12pt;
+              width: 9vw;
+              background-color: #ff6c22;
+              color: white;
+              transition: 0.5s;
+              position: relative;
+              top: 50%;
+
+              &:hover {
+                background-color: #517a53;
+              }
+            }
+          }
+          .totalCount {
+            border: 0px solid rgb(255, 0, 0);
+
+            margin: 2px;
+            padding: 2px;
+            width: 17vw;
+          }
         }
       }
     }
   }
-}
 
 }
 
@@ -482,5 +495,4 @@ deleteOrder(id) {
 .pagination-current-page {
   margin: 0 10px;
   font-size: 16px;
-}
-</style>
+}</style>
