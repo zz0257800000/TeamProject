@@ -11,6 +11,7 @@ export default {
       searchKeyword: '',
       cartTotalQuantity: "",
       isUserLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE',
+      user: null, // 初始化为 null 或一个空对象
 
     }
   },
@@ -52,7 +53,23 @@ export default {
       return sessionStorage.getItem('someData');
     },
   },
+  mounted() {
+    // 使用 sessionStorage 中的 user_Id
+    const userId = sessionStorage.getItem('user_Id');
+    console.log(userId);
 
+    // 调用获取用户信息的 API
+    axios.get(`http://localhost:8080/user/info?id=${userId}`)
+      .then(response => {
+        // 確保 response.data.user 存在
+        this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
+        console.log(response.data);
+
+      })
+      .catch(error => {
+        console.error('Error fetching user info:', error);
+      });
+  },
   components: {
     RouterLink
 
@@ -75,8 +92,8 @@ export default {
 
 
 
-        <div>      使用者名稱: {{ userName }}
-
+        <div>       
+<span v-if="user" >使用者帳號: {{ user.email }}</span>
           <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
           <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
             <i class="fa-solid fa-store"></i> 我的拍賣

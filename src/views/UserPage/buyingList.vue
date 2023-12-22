@@ -191,12 +191,12 @@ export default {
         </div>
         <div class="pagination-container">
           <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
-            上一页
+            上一頁
           </button>
-          <span class="pagination-current-page">第 {{ currentPage }} 页</span>
+          <span class="pagination-current-page">第 {{ currentPage }} 頁</span>
           <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)"
             :disabled="currentPage === pageCount">
-            下一页
+            下一頁
           </button>
         </div>
       </div>
