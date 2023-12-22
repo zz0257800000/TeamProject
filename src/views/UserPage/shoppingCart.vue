@@ -9,50 +9,22 @@ export default {
       // cartTotalQuantity:[],
       cartList:[],
       userId: sessionStorage.getItem('user_Id'),
-      
-      // itemList: [
-      //   { 
-      //     cartDate: '2023-12-15T16:30:00',
-      //     productId: '1',
-      //     productName: '優質短袖白T',
-      //     imgUrl: 'https://images.unsplash.com/photo-1534961880437-ce5ae2033053?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-      //     cartAmount: 500,
-      //     cartCount: 2,
-      //   },
-      //   {
-      //     productId: '2',
-      //     itemName: '骷髏手短黑T',
-      //     imgUrl: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-      //     price: '790',
-      //     count: '3'
-      //   },
-      //   {
-      //     productId: '3',
-      //     itemName: '超時尚牛仔褲',
-      //     imgUrl: 'https://images.unsplash.com/photo-1529391409740-59f2cea08bc6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1124&q=80',
-      //     price: '1200',
-      //     count: '1'
-      //   },
-      //   {
-      //     productId: '4',
-      //     itemName: '質感褐色系大衣服',
-      //     imgUrl: 'https://images.unsplash.com/photo-1491998664548-0063bef7856c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-      //     price: '2300',
-      //     count: '1'
-      //   },
-      // ]
     };
   },
   methods: {
-    handlePlus: function (item) {
-      item.cart_count++;
-    },
-    handleSub: function (item) {
-      if (item.cart_count > 1) {
-        item.cart_count--;
-      }
-    },
-    handledelete: function (index) {
+  handlePlus: function (item) {
+    item.cart_count++;
+    // 使用 api.cartCreate 更新商品數量和價格
+    this.updateCartItem(item);
+  },
+  handleSub: function (item) {
+    if (item.cart_count > 1) {
+      item.cart_count--;
+      // 使用 api.cartCreate 更新商品數量和價格
+      this.updateCartItem(item);
+    }
+  },
+  handledelete: function (index) {
 
   // 获取要删除的项目
   const deletedItem = this.cartList[index];
@@ -87,6 +59,27 @@ export default {
         console.log('Product Names:', this.cartList);
       })
       .catch(error => console.error('获取数据时出错:', error));
+  },
+  updateCartItem: function (item) {
+    // 調用 API 更新購物車中的商品數量和價格
+    api.cartCreat({
+      cartId: item.cartId,
+      cart_date: "2023-12-15T16:30:00",
+      product_name: item.product_name,
+      cart_count: item.cart_count,
+      cart_amount: item.cart_amount * item.cart_count,
+      user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
+      product_id: item.product_id,
+      photo: item.photo,
+    })
+    .then(response => {
+      // 处理 API 响应，如果需要的话
+      console.log('cartCreate:', response);
+    })
+    .catch(error => {
+      // 处理错误，如果需要的话
+      console.error('Error updating item in cart:', error);
+    });
   },
   },
   
