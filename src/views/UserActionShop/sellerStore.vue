@@ -47,28 +47,23 @@ export default {
     </div>
     <!-- <div class="productsShow"></div> -->
     <div class="productsShow">
-  <div class="product" v-for="(product, index) in product" :key="index">
-    <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
-      <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
-    </router-link>
-      <div class="productInfo">
-        <p class="productName">{{ product.product_name }}</p>
-        <p class="productPrice">${{ product.price }}</p>
+      <div class="product card" v-for="(product, index) in product" :key="index" style="width: 14rem;">
+        <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
+          <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
+          <div class="card-body">
+            <div class="card-text">
+            <h5 class="productName">{{ product.product_name }}</h5>
+            <p class="productPrice">${{ product.price }}</p>
+            </div>
+          <div class="product-icons">
+          <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button btn btn-primary">
+            <i class="fas fa-credit-card"></i>
+          </router-link>
+          </div>
+        </div>
+        </router-link>
       </div>
-
-      <div class="product-icons">
-    <router-link :to="'/UserPage/shoppingCart/'" class="cart-button">
-      <i class="fas fa-shopping-cart">加入購物車</i> 
-    </router-link>
-  </div>
-  <div class="product-icons1">
-    <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
-      <i class="fas fa-credit-card"></i> 立即購買
-    </router-link>
-  </div>
-    
-  </div>
-</div>
+    </div>
   </div>
 </template>
 
@@ -100,9 +95,7 @@ export default {
       align-items: center;
       left: 5%;
 
-
     }
-
   }
 
   .productsShow {
@@ -115,8 +108,37 @@ export default {
     top: 4%;
     left: 3%;
     background-color: rgb(104, 104, 104);
-
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
   }
-}</style>
+}
+
+.card {
+  height: 300px;
+  margin: 3px;
+
+  .card-img-top {
+    height: 200px;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column; /* 讓內容垂直排列 */
+  }
+
+  .product-icons {
+    margin-top: auto; /* 將 product-icons 推到 card-body 的底部 */
+  }
+  .productPageRoutBtn {
+  text-decoration: none; /* 移除超連結的底線 */
+  color: black;
+  }
+  }
+.buy-now-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+</style>
   
