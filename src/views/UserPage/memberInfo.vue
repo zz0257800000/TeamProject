@@ -8,6 +8,8 @@ export default {
         name: '', // 初始值
         userPhoto: null, // 添加 userPhoto 属性用于保存图像文件
       },
+      //綁定pwd input v-model
+      pwdInput:("")
     };
   },
   mounted() {
@@ -30,30 +32,45 @@ export default {
   methods: { 
     
    
-  //   saveUserInfo() {
-  //     const userData = new FormData();
-  //     // Append user data
-  //     userData.append('name', this.user.name);
-  //     userData.append('phone_number', this.user.phone_number);
-  //     userData.append('address', this.user.address);
-  //     userData.append('remittance_title', this.user.remittance_title);
-  //     userData.append('remittance_number', this.user.remittance_number);
+    saveUserInfo() {
+      // const userData = new FormData();
+      // // Append user data
+      // userData.append('name', this.user.name);
+      // userData.append('phone_number', this.user.phone_number);
+      // userData.append('address', this.user.address);
+      // userData.append('remittance_title', this.user.remittance_title);
+      // userData.append('remittance_number', this.user.remittance_number);
 
+      const req = (
+        {
+        id: this.user.id,
+        name: this.user.name,
+        email: this.user.email,
+        address: this.user.address,
+        level: 0,
+        userPhoto: this.user.userPhoto,
+        password: this.pwdInput,
+        phone_number: this.user.phone_number,
+        remittance_title: this.user.remittance_title,
+        remittance_number: this.user.remittance_number,
+        seller_name: this.user.seller_name
+    }
+      )
     
 
-  //    // 发送 JSON 格式的请求
-  //  axios.post(`http://localhost:8080/user/edit`, userData, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //     .then(response => {
-  //       console.log('User info updated successfully:', response.data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error updating user info:', error);
-  //     });
-  // },
+     // 发送 JSON 格式的请求
+   axios.post(`http://localhost:8080/user/edit`, req, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        console.log('User info updated successfully:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating user info:', error);
+      });
+  },
 
    
   },
@@ -63,6 +80,7 @@ export default {
 
 
 <template>
+  {{ user }}
   <div class="main-show">
     <div class="info-show">
       <div class="info-header">
@@ -85,6 +103,10 @@ export default {
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
               信箱: <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
+            </div>
+            <div class="detail-group" v-if="user">
+              <i class="fa-regular fa-user"></i>
+              確認密碼: <input type="text" name="" id="" class="input-field" v-model="pwdInput" >
             </div>
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
