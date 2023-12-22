@@ -137,7 +137,7 @@ export default {
             <div class="leftInfo">
                 <div class="productsInfo">
                     <h3>XXX小舖</h3>
-
+                    
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
                         <img :src="item.photo" alt="Product Image" class="product-image" style="width: 7rem;">
                         <div class="product-details">

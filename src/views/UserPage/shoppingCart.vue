@@ -103,39 +103,39 @@ export default {
       <span class="current-page">購物車</span>
     </div>
 
-   
-
-  <!-- {{ cartList }}-->
-  <!-- <div v-for="(item, index) in cartList" :key="item.id">
-        {{ "商品名稱：" + item.product_name }}
-        {{ "單價：" + item.cart_amount }}
-        {{ "數量：" + item.cart_count }}
-  </div> -->
-
-      <div class="cart-items">
-        <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
-          <div class="item-image">
-            <img :src="item.photo" alt="Product Image" class="product-image">
-          </div>
-          <div class="item-details">
-            <div class="item-name">{{ item.product_name }}</div>
-            <div class="item-price">
-              <span class="price-value">{{ item.cart_amount }}</span>
-            </div>
-            <div class="item-quantity">
-              <button @click="handleSub(item)">-</button>
-              <span class="quantity-value">{{ item.cart_count }}</span>
-              <button @click="handlePlus(item)">+</button>
-            </div>
-            <div class="item-total">
-              <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
-            </div>
-            <button @click="handledelete(index)" class="delete-button">刪除</button>
-          </div>
-        </div>
-        <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
+    <div class="cart-items">
+      <div class="item_header">
+        <div class="item-image header">商品照片</div>
+        <div class="item-name header">商品</div>  
+        <div class="item-price header">單價</div>
+        <div class="item-quantity header">數量</div>
+        <div class="amount header">總計</div>
+        <div class="operate header">操作</div>
       </div>
+      <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
+        <div class="item-image">
+          <img :src="item.photo" alt="Product Image" class="product-image">
+        </div>
+        <div class="item-details">
+          <div class="item-name">{{ item.product_name }}</div>
+          <div class="item-price">
+            <span class="price-value">{{ item.cart_amount }}</span>
+          </div>
+          <div class="item-quantity">
+            <button @click="handleSub(item)">-</button>
+            <span class="quantity-value">{{ item.cart_count }}</span>
+            <button @click="handlePlus(item)">+</button>
+          </div>
+          <div class="item-total">
+            <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
+          </div>
+          <button @click="handledelete(index)" class="delete-button">刪除</button>
+        </div>
+      </div>
+      <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
     </div>
+
+  </div>
 
 </template>
 
@@ -148,21 +148,18 @@ export default {
   font-family: 'Roboto', sans-serif;
   color: #333;
 }
-.container{
-  margin-bottom: 20px;
-}
 .page-header {
   margin-bottom: 20px;
 }
 .item_header{
   display: flex;
+  align-items: center;
   justify-content: space-around;
   margin-bottom: 20px;
-  margin-left: -90px;
-  
-  .item_detail{
-    margin-left: -65px;
+  background-color: #2ecc71;
+  .item-name{
   }
+  
 }
 .home-link {
   border-radius: 5px;
@@ -186,51 +183,45 @@ export default {
 
 .cart-items {
   width: 100%;
-}
-
-.cart-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
-
   .item-image {
-    margin-right: 20px;
+    width: 8vw;
+    background-color: #c5ffac;
     img {
       width: 80px;
       height: 80px;
       border-radius: 5px;
-      margin-left: 5px;
       background-color: #eeeeee;
     }
   }
-
-  .item-details {
-    flex-grow: 1;
-    display: flex;  
-    justify-content: space-around;
-
-    .item-name {
+  .item-name {
       width: 30vw;
       font-size: 18px;
       background-color: #eeeeee;
     }
 
-    .item-price,
-    .item-quantity,
+  .item-price{
+    width: 8vw;
+    background-color: #f75e5e;
+  }
+  .item-quantity{
+
+      background-color: #f75e5e;
+    }
     .item-total {
+      width: 10vw;
       margin-bottom: 8px;
     }
+  .item-details {
+    flex-grow: 1;
+    display: flex;  
+    justify-content: space-around;
 
     .quantity-value {
       margin: 0 5px;
     }
 
     .delete-button {
+      width: 5vw;
       background-color: #e74c3c;
       color: white;
       border: none;
@@ -244,6 +235,16 @@ export default {
       }
     }
   }
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .checkout-button {
