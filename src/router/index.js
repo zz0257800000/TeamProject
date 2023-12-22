@@ -48,6 +48,7 @@ const router = createRouter({
       path: "/UserPage/sellerStore/:userId",
       name: "sellerStore",
       component: () => import("../views/UserActionShop/sellerStore.vue"),
+      props:true,
     },
     {
       path: "/UserPage/addNewProduct",
