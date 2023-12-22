@@ -113,10 +113,10 @@ export default {
         <div class="operate header">操作</div>
       </div>
       <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
-        <div class="item-image">
+        <div class="item-details">
+          <div class="item-image">
           <img :src="item.photo" alt="Product Image" class="product-image">
         </div>
-        <div class="item-details">
           <div class="item-name">{{ item.product_name }}</div>
           <div class="item-price">
             <span class="price-value">{{ item.cart_amount }}</span>
@@ -140,6 +140,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.home-link {
+  border-radius: 5px;
+  padding: 5px;
+  transition: background 0.3s ease;
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    background-color: #ddd;
+  }
+}
 .cart-page {
   display: flex;
   flex-direction: column;
@@ -157,20 +168,7 @@ export default {
   justify-content: space-around;
   margin-bottom: 20px;
   background-color: #2ecc71;
-  .item-name{
-  }
-  
-}
-.home-link {
-  border-radius: 5px;
-  padding: 5px;
-  transition: background 0.3s ease;
-  text-decoration: none;
-  color: black;
-
-  &:hover {
-    background-color: #ddd;
-  }
+  margin-left: -5px;
 }
 
 .breadcrumb-separator {
@@ -204,7 +202,6 @@ export default {
     background-color: #f75e5e;
   }
   .item-quantity{
-
       background-color: #f75e5e;
     }
     .item-total {
