@@ -66,7 +66,7 @@ export default {
       this.currentPage = currentPage;
 
     },
-    
+
   },
 };
 </script>
@@ -117,7 +117,8 @@ export default {
             <div class="orderDetailshead">
               <div class="orderDetailsheadleft">
                 <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
-                <h4>賣家帳號 : xx &nbsp; </h4>
+                <h4>賣家帳號 :<router-link :to="'/UserPage/sellerStore/' + record.seller_id" class="nameRouter" title="前往賣家賣場">
+          {{ record.seller_id }}</router-link> &nbsp; </h4>
                 <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
                   訂單狀態 : {{ record.status }} &nbsp;
                 </h4>
@@ -167,14 +168,16 @@ export default {
               </div>
               <div v-if="record.shipping_method !== '貨到付款'" class="orderInfo1">
                 <h6>付款方式 : {{ record.payment_method }}</h6>
-                <h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">銀行 : {{ record.remittance_title }}</h6>
-<h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">匯款帳號 : {{ record.remittance_number }}</h6>
+                <h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">銀行 : {{
+                  record.remittance_title }}</h6>
+                <h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">匯款帳號 : {{
+                  record.remittance_number }}</h6>
 
               </div>
               <div class="totalCount">
                 <h6>商品金額小計 : ${{ record.product_amount - record.shipping_cost }}</h6>
                 <h6>運費 : ${{ record.shipping_cost }}</h6>
-                <h6>結帳總金額 : ${{ record.product_amount }}</h6>
+                <h3>結帳總金額 : ${{ record.product_amount }}</h3>
               </div>
               <div class="orderInfo2">
 

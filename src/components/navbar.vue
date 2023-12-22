@@ -75,7 +75,8 @@ export default {
 
 
 
-        <div>
+        <div>      使用者名稱: {{ userName }}
+
           <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
           <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
             <i class="fa-solid fa-store"></i> 我的拍賣

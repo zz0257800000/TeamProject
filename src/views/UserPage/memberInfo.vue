@@ -5,9 +5,9 @@ export default {
   data() {
     return {
       user: {
+        name: '', // 初始值
         userPhoto: null, // 添加 userPhoto 属性用于保存图像文件
       },
-      previewImage: null, // 用于保存图像预览的 Base64 编码字符串
     };
   },
   mounted() {
@@ -27,51 +27,35 @@ export default {
         console.error('Error fetching user info:', error);
       });
   },
-  methods: {
-    saveUserInfo() {
-      const userData = new FormData();
-      
-      // Append user data
-      userData.append('name', this.user.name);
-      userData.append('phone_number', this.user.phone_number);
-      userData.append('address', this.user.address);
-      userData.append('remittance_title', this.user.remittance_title);
-      userData.append('remittance_number', this.user.remittance_number);
+  methods: { 
+    
+   
+  //   saveUserInfo() {
+  //     const userData = new FormData();
+  //     // Append user data
+  //     userData.append('name', this.user.name);
+  //     userData.append('phone_number', this.user.phone_number);
+  //     userData.append('address', this.user.address);
+  //     userData.append('remittance_title', this.user.remittance_title);
+  //     userData.append('remittance_number', this.user.remittance_number);
 
-      // Append image file (if available)
-      if (this.user.userPhoto) {
-        userData.append('image', this.user.userPhoto);
-      }
-      const user_Id = sessionStorage.getItem('user_Id');
+    
 
-     // 发送 JSON 格式的请求
-   axios.post(`http://localhost:8080/user/edit?id=${user_Id}`, userData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        console.log('User info updated successfully:', response.data);
-      })
-      .catch(error => {
-        console.error('Error updating user info:', error);
-      });
-  },
+  //    // 发送 JSON 格式的请求
+  //  axios.post(`http://localhost:8080/user/edit`, userData, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then(response => {
+  //       console.log('User info updated successfully:', response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error updating user info:', error);
+  //     });
+  // },
 
-    handleImageChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        // 将用户选择的图像文件保存到 userPhoto 属性中
-        this.user.userPhoto = file;
-
-        // 使用FileReader API预览图像
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.previewImage = reader.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    },
+   
   },
 
 };
@@ -104,17 +88,21 @@ export default {
             </div>
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
-              更改名字: <input type="text" name="" id="" class="input-field" v-model="user.name">
+              更改名字: <input type="text" name="" id="" class="input-field" v-model="user.name"   >
             </div>
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
               更改電話: <input type="text" name="" id="" class="input-field" v-model="user.phone_number">
             </div>
+
+            <div class="detail-group" v-if="user">
+            填寫地址: <input type="text" name="" id="" class="input-field" v-model="user.address">
+          </div>
           </div>
         </div>
         <div class="address-details">
           <div class="detail-group" v-if="user">
-            填寫地址: <input type="text" name="" id="" class="input-field" v-model="user.address">
+           賣場名: <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
           </div>
           <div class="detail-group" v-if="user">
             填寫匯款銀行: <input type="text" name="" id="" class="input-field" v-model="user.remittance_title">

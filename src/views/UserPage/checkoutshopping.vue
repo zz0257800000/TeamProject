@@ -71,13 +71,23 @@ export default {
             this.quantity++;
         },
         submitOrder() {
- // 檢查是否所有必填項目都已經填寫
- if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
-        alert('請填寫所有必填項目');
-        return;
-        
-    }            const orderData = {
-        user_id: this.userId,  // Use the userId property
+            // 檢查是否所有必填項目都已經填寫
+            if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
+                alert('請填寫所有必填項目');
+                return;
+
+            }
+            // 获取当前时间并格式化
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            const hours = currentDate.getHours().toString().padStart(2, '0');
+            const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+            const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+            const orderData = {
+                user_id: this.userId,  // Use the userId property
                 product_id: this.product.productId,  // 使用 this.product.product_id
                 product_name: this.product.product_name,
                 product_count: this.quantity,
@@ -91,14 +101,16 @@ export default {
                 remittance_number: "812-00000087888",
                 remarks_column: this.remarksColumn,
                 product_amount: this.getOrderAmount,
-                record_date: new Date().toISOString(),
+                record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
                 status: "準備中",
-                record_type: "購買",
-                valid: true
+                record_type: "下標訂單",
+                valid: true,
+                seller_id: this.product.user_id,
+                seller_name: "",
 
             };
+            console.log('Success:', orderData);
 
-            // 發送 POST 請求
             fetch('http://localhost:8080/record/create', {
                 method: 'POST',
                 headers: {
@@ -120,7 +132,7 @@ export default {
                     console.error('Error:', error);
                     // 處理錯誤
                 });
-                this.$router.push('/UserPage/buyingList');
+            this.$router.push('/UserPage/buyingList');
 
         },
     },
