@@ -139,7 +139,7 @@ export default {
                     <h3>XXX小舖</h3>
 
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
-                        <img :src="cartList.photo" alt="Product Image" class="product-image">
+                        <img :src="item.photo" alt="Product Image" class="product-image" style="width: 7rem;">
                         <div class="product-details">
                             <p>{{ item.product_name }}</p>
                         </div>
