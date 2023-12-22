@@ -84,7 +84,7 @@ export default {
         const productName = data.cartList.map(item => item.product_name);
 
         // 在这里可以使用 productNames，例如打印到控制台
-        console.log('Product Names:', productName);
+        console.log('Product Names:', this.cartList);
       })
       .catch(error => console.error('获取数据时出错:', error));
   },
@@ -122,7 +122,7 @@ export default {
       <div class="cart-items">
         <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
           <div class="item-image">
-            <img :src="item.imgUrl" alt="">
+            <img :src="item.photo" alt="Product Image" class="product-image">
           </div>
           <div class="item-details">
             <div class="item-name">{{ item.product_name }}</div>

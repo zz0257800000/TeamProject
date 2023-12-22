@@ -12,6 +12,7 @@ export default {
         description: '',
         price: 0,
         inventory: 0,
+        photo:'',
       },
       quantity: 1,
       suggestArr: [], // 你的相關商品數據
@@ -106,6 +107,7 @@ export default {
             cart_count: this.quantity,
             cart_amount: this.product.price * this.quantity,
             product_name: this.product.product_name,
+            photo: this.product.photo,
           };
           console.log('User ID:', this.user_id);
           // 调用 cartCreat 函数
