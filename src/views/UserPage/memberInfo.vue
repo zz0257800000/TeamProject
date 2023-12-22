@@ -80,7 +80,7 @@ export default {
 
 
 <template>
-  {{ user }}
+  <!-- {{ user }} -->
   <div class="main-show">
     <div class="info-show">
       <div class="info-header">
