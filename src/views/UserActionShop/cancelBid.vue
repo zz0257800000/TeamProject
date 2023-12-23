@@ -128,7 +128,7 @@ shipOrder(record_id) {
           <h3>
           </h3>
           <h6>
-            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">銷售訂單</a>
+            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">取消訂單</a>
           </h6>
 
         </div>
@@ -137,7 +137,7 @@ shipOrder(record_id) {
 
       <div class="productManagement">
         <div class="productCreate">
-          <h1>銷售訂單
+          <h1>取消訂單
           </h1>
         </div>
         <div class="productAdmimList">
@@ -154,7 +154,7 @@ shipOrder(record_id) {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" @click="cancelOrder">取消交易</button>
+                <button class="btn"></button>
               </div>
             </div>
 
@@ -405,7 +405,7 @@ shipOrder(record_id) {
             justify-content: center;
             border-radius: 10px;
             width: 10vw;
-            background-color: #e74c3c;
+            background-color: #ffffff;
             /* 修改右侧头部背景颜色 */
             color: rgb(255, 255, 255);
           }
@@ -467,16 +467,14 @@ shipOrder(record_id) {
 
               font-size: 12pt;
               width: 9vw;
-              background-color: #ff6c22;
+              background-color: #ffffff;
               color: white;
               transition: 0.5s;
               position: relative;
               top: 70%;
               right: 10%;
 
-              &:hover {
-                background-color: #517a53;
-              }
+            
             }
           }
 

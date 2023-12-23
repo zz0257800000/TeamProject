@@ -458,7 +458,7 @@ export default {
 .actionPage {
   display: flex;
   width: 100vw;
-  height: 202.3vh;
+  height: 218vh;
   border: 0;
 }
 
@@ -468,7 +468,7 @@ export default {
   flex-direction: column;
   background-color: #37474f;
   /* Dark teal background color */
-  height: 202.3vh;
+  height: 218vh;
 
   .lefttHeader {
     height: 4vw;
@@ -517,7 +517,7 @@ export default {
 
 .actionPageRight {
   width: 85vw;
-  height: 202.3vh;
+  height: 204vh;
   border: 0px solid rgb(255, 0, 0);
 
   .RightHeader {
@@ -558,7 +558,7 @@ export default {
     height: 42vw;
     background-color: #f5f5f5;
     /* Light gray background color */
-    height: 193.7vh;
+    height: 209.4vh;
 
     .productCreate {
       display: flex;
