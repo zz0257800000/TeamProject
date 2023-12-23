@@ -67,6 +67,33 @@ export default {
 
     },
 
+    //有問題
+    cancelOrder(record_id) {
+      // 调用取消订单的 API
+      axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
+        .then(response => {
+        })
+        .catch(error => {
+          throw error;
+        });
+
+        alert("訂單已取消")
+    },  
+shipOrder(record_id) {
+        // 调用将订单状态改为已出货的 API
+        axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
+            .then(response => {
+                // 处理 API 调用成功的情况
+                console.log(response.data);
+
+                // 刷新数据或执行其他操作...
+            })
+            .catch(error => {
+                // 处理 API 调用失败的情况
+                console.error('Error shipping order:', error);
+            });
+    },
+
   },
 };
 </script>
@@ -83,7 +110,9 @@ export default {
         <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink>
         <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
         <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink>
-    <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
+
+        <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
         <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
 
       </div>
@@ -122,7 +151,7 @@ export default {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" @click="cancelOrder">取消交易</button>
+                <button class="btn" @click="cancelOrder(record.record_id)">取消交易</button>
               </div>
             </div>
 
@@ -181,7 +210,7 @@ export default {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> 出貨</RouterLink>
+                <RouterLink class="btn" to=""  @click="shipOrder(record.record_id)" > 出貨</RouterLink>
 
               </div>
 

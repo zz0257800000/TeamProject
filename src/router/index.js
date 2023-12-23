@@ -45,6 +45,11 @@ const router = createRouter({
       component: () => import("../views/UserActionShop/bidOrder.vue"),
     },
     {
+      path: "/UserActionShop/cancelBid/",
+      name: "cancelBid",
+      component: () => import("../views/UserActionShop/cancelBid.vue"),
+    },
+    {
       path: "/UserActionShop/orderCompleted/",
       name: "orderCompleted",
       component: () => import("../views/UserActionShop/orderCompleted.vue"),
@@ -78,6 +83,21 @@ const router = createRouter({
       path: "/UserPage/buyingList",
       name: "buyingList",
       component: () => import("../views/UserPage/buyingList.vue"),
+    },
+    {
+      path: "/UserPage/waitingReceipt",
+      name: "waitingReceipt",
+      component: () => import("../views/UserPage/waitingReceipt.vue"),
+    },
+    {
+      path: "/UserPage/buyCancelOrder",
+      name: "buyCancelOrder",
+      component: () => import("../views/UserPage/buyCancelOrder.vue"),
+    },
+    {
+      path: "/UserPage/completeReceipt",
+      name: "completeReceipt",
+      component: () => import("../views/UserPage/completeReceipt.vue"),
     },
     {
       path: "/UserPage/developerPage",

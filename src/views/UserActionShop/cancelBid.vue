@@ -47,7 +47,7 @@ export default {
       axios.get(apiUrl)
         .then(response => {
           console.log('API Response:', response.data);
-          this.recordList = response.data.recordList.filter(record => record.status === '已完成');
+          this.recordList = response.data.recordList.filter(record => record.status === '取消訂單');
 
         })
 
@@ -65,6 +65,36 @@ export default {
       // Handle current page change
       this.currentPage = currentPage;
 
+    },
+
+    //有問題
+    cancelOrder(record_id) {
+    // 调用取消订单的 API
+    axios.post(`http://localhost:8080/record/cancel/${record_id}`)
+        .then(response => {
+            // 处理 API 调用成功的情况
+            console.log(response.data);  // 这里假设 API 返回了一些信息，你可以根据实际情况处理
+
+            // 刷新数据或执行其他操作...
+        })
+        .catch(error => {
+            // 处理 API 调用失败的情况
+            console.error('Error canceling order:', error);
+        });
+},   
+shipOrder(record_id) {
+        // 调用将订单状态改为已出货的 API
+        axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
+            .then(response => {
+                // 处理 API 调用成功的情况
+                console.log(response.data);
+
+                // 刷新数据或执行其他操作...
+            })
+            .catch(error => {
+                // 处理 API 调用失败的情况
+                console.error('Error shipping order:', error);
+            });
     },
 
   },
@@ -98,7 +128,7 @@ export default {
           <h3>
           </h3>
           <h6>
-            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">完成訂單</a>
+            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">銷售訂單</a>
           </h6>
 
         </div>
@@ -107,7 +137,7 @@ export default {
 
       <div class="productManagement">
         <div class="productCreate">
-          <h1>完成訂單
+          <h1>銷售訂單
           </h1>
         </div>
         <div class="productAdmimList">
@@ -124,6 +154,7 @@ export default {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
+                <button class="btn" @click="cancelOrder">取消交易</button>
               </div>
             </div>
 
@@ -182,7 +213,7 @@ export default {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> </RouterLink>
+                <RouterLink class="btn" to=""  @click="shipOrder(record.record_id)" > 出貨</RouterLink>
 
               </div>
 
@@ -275,12 +306,14 @@ export default {
 
   .RightHeader {
     height: 4vw;
-    background-color: #bdc3c7; /* 浅灰色背景 */
-    
+    background-color: #bdc3c7;
+    /* Light gray background color */
+
     .secondtitle2 {
       justify-content: space-between;
       display: flex;
-      border: 0px solid #e74c3c; /* 边框颜色 */
+      border: 0px solid #e74c3c;
+      /* Border color */
       width: 82vw;
       height: 10vh;
       align-items: center;
@@ -290,10 +323,12 @@ export default {
         padding: 5px;
         transition: all 0.5s ease;
         text-decoration: none;
-        color: #34495e; /* 深色文字 */
+        color: #34495e;
+        /* Dark text color */
 
         &:hover {
-          color: #e74c3c; /* 悬停时的颜色 */
+          color: #e74c3c;
+          /* Hover color */
           background-color: rgba(118, 118, 117, 0.5);
         }
       }
@@ -301,7 +336,7 @@ export default {
   }
 
   .productManagement {
-    background-color: #171c1d; /* 深灰色背景 */
+    background-color: #c8d5d8;
     height: 163vh;
 
     .productCreate {
@@ -312,7 +347,8 @@ export default {
 
       h1 {
         margin: 0;
-        color: #3498db; /* 科技蓝标题颜色 */
+        color: #000000;
+        /* 修改标题颜色 */
       }
 
       .btn {
@@ -320,15 +356,17 @@ export default {
         align-items: center;
         justify-content: center;
         width: 20%;
-        color: #ecf0f1; /* 白色文字 */
-        background-color: #2c3e50; /* 深灰色按钮 */
+        color: #ecf0f1;
+        background-color: #2c3e50;
+        /* 修改按钮颜色 */
         padding: 10px;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;
 
         &:hover {
-          background-color: #34495e; /* 按钮悬停颜色 */
+          background-color: #34495e;
+          /* 修改按钮悬停颜色 */
         }
       }
     }
@@ -341,12 +379,13 @@ export default {
       .orderDetails {
         height: 55vh;
         border: 1px solid #808080;
-        background-color: #669bc7;
+        background-color: #fbfffc;
         transition: 0.5s;
         margin-bottom: 20px;
+        /* 添加20px的底部间隔 */
 
         &:hover {
-          box-shadow: 0 0 20px rgba(71, 227, 255, 0.8);
+          box-shadow: 0 0 20px rgba(65, 65, 65, 0.8);
         }
 
         .orderDetailshead {
@@ -366,7 +405,8 @@ export default {
             justify-content: center;
             border-radius: 10px;
             width: 10vw;
-            background-color: #669bc7;
+            background-color: #e74c3c;
+            /* 修改右侧头部背景颜色 */
             color: rgb(255, 255, 255);
           }
         }
@@ -384,6 +424,7 @@ export default {
             th,
             td {
               border: 1px solid #aaaaaa;
+              /* 将 border 值更改为 1px，颜色为 #ddd */
               padding: 8px;
               text-align: left;
             }
@@ -397,6 +438,8 @@ export default {
           height: 20vh;
           display: flex;
           justify-content: space-around;
+
+
           border: 0px solid rgb(255, 0, 0);
           display: flex;
 
@@ -409,8 +452,11 @@ export default {
               border: 0px solid rgb(251, 0, 0);
               width: 15vw;
               margin: 2px;
+
             }
+
           }
+
 
           .orderInfo2 {
             border: 0px solid rgb(255, 0, 0);
@@ -418,9 +464,10 @@ export default {
 
             .btn {
               border: 0px solid rgb(255, 0, 0);
+
               font-size: 12pt;
               width: 9vw;
-              background-color: #669bc7;
+              background-color: #ff6c22;
               color: white;
               transition: 0.5s;
               position: relative;
@@ -435,6 +482,7 @@ export default {
 
           .totalCount {
             border: 0px solid rgb(255, 0, 0);
+
             margin: 2px;
             padding: 2px;
             width: 17vw;
@@ -443,6 +491,7 @@ export default {
       }
     }
   }
+
 }
 
 .pagination-container {
@@ -475,5 +524,4 @@ export default {
   margin: 0 10px;
   font-size: 16px;
 }
-
 </style>

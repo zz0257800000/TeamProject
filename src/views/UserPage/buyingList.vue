@@ -47,7 +47,7 @@ export default {
       axios.get(apiUrl)
         .then(response => {
           console.log('API Response:', response.data);
-          this.recordList = response.data.recordList;
+          this.recordList = response.data.recordList.filter(record => record.status === '準備中');
 
         })
 
@@ -66,6 +66,17 @@ export default {
       this.currentPage = currentPage;
 
     },
+    cancelOrder(record_id) {
+      // 调用取消订单的 API
+      axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
+        .then(response => {
+        })
+        .catch(error => {
+          throw error;
+        });
+
+        alert("訂單已取消")
+    },
 
   },
 };
@@ -74,16 +85,18 @@ export default {
   <div class="actionPage">
     <div class="actionPageLeft">
       <div class="lefttHeader">
-        <h3>你的購買清單</h3>
+        <h3>你的購買紀錄</h3>
       </div>
 
       <div class="leftAdmin">
 
-        <RouterLink class="btn" to="/UserPage/buyingList"><i class="fa-solid fa-bars-staggered"></i> &nbsp;購買清單
+        <RouterLink class="btn" to="/UserPage/buyingList"><i class="fa-solid fa-bars-staggered"></i> &nbsp;訂單明細
         </RouterLink>
-        <RouterLink class="btn" to=""><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
+        <RouterLink class="btn" to="/UserPage/waitingReceipt"><i class="fa-solid fa-truck"></i>&nbsp; 待收貨 </RouterLink>
+        <RouterLink class="btn" to="/UserPage/completeReceipt"><i class="fa-solid fa-flag-checkered"></i> &nbsp;訂單已完成</RouterLink>
 
-        <RouterLink class="btn" to=""><i class="fa-solid fa-envelope-open"></i> &nbsp;訂單已完成</RouterLink>
+        <RouterLink class="btn" to="/UserPage/buyCancelOrder"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
+
 
         <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> &nbsp;設定</RouterLink>
 
@@ -97,7 +110,7 @@ export default {
           <h3>
           </h3>
           <h6>
-            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">購買清單</a>
+            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">訂單明細</a>
           </h6>
 
         </div>
@@ -124,7 +137,7 @@ export default {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" @click="cancelOrder">取消交易</button>
+                <button class="btn" @click="cancelOrder(record.record_id)">取消交易</button>
               </div>
             </div>
 
@@ -183,7 +196,7 @@ export default {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> 確認收貨</RouterLink>
+                <RouterLink class="btn" to="/"> </RouterLink>
 
               </div>
 
@@ -434,7 +447,7 @@ export default {
 
               font-size: 12pt;
               width: 9vw;
-              background-color: #ff6c22;
+              background-color: #ffffff;
               color: white;
               transition: 0.5s;
               position: relative;

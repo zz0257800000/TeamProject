@@ -123,7 +123,7 @@ export default {
       </div>
 
       <div>
-        <RouterLink class="btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> <i class="fa-solid fa-box"></i> 購買清單</RouterLink>
+        <RouterLink class="btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> <i class="fa-solid fa-box"></i> 購買紀錄</RouterLink>
       </div>
 
       <div>
