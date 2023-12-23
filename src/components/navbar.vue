@@ -117,17 +117,14 @@ export default {
         <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i></h1>
       </RouterLink>
 
-      <div class="search-container">
-        <input v-model="searchKeyword" placeholder="輸入收尋關鍵字">
-        <button @click="handleSearch">搜索</button>
-      </div>
+     
 
       <div>
         <RouterLink class="btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> <i class="fa-solid fa-box"></i> 購買紀錄</RouterLink>
       </div>
 
       <div>
-        <RouterLink class="btn" to="/UserPage/loginPage"  v-if="isLoggedIn"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
+        <RouterLink class="btn" to=""  v-if="isLoggedIn"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
       </div>
       <div>
         <RouterLink class="btn" to="/UserPage/shoppingCart"  v-if="isLoggedIn">

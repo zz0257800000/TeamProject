@@ -8,6 +8,8 @@ export default {
       products: [], // Save products data from the API
       currentPage: 1,
       perPage: 9, // Number of products per page
+      searchKeyword: '',
+      searchResults: [],
     };
   },
   computed: {
@@ -45,6 +47,16 @@ export default {
       // Handle current page change
       this.currentPage = currentPage;
     },
+    handleSearch() {
+      // 执行产品搜索请求
+      axios.get(`http://localhost:8080/product/search?productName=${this.searchKeyword}`)
+        .then(response => {
+          this.searchResults = response.data.results;
+        })
+        .catch(error => {
+          console.error('Error searching products:', error);
+        });
+    },
   },
 };
 </script>
@@ -52,6 +64,10 @@ export default {
 
 <template>
   <div class="mainshow">
+    <div class="search">
+        <input v-model="searchKeyword" placeholder="輸入搜尋關鍵字">
+        <button @click="handleSearch">搜尋</button>
+      </div>
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -93,17 +109,8 @@ export default {
         <p class="productName">{{ product.product_name }}</p>
         <p class="productPrice">${{ product.price }}</p>
       </div>
-
-      <div class="product-icons">
-    <router-link :to="'/UserPage/shoppingCart/'" class="cart-button">
-      <i class="fas fa-shopping-cart">加入購物車</i> 
-    </router-link>
-  </div>
-  <div class="product-icons1">
-    <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
-      <i class="fas fa-credit-card"></i> 立即購買
-    </router-link>
-  </div>
+     
+    
     
   </div>
 </div>
@@ -124,6 +131,35 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+}
 .product-icons {
   display: flex;
   flex-direction: column;
@@ -227,8 +263,17 @@ export default {
 }
 
 .mainshow {
+.search{
+  border: 0px solid rgb(255, 0, 0);
+  height: 10vh;
+width: 50vw;
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
   position: relative;
-  border: 1px solid rgb(255, 0, 0);
+  border: 0px solid rgb(255, 0, 0);
   height: 240vh;
   display: flex;
   flex-direction: column;
@@ -245,21 +290,23 @@ export default {
   .productAll {
   border: 1px solid #ddd;
   width: 70vw;
-  height: 170vh;
+  height: 175vh;
   padding: 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #2c3e50; /* 時尚科技風格的主要背景色 */
+  background-color: #2c3e50;
   overflow: hidden;
 }
+
+
 
 .product {
   
   position: relative;
   border: 1px solid #fff;
-  height: 51vh;
+  height: 54vh;
   width: 20vw;
   margin: 10px;
   border-radius: 8px;
@@ -278,6 +325,7 @@ export default {
 
   .productInfo {
     border: 0px solid rgb(255, 0, 0);
+    height: 15vh;
 
     display: flex;
     flex-direction: column;
@@ -287,30 +335,24 @@ export default {
     border-bottom-right-radius: 8px;
     display: flex;
     justify-content: space-between;
+    .productName {
+    border: 0px solid rgb(255, 0, 0);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+.productPrice{
+  border: 0px solid rgb(255, 0, 0);
+
+}
   }
 
-  .productName {
-    margin-top: 10px;
-  }
+ 
 
-  .productIcons {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    display: flex;
-    gap: 10px;
 
-    button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #ecf0f1; /* 時尚科技風格的文字顏色 */
-
-      i {
-        font-size: 24px;
-      }
-    }
-  }
 }
 }
 </style>

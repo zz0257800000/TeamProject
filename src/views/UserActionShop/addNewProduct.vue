@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       productName: '',
+
       productType: "書籍動漫",
 
       productDescription: '',
@@ -126,7 +127,10 @@ export default {
               <option value="日常用品">日常用品</option>
               <option value="3C產品">3C產品</option>
               <option value="寵物專區">寵物專區</option>
+              <option value="寵物專區">樂器專區</option>
               <option value="機車零件">機車零件</option>
+              <option value="其他">其他</option>
+
             </select>
           </div>
 

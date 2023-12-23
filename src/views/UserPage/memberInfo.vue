@@ -100,7 +100,7 @@ export default {
         <h2 class="title">修改會員資料</h2>
         <div class="button-group">
           <button class="save-button" @click="saveUserInfo">儲存</button>
-          <button class="cancel-button">取消</button>
+          <!-- <button class="cancel-button">取消</button> -->
         </div>
       </div>
       <div class="info-content">
