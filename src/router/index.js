@@ -40,6 +40,21 @@ const router = createRouter({
       component: () => import("../views/UserPage/forgotPasswordPage.vue"),
     },
     {
+      path: "/UserActionShop/bidOrder/",
+      name: "bidOrder",
+      component: () => import("../views/UserActionShop/bidOrder.vue"),
+    },
+    {
+      path: "/UserActionShop/orderCompleted/",
+      name: "orderCompleted",
+      component: () => import("../views/UserActionShop/orderCompleted.vue"),
+    },
+    {
+      path: "/UserActionShop/shippedOder/",
+      name: "shippedOder",
+      component: () => import("../views/UserActionShop/shippedOder.vue"),
+    },
+    {
       path: "/UserPage/actionShop/",
       name: "actionShop",
       component: () => import("../views/UserActionShop/actionShop.vue"),

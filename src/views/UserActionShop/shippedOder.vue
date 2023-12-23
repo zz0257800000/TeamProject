@@ -39,23 +39,21 @@ export default {
     },
     // 修改 fetchProductDetails 方法
 
-
     fetchRecord() {
-      const userId = this.userId;
-      const apiUrl = `http://localhost:8080/record/get/user_id?id=${userId}`;
+  const userId = this.userId;
+  const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
 
-      axios.get(apiUrl)
-        .then(response => {
-          console.log('API Response:', response.data);
-          this.recordList = response.data.recordList;
+  axios.get(apiUrl)
+    .then(response => {
+      console.log('API Response:', response.data);
 
-        })
-
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    },
-
+      // 直接过滤出状态为 '出貨中' 的订单
+      this.recordList = response.data.recordList.filter(record => record.status === '出貨中');
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+},
 
     handleSizeChange(size) {
       // Handle page size change
@@ -74,19 +72,17 @@ export default {
   <div class="actionPage">
     <div class="actionPageLeft">
       <div class="lefttHeader">
-        <h3>你的購買清單</h3>
+        <h2>我的拍賣</h2>
       </div>
 
       <div class="leftAdmin">
 
-        <RouterLink class="btn" to="/UserPage/buyingList"><i class="fa-solid fa-bars-staggered"></i> &nbsp;購買清單
-        </RouterLink>
-        <RouterLink class="btn" to=""><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
-
-        <RouterLink class="btn" to=""><i class="fa-solid fa-envelope-open"></i> &nbsp;訂單已完成</RouterLink>
-
-        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> &nbsp;設定</RouterLink>
-
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink>
+    <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
+        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
       </div>
 
     </div>
@@ -97,7 +93,7 @@ export default {
           <h3>
           </h3>
           <h6>
-            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">購買清單</a>
+            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">出貨訂單</a>
           </h6>
 
         </div>
@@ -106,25 +102,23 @@ export default {
 
       <div class="productManagement">
         <div class="productCreate">
-          <h1>訂單明細
+          <h1>出貨訂單
           </h1>
-          <RouterLink class="btn" to="/">繼續購物</RouterLink>
         </div>
         <div class="productAdmimList">
-          <div class="orderDetails" v-for="(record, recordIndex) in paginatedProducts" :key="recordIndex">
+            <div class="orderDetails" v-for="(record, recordIndex) in paginatedProducts" :key="recordIndex">
             <!-- 订单信息 -->
             <div class="orderDetailshead">
               <div class="orderDetailsheadleft">
                 <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
-                <h4>賣家帳號 :<router-link :to="'/UserPage/sellerStore/' + record.seller_id" class="nameRouter"
+                <h4>買家帳號 :<router-link :to="'/UserPage/sellerStore/' + record.seller_id" class="nameRouter"
                     title="前往賣家賣場">
-                    {{ record.seller_id }}</router-link> &nbsp; </h4>
+                    {{ record.user_id }}</router-link> &nbsp; </h4>
                 <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
                   訂單狀態 : {{ record.status }} &nbsp;
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" @click="cancelOrder">取消交易</button>
               </div>
             </div>
 
@@ -183,7 +177,7 @@ export default {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> 確認收貨</RouterLink>
+                <RouterLink class="btn" to="/"> </RouterLink>
 
               </div>
 
@@ -220,29 +214,30 @@ export default {
 
 .actionPageLeft {
   width: 15vw;
-  height: 170vh;
   display: flex;
   flex-direction: column;
-  background-color: #2c3e50;
-  /* Stylish dark background color */
+  background-color: #37474f;
+  /* Dark teal background color */
+  height: 170vh;
 
   .lefttHeader {
     height: 4vw;
-    background-color: rgb(100, 119, 148);
-    /* Slightly lighter shade */
+    background-color: #3b4c53;
+    /* Teal background color */
     display: flex;
     align-items: center;
     justify-content: center;
 
     h2 {
-      color: #56b3ca;
+      color: #eceff1;
       /* Light text color */
       margin: 0;
     }
   }
 
   .leftAdmin {
-    background-color: #34495e;
+    background-color: #546e7a;
+    /* Teal background color */
     height: 42vw;
     flex-direction: column;
     display: flex;
@@ -252,8 +247,10 @@ export default {
       align-items: center;
       justify-content: center;
       width: 80%;
-      color: #ecf0f1;
-      background-color: #2c3e50;
+      color: #eceff1;
+      /* Light text color */
+      background-color: #263238;
+      /* Darker teal */
       padding: 10px;
       margin: 10px auto;
       border-radius: 5px;
@@ -261,8 +258,8 @@ export default {
       text-align: center;
 
       &:hover {
-        background-color: #1d2b3a;
-        /* Darker shade on hover */
+        background-color: #79c1e6;
+        /* Dark teal on hover */
       }
     }
   }
@@ -273,14 +270,12 @@ export default {
 
   .RightHeader {
     height: 4vw;
-    background-color: #bdc3c7;
-    /* Light gray background color */
-
+    background-color: #f8a5c2; /* 可爱粉色 */
+    
     .secondtitle2 {
       justify-content: space-between;
       display: flex;
       border: 0px solid #e74c3c;
-      /* Border color */
       width: 82vw;
       height: 10vh;
       align-items: center;
@@ -291,11 +286,9 @@ export default {
         transition: all 0.5s ease;
         text-decoration: none;
         color: #34495e;
-        /* Dark text color */
-
+        
         &:hover {
-          color: #e74c3c;
-          /* Hover color */
+          color: #f368e0; /* 深粉色 */
           background-color: rgba(118, 118, 117, 0.5);
         }
       }
@@ -303,8 +296,8 @@ export default {
   }
 
   .productManagement {
-    background-color: #ecf0f1;
-    height: 161vh;
+    background-color: #fcdede; /* 淡粉色 */
+    height: 163vh;
 
     .productCreate {
       display: flex;
@@ -314,8 +307,7 @@ export default {
 
       h1 {
         margin: 0;
-        color: #3498db;
-        /* 修改标题颜色 */
+        color: #f368e0; /* 深粉色 */
       }
 
       .btn {
@@ -324,16 +316,14 @@ export default {
         justify-content: center;
         width: 20%;
         color: #ecf0f1;
-        background-color: #2c3e50;
-        /* 修改按钮颜色 */
+        background-color: #f368e0; /* 深粉色 */
         padding: 10px;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;
 
         &:hover {
-          background-color: #34495e;
-          /* 修改按钮悬停颜色 */
+          background-color: #ff7f50; /* 珊瑚橙色 */
         }
       }
     }
@@ -346,13 +336,12 @@ export default {
       .orderDetails {
         height: 55vh;
         border: 1px solid #808080;
-        background-color: #fbfffc;
+        background-color: #ffc3a0; /* 桃色 */
         transition: 0.5s;
         margin-bottom: 20px;
-        /* 添加20px的底部间隔 */
 
         &:hover {
-          box-shadow: 0 0 20px rgba(71, 227, 255, 0.8);
+          box-shadow: 0 0 20px rgba(255, 44, 44, 0.8);
         }
 
         .orderDetailshead {
@@ -372,8 +361,7 @@ export default {
             justify-content: center;
             border-radius: 10px;
             width: 10vw;
-            background-color: #e74c3c;
-            /* 修改右侧头部背景颜色 */
+            background-color: #ffc3a0; /* 桃色 */
             color: rgb(255, 255, 255);
           }
         }
@@ -391,7 +379,6 @@ export default {
             th,
             td {
               border: 1px solid #aaaaaa;
-              /* 将 border 值更改为 1px，颜色为 #ddd */
               padding: 8px;
               text-align: left;
             }
@@ -405,8 +392,6 @@ export default {
           height: 20vh;
           display: flex;
           justify-content: space-around;
-
-
           border: 0px solid rgb(255, 0, 0);
           display: flex;
 
@@ -419,11 +404,8 @@ export default {
               border: 0px solid rgb(251, 0, 0);
               width: 15vw;
               margin: 2px;
-
             }
-
           }
-
 
           .orderInfo2 {
             border: 0px solid rgb(255, 0, 0);
@@ -431,25 +413,19 @@ export default {
 
             .btn {
               border: 0px solid rgb(255, 0, 0);
-
               font-size: 12pt;
               width: 9vw;
-              background-color: #ff6c22;
+              background-color: #ffc3a0; /* 桃色 */
               color: white;
               transition: 0.5s;
               position: relative;
               top: 70%;
               right: 10%;
-
-              &:hover {
-                background-color: #517a53;
-              }
             }
           }
 
           .totalCount {
             border: 0px solid rgb(255, 0, 0);
-
             margin: 2px;
             padding: 2px;
             width: 17vw;
@@ -458,7 +434,6 @@ export default {
       }
     }
   }
-
 }
 
 .pagination-container {
@@ -469,16 +444,16 @@ export default {
 }
 
 .pagination-button {
-  background-color: #409eff;
+  background-color: #f368e0; /* 深粉色 */
   color: #fff;
-  border: 1px solid #409eff;
+  border: 1px solid #f368e0; /* 深粉色 */
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .pagination-button:hover {
-  background-color: #66b1ff;
+  background-color: #ff7f50; /* 珊瑚橙色 */
 }
 
 .pagination-button:disabled {
@@ -491,4 +466,5 @@ export default {
   margin: 0 10px;
   font-size: 16px;
 }
+
 </style>

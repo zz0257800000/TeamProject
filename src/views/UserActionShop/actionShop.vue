@@ -171,15 +171,16 @@ export default {
   <div class="actionPage">
     <div class="actionPageLeft">
       <div class="lefttHeader">
-        <h2>賣場管理</h2>
+        <h2>我的拍賣</h2>
       </div>
 
       <div class="leftAdmin">
 
         <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
-        <RouterLink class="btn" to="/"><i class="fa-solid fa-bars-staggered"></i> 訂單管理</RouterLink>
-        <RouterLink class="btn" to=""><i class="fa-solid fa-envelope-open"></i> 訊息中心</RouterLink>
-        <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink>
+    <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
         <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
 
       </div>
@@ -192,7 +193,7 @@ export default {
           <h3>
           </h3>
           <h6>
-            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">賣場管理</a>
+            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">產品管理</a>
           </h6>
 
         </div>
