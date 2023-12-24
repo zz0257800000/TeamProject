@@ -137,14 +137,20 @@ export default {
             <div class="leftInfo">
                 <div class="productsInfo">
                     <h3>XXX小舖</h3>
-
+                    <div class="item_header">
+                        <div class="item-image header">商品照片</div>
+                        <div class="item-name header">商品</div>  
+                        <div class="item-price header">單價</div>
+                        <div class="item-quantity header">數量</div>
+                        <div class="item-total header">總計</div>
+                    </div>
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
-                        <img :src="item.photo" alt="Product Image" class="product-image" style="width: 7rem;">
-                        <div class="product-details">
+                        <img :src="item.photo" alt="Product Image" class="item-image">
+                        <div class="item-name product-details">
                             <p>{{ item.product_name }}</p>
                         </div>
-                        <p>單價${{ item.cart_amount }}</p>
-                        <div class="quantity">
+                        <p class="item-price">${{ item.cart_amount }}</p>
+                        <div class="item-quantity">
                             <!-- <p>數量：</p> -->
                             <p>{{ item.cart_count }}</p>
                             <!-- <button @click="decrementQuantity(item)">-</button>
@@ -152,7 +158,7 @@ export default {
                             <button @click="incrementQuantity(item)">+</button> -->
                         </div>
                         <div class="item-total">
-                            <span class="total-value">總價：{{ item.cart_amount * item.cart_count }}</span>
+                            <p class="total-value">{{ item.cart_amount * item.cart_count }}</p>
                         </div>
                     </div>
                 </div>
@@ -220,28 +226,8 @@ export default {
         </div>
     </div>
 </template>
-  
- 
-  
+
 <style lang="scss" scoped>
-.quantity {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-
-    input {
-        width: 60px;
-        text-align: center;
-    }
-
-    p {
-        margin-right: 10px;
-    }
-
-    button {
-        border: 0;
-    }
-}
 
 .mainshow {
     height: 150vh;
@@ -277,6 +263,7 @@ export default {
                 margin-bottom: 10px;
 
                 .produtsrow {
+                    padding: 5px;
                     display: flex;
                     align-items: center;
                     height: 15vh;
@@ -284,24 +271,12 @@ export default {
                     /* Muted product row color */
                     margin: 10px;
 
-                    .product-image {
-                        max-width: 90%;
-                        max-height: 90%;
-                        object-fit: contain;
-                        margin-right: 10px;
-                        margin: 5px;
-                        border-radius: 5px;
-                    }
 
                     .product-details {
                         h4 {
                             color: #333;
                             font-size: 1.5rem;
                             margin: 10px;
-                        }
-
-                        p {
-                            margin: 5px 0;
                         }
                     }
                 }
@@ -359,5 +334,40 @@ export default {
             }
         }
     }
+.item_header{
+    margin: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+.item-image {
+    display: flex;
+    justify-content: center;
+    width: 8vw;
+    img {
+        height: 80px;
+        border-radius: 5px;
+        border: 2px solid#c9c9c9;
+    }
+    }
+.item-name {
+    margin-left: 15px;
+    width: 30vw;
+    font-size: 18px;
+    }
+.item-price{
+    width: 8vw;
+}
+.item-quantity{
+    width: 5vw;
+}
+.item-total{
+    width: 8vw;
+}
+    
 }
 </style>

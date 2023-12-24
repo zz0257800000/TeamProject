@@ -103,67 +103,43 @@ export default {
       <span class="current-page">購物車</span>
     </div>
 
-   
-
-  <!-- {{ cartList }}-->
-  <!-- <div v-for="(item, index) in cartList" :key="item.id">
-        {{ "商品名稱：" + item.product_name }}
-        {{ "單價：" + item.cart_amount }}
-        {{ "數量：" + item.cart_count }}
-  </div> -->
-
-      <div class="cart-items">
-        <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
-          <div class="item-image">
-            <img :src="item.photo" alt="Product Image" class="product-image">
-          </div>
-          <div class="item-details">
-            <div class="item-name">{{ item.product_name }}</div>
-            <div class="item-price">
-              <span class="price-value">{{ item.cart_amount }}</span>
-            </div>
-            <div class="item-quantity">
-              <button @click="handleSub(item)">-</button>
-              <span class="quantity-value">{{ item.cart_count }}</span>
-              <button @click="handlePlus(item)">+</button>
-            </div>
-            <div class="item-total">
-              <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
-            </div>
-            <button @click="handledelete(index)" class="delete-button">刪除</button>
-          </div>
-        </div>
-        <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
+    <div class="cart-items">
+      <div class="item_header">
+        <div class="item-image header">商品照片</div>
+        <div class="item-name header">商品</div>  
+        <div class="item-price header">單價</div>
+        <div class="item-quantity header">數量</div>
+        <div class="item-total header">總計</div>
+        <div class="operate header">操作</div>
       </div>
+      <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
+        <div class="item-details">
+          <div class="item-image">
+          <img :src="item.photo" alt="Product Image" class="product-image">
+        </div>
+          <div class="item-name">{{ item.product_name }}</div>
+          <div class="item-price">
+            <span class="price-value">{{ item.cart_amount }}</span>
+          </div>
+          <div class="item-quantity">
+            <button @click="handleSub(item)">-</button>
+            <span class="quantity-value">{{ " " + item.cart_count + " " }}</span>
+            <button @click="handlePlus(item)">+</button>
+          </div>
+          <div class="item-total">
+            <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
+          </div>
+          <button @click="handledelete(index)" class="operate delete-button">刪除</button>
+        </div>
+      </div>
+      <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
     </div>
+
+  </div>
 
 </template>
 
 <style lang="scss" scoped>
-.cart-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  font-family: 'Roboto', sans-serif;
-  color: #333;
-}
-.container{
-  margin-bottom: 20px;
-}
-.page-header {
-  margin-bottom: 20px;
-}
-.item_header{
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-  margin-left: -90px;
-  
-  .item_detail{
-    margin-left: -65px;
-  }
-}
 .home-link {
   border-radius: 5px;
   padding: 5px;
@@ -175,62 +151,65 @@ export default {
     background-color: #ddd;
   }
 }
+.cart-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+.page-header {
+  margin-bottom: 20px;
+}
+.item_header{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
+//> 符號
 .breadcrumb-separator {
   margin: 0 5px;
 }
-
 .current-page {
   font-weight: bold;
 }
 
 .cart-items {
-  width: 100%;
-}
-
-.cart-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
   padding: 10px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
-
+  width: 100%;
   .item-image {
-    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    width: 8vw;
     img {
       width: 80px;
       height: 80px;
       border-radius: 5px;
-      margin-left: 5px;
-      background-color: #eeeeee;
+      border: 2px solid#c9c9c9;
     }
   }
-
-  .item-details {
-    flex-grow: 1;
-    display: flex;  
-    justify-content: space-around;
-
-    .item-name {
+  .item-name {
       width: 30vw;
       font-size: 18px;
-      background-color: #eeeeee;
     }
-
-    .item-price,
-    .item-quantity,
-    .item-total {
-      margin-bottom: 8px;
-    }
-
-    .quantity-value {
-      margin: 0 5px;
-    }
-
-    .delete-button {
+  .item-price{
+    width: 8vw;
+  }
+  .item-quantity{
+      width: 5vw;
+  }
+  .item-total{
+    width: 8vw;
+  }
+  .operate{
+    width: 5vw;
+  }
+  .delete-button {
       background-color: #e74c3c;
       color: white;
       border: none;
@@ -238,12 +217,27 @@ export default {
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-
       &:hover {
         background-color: #c0392b;
       }
     }
+  .item-details {
+    flex-grow: 1;
+    display: flex;  
+    justify-content: space-around;
+
+
   }
+}
+
+.cart-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .checkout-button {
