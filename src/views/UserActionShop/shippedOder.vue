@@ -218,28 +218,24 @@ export default {
   width: 15vw;
   display: flex;
   flex-direction: column;
-  background-color: #37474f;
-  /* Dark teal background color */
+  background-color: #f9a825; /* 黃色主題 */
   height: 170vh;
 
   .lefttHeader {
     height: 4vw;
-    background-color: #3b4c53;
-    /* Teal background color */
+    background-color: #ffcc80; /* 淺桔黃色 */
     display: flex;
     align-items: center;
     justify-content: center;
 
     h2 {
-      color: #eceff1;
-      /* Light text color */
+      color: #263238; /* 深灰色文字 */
       margin: 0;
     }
   }
 
   .leftAdmin {
-    background-color: #546e7a;
-    /* Teal background color */
+    background-color: #ffb74d; /* 桔黃色 */
     height: 42vw;
     flex-direction: column;
     display: flex;
@@ -249,10 +245,8 @@ export default {
       align-items: center;
       justify-content: center;
       width: 80%;
-      color: #eceff1;
-      /* Light text color */
-      background-color: #263238;
-      /* Darker teal */
+      color: #263238; /* 深灰色文字 */
+      background-color: #ff9800; /* 橙色 */
       padding: 10px;
       margin: 10px auto;
       border-radius: 5px;
@@ -260,8 +254,7 @@ export default {
       text-align: center;
 
       &:hover {
-        background-color: #79c1e6;
-        /* Dark teal on hover */
+        background-color: #fb8c00; /* 深橙色 */
       }
     }
   }
@@ -272,8 +265,8 @@ export default {
 
   .RightHeader {
     height: 4vw;
-    background-color: #f8a5c2; /* 可爱粉色 */
-    
+    background-color: #ffef61; 
+
     .secondtitle2 {
       justify-content: space-between;
       display: flex;
@@ -288,9 +281,9 @@ export default {
         transition: all 0.5s ease;
         text-decoration: none;
         color: #34495e;
-        
+
         &:hover {
-          color: #f368e0; /* 深粉色 */
+          color: #f3c968;
           background-color: rgba(118, 118, 117, 0.5);
         }
       }
@@ -298,8 +291,8 @@ export default {
   }
 
   .productManagement {
-    background-color: #fcdede; /* 淡粉色 */
-    height: 163vh;
+    background-color: #fcf7de; 
+    height: 162vh;
 
     .productCreate {
       display: flex;
@@ -309,7 +302,7 @@ export default {
 
       h1 {
         margin: 0;
-        color: #f368e0; /* 深粉色 */
+        color: #857739;
       }
 
       .btn {
@@ -318,14 +311,14 @@ export default {
         justify-content: center;
         width: 20%;
         color: #ecf0f1;
-        background-color: #f368e0; /* 深粉色 */
+        background-color: #c3ac38; 
         padding: 10px;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;
 
         &:hover {
-          background-color: #ff7f50; /* 珊瑚橙色 */
+          background-color: #ffe250; /* 珊瑚橙色 */
         }
       }
     }
@@ -338,12 +331,12 @@ export default {
       .orderDetails {
         height: 55vh;
         border: 1px solid #808080;
-        background-color: #ffc3a0; /* 桃色 */
+        background-color: #ffffa0;
         transition: 0.5s;
         margin-bottom: 20px;
 
         &:hover {
-          box-shadow: 0 0 20px rgba(255, 44, 44, 0.8);
+          box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
         }
 
         .orderDetailshead {
@@ -363,7 +356,7 @@ export default {
             justify-content: center;
             border-radius: 10px;
             width: 10vw;
-            background-color: #ffc3a0; /* 桃色 */
+            background-color: #fff5a0; 
             color: rgb(255, 255, 255);
           }
         }
@@ -417,7 +410,7 @@ export default {
               border: 0px solid rgb(255, 0, 0);
               font-size: 12pt;
               width: 9vw;
-              background-color: #ffc3a0; /* 桃色 */
+              background-color: #fff1a0; 
               color: white;
               transition: 0.5s;
               position: relative;
@@ -446,16 +439,16 @@ export default {
 }
 
 .pagination-button {
-  background-color: #f368e0; /* 深粉色 */
+  background-color: #f3b468; 
   color: #fff;
-  border: 1px solid #f368e0; /* 深粉色 */
+  border: 1px solid #f3c568; 
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .pagination-button:hover {
-  background-color: #ff7f50; /* 珊瑚橙色 */
+  background-color: #fff650; 
 }
 
 .pagination-button:disabled {

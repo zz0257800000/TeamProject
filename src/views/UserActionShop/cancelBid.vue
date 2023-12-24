@@ -252,28 +252,28 @@ shipOrder(record_id) {
   width: 15vw;
   display: flex;
   flex-direction: column;
-  background-color: #37474f;
-  /* Dark teal background color */
+  background-color: #b04267;
+  /* Cute pink background color */
   height: 170vh;
 
   .lefttHeader {
     height: 4vw;
-    background-color: #3b4c53;
-    /* Teal background color */
+    background-color: #ec407a;
+    /* Pink background color */
     display: flex;
     align-items: center;
     justify-content: center;
 
     h2 {
-      color: #eceff1;
-      /* Light text color */
+      color: #ffffff;
+      /* White text color */
       margin: 0;
     }
   }
 
   .leftAdmin {
-    background-color: #546e7a;
-    /* Teal background color */
+    background-color: #ff80ab;
+    /* Lighter pink background color */
     height: 42vw;
     flex-direction: column;
     display: flex;
@@ -283,10 +283,10 @@ shipOrder(record_id) {
       align-items: center;
       justify-content: center;
       width: 80%;
-      color: #eceff1;
-      /* Light text color */
-      background-color: #263238;
-      /* Darker teal */
+      color: #ffffff;
+      /* White text color */
+      background-color: #f846a5;
+      /* Light red */
       padding: 10px;
       margin: 10px auto;
       border-radius: 5px;
@@ -294,8 +294,8 @@ shipOrder(record_id) {
       text-align: center;
 
       &:hover {
-        background-color: #37474f;
-        /* Dark teal on hover */
+        background-color: #a93c3c;
+        /* Light orange on hover */
       }
     }
   }
@@ -306,14 +306,13 @@ shipOrder(record_id) {
 
   .RightHeader {
     height: 4vw;
-    background-color: #bdc3c7;
-    /* Light gray background color */
-
+    background-color: #ff93b7;
+    /* Light orange background color */
+    
     .secondtitle2 {
       justify-content: space-between;
       display: flex;
       border: 0px solid #e74c3c;
-      /* Border color */
       width: 82vw;
       height: 10vh;
       align-items: center;
@@ -324,11 +323,9 @@ shipOrder(record_id) {
         transition: all 0.5s ease;
         text-decoration: none;
         color: #34495e;
-        /* Dark text color */
-
+        
         &:hover {
-          color: #e74c3c;
-          /* Hover color */
+          color: #ba49ab; /* Deep pink */
           background-color: rgba(118, 118, 117, 0.5);
         }
       }
@@ -336,8 +333,9 @@ shipOrder(record_id) {
   }
 
   .productManagement {
-    background-color: #c8d5d8;
-    height: 163vh;
+    background-color: #f8bbd0;
+    /* Lighter pink background color */
+    height: 162vh;
 
     .productCreate {
       display: flex;
@@ -347,8 +345,7 @@ shipOrder(record_id) {
 
       h1 {
         margin: 0;
-        color: #000000;
-        /* 修改标题颜色 */
+        color: #f368e0; /* Deep pink */
       }
 
       .btn {
@@ -357,16 +354,14 @@ shipOrder(record_id) {
         justify-content: center;
         width: 20%;
         color: #ecf0f1;
-        background-color: #2c3e50;
-        /* 修改按钮颜色 */
+        background-color: #ff95ce; /* Deep pink */
         padding: 10px;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;
 
         &:hover {
-          background-color: #34495e;
-          /* 修改按钮悬停颜色 */
+          background-color: #ff7f50; /* Coral on hover */
         }
       }
     }
@@ -379,13 +374,12 @@ shipOrder(record_id) {
       .orderDetails {
         height: 55vh;
         border: 1px solid #808080;
-        background-color: #fbfffc;
+        background-color: #ffc3a0; /* Peach */
         transition: 0.5s;
         margin-bottom: 20px;
-        /* 添加20px的底部间隔 */
 
         &:hover {
-          box-shadow: 0 0 20px rgba(65, 65, 65, 0.8);
+          box-shadow: 0 0 20px rgba(255, 44, 44, 0.8);
         }
 
         .orderDetailshead {
@@ -405,8 +399,7 @@ shipOrder(record_id) {
             justify-content: center;
             border-radius: 10px;
             width: 10vw;
-            background-color: #ffffff;
-            /* 修改右侧头部背景颜色 */
+            background-color: #ffc3a0; /* Peach */
             color: rgb(255, 255, 255);
           }
         }
@@ -424,7 +417,6 @@ shipOrder(record_id) {
             th,
             td {
               border: 1px solid #aaaaaa;
-              /* 将 border 值更改为 1px，颜色为 #ddd */
               padding: 8px;
               text-align: left;
             }
@@ -438,8 +430,6 @@ shipOrder(record_id) {
           height: 20vh;
           display: flex;
           justify-content: space-around;
-
-
           border: 0px solid rgb(255, 0, 0);
           display: flex;
 
@@ -452,11 +442,8 @@ shipOrder(record_id) {
               border: 0px solid rgb(251, 0, 0);
               width: 15vw;
               margin: 2px;
-
             }
-
           }
-
 
           .orderInfo2 {
             border: 0px solid rgb(255, 0, 0);
@@ -464,23 +451,19 @@ shipOrder(record_id) {
 
             .btn {
               border: 0px solid rgb(255, 0, 0);
-
               font-size: 12pt;
               width: 9vw;
-              background-color: #ffffff;
+              background-color: #ffc3a0; /* Peach */
               color: white;
               transition: 0.5s;
               position: relative;
               top: 70%;
               right: 10%;
-
-            
             }
           }
 
           .totalCount {
             border: 0px solid rgb(255, 0, 0);
-
             margin: 2px;
             padding: 2px;
             width: 17vw;
@@ -489,7 +472,6 @@ shipOrder(record_id) {
       }
     }
   }
-
 }
 
 .pagination-container {
@@ -500,16 +482,16 @@ shipOrder(record_id) {
 }
 
 .pagination-button {
-  background-color: #409eff;
+  background-color: #f368e0; /* Deep pink */
   color: #fff;
-  border: 1px solid #409eff;
+  border: 1px solid #f368e0; /* Deep pink */
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .pagination-button:hover {
-  background-color: #66b1ff;
+  background-color: #ff7f50; /* Coral on hover */
 }
 
 .pagination-button:disabled {

@@ -142,7 +142,7 @@ export default {
   </div>
   <div class="Marquee">
     <div class="announcement">
-      <p>變數使用小駝峰命名統一 不要底線XD！</p>
+      <p>玉翔我愛你!!!！</p>
     </div>
 
 

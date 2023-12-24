@@ -334,7 +334,7 @@ shipOrder(record_id) {
 
   .productManagement {
     background-color: #c8d5d8;
-    height: 163vh;
+    height: 162vh;
 
     .productCreate {
       display: flex;

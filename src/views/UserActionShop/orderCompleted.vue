@@ -221,13 +221,13 @@ export default {
   width: 15vw;
   display: flex;
   flex-direction: column;
-  background-color: #37474f;
+  background-color: #497c96;
   /* Dark teal background color */
   height: 170vh;
 
   .lefttHeader {
     height: 4vw;
-    background-color: #3b4c53;
+    background-color: #5c94ac;
     /* Teal background color */
     display: flex;
     align-items: center;
@@ -241,7 +241,7 @@ export default {
   }
 
   .leftAdmin {
-    background-color: #546e7a;
+    background-color: #364247;
     /* Teal background color */
     height: 42vw;
     flex-direction: column;
@@ -254,7 +254,7 @@ export default {
       width: 80%;
       color: #eceff1;
       /* Light text color */
-      background-color: #263238;
+      background-color: #5c8ea7;
       /* Darker teal */
       padding: 10px;
       margin: 10px auto;
@@ -263,7 +263,7 @@ export default {
       text-align: center;
 
       &:hover {
-        background-color: #37474f;
+        background-color: #39657b;
         /* Dark teal on hover */
       }
     }
@@ -275,7 +275,7 @@ export default {
 
   .RightHeader {
     height: 4vw;
-    background-color: #bdc3c7; /* 浅灰色背景 */
+    background-color: #516877; /* 浅灰色背景 */
     
     .secondtitle2 {
       justify-content: space-between;
@@ -290,7 +290,7 @@ export default {
         padding: 5px;
         transition: all 0.5s ease;
         text-decoration: none;
-        color: #34495e; /* 深色文字 */
+        color: #7fa2c6; /* 深色文字 */
 
         &:hover {
           color: #e74c3c; /* 悬停时的颜色 */
@@ -302,7 +302,7 @@ export default {
 
   .productManagement {
     background-color: #171c1d; /* 深灰色背景 */
-    height: 163vh;
+    height: 162.3vh;
 
     .productCreate {
       display: flex;

@@ -11,6 +11,7 @@
     "@popperjs/core": "^2.11.8",
     "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
+    "chart.js": "^4.4.1",
     "element": "^0.1.4",
     "pinia": "^2.1.7",
     "sass": "^1.69.5",
