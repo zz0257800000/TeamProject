@@ -145,6 +145,7 @@ export default {
 
 <template>
   <div class="mainshow">
+
     <div class="sellinfo">
       <div class="sellinfHeader">
         <h3>賣場資訊</h3>
@@ -152,14 +153,13 @@ export default {
       <h4>賣家id： <router-link :to="'/UserPage/sellerStore/' + product.user_id" class="productPageRoutBtn" title="前往賣家賣場">
           {{ product.user_id }}</router-link>
       </h4>
-      <h4>全部商品：</h4>
+      <!-- <h4>全部商品：</h4> -->
       <h4>賣場評價：</h4>
-
     </div>
-    <div class="bg">
 
+    <div class="bg">
       <div class="product Area">
-        <img :src="product.photo" class="card-img-top fixed-size-image" alt="..." @click="openImageModal">
+        <img :src="product.photo" class="card-img-top fixed-size-image" alt="..." @click="openImageModal" style="height: 100%; width: 700px;">
 
         <div class="productText">
           <div class="title">
@@ -188,15 +188,12 @@ export default {
           </div>
 
           <div class="product-buttons">
-            <!-- <router-link :to="'/UserPage/shoppingCart/'" class="cart-button">
-            <i class="fas fa-shopping-cart"></i> 加入購物車
-          </router-link> -->
-            <button v-if="this.userId != product.user_id" class="cart-button" @click="addToCartAndShowAlert"><i class="fas fa-shopping-cart"></i>加入購物車</button>
+            <button v-if="this.userId != product.user_id" class="cart-button" @click="addToCartAndShowAlert" style="width: 9rem;"><i class="fas fa-shopping-cart"></i>加入購物車</button>
 
-            <router-link v-if="this.userId != product.user_id" :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" >
-  <i class="fas fa-credit-card"></i> 立即購買
-</router-link>
-   
+            <router-link v-if="this.userId != product.user_id" :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" style="width: 9rem;">
+              <i class="fas fa-credit-card"></i> 立即購買
+            </router-link>
+
           </div>
 
         </div>
@@ -204,7 +201,6 @@ export default {
       <h2>相關商品</h2>
       <div class="Otherproducts">
       
-
         <div v-for="(product, index) in products.slice(0, 14)" :key="index" class="related-product-item">
           <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn"
             @click="navigateToProductPage(product.productId)">
@@ -233,22 +229,25 @@ export default {
 
 .cart-button,
 .buy-now-button {
-  padding: 10px 20px;
   font-size: 16px;
   text-decoration: none;
+  text-align: center;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  background-color: #28a745;
 }
 
 .cart-button {
   background-color: #007bff;
+  border: 0;
+
+}
+.buy-now-button {
+  padding-top: 18px;
 }
 
-.buy-now-button {
-  background-color: #28a745;
-}
 
 .cart-button:hover,
 .buy-now-button:hover {
@@ -359,8 +358,6 @@ export default {
       display: flex;
       align-items: center;
       left: 5%;
-
-
     }
 
   }

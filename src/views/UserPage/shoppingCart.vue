@@ -109,7 +109,7 @@ export default {
         <div class="item-name header">商品</div>  
         <div class="item-price header">單價</div>
         <div class="item-quantity header">數量</div>
-        <div class="amount header">總計</div>
+        <div class="item-total header">總計</div>
         <div class="operate header">操作</div>
       </div>
       <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
@@ -123,13 +123,13 @@ export default {
           </div>
           <div class="item-quantity">
             <button @click="handleSub(item)">-</button>
-            <span class="quantity-value">{{ item.cart_count }}</span>
+            <span class="quantity-value">{{ " " + item.cart_count + " " }}</span>
             <button @click="handlePlus(item)">+</button>
           </div>
           <div class="item-total">
             <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
           </div>
-          <button @click="handledelete(index)" class="delete-button">刪除</button>
+          <button @click="handledelete(index)" class="operate delete-button">刪除</button>
         </div>
       </div>
       <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
@@ -167,58 +167,49 @@ export default {
   align-items: center;
   justify-content: space-around;
   margin-bottom: 20px;
-  background-color: #2ecc71;
-  margin-left: -5px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+//> 符號
 .breadcrumb-separator {
   margin: 0 5px;
 }
-
 .current-page {
   font-weight: bold;
 }
 
 .cart-items {
+  padding: 10px;
   width: 100%;
   .item-image {
+    display: flex;
+    justify-content: center;
     width: 8vw;
-    background-color: #c5ffac;
     img {
       width: 80px;
       height: 80px;
       border-radius: 5px;
-      background-color: #eeeeee;
+      border: 2px solid#c9c9c9;
     }
   }
   .item-name {
       width: 30vw;
       font-size: 18px;
-      background-color: #eeeeee;
     }
-
   .item-price{
     width: 8vw;
-    background-color: #f75e5e;
   }
   .item-quantity{
-      background-color: #f75e5e;
-    }
-    .item-total {
-      width: 10vw;
-      margin-bottom: 8px;
-    }
-  .item-details {
-    flex-grow: 1;
-    display: flex;  
-    justify-content: space-around;
-
-    .quantity-value {
-      margin: 0 5px;
-    }
-
-    .delete-button {
       width: 5vw;
+  }
+  .item-total{
+    width: 8vw;
+  }
+  .operate{
+    width: 5vw;
+  }
+  .delete-button {
       background-color: #e74c3c;
       color: white;
       border: none;
@@ -226,22 +217,27 @@ export default {
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-
       &:hover {
         background-color: #c0392b;
       }
     }
+  .item-details {
+    flex-grow: 1;
+    display: flex;  
+    justify-content: space-around;
+
+
   }
 }
 
 .cart-item {
   display: flex;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  padding: 10px;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .checkout-button {
