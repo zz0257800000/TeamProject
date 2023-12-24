@@ -74,6 +74,11 @@ export default {
       this.quantity++;
     },
     buyNow() {
+      if (this.product.inventory <= 0) {
+      // 库存不足，显示提示
+      alert('庫存不足');
+      return;
+    }
   // 检查是否购买自己的商品
   if (this.userId === this.product.user_id) {
     // 显示提示信息
@@ -161,22 +166,21 @@ export default {
             <p>庫存：{{ product.inventory }}</p>
           </div>
           <div class="title">
-            <p>上架時間：{{ product.upload_time }}</p>
+            <h5>上架時間：{{ product.upload_time }}</h5>
           </div>
-          <div class="quantity" v-if="this.userId != product.user_id">
+          <div class="quantity" v-if="this.userId != product.user_id && product.inventory > 0" >
             <p>數量：</p>
             <button @click="decrementQuantity">-</button>
             <input v-model="quantity" type="number" min="1" />
             <button @click="incrementQuantity">+</button>
           </div>
           <div class="product-buttons">
-            <button v-if="this.userId != product.user_id" class="cart-button" @click="addToCartAndShowAlert">
+            <button v-if="this.userId != product.user_id && product.inventory > 0" class="cart-button" @click="addToCartAndShowAlert">
               <i class="fas fa-shopping-cart"></i>加入購物車
             </button>
-            <router-link v-if="this.userId != product.user_id" :to="'/UserPage/checkoutshopping/' + product.productId"
-              class="buy-now-button">
-              <i class="fas fa-credit-card"></i> 立即購買
-            </router-link>
+            <router-link v-if="this.userId != product.user_id && product.inventory > 0" :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
+  <i class="fas fa-credit-card"></i> 立即購買
+</router-link>
           </div>
         </div>
       </div>

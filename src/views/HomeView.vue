@@ -49,9 +49,11 @@ export default {
     },
     handleSearch() {
       // 执行产品搜索请求
-      axios.get(`http://localhost:8080/product/search?productName=${this.searchKeyword}`)
+      axios.get(`http://localhost:8080/product/search?productName=${this.searchResults}`)
         .then(response => {
-          this.searchResults = response.data.results;
+          this.products = response.data.products;
+          console.log(response.data);
+          this.searchResults="";
         })
         .catch(error => {
           console.error('Error searching products:', error);
@@ -65,7 +67,7 @@ export default {
 <template>
   <div class="mainshow">
     <div class="search">
-        <input v-model="searchKeyword" placeholder="輸入搜尋關鍵字">
+        <input v-model="searchResults" placeholder="輸入搜尋關鍵字">
         <button @click="handleSearch">搜尋</button>
       </div>
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -100,6 +102,7 @@ export default {
       </button>
     </div>
 
+    <h1 v-if="products.length==0">找不到查詢商品,請再次輸入</h1>
     <div class="productAll">
   <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
     <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">

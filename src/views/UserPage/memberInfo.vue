@@ -7,6 +7,7 @@ export default {
       user: {
         name: '', // 初始值
         userPhoto: null, // 添加 userPhoto 属性用于保存图像文件
+
       },
       //綁定pwd input v-model
       pwdInput: ("")
@@ -34,9 +35,10 @@ export default {
 
     saveUserInfo() {
       if (!this.pwdInput || this.pwdInput.trim() === '') {
-    alert('請輸入正確的密碼');
-    return;
-  }
+        alert('請輸入正確的密碼');
+        return;
+      }
+      
       const req = (
         {
           id: this.user.id,
@@ -49,7 +51,9 @@ export default {
           phone_number: this.user.phone_number,
           remittance_title: this.user.remittance_title,
           remittance_number: this.user.remittance_number,
-          seller_name: this.user.seller_name
+          seller_name: this.user.seller_name,
+          points: this.user.points,
+
         }
       )
 
@@ -60,28 +64,32 @@ export default {
           'Content-Type': 'application/json',
         },
       })
-      .then(response => {
-    console.log('User info updated successfully:', response.data);
+        .then(response => {
+          console.log('User info updated successfully:', response.data);
+          this.user.points = response.data.newPoints;
 
-    // 检查后端返回的数据，如果密码验证失败，显示相应的提示
-    if (response.data && response.data.rtnCode === 'PASSWORD_ERROR') {
+          // 检查后端返回的数据，如果密码验证失败，显示相应的提示
+          if (response.data && response.data.rtnCode === 'PASSWORD_ERROR') {
             alert('密碼錯誤請重新登入');
-    } else {
-      // 如果密码验证成功，执行其他操作
-      alert('資料修改成功');
-      this.pwdInput = '';
-    }
-  })
+          } else {
+            // 如果密码验证成功，执行其他操作
+            
+            alert('資料修改成功');
+            this.user.points = response.data.newPoints;
+
+            this.pwdInput = '';
+          }
+        })
         .catch(error => {
-       
+
 
           console.error('Error updating user info:', error);
           if (error.response && error.response.status === 401) {
-        // 401 Unauthorized status typically indicates a password error
-        alert('密碼錯誤請重新登入');
-      } else {
-        alert('密碼錯誤請重新登入');
-      }
+            // 401 Unauthorized status typically indicates a password error
+            alert('密碼錯誤請重新登入');
+          } else {
+            alert('密碼錯誤請重新登入');
+          }
         });
     },
 
@@ -145,6 +153,10 @@ export default {
           <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
             填寫銀行帳號: <input type="text" name="" id="" class="input-field" v-model="user.remittance_number">
+          </div>
+          <div class="detail-group" v-if="user">
+            <i class="far fa-user"></i>
+            點數儲值: <input type="number" name="" id="" class="input-field" v-model="user.points">
           </div>
           <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
@@ -249,7 +261,7 @@ export default {
   margin-top: 5px;
 }
 
-.user-details {  
+.user-details {
 
   display: flex;
   flex-direction: column;
@@ -282,7 +294,8 @@ export default {
   /* 深色输入框 */
   color: white;
   /* 字体颜色 */
-}</style>
+}
+</style>
 
 
   

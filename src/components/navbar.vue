@@ -93,6 +93,8 @@ export default {
 
 
         <div>       
+          <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
+
 <span v-if="user" >使用者帳號: {{ user.email }}</span>
           <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
           <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
