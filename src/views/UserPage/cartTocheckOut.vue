@@ -139,7 +139,7 @@ export default {
                 <div class="productsInfo">
                     <h3>XXX小舖</h3>
                     <div class="item_header">
-                        <div class="item-image header">商品照片</div>
+                        <div class="item-image header" >商品照片</div>
                         <div class="item-name header">商品</div>  
                         <div class="item-type header">產品分類</div> 
                         <div class="item-price header">單價</div>
@@ -147,7 +147,9 @@ export default {
                         <div class="item-total header">總計</div>
                     </div>
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
-                        <img :src="item.photo" alt="Product Image" class="item-image">
+                        <div class="item-image">
+                            <img :src="item.photo" alt="Product Image" class="item-image">
+                        </div>
                         <div class="item-name product-details">
                             <p>{{ item.product_name }}</p>
                         </div>
@@ -352,22 +354,18 @@ export default {
     display: flex;
     justify-content: center;
     width: 8vw;
-    background-color: #4caf50;
-    border: 2px solid#810000;
     img {
+        width: 7vw;
         height: 80px;
         border-radius: 5px;
-        border: 2px solid#810000;
     }
     }
 .item-name {
     margin-left: 15px;
     width: 30vw;
-    background-color: #4caf50;
     }
 .item-type{
     width: 8vw;
-    background-color: #4caf50;
 }
 .item-price{
     width: 8vw;
