@@ -92,7 +92,7 @@ export default {
 
 
 
-        <div>       
+        <div>      
           <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
 
 <span v-if="user" >使用者帳號: {{ user.email }}</span>
@@ -142,11 +142,12 @@ export default {
   </div>
   <div class="Marquee">
     <div class="announcement">
-      <p>聖誕節特賣</p>
+      <!-- <p>出租男友玉翔我愛你!!!！</p> -->
+
+      <p> 魔剣の継承者漫画、イラスト発売中!!!！ </p>
     </div>
 
 
-    <!-- 產品分類下拉式選單 -->
     <div class="type">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">

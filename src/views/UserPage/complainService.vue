@@ -46,10 +46,7 @@ export default {
 <b>聯絡地址</b>
 <br>
 <input type="text" class="textinput" >
-<br>
-<b>● 用餐店鋪</b>
-<br>
-<input type="text" class="textinput" >
+
 <br>
 <b>● 問題或建議</b>
 <br>

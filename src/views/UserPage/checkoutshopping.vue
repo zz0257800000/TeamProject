@@ -106,7 +106,7 @@ export default {
                 record_type: "下標訂單",
                 valid: true,
                 seller_id: this.product.user_id,
-                seller_name: "",
+                seller_name: this.product.seller_name,
 
             };
             console.log('Success:', orderData);

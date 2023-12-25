@@ -353,11 +353,7 @@ export default {
 
           .orderDetailsheadright {
             display: flex;
-            justify-content: center;
-            border-radius: 10px;
-            width: 10vw;
-            background-color: #fff5a0; 
-            color: rgb(255, 255, 255);
+
           }
         }
 
@@ -408,14 +404,7 @@ export default {
 
             .btn {
               border: 0px solid rgb(255, 0, 0);
-              font-size: 12pt;
-              width: 9vw;
-              background-color: #fff1a0; 
-              color: white;
-              transition: 0.5s;
-              position: relative;
-              top: 70%;
-              right: 10%;
+              
             }
           }
 

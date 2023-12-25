@@ -213,7 +213,7 @@ shipOrder(record_id) {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to=""  @click="shipOrder(record.record_id)" > 出貨</RouterLink>
+                <RouterLink class="btn" to=""  > </RouterLink>
 
               </div>
 
