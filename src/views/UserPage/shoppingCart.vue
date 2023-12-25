@@ -237,9 +237,7 @@ export default {
     flex-grow: 1;
     display: flex;  
     justify-content: space-around;
-    align-items: center; /* 新增的屬性，將內容垂直置中 */
-    
-
+    align-items: center; 
 
   }
 }
