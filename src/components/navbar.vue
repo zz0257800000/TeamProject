@@ -142,7 +142,7 @@ export default {
   </div>
   <div class="Marquee">
     <div class="announcement">
-      <p>玉翔我愛你!!!！</p>
+      <p>聖誕節特賣</p>
     </div>
 
 

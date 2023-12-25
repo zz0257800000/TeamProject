@@ -71,8 +71,13 @@ export default {
       }
     },
     incrementQuantity() {
-      this.quantity++;
-    },
+  if (this.quantity < this.product.inventory) {
+    this.quantity++;
+  } else {
+    // 庫存不足的提示，你可以自行調整
+    alert('已達到庫存上限');
+  }
+},
     buyNow() {
       if (this.product.inventory <= 0) {
       // 库存不足，显示提示

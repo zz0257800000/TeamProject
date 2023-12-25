@@ -163,7 +163,7 @@ export default {
                             <button @click="incrementQuantity(item)">+</button> -->
                         </div>
                         <div class="item-total">
-                            <p class="total-value">{{ item.cart_amount * item.cart_count }}</p>
+                            <p class="total-value">${{ item.cart_amount * item.cart_count }}</p>
                         </div>
                     </div>
                 </div>
