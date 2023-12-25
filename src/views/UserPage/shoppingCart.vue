@@ -189,10 +189,9 @@ export default {
     display: flex;
     justify-content: center;
     width: 8vw;
-    background-color: #c0392b;
     img {
       height: 80px;
-      border-radius: 50px;
+      border-radius: 5px;
       border: 2px solid#c9c9c9;
     }
   }
