@@ -107,65 +107,78 @@ export default {
       <div class="info-header">
         <h2 class="title">修改會員資料</h2>
         <div class="button-group">
-          <button class="save-button" @click="saveUserInfo">儲存</button>
+          <button class="save-button" @click="">+ 點數儲值</button>
+
           <!-- <button class="cancel-button">取消</button> -->
         </div>
       </div>
       <div class="info-content">
         <div class="user-profile">
-          <div class="profile-image" v-if="previewImage">
+         
+
+          <div class="user-details">
+            <div class="profile-image" v-if="previewImage">
             <!-- 显示预览图像 -->
             <img :src="previewImage" alt="User Photo" />
           </div>
+          <br>
           <label for="userPhoto"></label>
           <input type="file" @change="handleImageChange" id="userPhoto" />
-
-          <div class="user-details">
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
-              信箱: <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
+              信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
             </div>
 
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
-              更改名字: <input type="text" name="" id="" class="input-field" v-model="user.name">
+              更改名字: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.name">
             </div>
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
-              更改電話: <input type="text" name="" id="" class="input-field" v-model="user.phone_number">
+              更改電話:&nbsp;  <input type="text" name="" id="" class="input-field" v-model="user.phone_number">
             </div>
 
             <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
-              填寫地址: <input type="text" name="" id="" class="input-field" v-model="user.address">
+              填寫地址: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.address">
             </div>
           </div>
         </div>
         <div class="address-details">
           <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
-            賣場名: <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
+            賣場名: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
           </div>
           <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
-            填寫匯款銀行: <input type="text" name="" id="" class="input-field" v-model="user.remittance_title">
+            填寫匯款銀行:&nbsp;  <input type="text" name="" id="" class="input-field" v-model="user.remittance_title">
           </div>
           <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
-            填寫銀行帳號: <input type="text" name="" id="" class="input-field" v-model="user.remittance_number">
+            填寫銀行帳號: &nbsp;  <input type="text" name="" id="" class="input-field" v-model="user.remittance_number">
           </div>
           <div class="detail-group" v-if="user">
             <i class="far fa-user"></i>
-            點數儲值: <input type="number" name="" id="" class="input-field" v-model="user.points">
+            點數儲值:  &nbsp; <input type="number" name="" id="" class="input-field" v-model="user.points">
           </div>
           <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
 
-            確認密碼才能改資料: <input type="text" name="" id="" class="input-field" v-model="pwdInput">
+            確認密碼改資料:&nbsp;  <input type="text" name="" id="" class="input-field" v-model="pwdInput">
           </div>
+      
         </div>
+       
       </div>
+      <div class="info-footer">
+
+<div class="button-group">
+  <button class="save-button" @click="saveUserInfo">儲存</button>
+</div>
+
+</div>
     </div>
+  
   </div>
 </template>
 
@@ -181,23 +194,33 @@ export default {
   color: white;
 
   .info-content {
-    width: 65vw;
+    width: 80vw;
     border: 0px solid rgb(255, 0, 0);
-    justify-content: space-around;
     display: flex;
-    align-items: center;
-    height: 70vh;
+  align-items: center;
+  justify-content: center;
+    height: 60vh;
   }
 }
 
 .info-show {
-  width: 70vw;
+  width: 85vw;
   height: 80vh;
   background-color: #1e1e1e;
   /* 深色卡片背景 */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 0px solid rgb(255, 0, 0);
+.info-footer {
+height: 10vh;
+ position: relative;
+ left: 94%;
+ width: 5vw;
+border: 0px solid rgb(255, 0, 0);
+
+
+}
 
 }
 
@@ -206,6 +229,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  border: 0px solid rgb(255, 0, 0);
+
 }
 
 .title {
@@ -232,9 +257,11 @@ export default {
 
 .user-profile {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 0px solid rgb(255, 0, 0);
   width: 40vw;
+  height: 60vh;
 
 }
 
@@ -280,8 +307,15 @@ export default {
 }
 
 .address-details {
+  top: 12%;
+  position: relative;
   display: flex;
   flex-direction: column;
+  border: 0px solid rgb(255, 0, 0);
+  width: 40vw;
+
+
+
 }
 
 .input-field {

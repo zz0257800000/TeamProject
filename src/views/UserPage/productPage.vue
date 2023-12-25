@@ -113,6 +113,8 @@ export default {
             cart_amount: this.product.price * this.quantity,
             product_name: this.product.product_name,
             photo: this.product.photo,
+            seller_name: this.product.seller_name,
+
           };
           console.log('User ID:', this.user_id);
           console.log('User ID:', this.userId);
@@ -153,7 +155,7 @@ export default {
   <div class="mainshow">
     <div class="productInfo">
       <div class="product">
-        <img :src="product.photo" class="card-img-top fixed-size-image" alt="..." @click="openImageModal">
+        <img :src="product.photo" class="photoShow" alt="..." @click="openImageModal">
         <div class="productText">
           <div class="title">
             <p class="product-name">商品名稱：{{ product.product_name }}</p>
@@ -225,6 +227,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.photoShow{
+
+  scale: 1.0;
+}
 .mainshow {
   display: flex;
   width: 100vw;
@@ -475,10 +481,12 @@ img {
 .image-modal-container {
   max-width: 35%;
   max-height: 120%;
+
 }
 .image-modal-content {
   width: 100%;
   height: 100%;
   object-fit: contain;
+
 }
 </style>
