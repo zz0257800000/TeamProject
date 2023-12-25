@@ -112,6 +112,7 @@ export default {
             cart_count: this.quantity,
             cart_amount: this.product.price * this.quantity,
             product_name: this.product.product_name,
+            product_type:this.product.product_type,
             photo: this.product.photo,
           };
           console.log('User ID:', this.user_id);

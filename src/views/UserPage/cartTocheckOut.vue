@@ -82,6 +82,7 @@ export default {
             user_id: this.userId,
             product_id: 1,  // 使用 this.product.product_id
             product_name: "測試",
+            product_type: this.productType,
             product_count: 1,
             consumer_name: this.recipientName,
             consumer_address: this.recipientAddress,

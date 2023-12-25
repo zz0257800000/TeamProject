@@ -66,6 +66,7 @@ export default {
       cartId: item.cartId,
       cart_date: "2023-12-15T16:30:00",
       product_name: item.product_name,
+      product_type:item.product_type,
       cart_count: item.cart_count,
       cart_amount: item.cart_amount * item.cart_count,
       user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
@@ -106,7 +107,8 @@ export default {
     <div class="cart-items">
       <div class="item_header">
         <div class="item-image header">商品照片</div>
-        <div class="item-name header">商品</div>  
+        <div class="item-name header">商品</div> 
+        <div class="item-type header">產品分類</div> 
         <div class="item-price header">單價</div>
         <div class="item-quantity header">數量</div>
         <div class="item-total header">總計</div>
@@ -118,13 +120,14 @@ export default {
           <img :src="item.photo" alt="Product Image" class="product-image">
         </div>
           <div class="item-name">{{ item.product_name }}</div>
+          <div class="item-type">{{ item.product_type }}</div>
           <div class="item-price">
             <span class="price-value">{{ item.cart_amount }}</span>
           </div>
           <div class="item-quantity">
-            <button @click="handleSub(item)">-</button>
+            <button @click="handleSub(item)"> - </button>
             <span class="quantity-value">{{ " " + item.cart_count + " " }}</span>
-            <button @click="handlePlus(item)">+</button>
+            <button @click="handlePlus(item)"> + </button>
           </div>
           <div class="item-total">
             <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
@@ -195,13 +198,22 @@ export default {
   }
   .item-name {
       width: 30vw;
-      font-size: 18px;
     }
+  .item-type{
+    width: 8vw;
+  }
   .item-price{
     width: 8vw;
   }
   .item-quantity{
       width: 5vw;
+      button{
+        width: 20px;
+        border: 0;
+        border-radius: 5px;
+        background-color: #2ecc71;
+        color: white;
+      }
   }
   .item-total{
     width: 8vw;
@@ -225,6 +237,8 @@ export default {
     flex-grow: 1;
     display: flex;  
     justify-content: space-around;
+    align-items: center; /* 新增的屬性，將內容垂直置中 */
+    
 
 
   }
