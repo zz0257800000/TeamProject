@@ -9,7 +9,8 @@ export default {
         userPhoto: null, // 添加 userPhoto 属性用于保存图像文件
 
       },
-      //綁定pwd input v-model
+      showPointsModal: false,
+        
       pwdInput: ("")
     };
   },
@@ -38,7 +39,7 @@ export default {
         alert('請輸入正確的密碼');
         return;
       }
-      
+
       const req = (
         {
           id: this.user.id,
@@ -73,9 +74,8 @@ export default {
             alert('密碼錯誤請重新登入');
           } else {
             // 如果密码验证成功，执行其他操作
-            
+
             alert('資料修改成功');
-            this.user.points = response.data.newPoints;
 
             this.pwdInput = '';
           }
@@ -91,6 +91,13 @@ export default {
             alert('密碼錯誤請重新登入');
           }
         });
+    }, addPoints() {
+      // 点击 + 點數儲值 按钮时，显示弹窗
+      this.showPointsModal = true;
+    },
+    closePointsModal() {
+      // 关闭弹窗
+      this.showPointsModal = false;
     },
 
 
@@ -107,23 +114,23 @@ export default {
       <div class="info-header">
         <h2 class="title">修改會員資料</h2>
         <div class="button-group">
-          <button class="save-button" @click="">+ 點數儲值</button>
+          <!-- <button class="save-button" @click="addPoints">+ 點數儲值</button> -->
 
           <!-- <button class="cancel-button">取消</button> -->
         </div>
       </div>
       <div class="info-content">
         <div class="user-profile">
-         
+
 
           <div class="user-details">
             <div class="profile-image" v-if="previewImage">
-            <!-- 显示预览图像 -->
-            <img :src="previewImage" alt="User Photo" />
-          </div>
-          <br>
-          <label for="userPhoto"></label>
-          <input type="file" @change="handleImageChange" id="userPhoto" />
+              <!-- 显示预览图像 -->
+              <img :src="previewImage" alt="User Photo" />
+            </div>
+            <br>
+            <label for="userPhoto"></label>
+            <input type="file" @change="handleImageChange" id="userPhoto" />
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
               信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
@@ -135,7 +142,7 @@ export default {
             </div>
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
-              更改電話:&nbsp;  <input type="text" name="" id="" class="input-field" v-model="user.phone_number">
+              更改電話:&nbsp; <input type="text" name="" id="" class="input-field" v-model="user.phone_number">
             </div>
 
             <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
@@ -149,36 +156,67 @@ export default {
 
             賣場名: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
           </div>
-          <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
+          <div class="detail-group" v-if="user">
+            <i class="fa-regular fa-user"></i>
+            選擇匯款銀行:
+            <select v-model="user.remittance_title">
+              <option value="">請選擇銀行</option>
 
-            填寫匯款銀行:&nbsp;  <input type="text" name="" id="" class="input-field" v-model="user.remittance_title">
+              <option value="台灣銀行 - 004">台灣銀行 - 004</option>
+              <option value="中國信託 - 812">中國信託 - 812</option>
+            </select>
           </div>
-          <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
-
-            填寫銀行帳號: &nbsp;  <input type="text" name="" id="" class="input-field" v-model="user.remittance_number">
+          <div class="detail-group" v-if="user">
+            <i class="fa-regular fa-user"></i>
+            填寫銀行帳號: &nbsp;
+            <input type="text" name="" id="" class="input-field" v-model="user.remittance_number" maxlength="12" />
           </div>
           <div class="detail-group" v-if="user">
             <i class="far fa-user"></i>
-            點數儲值:  &nbsp; <input type="number" name="" id="" class="input-field" v-model="user.points">
+            點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="user.points">
           </div>
           <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
 
-            確認密碼改資料:&nbsp;  <input type="text" name="" id="" class="input-field" v-model="pwdInput">
+            確認密碼:&nbsp; <input type="password" name="" id="" class="input-field" v-model="pwdInput">
           </div>
-      
+
         </div>
-       
+
       </div>
       <div class="info-footer">
 
-<div class="button-group">
-  <button class="save-button" @click="saveUserInfo">儲存</button>
-</div>
+        <div class="button-group">
+          <button class="save-button" @click="saveUserInfo">儲存</button>
+        </div>
 
-</div>
+      </div>
     </div>
-  
+    <div class="points-modal" v-show="showPointsModal">
+      <!-- 弹窗内容 -->
+      <div class="modal-content">
+        <div class="firstshow">
+          <h3>儲值點數畫面</h3>
+          <button class="closebutton" @click="closePointsModal">X</button>
+        </div>
+        <div class="secondshow">
+          <div class="detail-group" v-if="user">
+            <i class="far fa-user"></i>
+            點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="user.points">
+          </div>
+          <div class="detail-group" v-if="user">
+            <i class="fa-regular fa-user"></i>
+
+            確認密碼:&nbsp; <input type="password" name="" id="" class="input-field" v-model="pwdInput">
+          </div>
+        </div>
+        <div class="button-group">
+          <button class="save-button" @click="saveUserInfo">確認儲值</button>
+        </div>
+
+
+      </div>
+    </div>
   </div>
 </template>
 
@@ -197,13 +235,109 @@ export default {
     width: 80vw;
     border: 0px solid rgb(255, 0, 0);
     display: flex;
-  align-items: center;
-  justify-content: center;
+    align-items: center;
+    justify-content: center;
     height: 60vh;
+
   }
+
+  .points-modal {
+    /* 其他样式属性... */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明的背景遮罩 */
+    z-index: 999;
+
+    .input-field {
+      color: white;
+
+    }
+  }
+
+  .modal-content {
+    height: 50vh;
+    width: 50vw;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .firstshow {
+      display: flex;
+      justify-content: space-between;
+
+      .closebutton {
+        width: 30px;
+        /* 调整按钮的宽度 */
+        height: 30px;
+        /* 调整按钮的高度 */
+        font-size: 20px;
+        /* 设置字体大小 */
+        color: #fff;
+        /* 字体颜色 */
+        background-color: #2196F3;
+        /* 按钮蓝色 */
+        border: none;
+        border-radius: 50%;
+        /* 将按钮形状设置为圆形 */
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        /* 移除点击时的边框 */
+        transition: background-color 0.3s;
+        /* 添加过渡效果 */
+
+      }
+
+      .closebutton:hover {
+        background-color: #2196F3;
+        /* 按钮蓝色 */
+      }
+
+    }
+
+    .secondshow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 0px solid rgb(255, 0, 0);
+      height: 30vh;
+      justify-content: center;
+
+    }
+
+    .button-group {
+      position: fixed;
+      bottom: 25%;
+      right: 25%;
+      margin: 20px;
+      /* 距离边缘的距离，根据需要调整 */
+    }
+
+    .button-group button {
+      padding: 10px 20px;
+      background-color: #2196F3;
+      /* 按钮蓝色 */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
 }
 
 .info-show {
+
   width: 85vw;
   height: 80vh;
   background-color: #1e1e1e;
@@ -212,15 +346,16 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border: 0px solid rgb(255, 0, 0);
-.info-footer {
-height: 10vh;
- position: relative;
- left: 94%;
- width: 5vw;
-border: 0px solid rgb(255, 0, 0);
+
+  .info-footer {
+    height: 10vh;
+    position: relative;
+    left: 94%;
+    width: 5vw;
+    border: 0px solid rgb(255, 0, 0);
 
 
-}
+  }
 
 }
 
@@ -307,7 +442,7 @@ border: 0px solid rgb(255, 0, 0);
 }
 
 .address-details {
-  top: 12%;
+  top: 5%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -328,8 +463,7 @@ border: 0px solid rgb(255, 0, 0);
   /* 深色输入框 */
   color: white;
   /* 字体颜色 */
-}
-</style>
+}</style>
 
 
   

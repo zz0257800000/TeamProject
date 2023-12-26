@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import Swal from 'sweetalert2'
 export default {
   data() {
     return {
@@ -61,13 +62,15 @@ export default {
         alert("請填寫密碼!!");
         return;
       }
-      // 密碼正規表達式，密碼至少8字元，要有英文+數字，其中需包含至少一個大寫字母和小寫字母及一個數字。
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+      // 密碼正規表達式，密碼至少8字元，要有英文+數字，字母及一個數字。
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
       // 檢查密碼是否符合要求
       if (!passwordRegex.test(this.password)) {
-        alert(
-          "密碼至少要包含8個字元，要有英文+數字，其中需包含至少一個大寫字母和小寫字母及一個數字!!"
-        );
+        alert("密碼至少要包含8個字元，要有英文+數字，其中需包含至少一個字母及一個數字!!");
+        return;
+      }
+      if (this.password !== this.confirmPassword) {
+        alert("密碼與確認密碼不同，請確認後重新输入。");
         return;
       }
       // 若通過所有條件，才可進行註冊
@@ -78,17 +81,31 @@ export default {
         confirmPassword: this.confirmPassword,
         phone_number: this.phone_number,
       };
-      axios
-        .post("http://localhost:8080/user/sign_up", userData)
+      axios.post("http://localhost:8080/user/sign_up", userData)
         .then((response) => {
           console.log(response.data);
-          alert("註冊成功，即將幫您導向登入首頁!!");
-          this.$router.push("/UserPage/loginPage"); // 註冊完成導回首頁
+          const responseData = response.data;
+          console.log(responseData.rtnCode);
+          if(responseData.rtnCode === "EMAIL_IS_EXIST"){
+            alert("此電子郵件已被註冊，請使用其他電子郵件註冊!!")
+          }else{
+          // 如果不是 "EMAIL_IS_EXIST"，代表註冊成功
+          this.showAlert("註冊成功!!")
+          this.$router.push("/UserPage/loginPage"); // 註冊完成導回登入頁面
+          }
         })
         .catch((error) => {
           console.error(error);
-          // 處理錯誤，顯示錯誤訊息等
         });
+    },
+    //套件sweetalert2，顯示註冊成功
+    showAlert() {
+      Swal.fire({
+        title: '註冊成功!!',
+        text: '歡迎加入皮皮蝦大家庭，即將幫您導向登入頁面!!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      })
     },
     //mail防呆，正規表達式
     validateEmail() {
@@ -118,7 +135,7 @@ export default {
 <template>
   <div class="signup-container">
     <div class="backbtn">
-      <RouterLink class="btn" to="/UserPage/loginPage">返回登入面</RouterLink>
+      <RouterLink class="btn" to="/UserPage/loginPage">返回登入頁面</RouterLink>
       <h3></h3>
       <h6>
         <RouterLink class="btn1" to="/"> Home</RouterLink> > <a href="">註冊</a>
@@ -142,7 +159,7 @@ export default {
                 type="text"
                 class="form-control"
                 name="userName"
-                maxlength="7"
+                maxlength=""
                 placeholder="Enter user name"
               />
             </div>
@@ -181,6 +198,7 @@ export default {
                 class="form-control"
                 name="phone"
                 placeholder="0912345678"
+                maxlength="10"
               />
             </div>
             <span class="col-sm-6">
@@ -196,12 +214,16 @@ export default {
               <div class="input-form-control">
                 <input
                   v-model="password"
-                  
+                  :type="showPassword ? 'text' : 'password'"
                   class="form-control"
                   name="password"
-                  placeholder="Enter password"
+                  placeholder="Password"
                 />
-               
+                <!-- <i
+                  class="fa-solid fa-eye A"
+                  @click="showPassword = !showPassword"
+                ></i> -->
+                <input type="checkbox" @click="showPassword = !showPassword">顯示密碼
               </div>
             </div>
             <span class="col-sm-6"><p id="errPwd"></p></span>
@@ -218,10 +240,11 @@ export default {
                   class="form-control"
                   name="confirmPassword"
                   placeholder="Re-type password"/>
-                <i
+                <!-- <i
                   class="fa-solid fa-eye A"
                   @click="showConfirmPassword = !showConfirmPassword"
-                ></i>
+                ></i> -->
+                <input type="checkbox" @click="showConfirmPassword = !showConfirmPassword">顯示密碼
               </div>
             </div>
             <span class="col-sm-6"><p id="errConfirmPwd"></p></span>

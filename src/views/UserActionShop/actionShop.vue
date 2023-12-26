@@ -281,12 +281,12 @@ export default {
           <form @submit.prevent="submitForm">
             <div class="form-group">
               <label for="productImage">商品圖片:</label>
-              <input type="file" @change="handleImageChange" id="productImage" />
+              <input type="file" @change="handleImageChange" id="productImage" class="form-productImage"/>
             </div>
 
             <div class="form-group">
-              <label for="productName">商品名称:</label>
-              <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" />
+              <label for="productName">商品名稱:</label>
+              <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" class="productName"/>
             </div>
             <div class="form-group">
 
@@ -306,10 +306,10 @@ export default {
               </select>
             </div>
 
-            <div class="form-group">
-              <label for="description">商品描述:</label>
-              <input v-model="editedProduct.description" id="productDescription" placeholder="商品描述" />
-            </div>
+         <div class="form-group">
+  <label for="description">商品描述:</label>
+  <textarea v-model="editedProduct.description" id="productDescription" placeholder="商品描述" @input="adjustTextareaHeight"></textarea>
+</div>
 
             <div class="form-group">
               <label for="inventory">庫存:</label>
@@ -338,6 +338,13 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
+
+#productDescription {
+  width: 400px; /* 设置宽度 */
+  height: 300px; /* 设置高度 */
+  resize: none; /* 防止用户手动调整大小 */
+  overflow: auto; /* 显示滚动条以便查看溢出内容 */
+}
 .edit-modal {
   position: fixed;
   top: 0;
@@ -350,19 +357,21 @@ export default {
   justify-content: center;
   cursor: pointer;
   z-index: 9999;
+  border: 0px solid rgb(255, 0, 0);
 
   .edit-content {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 60%; // 调整为更小的百分比
-    max-width: 800px; // 最大宽度，防止过宽
-    position: relative;
+    max-width: 80vw; // 最大宽度，防止过宽
+    position: relative;   
+     border: 0px solid rgb(255, 0, 0);
+    
   }
-
+ 
   .edit-form {
     display: flex;
     flex-direction: column;
@@ -370,13 +379,19 @@ export default {
     max-width: 400px; // 最大宽度，防止过宽
     border: 0px solid rgb(255, 0, 0);
     position: relative;
-    left: 2%;
+    right: 4%;
+
+    height: 80vh;
 
 
   }
 
   .form-group {
     margin-bottom: 10px; // 将间距调整为更小
+    .productName{
+
+      width: 19vw;
+    }
   }
 
   .close-button {
@@ -388,8 +403,10 @@ export default {
   }
 
   .modal-image {
-    max-width: 100%;
-    height: auto;
+    max-width: 90%;
+    height:90%;
+    border: 0px solid rgb(255, 0, 0);
+
   }
 
   /* 其他样式调整 */
@@ -418,8 +435,8 @@ export default {
 }
 
 .modal-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 80%;
+  max-height: 80%;
   object-fit: contain;
   /* 保持圖片原始比例並使其完全顯示 */
 }

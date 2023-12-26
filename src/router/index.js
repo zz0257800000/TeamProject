@@ -75,11 +75,7 @@ const router = createRouter({
       name: "addNewProduct",
       component: () => import("../views/UserActionShop/addNewProduct.vue"),
     },
-    {
-      path: "/UserPage/complainService",
-      name: "complainService",
-      component: () => import("../views/UserPage/complainService.vue"),
-    },
+  
     {
       path: "/UserPage/buyingList",
       name: "buyingList",
@@ -125,6 +121,32 @@ const router = createRouter({
       name: "cartToCheckOut",
       component: () => import("../views/UserPage/cartToCheckOut.vue"),
     },
+    {
+      path: "/UserPage/Watchfeedback",
+      name: "Watchfeedback",
+      component: () => import("../views/UserPage/Watchfeedback.vue"),
+    }, 
+    {
+      path: "/UserPage/ChangeForgetPassword",
+      name: "ChangeForgetPassword",
+      component: () => import("../views/UserPage/ChangeForgetPassword.vue"),
+    }, 
+     {
+      path: "/UserPage/forgotPasswordPage",
+      name: "forgotPasswordPage",
+      component: () => import("../views/UserPage/forgotPasswordPage.vue"),
+    },
+    {
+      path: "/UserPage/ChangePassword",
+      name: "ChangePassword",
+      component: () => import("../views/UserPage/ChangePassword.vue"),
+    }, 
+    {
+      path: "/UserPage/complainService",
+      name: "complainService",
+      component: () => import("../views/UserPage/complainService.vue"),
+    },
+
   ],
 });
 

@@ -120,21 +120,22 @@ export default {
       </RouterLink>
 
      
+      <div class="headerRight">
+
+     
 
       <div>
         <RouterLink class="btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> <i class="fa-solid fa-box"></i> 購買紀錄</RouterLink>
       </div>
 
-      <div>
-        <RouterLink class="btn" to=""  v-if="isLoggedIn"><i class="fa-regular fa-message"></i> 聊聊訊息</RouterLink>
-      </div>
+     
       <div>
         <RouterLink class="btn" to="/UserPage/shoppingCart"  v-if="isLoggedIn">
           <i class="fa-solid fa-cart-shopping usericon"></i> 購物車
           <span class="notification-badge">{{ cartTotalQuantity }}</span>
         </RouterLink>
       </div>
-
+ </div>
     </div>
 
 
@@ -330,30 +331,20 @@ export default {
   }
 
   .askHeader {
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     display: flex;
+    width: 95vw;
     font-size: 16pt;
     padding: 5px;
     border: 0px solid rgb(255, 0, 0);
+    position: relative;
+    left: 3%;
 
-    .search {
-      width: 40vw;
+    .headerRight{
       display: flex;
-      justify-content: space-around;
-      height: 5vh;
-      z-index: 2;
 
-      i {
-        font-size: 20pt;
-        margin: 0 10px;
-      }
 
-      .searchText {
-        padding: 10px;
-        width: 50vw;
-        font-size: 16pt;
-      }
     }
 
   }

@@ -1,15 +1,46 @@
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
       email: "",
       password: "",
+      showPassword: false, // 切換密碼可見性
+      id: "",
     };
   },
   methods: {
-    
+    //登入方法
     LoginUser() {
+      if (!this.email.trim() || !this.password.trim()) {
+        alert("請填寫所有欄位的資料!!");
+        return;
+      }
+      // 檢查電子郵件是否為空且符合格式
+      if (!this.email.trim()) {
+        alert("請填寫電子郵件!!");
+        return;
+      } else {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValidEmail = emailRegex.test(this.email);
+        if (!isValidEmail) {
+          alert("請輸入有效的電子郵件!!");
+          return;
+        }
+      }
+      // 檢查密碼是否為空
+      if (!this.password.trim()) {
+        alert("請填寫密碼!!");
+        return;
+      }
+      // 密碼正規表達式，密碼至少8字元，要有英文+數字，其中包含至少一個字母及一個數字。
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+      // 檢查密碼是否符合要求
+      if (!passwordRegex.test(this.password)) {
+        alert("請確認您的密碼至少8碼，其中包含至少一個字母及一個數字");
+        return;
+      }
       const userData = {
         email: this.email,
         password: this.password,
@@ -17,42 +48,69 @@ export default {
       // 使用 Axios 發送 POST 請求
       axios.post("http://localhost:8080/user/login", userData)
         .then((response) => {
-          console.log(response.data);
-          sessionStorage.setItem('loggedIn', 'TRUE');  // 设置登录状态为TRUE
-          sessionStorage.setItem('user_Id', response.data.user.id);  // 设置用户ID，假设用户ID在返回数据的user对象中
-          console.log("user_ID:" + response.data.user.id)
-
-          alert('登入成功');
-
-      this.$router.push("/");
-
-
+          const responseData = response.data;
+          console.log(responseData.rtnCode);
+          switch (responseData.rtnCode) { //判斷rtnCode 以下判斷rtnCode的訊息做分類
+            case "SUCCESSFUL": // 登入成功
+              console.log(responseData);
+              sessionStorage.setItem("loggedIn", "TRUE");
+              sessionStorage.setItem("user_Id", responseData.user.id);
+              this.showAlert("登入成功");
+              this.$router.push("/");
+              break;
+            case "FOUND_TO_CHANGE_PASSWORD_PAGE": // 需要更改密碼
+            this.showAlert1("登入成功，請更改密碼!!");
+              this.$router.push("/UserPage/ChangeForgetPassword");
+              break;
+            case "EMAIL_NOT_FOUND": // 電子郵件未註冊
+              alert("此電子郵件尚未註冊");
+              break;
+            case "PASSWORD_ERROR": // 密碼錯誤
+              alert("密碼錯誤");
+              break;
+            default:
+              console.error("未知錯誤:", responseData.code);
+              alert("登入失敗，請稍後再試");
+              break;
+          }
         })
-        .catch(error => {
-      console.error(error);
-      if (error.response && error.response.status === 401) {
-        // 401 Unauthorized status typically indicates a password error
-        alert('密碼錯誤請重新登入');
-      } else {
-        alert('密碼錯誤請重新登入');
-      }
-    });
-    },
+        .catch((error) => {
+          console.error(error);
+          // 處理網路或伺服器錯誤
+          alert("發生了一些問題，請確保您的網路連線正常，並稍後再試!");
+        });
+      },
+    //套件sweetalert2，顯示登入成功
+    showAlert() {
+      Swal.fire({
+        title: "登入成功!!",
+        text: "歡迎回來皮皮蝦!!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      },
+   //套件sweetalert2，引導更改密碼
+    showAlert1() {
+      Swal.fire({
+        title: "登入成功!!",
+        text: "請更改密碼!!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+      },
+    //切換密碼可見性
+    togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+      },
   },
 };
 </script>
 
 <template>
-  <div class="secondtitle2">
-    <h3></h3>
-    <h6>
-      <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">登入</a>
-    </h6>
-  </div>
   <div class="mainLoginShow">
     <div class="leftShow">
       <h1>
-        <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i>
+        <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b></i>
       </h1>
     </div>
     <div class="login-box">
@@ -63,21 +121,19 @@ export default {
 
       <form class="email-login">
         <div class="u-form-group">
-          <i class="fa-solid fa-user"></i> &nbsp;<input type="email" placeholder="Email" v-model="email" />
+          <i class="fa-solid fa-user" style="margin-right: 2%;"></i> &nbsp;
+          <input type="email" placeholder="Email" v-model="email" />
         </div>
         <div class="u-form-group">
-          <i class="fa-solid fa-lock"></i> &nbsp;
-          <input type="password" placeholder="Password" v-model="password" />
-        </div>
+          <i class="fa-solid fa-lock" style="margin-right: 5%;"></i>
+        <input :type="showPassword ? 'text' : 'password'" placeholder="Password" v-model="password" class="pwd"/>
+      <br><input type="checkbox"  @click="togglePasswordVisibility" style="margin-left: 8%;">顯示密碼
+    </div>
         <div class="passwordright">
-          <h1></h1>
-          <RouterLink class="btn" to="/UserPage/forgotPasswordPage">忘記密碼</RouterLink>
+          <RouterLink class="btn" to="/UserPage/ForgotPasswordPage">忘記密碼?</RouterLink>
         </div>
         <div class="u-form-group">
-          <!-- <RouterLink class="loginBtn" to="/">Login</RouterLink> -->
-          <button @click="LoginUser" class="loginBtn" type="button">
-            登入
-          </button>
+          <button @click="LoginUser" class="loginBtn" type="button">登入</button>
         </div>
         <div class="u-form-group">
           <RouterLink class="signBtn" to="/UserPage/signUp">註冊</RouterLink>
@@ -158,7 +214,7 @@ export default {
     position: relative;
     margin: 10px;
     width: 500px;
-    height: 67vh;
+    height: 70vh;
     background-color: #fff;
     padding: 10px;
     border-radius: 3px;
@@ -167,14 +223,14 @@ export default {
 
   .lb-header {
     display: flex;
-
+    justify-content: center;
     position: relative;
     color: #00415d;
     margin: 5px 5px 10px 5px;
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
     text-align: center;
-    height: 28px;
+    height: 35px;
 
     a {
       margin: 0 25px;
@@ -234,23 +290,24 @@ export default {
     }
   }
 
-  .email-login,
-  .email-signup {
-    position: relative;
-    float: left;
-    width: 100%;
-    height: auto;
-    margin-top: 20px;
-    text-align: center;
-  }
-
+  .email-login {
   .u-form-group {
-    width: 100%;
+    // width: 100%;
     margin-bottom: 10px;
+    position: relative;
+
+    .fa-solid.fa-eye {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
 
     input[type="email"],
     input[type="password"] {
-      width: 75%;
+      padding-right: 40px;
+      width: 85%;
       height: 45px;
       outline: none;
       border: 1px solid #9c9c9c;
@@ -271,7 +328,11 @@ export default {
     justify-content: space-between;
     border: 0px solid rgb(0, 0, 0);
     width: 27vw;
+    margin-left: 70%;
   }
+}
+
+
 
   .loginBtn {
     border: 2px solid rgb(0, 0, 0);
@@ -289,7 +350,6 @@ export default {
 
   .signBtn {
     background-color: #000000;
-
     color: #ffffff;
     font-size: 20px;
     border-radius: 4px;
@@ -299,6 +359,7 @@ export default {
     margin: 0 auto;
     padding: 10px;
     margin-top: 20px;
+    text-align: center;
   }
 }
 </style>
