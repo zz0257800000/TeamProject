@@ -82,6 +82,7 @@ export default {
             user_id: this.userId,
             product_id: 1,  // 使用 this.product.product_id
             product_name: "測試",
+            product_type: this.product_type,
             product_count: 1,
             consumer_name: this.recipientName,
             consumer_address: this.recipientAddress,
@@ -138,17 +139,21 @@ export default {
                 <div class="productsInfo">
                     <h3>XXX小舖</h3>
                     <div class="item_header">
-                        <div class="item-image header">商品照片</div>
+                        <div class="item-image header" >商品照片</div>
                         <div class="item-name header">商品</div>  
+                        <div class="item-type header">產品分類</div> 
                         <div class="item-price header">單價</div>
                         <div class="item-quantity header">數量</div>
                         <div class="item-total header">總計</div>
                     </div>
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
-                        <img :src="item.photo" alt="Product Image" class="item-image">
+                        <div class="item-image">
+                            <img :src="item.photo" alt="Product Image" class="item-image">
+                        </div>
                         <div class="item-name product-details">
                             <p>{{ item.product_name }}</p>
                         </div>
+                        <p class="item-type">{{ item.product_type }}</p>
                         <p class="item-price">${{ item.cart_amount }}</p>
                         <div class="item-quantity">
                             <!-- <p>數量：</p> -->
@@ -158,7 +163,7 @@ export default {
                             <button @click="incrementQuantity(item)">+</button> -->
                         </div>
                         <div class="item-total">
-                            <p class="total-value">{{ item.cart_amount * item.cart_count }}</p>
+                            <p class="total-value">${{ item.cart_amount * item.cart_count }}</p>
                         </div>
                     </div>
                 </div>
@@ -270,6 +275,7 @@ export default {
                     background-color: #d0d0d0;
                     /* Muted product row color */
                     margin: 10px;
+                    align-items: center; 
 
 
                     .product-details {
@@ -349,16 +355,18 @@ export default {
     justify-content: center;
     width: 8vw;
     img {
+        width: 7vw;
         height: 80px;
         border-radius: 5px;
-        border: 2px solid#c9c9c9;
     }
     }
 .item-name {
     margin-left: 15px;
     width: 30vw;
-    font-size: 18px;
     }
+.item-type{
+    width: 8vw;
+}
 .item-price{
     width: 8vw;
 }
