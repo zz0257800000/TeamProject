@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import Paginate from 'vuejs-paginate';
+import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -64,11 +65,22 @@ export default {
 
           // 刷新产品列表，可以重新调用获取产品列表的方法
           this.fetchProducts();
+          this.showAlert("刪除成功");
         })
         .catch(error => {
           console.error('Error:', error);
           // 处理错误，例如显示错误消息给用户
         });
+
+
+    },
+    showAlert() {
+      Swal.fire({
+        title: "刪除成功",
+        text: "你的商品刪除成功",  // 使用传入的消息参数
+        icon: "success",
+        confirmButtonText: "OK",
+      });
     },
     handleSizeChange(size) {
       // Handle page size change
@@ -149,19 +161,32 @@ export default {
       })
         .then(response => {
           console.log('Response:', response.data);
-          alert('商品新增成功');
           this.isEditModalOpen = false;
-          window.location.reload(true);
+          this.showAlert2("編輯成功");
+
 
         })
         .catch(error => {
           console.error('Error:', error);
           // 處理錯誤，向使用者顯示錯誤訊息
+        })
+        .finally(() => {
+          // 在弹窗关闭后执行页面跳转
+          this.$router.go(0);
         });
+    }, showAlert2() {
+      Swal.fire({
+        title: "編輯成功",
+        text: "你的商品編輯成功",  // 使用传入的消息参数
+        icon: "success",
+        confirmButtonText: "OK",
+      });
     },
+
     toggleShelves() {
       this.editedProduct.shelves = !this.editedProduct.shelves;
-    },  turnToData(name, id) {
+    },
+    turnToData(name, id) {
     this.$router.push({
       name: "productData",
       params: {
@@ -170,7 +195,6 @@ export default {
       },
     });
   },
-
   },
 
 };
@@ -265,7 +289,6 @@ export default {
                   <button class="edit-btn" @click="editProduct(index)">編輯</button>
                   <button class="delete-btn" @click="deleteProduct(product.productId)">刪除</button>
                 </td>
-
               </tr>
             </tbody>
           </table>
@@ -291,19 +314,19 @@ export default {
       <div class="edit-content">
         <!-- 编辑表单 -->
         <div class="close-button" @click="closeEditModal">X</div>
-        <div class="form-group">
+        <div class="editPhoto">
           <img v-if="editedProduct.photo" :src="editedProduct.photo" alt="商品圖片" class="modal-image" />
         </div>
         <div class="edit-form">
           <form @submit.prevent="submitForm">
             <div class="form-group">
               <label for="productImage">商品圖片:</label>
-              <input type="file" @change="handleImageChange" id="productImage" />
+              <input type="file" @change="handleImageChange" id="productImage" class="form-productImage" />
             </div>
 
             <div class="form-group">
-              <label for="productName">商品名称:</label>
-              <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" />
+              <label for="productName">商品名稱:</label>
+              <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" class="productName" />
             </div>
             <div class="form-group">
 
@@ -325,7 +348,8 @@ export default {
 
             <div class="form-group">
               <label for="description">商品描述:</label>
-              <input v-model="editedProduct.description" id="productDescription" placeholder="商品描述" />
+              <textarea v-model="editedProduct.description" id="productDescription" placeholder="商品描述"
+                @input="adjustTextareaHeight"></textarea>
             </div>
 
             <div class="form-group">
@@ -345,9 +369,12 @@ export default {
                 {{ editedProduct.shelves ? '關閉商品' : '開啟商品' }}
               </button>
             </div>
+            <div class="form-group">
 
-            <!-- 其他编辑项 -->
-            <button type="submit">保存编辑</button>
+              <!-- 其他编辑项 -->
+              <button type="submit" class="subBtn">保存編輯</button>
+            </div>
+
           </form>
         </div>
       </div>
@@ -355,7 +382,7 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
-.link {
+  .link {
     padding: 0.2rem 0.5rem;
     transition: 0.3s ease;
 
@@ -365,6 +392,17 @@ export default {
       cursor: pointer;
     }
   }
+#productDescription {
+  width: 400px;
+  /* 设置宽度 */
+  height: 300px;
+  /* 设置高度 */
+  resize: none;
+  /* 防止用户手动调整大小 */
+  overflow: auto;
+  /* 显示滚动条以便查看溢出内容 */
+}
+
 .edit-modal {
   position: fixed;
   top: 0;
@@ -377,17 +415,20 @@ export default {
   justify-content: center;
   cursor: pointer;
   z-index: 9999;
+  border: 0px solid rgb(255, 0, 0);
 
   .edit-content {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    width: 60%; // 调整为更小的百分比
-    max-width: 800px; // 最大宽度，防止过宽
+    width: 70vw;
     position: relative;
+    border: 0px solid rgb(255, 0, 0);
+
+
   }
 
   .edit-form {
@@ -397,13 +438,34 @@ export default {
     max-width: 400px; // 最大宽度，防止过宽
     border: 0px solid rgb(255, 0, 0);
     position: relative;
-    left: 2%;
+    right: 4%;
+
+    height: 80vh;
 
 
   }
 
   .form-group {
     margin-bottom: 10px; // 将间距调整为更小
+
+    .productName {
+
+      width: 19vw;
+    }
+
+    .subBtn {
+      position: relative;
+      left: 85%;
+      border: 0px solid rgb(255, 0, 0);
+
+      padding: 8px 16px;
+      background-color: #2196F3;
+      /* 更改按钮蓝色 */
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
   }
 
   .close-button {
@@ -412,11 +474,23 @@ export default {
     right: 10px;
     font-size: 20px;
     cursor: pointer;
+    font-size: 20pt;
+  }
+
+  .editPhoto {
+    border: 0px solid rgb(255, 0, 0);
+    height: 90vh;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .modal-image {
-    max-width: 100%;
-    height: auto;
+  
+    scale: 1.2;
+    border: 0px solid rgb(255, 0, 0);
+    overflow: auto;
   }
 
   /* 其他样式调整 */
@@ -445,8 +519,8 @@ export default {
 }
 
 .modal-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 80%;
+  max-height: 80%;
   object-fit: contain;
   /* 保持圖片原始比例並使其完全顯示 */
 }
