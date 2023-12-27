@@ -122,6 +122,7 @@ export default {
             product_name: this.product.product_name,
             product_type: this.product.product_type,
             photo: this.product.photo,
+            seller_id:this.product.user_id,
             seller_name: this.product.seller_name,
 
           };

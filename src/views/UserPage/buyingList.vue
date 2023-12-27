@@ -18,7 +18,6 @@ export default {
     this.userId = sessionStorage.getItem('user_Id');
     this.fetchData();
 
-
   },
   computed: {
     paginatedProducts() {
@@ -48,10 +47,9 @@ export default {
 
       axios.get(apiUrl)
         .then(response => {
-          console.log('API Response:', response.data);
+          // console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '準備中');
           this.fetchRecord();
-
         })
 
         .catch(error => {
