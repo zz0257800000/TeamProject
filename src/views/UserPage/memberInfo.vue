@@ -134,12 +134,10 @@ export default {
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
               信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
-              信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
             </div>
 
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
-              更改名字: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.name">
               更改名字: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.name">
             </div>
             <div class="detail-group" v-if="user">
@@ -150,14 +148,12 @@ export default {
             <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
               填寫地址: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.address">
-              填寫地址: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.address">
             </div>
           </div>
         </div>
         <div class="address-details">
           <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
-            賣場名: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
             賣場名: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
           </div>
           <div class="detail-group" v-if="user">
@@ -209,7 +205,6 @@ export default {
 
       </div>
     </div>
-  
   </div>
 </template>
 
@@ -225,7 +220,6 @@ export default {
   color: white;
 
   .info-content {
-    width: 80vw;
     width: 80vw;
     border: 0px solid rgb(255, 0, 0);
     display: flex;
@@ -440,11 +434,6 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  border: 0px solid rgb(255, 0, 0);
-  width: 40vw;
-
-
-
   border: 0px solid rgb(255, 0, 0);
   width: 40vw;
 

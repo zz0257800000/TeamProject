@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -46,6 +47,8 @@ export default {
         sale_count: this.sale_count,
         shelves: this.shelves,
         user_id: this.user_Id,
+        seller_name: this.seller_name,
+
         upload_time: new Date(),  // 设置上传时间为当前时间
 
       };  // 如果有選擇圖片，將其轉換為 Base64 字符串
@@ -64,8 +67,11 @@ export default {
     sendData(data) {
       // 从 sessionStorage 中获取 user_Id
       const user_Id = sessionStorage.getItem('user_Id');
+      const seller_name = sessionStorage.getItem('seller_name');
 
       // 添加 user_Id 到请求数据
+      data.seller_name = seller_name;
+
       data.user_id = user_Id;
       axios.post('http://localhost:8080/product/create', JSON.stringify(data), {
         headers: {
@@ -76,7 +82,8 @@ export default {
 
 
           console.log('Response:', response.data);
-          alert('商品新增成功');
+          this.showAlert("商品新增成功");
+
           this.$router.push('/UserPage/actionShop');
         })
         .catch(error => {
@@ -84,6 +91,14 @@ export default {
           // 處理錯誤，向使用者顯示錯誤訊息
         });
     },
+    showAlert() {
+    Swal.fire({
+      title: "商品新增",
+      text: "你的商品新增成功",  // 使用传入的消息参数
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  },
     openImageModal() {
       this.isImageModalOpen = true;
     },
