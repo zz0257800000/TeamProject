@@ -4,6 +4,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { mapActions } from 'vuex';
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -34,7 +35,15 @@ export default {
           // 清除前端的用户状态
           sessionStorage.removeItem('loggedIn');
           sessionStorage.removeItem('user_Id');
-          alert('用户已登出');
+          sessionStorage.removeItem('name');
+          sessionStorage.removeItem('points');
+
+          sessionStorage.removeItem('seller_name');
+          sessionStorage.removeItem('remittance_title');
+          sessionStorage.removeItem('remittance_number');
+          sessionStorage.removeItem('phone_number');
+
+          alert('用戶登出成功');
           window.location.reload();
 
         })
@@ -69,6 +78,7 @@ export default {
       .catch(error => {
         console.error('Error fetching user info:', error);
       });
+   
   },
   components: {
     RouterLink

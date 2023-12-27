@@ -39,8 +39,8 @@ export default {
         <h3>賣場資訊</h3>
       </div>
       <!-- <h4>賣家名稱：</h4> -->
-      <h4>賣家id：
-        <router-link :to="'/UserPage/sellerStore/' + userId" class="productPageRoutBtn" title="前往賣家賣場">
+      <h4>賣家名稱：
+        <router-link :to="'/UserPage/sellerStore/' + userId" class="productPageRoutBtn" title="前往賣家賣場" >
           {{ userId }}
         </router-link>
       </h4>
@@ -59,7 +59,7 @@ export default {
             <p class="productPrice">${{ product.price }}</p>
             </div>
           <div class="product-icons">
-          <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button btn btn-primary">
+          <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button btn btn-primary"  v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
             <i class="fas fa-credit-card"></i>
           </router-link>
           </div>

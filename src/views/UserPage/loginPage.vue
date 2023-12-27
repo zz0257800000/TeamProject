@@ -55,7 +55,17 @@ export default {
               console.log(responseData);
               sessionStorage.setItem("loggedIn", "TRUE");
               sessionStorage.setItem("user_Id", responseData.user.id);
+              sessionStorage.setItem("name", responseData.user.name);
+              sessionStorage.setItem("points", responseData.user.points);
+
+              sessionStorage.setItem("seller_name", responseData.user.seller_name);
+              sessionStorage.setItem("remittance_title", responseData.user.remittance_title);
+              sessionStorage.setItem("remittance_number", responseData.user.remittance_number);
+              sessionStorage.setItem("phone_number", responseData.user.phone_number);
+
               this.showAlert("登入成功");
+              this.$emit('userLoggedIn');
+
               this.$router.push("/");
               break;
             case "FOUND_TO_CHANGE_PASSWORD_PAGE": // 需要更改密碼

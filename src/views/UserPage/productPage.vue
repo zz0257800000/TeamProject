@@ -20,7 +20,8 @@ export default {
       products: [], // Save products data from the API
       isImageModalOpen: false,
       userId: sessionStorage.getItem('user_Id'),
-
+      comments: [], // 用於存儲商品留言的陣列
+      newCommentText: '', // 新留言文本的輸入框
 
     };
   },
@@ -28,7 +29,8 @@ export default {
     this.fetchProducts();
     this.userId = sessionStorage.getItem('user_Id');
     console.log('User ID:', this.userId); // 檢查 userId 是否被設置
-    this.fetchProductDetails();
+    this.fetchProductDetails(); // 現有的方法
+    this.fetchProductComments(); // 獲取商品留言
   },
   methods: {
     openImageModal() {
@@ -71,13 +73,13 @@ export default {
       }
     },
     incrementQuantity() {
-  if (this.quantity < this.product.inventory) {
-    this.quantity++;
-  } else {
-    // 庫存不足的提示，你可以自行調整
-    alert('已達到庫存上限');
-  }
-},
+      if (this.quantity < this.product.inventory) {
+        this.quantity++;
+      } else {
+        // 庫存不足的提示，你可以自行調整
+        alert('已達到庫存上限');
+      }
+    },
     buyNow() {
       if (this.product.inventory <= 0) {
         // 库存不足，显示提示
@@ -115,10 +117,10 @@ export default {
             user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
             cart_date: "2023-12-15T16:30:00",
             cart_count: this.quantity,
-            inventory:this.product.inventory,
+            inventory: this.product.inventory,
             cart_amount: this.product.price * this.quantity,
             product_name: this.product.product_name,
-            product_type:this.product.product_type,
+            product_type: this.product.product_type,
             photo: this.product.photo,
             seller_name: this.product.seller_name,
 
@@ -154,7 +156,38 @@ export default {
       addToCart();
     },
 
+    fetchProductComments() {
+      const productId = this.$route.params.productId;
 
+      axios.get(`http://localhost:8080/api/product/${productId}/comments`)
+        .then(response => {
+          this.comments = response.data;
+          console.log('獲取的留言:', this.comments);
+        })
+        .catch(error => {
+          console.error('獲取留言時出錯:', error);
+        });
+    },
+
+    // 為當前商品新增留言
+    addProductComment() {
+      const productId = this.$route.params.productId;
+
+      axios.post(`http://localhost:8080/api/comment/create`, {
+        text: this.newCommentText,
+        // 可以根據留言的實際結構添加其他必要的屬性
+      })
+        .then(response => {
+          // 根據需要處理回應
+          console.log('新增的留言:', response.data);
+
+          // 可選地，在添加新留言後刷新留言
+          this.fetchProductComments();
+        })
+        .catch(error => {
+          console.error('添加留言時出錯:', error);
+        });
+    },
   },
 };
 </script>
@@ -178,28 +211,34 @@ export default {
           <div class="title">
             <h5>上架時間：{{ product.upload_time }}</h5>
           </div>
-          <div class="quantity" v-if="this.userId != product.user_id && product.inventory > 0">
+          <div class="quantity" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
             <p>數量：</p>
             <button @click="decrementQuantity">-</button>
             <input v-model="quantity" type="number" min="1" />
             <button @click="incrementQuantity">+</button>
           </div>
           <div class="product-buttons">
-            <button v-if="this.userId != product.user_id && product.inventory > 0" class="cart-button"
-              @click="addToCartAndShowAlert">
+            <button v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0"
+              class="cart-button" @click="addToCartAndShowAlert">
               <i class="fas fa-shopping-cart"></i>加入購物車
             </button>
-            <router-link v-if="this.userId != product.user_id && product.inventory > 0"
+            <router-link v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0"
               :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
               <i class="fas fa-credit-card"></i> 立即購買
             </router-link>
+
           </div>
+          <h1>
+            <div v-if="!userId || userId === product.user_id || product.inventory <= 0" class="not-logged-in-message">
+              請先登入以購買產品
+            </div>
+          </h1>
         </div>
       </div>
       <div class="sellinfo">
         <div class="seller-details">
           <router-link :to="'/UserPage/sellerStore/' + product.user_id" title="前往賣家賣場" class="routerseller">
-            <h4>賣家id：{{ product.user_id }}</h4>
+            <h4>賣家名稱：{{ product.seller_name }}</h4>
           </router-link>
           <div class="divider"></div>
         </div>
@@ -219,11 +258,24 @@ export default {
       <div class="viewReplies">
         <!-- 弹窗内容 -->
         <div class="modal-content">
+          <h4>商品留言 ： </h4>
+
           <div class="firstshow">
-            <h4>商品留言 ： </h4>
+            <!-- 顯示現有的留言 -->
+            <div v-for="(comment, index) in comments" :key="index" class="comment-item">
+              <p>{{ comment.text }}</p>
+              <!-- 根據需要顯示其他留言屬性 -->
+            </div>
+
+            <!-- 新增留言的輸入框 -->
+
           </div>
           <div class="secondShow">
+            <div v-if="userId !== product.user_id && product.inventory > 0">
 
+              <input type="text" v-model="newCommentText" placeholder="添加留言" class="textEnter">
+              <button @click="addProductComment" class="commitBtn">添加留言</button>
+            </div>
           </div>
 
 
@@ -429,9 +481,11 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 20px;
-.routerseller{
-  text-decoration: none;
-}
+
+    .routerseller {
+      text-decoration: none;
+    }
+
     h4 {
       color: #000000;
       text-decoration: none;
@@ -479,6 +533,41 @@ export default {
     background-color: white;
     padding: 20px;
     margin-top: 20px;
+
+    .modal-content {
+      border: 0px solid #ff0000;
+      height: 55vh;
+
+      .firstshow {
+        margin: 10px;
+        border: 1px solid #000000;
+        height: 48vh;
+
+      }
+
+      .secondShow {
+        border: 0px solid #000000;
+
+        .textEnter {
+          border: 1px solid #000000;
+          width: 59vw;
+          height: 5vh;
+          border-radius: 5px;
+        }
+
+        .commitBtn {
+          padding: 10px 20px;
+          background-color: #2196F3;
+          /* 按钮蓝色 */
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-left: 10px;
+        }
+      }
+
+    }
   }
 
   h2 {
@@ -560,4 +649,5 @@ export default {
   height: 100%;
   object-fit: contain;
 
-}</style>
+}
+</style>
