@@ -94,6 +94,7 @@ export default {
             product_amount: this.getOrderAmount,
             record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
             status: "準備中",
+            seller_id: item.seller_id,
             record_type: "購買",
             valid: true,
             };

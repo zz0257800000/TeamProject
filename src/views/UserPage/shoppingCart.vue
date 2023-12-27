@@ -61,7 +61,7 @@ export default {
         const productName = data.cartList.map(item => item.product_name);
 
         // 在这里可以使用 productNames，例如打印到控制台
-        console.log('Product Names:', this.cartList);
+        console.log('商品資訊:', this.cartList);
       })
       .catch(error => console.error('获取数据时出错:', error));
   },
@@ -78,6 +78,7 @@ export default {
       user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
       product_id: item.product_id,
       photo: item.photo,
+      seller_id:item.seller_id,
     })
     .then(response => {
       // 处理 API 响应，如果需要的话
