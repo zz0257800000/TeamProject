@@ -102,9 +102,9 @@ export default {
       </button>
     </div>
 
-    <h1 v-if="products.length==0">找不到查詢商品,請再次輸入</h1>
+    <h1 v-if="products.length == 0">找不到查詢商品,請再次輸入</h1>
     <div class="productAll">
-  <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
+  <!-- <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
     <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
       <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
     </router-link>
@@ -115,9 +115,20 @@ export default {
      
     
     
-  </div>
+  </div> -->
+
+  <div class="product card" v-for="(product, index) in paginatedProducts" :key="index" style="width: 16rem;">
+        <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" :title="product.product_name">
+          <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
+          <div class="card-body">
+            <div class="card-text">
+            <h5 class="productName">{{ product.product_name }}</h5>
+            <p class="productPrice">${{ product.price }}</p>
+            </div>
+        </div>
+        </router-link>
+      </div>
 </div>
-   
 
     <div class="pagination-container">
     <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
@@ -130,7 +141,6 @@ export default {
   </div>
   </div>
 
-
 </template>
 
 <style lang="scss" scoped>
@@ -138,6 +148,8 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  height: 10vh;
+  width: 50vw;
 
   input {
     flex: 1;
@@ -163,76 +175,6 @@ export default {
     background-color: #2980b9;
   }
 }
-.product-icons {
-  display: flex;
-  flex-direction: column;
-  width: 8vw;
-  position: relative;
-  bottom: 20%;
-  left: 58%;
-}
-
-.product-icons1 {
-  display: flex;
-  flex-direction: column;
-  width: 8vw;
-  position: relative;
-  bottom: 18%;
-  left: 58%;
-}
-
-.cart-button {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background-color: #46799b; /* 第一个按钮的颜色 */
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #296593; /* 鼠标悬停时的颜色 */
-    transform: scale(1.05);
-  }
-
-  i {
-    margin-right: 5px;
-  }
-}
-
-.buy-now-button {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background-color: #319241; /* 第二个按钮的颜色 */
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s, transform 0.3s;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #29b930; /* 鼠标悬停时的颜色 */
-    transform: scale(1.05);
-  }
-
-  i {
-    margin-right: 5px;
-  }
-}
-.fixed-size-image {
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-}
-
-.productPageRoutBtn {
-  text-decoration: none;
-  color: #3498db; /* 時尚科技風格的主要顏色 */
-  font-size: 14pt;
-}
 
 .pagination-container {
   display: flex;
@@ -242,9 +184,8 @@ export default {
 }
 
 .pagination-button {
-  background-color: #3498db; /* 時尚科技風格的主要顏色 */
+  background-color: #000000; /* 時尚科技風格的主要顏色 */
   color: #fff;
-  border: 1px solid #3498db; /* 時尚科技風格的主要顏色 */
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -266,15 +207,6 @@ export default {
 }
 
 .mainshow {
-.search{
-  border: 0px solid rgb(255, 0, 0);
-  height: 10vh;
-width: 50vw;
-display: flex;
-align-items: center;
-justify-content: center;
-
-}
   position: relative;
   border: 0px solid rgb(255, 0, 0);
   height: 240vh;
@@ -282,80 +214,73 @@ justify-content: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5; /* 時尚科技風格的背景色 */
+  background-color: #f5f5f5;
 
   .carousel {
-    width: 70vw;
+    width: 77vw;
     margin-bottom: 20px;
-    background-color: #3498db; /* 時尚科技風格的主要顏色 */
+    img{
+      border-radius: 10px;
+    }
   }
 
   .productAll {
-  border: 1px solid #ddd;
-  width: 70vw;
-  height: 175vh;
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #2c3e50;
-  overflow: hidden;
-}
-
-
+    border: 1px solid #ddd;
+    width: 77vw;
+    height: 175vh;
+    padding: 10px 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #2c3e50;
+    border-radius: 10px;
+    overflow: hidden;
+  }
 
 .product {
-  
   position: relative;
-  border: 1px solid #fff;
   height: 54vh;
-  width: 20vw;
   margin: 10px;
   border-radius: 8px;
   transition: transform 0.2s ease-in-out;
-  background-color: #34495e; /* 時尚科技風格的次要背景色 */
 
   &:hover {
     transform: scale(1.05);
   }
-
   img {
     width: 100%;
+    height: 250px;
     object-fit: cover;
     border-radius: 8px;
   }
 
-  .productInfo {
-    border: 0px solid rgb(255, 0, 0);
-    height: 15vh;
-
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(52, 73, 94, 0.7); /* 半透明背景 */
-    color: #ecf0f1; /* 時尚科技風格的文字顏色 */
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    .productName {
-    border: 0px solid rgb(255, 0, 0);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  -webkit-line-clamp: 2;
-  text-overflow: ellipsis;
-  white-space: normal;
-}
-.productPrice{
-  border: 0px solid rgb(255, 0, 0);
-
-}
+.card {
+  height: 300px;
+  margin: 3px;
+  .card-img-top {
+    height: 200px;
   }
-
- 
-
-
+  .card-body {
+    display: flex;
+    flex-direction: column; /* 讓內容垂直排列 */
+  }
+  }
+  .productName {
+    height: 40px;
+    font-size: 12pt;
+    overflow: hidden;        /* 超出框框的內容隱藏 */
+    text-overflow: ellipsis; /* 顯示省略號以表示文字被截斷 */
+    text-decoration: none;
+}
+  .productPageRoutBtn {
+    text-decoration: none;
+    color: #4d4d4d; /* 時尚科技風格的主要顏色 */
+    font-size: 14pt;
+    }
+  .productPrice{
+    color: #f07a25;
+  }
 }
 }
 </style>
