@@ -55,35 +55,33 @@ export default {
                 .then(response => response.json())
                 .then(data => {
                     this.product = data.cartList;
-                    this.quantity = data.cartList.cart_count
-                    console.log(this.product)
+                    this.quantity = data.cartList.cart_count;
+                    console.log(this.product);
                     })
                 .catch(error => console.error('获取数据时出错:', error));
         },
-
-        //控制各品項數量
-        // decrementQuantity(item) {
-        //     if (item.cart_count > 1) {
-        //         item.cart_count--;
-        //     }
-        // },
-        // incrementQuantity(item) {
-        //     item.cart_count++;
-        // },
         
         //欄位防呆
-        submitOrder() {
+        submitOrder(item) {
         // 檢查是否所有必填項目都已經填寫
         if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
             alert('請填寫所有必填項目');
         return;
         }
-            const orderData = {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        const hours = currentDate.getHours().toString().padStart(2, '0');
+        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+        const orderData = {
             user_id: this.userId,
-            product_id: 1,  // 使用 this.product.product_id
-            product_name: "測試",
-            product_type: this.product_type,
-            product_count: 1,
+            product_id: item.product_id,  // 使用 this.product.product_id
+            product_name: item.product_name,
+            product_type: item.product_type,
+            product_count: item.cart_count,
             consumer_name: this.recipientName,
             consumer_address: this.recipientAddress,
             consumer_phone: this.recipientPhone,
@@ -94,11 +92,10 @@ export default {
             remittance_number: "812-00000087888",
             remarks_column: this.remarksColumn,
             product_amount: this.getOrderAmount,
-            record_date: new Date(),
+            record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
             status: "準備中",
             record_type: "購買",
-            valid: true
-
+            valid: true,
             };
 
             // 發送 POST 請求
@@ -122,6 +119,7 @@ export default {
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    console.log(orderData);
                     // 處理錯誤
                 });
                 this.$router.push('/UserPage/buyingList');
@@ -156,11 +154,7 @@ export default {
                         <p class="item-type">{{ item.product_type }}</p>
                         <p class="item-price">${{ item.cart_amount }}</p>
                         <div class="item-quantity">
-                            <!-- <p>數量：</p> -->
                             <p>{{ item.cart_count }}</p>
-                            <!-- <button @click="decrementQuantity(item)">-</button>
-                            <input v-model="item.cart_count" type="number" min="1" />
-                            <button @click="incrementQuantity(item)">+</button> -->
                         </div>
                         <div class="item-total">
                             <p class="total-value">${{ item.cart_amount * item.cart_count }}</p>
@@ -224,7 +218,8 @@ export default {
                 <h3>商品總金額: ${{ getTotalAmount }}</h3>
                 <h4>運費: ${{ getShippingFee }}</h4>
                 <h2>訂單金額: ${{ getOrderAmount }}</h2>
-                <router-link :to="''" class="Checkout" @click="submitOrder">結帳</router-link>
+                <router-link :to="''" class="Checkout" @click="submitOrder(item)" v-for="(item, index) in product" :key="item.id">結帳</router-link>
+
             </div>
 
 
