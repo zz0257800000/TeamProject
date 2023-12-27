@@ -28,7 +28,7 @@ export default {
   },
   mounted(){
     this.fetchProducts();
-  }
+  } 
 };
 </script>
 
@@ -51,7 +51,7 @@ export default {
     <!-- <div class="productsShow"></div> -->
     <div class="productsShow">
       <div class="product card" v-for="(product, index) in product" :key="index" style="width: 14rem;">
-        <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
+        <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" :title="product.product_name">
           <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
           <div class="card-body">
             <div class="card-text">
@@ -143,5 +143,11 @@ export default {
     bottom: 0;
     right: 0;
   }
+.productName {
+  height: 40px;
+  font-size: 12pt;
+  overflow: hidden;        /* 超出框框的內容隱藏 */
+  text-overflow: ellipsis; /* 顯示省略號以表示文字被截斷 */
+}
 </style>
   

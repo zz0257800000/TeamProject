@@ -71,8 +71,13 @@ export default {
       }
     },
     incrementQuantity() {
-      this.quantity++;
-    },
+  if (this.quantity < this.product.inventory) {
+    this.quantity++;
+  } else {
+    // 庫存不足的提示，你可以自行調整
+    alert('已達到庫存上限');
+  }
+},
     buyNow() {
       if (this.product.inventory <= 0) {
         // 库存不足，显示提示
@@ -110,8 +115,10 @@ export default {
             user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
             cart_date: "2023-12-15T16:30:00",
             cart_count: this.quantity,
+            inventory:this.product.inventory,
             cart_amount: this.product.price * this.quantity,
             product_name: this.product.product_name,
+            product_type:this.product.product_type,
             photo: this.product.photo,
             seller_name: this.product.seller_name,
 
