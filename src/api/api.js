@@ -101,6 +101,62 @@ const getRecordInfoByProductId = (id) => {
     });
 };
 
+/*comment API*/
+//發布留言(儲存)
+const postComment = (req) => {
+  return axios({
+    method: "post",
+    url: `http://localhost:8080/comment/create`,
+    data: req,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+//取得評論資料(依據產品id)
+const getCommentInfo = (id) => {
+  return axios
+    .get(`http://localhost:8080/comment/info?id=${id}`)
+    .then((res) => {
+      return res.data.commentList;
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+//按讚
+const addLike = (id) => {
+  return axios({
+    method: "post",
+    url: `http://localhost:8080/comment/like?id=${id}`,
+  })
+    .then((res) => {
+      // console.log(res);
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+//倒讚
+const addDislike = (id) => {
+  return axios({
+    method: "post",
+    url: `http://localhost:8080/comment/dislike?id=${id}`,
+  })
+    .then((res) => {
+      // console.log(res);
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
 export default {
   signUp,
   login,
@@ -109,4 +165,8 @@ export default {
   getCartInfoByUserId,
   getProductInfoByUserId,
   getRecordInfoByProductId,
+  postComment,
+  getCommentInfo,
+  addLike,
+  addDislike,
 };
