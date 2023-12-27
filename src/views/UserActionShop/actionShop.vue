@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 import Paginate from 'vuejs-paginate';
+import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -71,16 +72,16 @@ export default {
           // 处理错误，例如显示错误消息给用户
         });
 
-        
+
     },
     showAlert() {
-    Swal.fire({
-      title: "刪除成功",
-      text: "你的商品刪除成功",  // 使用传入的消息参数
-      icon: "success",
-      confirmButtonText: "OK",
-    });
-  },
+      Swal.fire({
+        title: "刪除成功",
+        text: "你的商品刪除成功",  // 使用传入的消息参数
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    },
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -160,17 +161,28 @@ export default {
       })
         .then(response => {
           console.log('Response:', response.data);
-          alert('商品新增成功');
           this.isEditModalOpen = false;
-          window.location.reload(true);
-          
+          this.showAlert2("編輯成功");
+
 
         })
         .catch(error => {
           console.error('Error:', error);
           // 處理錯誤，向使用者顯示錯誤訊息
+        })
+        .finally(() => {
+          // 在弹窗关闭后执行页面跳转
+          this.$router.go(0);
         });
+    }, showAlert2() {
+      Swal.fire({
+        title: "編輯成功",
+        text: "你的商品編輯成功",  // 使用传入的消息参数
+        icon: "success",
+        confirmButtonText: "OK",
+      });
     },
+
     toggleShelves() {
       this.editedProduct.shelves = !this.editedProduct.shelves;
     },
@@ -189,10 +201,13 @@ export default {
       <div class="leftAdmin">
 
         <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單
+        </RouterLink>
         <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單
+        </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
+        </RouterLink>
 
         <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
         <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
@@ -286,42 +301,43 @@ export default {
       <div class="edit-content">
         <!-- 编辑表单 -->
         <div class="close-button" @click="closeEditModal">X</div>
-        <div class="form-group">
+        <div class="editPhoto">
           <img v-if="editedProduct.photo" :src="editedProduct.photo" alt="商品圖片" class="modal-image" />
         </div>
         <div class="edit-form">
           <form @submit.prevent="submitForm">
             <div class="form-group">
               <label for="productImage">商品圖片:</label>
-              <input type="file" @change="handleImageChange" id="productImage" class="form-productImage"/>
+              <input type="file" @change="handleImageChange" id="productImage" class="form-productImage" />
             </div>
 
             <div class="form-group">
               <label for="productName">商品名稱:</label>
-              <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" class="productName"/>
+              <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" class="productName" />
             </div>
             <div class="form-group">
 
               <label for="productType">產品分類:</label>
               <select id="productType" v-model="editedProduct.product_type" placeholder="產品分類">
                 <option value="書籍動漫">書籍動漫</option>
-              <option value="食品專區">食品專區</option>
-              <option value="精品服飾">精品服飾</option>
-              <option value="日常用品">日常用品</option>
-              <option value="3C產品">3C產品</option>
-              <option value="寵物專區">寵物專區</option>
-              <option value="樂器專區">樂器專區</option>
+                <option value="食品專區">食品專區</option>
+                <option value="精品服飾">精品服飾</option>
+                <option value="日常用品">日常用品</option>
+                <option value="3C產品">3C產品</option>
+                <option value="寵物專區">寵物專區</option>
+                <option value="樂器專區">樂器專區</option>
 
-              <option value="機車零件">機車零件</option>
-              <option value="其他">其他</option>
+                <option value="機車零件">機車零件</option>
+                <option value="其他">其他</option>
 
               </select>
             </div>
 
-         <div class="form-group">
-  <label for="description">商品描述:</label>
-  <textarea v-model="editedProduct.description" id="productDescription" placeholder="商品描述" @input="adjustTextareaHeight"></textarea>
-</div>
+            <div class="form-group">
+              <label for="description">商品描述:</label>
+              <textarea v-model="editedProduct.description" id="productDescription" placeholder="商品描述"
+                @input="adjustTextareaHeight"></textarea>
+            </div>
 
             <div class="form-group">
               <label for="inventory">庫存:</label>
@@ -342,9 +358,9 @@ export default {
             </div>
             <div class="form-group">
 
-            <!-- 其他编辑项 -->
-            <button type="submit" class="subBtn">保存编辑</button>   
-                   </div>
+              <!-- 其他编辑项 -->
+              <button type="submit" class="subBtn">保存編輯</button>
+            </div>
 
           </form>
         </div>
@@ -353,13 +369,17 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
-
 #productDescription {
-  width: 400px; /* 设置宽度 */
-  height: 300px; /* 设置高度 */
-  resize: none; /* 防止用户手动调整大小 */
-  overflow: auto; /* 显示滚动条以便查看溢出内容 */
+  width: 400px;
+  /* 设置宽度 */
+  height: 300px;
+  /* 设置高度 */
+  resize: none;
+  /* 防止用户手动调整大小 */
+  overflow: auto;
+  /* 显示滚动条以便查看溢出内容 */
 }
+
 .edit-modal {
   position: fixed;
   top: 0;
@@ -381,12 +401,13 @@ export default {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-    max-width: 80vw; // 最大宽度，防止过宽
-    position: relative;   
-     border: 0px solid rgb(255, 0, 0);
-    
+    width: 70vw;
+    position: relative;
+    border: 0px solid rgb(255, 0, 0);
+
+
   }
- 
+
   .edit-form {
     display: flex;
     flex-direction: column;
@@ -403,22 +424,25 @@ export default {
 
   .form-group {
     margin-bottom: 10px; // 将间距调整为更小
-    .productName{
+
+    .productName {
 
       width: 19vw;
     }
-    .subBtn{
-position: relative;
-left: 90%;
-padding: 8px 16px;
-background-color: #2196F3;
-/* 更改按钮蓝色 */
-color: white;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-margin-top: 5px;
-}
+
+    .subBtn {
+      position: relative;
+      left: 85%;
+      border: 0px solid rgb(255, 0, 0);
+
+      padding: 8px 16px;
+      background-color: #2196F3;
+      /* 更改按钮蓝色 */
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
   }
 
   .close-button {
@@ -427,13 +451,23 @@ margin-top: 5px;
     right: 10px;
     font-size: 20px;
     cursor: pointer;
+    font-size: 20pt;
+  }
+
+  .editPhoto {
+    border: 0px solid rgb(255, 0, 0);
+    height: 90vh;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .modal-image {
-    max-width: 90%;
-    height:90%;
+  
+    scale: 1.2;
     border: 0px solid rgb(255, 0, 0);
-
+    overflow: auto;
   }
 
   /* 其他样式调整 */
@@ -715,5 +749,4 @@ margin-top: 5px;
       }
     }
   }
-}
-</style>
+}</style>

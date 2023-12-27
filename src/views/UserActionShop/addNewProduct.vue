@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -76,7 +77,8 @@ export default {
 
 
           console.log('Response:', response.data);
-          alert('商品新增成功');
+          this.showAlert("商品新增成功");
+
           this.$router.push('/UserPage/actionShop');
         })
         .catch(error => {
@@ -84,6 +86,14 @@ export default {
           // 處理錯誤，向使用者顯示錯誤訊息
         });
     },
+    showAlert() {
+    Swal.fire({
+      title: "商品新增",
+      text: "你的商品新增成功",  // 使用传入的消息参数
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  },
     openImageModal() {
       this.isImageModalOpen = true;
     },
