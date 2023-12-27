@@ -60,7 +60,6 @@ const cartDelete = (cartId) => {
     });
 };
 
-
 //尋找購物車
 const getCartInfoByUserId = (userId) => {
   return axios({
@@ -76,6 +75,31 @@ const getCartInfoByUserId = (userId) => {
     });
 };
 
+/* product */
+const getProductInfoByUserId = (id) => {
+  return axios
+    .get(`http://localhost:8080/product/get/info/user_id?id=${id}`)
+    .then((res) => {
+      // console.log(res.data.products);
+      return res.data.products;
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+/* record */
+const getRecordInfoByProductId = (id) => {
+  return axios
+    .get(`http://localhost:8080/record/get/product_id?id=${id}`)
+    .then((res) => {
+      // console.log(res.data.recordList);
+      return res.data.recordList;
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
 
 export default {
   signUp,
@@ -83,4 +107,6 @@ export default {
   cartCreat,
   cartDelete,
   getCartInfoByUserId,
+  getProductInfoByUserId,
+  getRecordInfoByProductId,
 };

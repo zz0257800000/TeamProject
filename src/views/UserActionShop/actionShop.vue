@@ -1,11 +1,10 @@
 <script>
-import axios from 'axios';
-import Paginate from 'vuejs-paginate';
+import axios from "axios";
+import Paginate from "vuejs-paginate";
 
 export default {
   components: {
     Paginate,
-
   },
   data() {
     return {
@@ -17,7 +16,6 @@ export default {
       isEditModalOpen: false,
       editedProduct: null,
       userId: null, // 確保在這裡定義 userId
-
     };
   },
   computed: {
@@ -31,56 +29,51 @@ export default {
     },
   },
   mounted() {
-    this.userId = sessionStorage.getItem('user_Id');
-    console.log('User ID:', this.userId); // 檢查 userId 是否被設置
+    this.userId = sessionStorage.getItem("user_Id");
+    console.log("User ID:", this.userId); // 檢查 userId 是否被設置
     this.fetchProducts();
-
-
   },
   methods: {
-
     fetchProducts() {
       // 发送获取产品列表的请求
-      axios.get(`http://localhost:8080/product/get/info/user_id?id=${this.userId}`)
-        .then(response => {
+      axios
+        .get(`http://localhost:8080/product/get/info/user_id?id=${this.userId}`)
+        .then((response) => {
           // 成功获取数据，将数据保存到 products 数组中
           this.products = response.data.products;
-          console.log('Fetched products:', this.products);
-
-
+          console.log("Fetched products:", this.products);
         })
-        .catch(error => {
-          console.error('Error:', error);
+        .catch((error) => {
+          console.error("Error:", error);
           // 处理错误，例如显示错误消息给用户
         });
     },
 
     deleteProduct(productId) {
       // 发送删除请求，并将 productId 作为参数传递
-      axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
-        .then(response => {
+      axios
+        .delete(`http://localhost:8080/product/delete?id=${productId}`)
+        .then((response) => {
           // 删除成功后，刷新产品列表或者做其他操作
-          console.log('Product deleted successfully:', response.data);
+          console.log("Product deleted successfully:", response.data);
 
           // 刷新产品列表，可以重新调用获取产品列表的方法
           this.fetchProducts();
           this.showAlert("刪除成功");
         })
-        .catch(error => {
-          console.error('Error:', error);
+        .catch((error) => {
+          console.error("Error:", error);
           // 处理错误，例如显示错误消息给用户
         });
-
-        
     },
     showAlert() {
-    Swal.fire({
-      title: "刪除成功",
-      text: "你的商品刪除成功",  // 使用传入的消息参数
-      icon: "success",
-      confirmButtonText: "OK",
-    });
-  },
+      Swal.fire({
+        title: "刪除成功",
+        text: "你的商品刪除成功", // 使用传入的消息参数
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    },
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -122,19 +115,23 @@ export default {
       // 获取要编辑的产品数据
       this.editedProduct = { ...this.paginatedProducts[index] };
       // 打开编辑弹窗 // 初始化 shelves 属性，如果商品没有该属性，可以设置默认值
-      if (!this.editedProduct.hasOwnProperty('shelves')) {
-        this.$set(this.editedProduct, 'shelves', true); // 默认为 true，你可以根据需要设置其他默认值
+      if (!this.editedProduct.hasOwnProperty("shelves")) {
+        this.$set(this.editedProduct, "shelves", true); // 默认为 true，你可以根据需要设置其他默认值
       }
       this.isEditModalOpen = true;
     },
     submitForm() {
-      if (!this.editedProduct.product_name || !this.editedProduct.description || !this.editedProduct.price) {
-        alert('請填寫所有必填欄位');
+      if (
+        !this.editedProduct.product_name ||
+        !this.editedProduct.description ||
+        !this.editedProduct.price
+      ) {
+        alert("請填寫所有必填欄位");
         return;
       }
       // 确保 'shelves' 属性已定义，如果未定义，则设置默认值
-      if (!this.editedProduct.hasOwnProperty('shelves')) {
-        this.$set(this.editedProduct, 'shelves', true); // 默认为 true，你可以根据需要设置其他默认值
+      if (!this.editedProduct.hasOwnProperty("shelves")) {
+        this.$set(this.editedProduct, "shelves", true); // 默认为 true，你可以根据需要设置其他默认值
       }
       const formData = { ...this.editedProduct };
 
@@ -153,30 +150,27 @@ export default {
     },
 
     sendData(data) {
-      axios.post('http://localhost:8080/product/create', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => {
-          console.log('Response:', response.data);
-          alert('商品新增成功');
+      axios
+        .post("http://localhost:8080/product/create", JSON.stringify(data), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log("Response:", response.data);
+          alert("商品新增成功");
           this.isEditModalOpen = false;
           window.location.reload(true);
-          
-
         })
-        .catch(error => {
-          console.error('Error:', error);
+        .catch((error) => {
+          console.error("Error:", error);
           // 處理錯誤，向使用者顯示錯誤訊息
         });
     },
     toggleShelves() {
       this.editedProduct.shelves = !this.editedProduct.shelves;
     },
-
   },
-
 };
 </script>
 <template>
@@ -187,37 +181,48 @@ export default {
       </div>
 
       <div class="leftAdmin">
+        <RouterLink class="btn" to="/UserPage/actionShop"
+          ><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink
+        >
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"
+          ><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink
+        >
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"
+          ><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink
+        >
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"
+          ><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink
+        >
+        <RouterLink class="btn" to="/UserActionShop/cancelBid/"
+          ><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
+        </RouterLink>
 
-        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
-
-        <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
-        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
-
+        <RouterLink class="btn" to="/UserProduct"
+          ><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink
+        >
+        <RouterLink class="btn" to=""
+          ><i class="fa-solid fa-gear"></i> 設定</RouterLink
+        >
       </div>
-
     </div>
 
     <div class="actionPageRight">
       <div class="RightHeader">
         <div class="secondtitle2">
-          <h3>
-          </h3>
+          <h3></h3>
           <h6>
-            <RouterLink class="btn" to="/"> Home</RouterLink> > <a href="">產品管理</a>
+            <RouterLink class="btn" to="/"> Home</RouterLink> >
+            <a href="">產品管理</a>
           </h6>
-
         </div>
-
       </div>
 
       <div class="productManagement">
         <div class="productCreate">
           <h1>產品管理</h1>
-          <RouterLink class="btn" to="/UserPage/addNewProduct">添加新產品</RouterLink>
+          <RouterLink class="btn" to="/UserPage/addNewProduct"
+            >添加新產品</RouterLink
+          >
         </div>
         <div class="productAdmimList">
           <table>
@@ -239,11 +244,14 @@ export default {
             </thead>
             <tbody>
               <tr v-for="(product, index) in paginatedProducts" :key="index">
-                <td>{{ product.productId }}
-                </td>
+                <td>{{ product.productId }}</td>
                 <td>
-                  <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
-                    @click="() => openImageModal(product)">
+                  <img
+                    :src="product.photo"
+                    alt="商品圖片"
+                    class="card-img-top fixed-size-image"
+                    @click="() => openImageModal(product)"
+                  />
                 </td>
                 <td>{{ product.product_type }}</td>
 
@@ -251,26 +259,40 @@ export default {
                 <td>{{ product.inventory }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.sale_count }}</td>
-                <td :style="{ 'color': product.shelves ? 'green' : 'red' }">{{ product.shelves ? '上架中' : '下架中' }}</td>
+                <td :style="{ color: product.shelves ? 'green' : 'red' }">
+                  {{ product.shelves ? "上架中" : "下架中" }}
+                </td>
 
-
-
-                <td>{{ product.upload_time }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
+                <td>{{ product.upload_time }}</td>
+                <!-- 這裡我們假設有一個 shelfTime 屬性 -->
                 <td class="action-btns">
-
-                  <button class="edit-btn" @click="editProduct(index)">編輯</button>
-                  <button class="delete-btn" @click="deleteProduct(product.productId)">刪除</button>
+                  <button class="edit-btn" @click="editProduct(index)">
+                    編輯
+                  </button>
+                  <button
+                    class="delete-btn"
+                    @click="deleteProduct(product.productId)"
+                  >
+                    刪除
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
           <div class="pagination-container">
-            <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
+            <button
+              class="pagination-button"
+              @click="handleCurrentChange(currentPage - 1)"
+              :disabled="currentPage === 1"
+            >
               上一頁
             </button>
             <span class="pagination-current-page">第 {{ currentPage }} 頁</span>
-            <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)"
-              :disabled="currentPage === pageCount">
+            <button
+              class="pagination-button"
+              @click="handleCurrentChange(currentPage + 1)"
+              :disabled="currentPage === pageCount"
+            >
               下一頁
             </button>
           </div>
@@ -278,74 +300,113 @@ export default {
       </div>
     </div>
     <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
-      <img :src="selectedImage" alt="商品圖片" class="modal-image">
+      <img :src="selectedImage" alt="商品圖片" class="modal-image" />
     </div>
-
 
     <div v-if="isEditModalOpen" class="edit-modal">
       <div class="edit-content">
         <!-- 编辑表单 -->
         <div class="close-button" @click="closeEditModal">X</div>
         <div class="form-group">
-          <img v-if="editedProduct.photo" :src="editedProduct.photo" alt="商品圖片" class="modal-image" />
+          <img
+            v-if="editedProduct.photo"
+            :src="editedProduct.photo"
+            alt="商品圖片"
+            class="modal-image"
+          />
         </div>
         <div class="edit-form">
           <form @submit.prevent="submitForm">
             <div class="form-group">
               <label for="productImage">商品圖片:</label>
-              <input type="file" @change="handleImageChange" id="productImage" class="form-productImage"/>
+              <input
+                type="file"
+                @change="handleImageChange"
+                id="productImage"
+                class="form-productImage"
+              />
             </div>
 
             <div class="form-group">
               <label for="productName">商品名稱:</label>
-              <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" class="productName"/>
+              <input
+                v-model="editedProduct.product_name"
+                id="productName"
+                placeholder="商品名称"
+                class="productName"
+              />
             </div>
             <div class="form-group">
-
               <label for="productType">產品分類:</label>
-              <select id="productType" v-model="editedProduct.product_type" placeholder="產品分類">
+              <select
+                id="productType"
+                v-model="editedProduct.product_type"
+                placeholder="產品分類"
+              >
                 <option value="書籍動漫">書籍動漫</option>
-              <option value="食品專區">食品專區</option>
-              <option value="精品服飾">精品服飾</option>
-              <option value="日常用品">日常用品</option>
-              <option value="3C產品">3C產品</option>
-              <option value="寵物專區">寵物專區</option>
-              <option value="樂器專區">樂器專區</option>
+                <option value="食品專區">食品專區</option>
+                <option value="精品服飾">精品服飾</option>
+                <option value="日常用品">日常用品</option>
+                <option value="3C產品">3C產品</option>
+                <option value="寵物專區">寵物專區</option>
+                <option value="樂器專區">樂器專區</option>
 
-              <option value="機車零件">機車零件</option>
-              <option value="其他">其他</option>
-
+                <option value="機車零件">機車零件</option>
+                <option value="其他">其他</option>
               </select>
             </div>
 
-         <div class="form-group">
-  <label for="description">商品描述:</label>
-  <textarea v-model="editedProduct.description" id="productDescription" placeholder="商品描述" @input="adjustTextareaHeight"></textarea>
-</div>
+            <div class="form-group">
+              <label for="description">商品描述:</label>
+              <textarea
+                v-model="editedProduct.description"
+                id="productDescription"
+                placeholder="商品描述"
+                @input="adjustTextareaHeight"
+              ></textarea>
+            </div>
 
             <div class="form-group">
               <label for="inventory">庫存:</label>
-              <input v-model="editedProduct.inventory" id="inventory" placeholder="庫存" />
+              <input
+                v-model="editedProduct.inventory"
+                id="inventory"
+                placeholder="庫存"
+              />
             </div>
 
             <div class="form-group">
               <label for="price">售價:</label>
-              <input v-model="editedProduct.price" id="productPrice" placeholder="售價" />
+              <input
+                v-model="editedProduct.price"
+                id="productPrice"
+                placeholder="售價"
+              />
             </div>
 
             <div class="form-group">
               <label>是否上架商品:</label>
-              <button type="button" @click="toggleShelves"
-                :style="{ backgroundColor: editedProduct.shelves ? 'red' : 'green', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px', transition: 'background-color 0.3s ease' }">
-                {{ editedProduct.shelves ? '關閉商品' : '開啟商品' }}
+              <button
+                type="button"
+                @click="toggleShelves"
+                :style="{
+                  backgroundColor: editedProduct.shelves ? 'red' : 'green',
+                  color: 'white',
+                  padding: '10px',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  fontSize: '16px',
+                  transition: 'background-color 0.3s ease',
+                }"
+              >
+                {{ editedProduct.shelves ? "關閉商品" : "開啟商品" }}
               </button>
             </div>
             <div class="form-group">
-
-            <!-- 其他编辑项 -->
-            <button type="submit" class="subBtn">保存编辑</button>   
-                   </div>
-
+              <!-- 其他编辑项 -->
+              <button type="submit" class="subBtn">保存编辑</button>
+            </div>
           </form>
         </div>
       </div>
@@ -353,7 +414,6 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
-
 #productDescription {
   width: 400px; /* 设置宽度 */
   height: 300px; /* 设置高度 */
@@ -382,11 +442,10 @@ export default {
     padding: 20px;
     border-radius: 8px;
     max-width: 80vw; // 最大宽度，防止过宽
-    position: relative;   
-     border: 0px solid rgb(255, 0, 0);
-    
+    position: relative;
+    border: 0px solid rgb(255, 0, 0);
   }
- 
+
   .edit-form {
     display: flex;
     flex-direction: column;
@@ -397,28 +456,25 @@ export default {
     right: 4%;
 
     height: 80vh;
-
-
   }
 
   .form-group {
     margin-bottom: 10px; // 将间距调整为更小
-    .productName{
-
+    .productName {
       width: 19vw;
     }
-    .subBtn{
-position: relative;
-left: 90%;
-padding: 8px 16px;
-background-color: #2196F3;
-/* 更改按钮蓝色 */
-color: white;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-margin-top: 5px;
-}
+    .subBtn {
+      position: relative;
+      left: 90%;
+      padding: 8px 16px;
+      background-color: #2196f3;
+      /* 更改按钮蓝色 */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 5px;
+    }
   }
 
   .close-button {
@@ -431,9 +487,8 @@ margin-top: 5px;
 
   .modal-image {
     max-width: 90%;
-    height:90%;
+    height: 90%;
     border: 0px solid rgb(255, 0, 0);
-
   }
 
   /* 其他样式调整 */
@@ -590,7 +645,6 @@ margin-top: 5px;
           color: #e74c3c;
           /* Hover color */
           background-color: rgba(118, 118, 117, 0.5);
-
         }
       }
     }

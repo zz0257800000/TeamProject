@@ -68,14 +68,14 @@ const router = createRouter({
       path: "/UserPage/sellerStore/:userId",
       name: "sellerStore",
       component: () => import("../views/UserActionShop/sellerStore.vue"),
-      props:true,
+      props: true,
     },
     {
       path: "/UserPage/addNewProduct",
       name: "addNewProduct",
       component: () => import("../views/UserActionShop/addNewProduct.vue"),
     },
-  
+
     {
       path: "/UserPage/buyingList",
       name: "buyingList",
@@ -125,13 +125,13 @@ const router = createRouter({
       path: "/UserPage/Watchfeedback",
       name: "Watchfeedback",
       component: () => import("../views/UserPage/Watchfeedback.vue"),
-    }, 
+    },
     {
       path: "/UserPage/ChangeForgetPassword",
       name: "ChangeForgetPassword",
       component: () => import("../views/UserPage/ChangeForgetPassword.vue"),
-    }, 
-     {
+    },
+    {
       path: "/UserPage/forgotPasswordPage",
       name: "forgotPasswordPage",
       component: () => import("../views/UserPage/forgotPasswordPage.vue"),
@@ -140,13 +140,22 @@ const router = createRouter({
       path: "/UserPage/ChangePassword",
       name: "ChangePassword",
       component: () => import("../views/UserPage/ChangePassword.vue"),
-    }, 
+    },
     {
       path: "/UserPage/complainService",
       name: "complainService",
       component: () => import("../views/UserPage/complainService.vue"),
     },
-
+    {
+      path: "/UserProduct",
+      name: "userProduct",
+      component: () => import("../views/UserActionShop/UserProductView.vue"),
+    },
+    {
+      path: "/:product/:id/data",
+      name: "productData",
+      component: () => import("../views/UserActionShop/ProductSaleData.vue"),
+    },
   ],
 });
 
