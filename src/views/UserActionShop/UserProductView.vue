@@ -33,28 +33,16 @@ onMounted(async () => {
       </div>
 
       <div class="leftAdmin">
-        <RouterLink class="btn" to="/UserPage/actionShop"
-          ><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"
-          ><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/shippedOder/"
-          ><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"
-          ><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/cancelBid/"
-          ><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單
+        </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單
+        </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
         </RouterLink>
 
-        <RouterLink class="btn" to="/UserProduct"
-          ><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink
-        >
-        <RouterLink class="btn" to=""
-          ><i class="fa-solid fa-gear"></i> 設定</RouterLink
-        >
+        <RouterLink class="btn" to="/UserProduct"><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
       </div>
     </div>
 
@@ -91,14 +79,10 @@ onMounted(async () => {
             </thead>
             <tbody>
               <tr v-for="(product, index) in productInfo" :key="index">
-                <td>{{ product.product_id }}</td>
+                <td>{{ product.productId }}</td>
                 <td>
-                  <img
-                    :src="product.photo"
-                    alt="商品圖片"
-                    class="card-img-top fixed-size-image"
-                    @click="() => openImageModal(product)"
-                  />
+                  <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
+                    @click="() => openImageModal(product)" />
                 </td>
                 <td>{{ product.product_type }}</td>
 
@@ -113,13 +97,9 @@ onMounted(async () => {
                 <td>{{ product.upload_time }}</td>
                 <!-- 這裡我們假設有一個 shelfTime 屬性 -->
                 <td class="action-btns">
-                  <span
-                    class="link"
-                    @click="
-                      turnToData(product.product_name, product.product_id)
-                    "
-                    >詳細資料</span
-                  >
+                  <span class="link" @click="
+                    turnToData(product.product_name, product.productId)
+                    ">詳細資料</span>
                 </td>
               </tr>
             </tbody>
@@ -133,13 +113,14 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .body {
   display: flex;
+
   .actionPageLeft {
     width: 15vw;
     display: flex;
     flex-direction: column;
     background-color: #37474f;
     /* Dark teal background color */
-    height: 218vh;
+    height: 219vh;
 
     .lefttHeader {
       height: 4vw;
@@ -207,11 +188,13 @@ onMounted(async () => {
   }
 
   .productBar table td:first-child {
-    width: 5%; /* 調整第一列的寬度 */
+    width: 5%;
+    /* 調整第一列的寬度 */
   }
 
   .productBar table td:nth-child(2) {
-    width: 20%; /* 調整商品圖片列的寬度 */
+    width: 20%;
+    /* 調整商品圖片列的寬度 */
   }
 
   .RightHeader {
@@ -224,7 +207,7 @@ onMounted(async () => {
       display: flex;
       border: 0px solid #e74c3c;
       /* Border color */
-      width: 82vw;
+      width: 85vw;
       height: 10vh;
       align-items: center;
 
@@ -368,6 +351,7 @@ onMounted(async () => {
   .link {
     padding: 0.2rem 0.5rem;
     transition: 0.3s ease;
+
     &:hover {
       background-color: #263238;
       color: #e0e0e0;

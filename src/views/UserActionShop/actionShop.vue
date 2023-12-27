@@ -161,7 +161,15 @@ export default {
     },
     toggleShelves() {
       this.editedProduct.shelves = !this.editedProduct.shelves;
-    },
+    },  turnToData(name, id) {
+    this.$router.push({
+      name: "productData",
+      params: {
+        product: name,
+        id: id,
+      },
+    });
+  },
 
   },
 
@@ -185,8 +193,6 @@ export default {
         <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
         </RouterLink>
 
-        <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
-        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
 
       </div>
 
@@ -225,6 +231,8 @@ export default {
                 <th>銷售數量</th>
                 <th>商品狀態</th>
                 <th>上架時間</th>
+                <th>銷售報表</th>
+
                 <th>操作</th>
               </tr>
             </thead>
@@ -247,11 +255,17 @@ export default {
 
 
                 <td>{{ product.upload_time }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
+                <td >
+                  <span class="link" @click="
+                    turnToData(product.product_name, product.productId)
+                    ">詳細資料</span>
+                </td>
                 <td class="action-btns">
 
                   <button class="edit-btn" @click="editProduct(index)">編輯</button>
                   <button class="delete-btn" @click="deleteProduct(product.productId)">刪除</button>
                 </td>
+
               </tr>
             </tbody>
           </table>
@@ -341,6 +355,16 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
+.link {
+    padding: 0.2rem 0.5rem;
+    transition: 0.3s ease;
+
+    &:hover {
+      background-color: #263238;
+      color: #e0e0e0;
+      cursor: pointer;
+    }
+  }
 .edit-modal {
   position: fixed;
   top: 0;

@@ -20,7 +20,7 @@ const commentInput = ref("");
 //點擊發布留言儲存一筆資料
 const postCommentHandler = () => {
   let commentReq = reactive({
-    user_name: userName,
+    user_name: "ian",
     star: 5,
     comment: commentInput.value,
     like_count: 0,

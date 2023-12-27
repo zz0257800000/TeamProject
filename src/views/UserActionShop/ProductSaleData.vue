@@ -86,28 +86,17 @@ onMounted(async () => {
       </div>
 
       <div class="leftAdmin">
-        <RouterLink class="btn" to="/UserPage/actionShop"
-          ><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"
-          ><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/shippedOder/"
-          ><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"
-          ><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink
-        >
-        <RouterLink class="btn" to="/UserActionShop/cancelBid/"
-          ><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單
+        </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單
+        </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
         </RouterLink>
 
-        <RouterLink class="btn" to="/UserProduct"
-          ><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink
-        >
-        <RouterLink class="btn" to=""
-          ><i class="fa-solid fa-gear"></i> 設定</RouterLink
-        >
+
+        
       </div>
     </div>
 
@@ -126,23 +115,29 @@ onMounted(async () => {
       </div>
     </div>
   </div>
-  {{ recordData }}
+  <!-- {{ recordData }} -->
 </template>
 
 <style lang="scss" scoped>
 .chart {
-  width: 1200px;
+  width: 700px;
   height: 600px;
+  border: 0px solid #ff0000;
+  position: relative;
+  left: 30%;
 }
+
 .body {
   display: flex;
+
   .actionPageLeft {
     width: 15vw;
     display: flex;
     flex-direction: column;
     background-color: #37474f;
     /* Dark teal background color */
-    height: 218vh;
+    height: 100vh;
+    border: 0px solid #ff0000;
 
     .lefttHeader {
       height: 4vw;
@@ -210,44 +205,50 @@ onMounted(async () => {
   }
 
   .productBar table td:first-child {
-    width: 5%; /* 調整第一列的寬度 */
+    width: 5%;
+    /* 調整第一列的寬度 */
   }
 
   .productBar table td:nth-child(2) {
-    width: 20%; /* 調整商品圖片列的寬度 */
+    width: 20%;
+    /* 調整商品圖片列的寬度 */
   }
+
   .actionPageRight {
     display: flex;
     flex-direction: column;
+
     .RightHeader {
       height: 4vw;
       background-color: #bdbdbd;
+      width: 85vw;
 
       /* Light gray background color */
       .secondtitle2 {
-        justify-content: space-between;
-        display: flex;
-        border: 0px solid #e74c3c;
-        /* Border color */
-        width: 82vw;
-        height: 10vh;
-        align-items: center;
+      justify-content: space-between;
+      display: flex;
+      border: 0px solid #e74c3c;
+      /* Border color */
+      width: 83vw;
+      height: 10vh;
+      align-items: center;
+      position: relative;
+left: 1%;
+      a {
+        border-radius: 10px;
+        padding: 5px;
+        transition: all 0.5s ease;
+        text-decoration: none;
+        color: #34495e;
+        /* Dark text color */
 
-        a {
-          border-radius: 10px;
-          padding: 5px;
-          transition: all 0.5s ease;
-          text-decoration: none;
-          color: #37474f;
-          /* Dark teal text color */
-
-          &:hover {
-            color: #e74c3c;
-            /* Hover color */
-            background-color: rgba(118, 118, 117, 0.5);
-          }
+        &:hover {
+          color: #e74c3c;
+          /* Hover color */
+          background-color: rgba(118, 118, 117, 0.5);
         }
       }
+    }
     }
   }
 }
