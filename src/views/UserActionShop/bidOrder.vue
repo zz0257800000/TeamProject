@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'; // 記得這行要加上
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -55,7 +56,7 @@ export default {
           console.error('Error fetching data:', error);
         });
     },
-
+  
 
     handleSizeChange(size) {
       // Handle page size change
@@ -72,19 +73,31 @@ export default {
       // 调用取消订单的 API
       axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
         .then(response => {
+          this.fetchData();
+          this.showAlert("取消訂單成功");
+
         })
         .catch(error => {
           throw error;
         });
 
-        alert("訂單已取消")
     },  
+    showAlert() {
+    Swal.fire({
+      title: "取消訂單",
+      text: "你的商品取消訂單成功",  // 使用传入的消息参数
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  },
 shipOrder(record_id) {
         // 调用将订单状态改为已出货的 API
         axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
             .then(response => {
                 // 处理 API 调用成功的情况
                 console.log(response.data);
+                this.fetchData();
+                this.showAlert1("出貨成功");
 
                 // 刷新数据或执行其他操作...
             })
@@ -93,6 +106,14 @@ shipOrder(record_id) {
                 console.error('Error shipping order:', error);
             });
     },
+    showAlert1() {
+    Swal.fire({
+      title: "出貨成功",
+      text: "你的商品出貨成功",  // 使用传入的消息参数
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  },
 
   },
 };

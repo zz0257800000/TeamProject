@@ -305,7 +305,8 @@ export default {
     }
 
     input[type="email"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="text"] {
       padding-right: 40px;
       width: 85%;
       height: 45px;

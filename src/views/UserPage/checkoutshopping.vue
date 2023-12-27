@@ -133,6 +133,8 @@ export default {
                     // 處理錯誤
                 });
             this.$router.push('/UserPage/buyingList');
+            
+
 
         },
     },

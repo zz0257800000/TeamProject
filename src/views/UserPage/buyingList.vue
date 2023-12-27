@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'; // 記得這行要加上
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -12,6 +13,7 @@ export default {
 
     };
   },
+  
   mounted() {
     this.userId = sessionStorage.getItem('user_Id');
     this.fetchData();
@@ -70,14 +72,23 @@ export default {
       // 调用取消订单的 API
       axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
         .then(response => {
+          this.fetchData();
+          this.showAlert("取消訂單成功");
+
         })
         .catch(error => {
           throw error;
         });
 
-        alert("訂單已取消")
     },
-
+    showAlert() {
+    Swal.fire({
+      title: "取消訂單",
+      text: "你的商品取消訂單成功",  // 使用传入的消息参数
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  },
   },
 };
 </script>

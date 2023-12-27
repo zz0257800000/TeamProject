@@ -199,20 +199,8 @@ export default {
           <h3>儲值點數畫面</h3>
           <button class="closebutton" @click="closePointsModal">X</button>
         </div>
-        <div class="secondshow">
-          <div class="detail-group" v-if="user">
-            <i class="far fa-user"></i>
-            點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="user.points">
-          </div>
-          <div class="detail-group" v-if="user">
-            <i class="fa-regular fa-user"></i>
-
-            確認密碼:&nbsp; <input type="password" name="" id="" class="input-field" v-model="pwdInput">
-          </div>
-        </div>
-        <div class="button-group">
-          <button class="save-button" @click="saveUserInfo">確認儲值</button>
-        </div>
+      
+        
 
 
       </div>

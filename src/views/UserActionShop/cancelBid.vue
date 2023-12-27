@@ -48,6 +48,7 @@ export default {
         .then(response => {
           console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '取消訂單');
+          this.fetchRecord();
 
         })
 
@@ -67,35 +68,7 @@ export default {
 
     },
 
-    //有問題
-    cancelOrder(record_id) {
-    // 调用取消订单的 API
-    axios.post(`http://localhost:8080/record/cancel/${record_id}`)
-        .then(response => {
-            // 处理 API 调用成功的情况
-            console.log(response.data);  // 这里假设 API 返回了一些信息，你可以根据实际情况处理
-
-            // 刷新数据或执行其他操作...
-        })
-        .catch(error => {
-            // 处理 API 调用失败的情况
-            console.error('Error canceling order:', error);
-        });
-},   
-shipOrder(record_id) {
-        // 调用将订单状态改为已出货的 API
-        axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
-            .then(response => {
-                // 处理 API 调用成功的情况
-                console.log(response.data);
-
-                // 刷新数据或执行其他操作...
-            })
-            .catch(error => {
-                // 处理 API 调用失败的情况
-                console.error('Error shipping order:', error);
-            });
-    },
+  
 
   },
 };

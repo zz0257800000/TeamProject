@@ -64,12 +64,23 @@ export default {
 
           // 刷新产品列表，可以重新调用获取产品列表的方法
           this.fetchProducts();
+          this.showAlert("刪除成功");
         })
         .catch(error => {
           console.error('Error:', error);
           // 处理错误，例如显示错误消息给用户
         });
+
+        
     },
+    showAlert() {
+    Swal.fire({
+      title: "刪除成功",
+      text: "你的商品刪除成功",  // 使用传入的消息参数
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  },
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -152,6 +163,7 @@ export default {
           alert('商品新增成功');
           this.isEditModalOpen = false;
           window.location.reload(true);
+          
 
         })
         .catch(error => {
@@ -328,9 +340,12 @@ export default {
                 {{ editedProduct.shelves ? '關閉商品' : '開啟商品' }}
               </button>
             </div>
+            <div class="form-group">
 
             <!-- 其他编辑项 -->
-            <button type="submit">保存编辑</button>
+            <button type="submit" class="subBtn">保存编辑</button>   
+                   </div>
+
           </form>
         </div>
       </div>
@@ -392,6 +407,18 @@ export default {
 
       width: 19vw;
     }
+    .subBtn{
+position: relative;
+left: 90%;
+padding: 8px 16px;
+background-color: #2196F3;
+/* 更改按钮蓝色 */
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 5px;
+}
   }
 
   .close-button {

@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'; // 記得這行要加上
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -70,15 +71,23 @@ export default {
       // 调用将订单状态改为已完成的 API
       axios.post(`http://localhost:8080/record/completed?id=${record_id}`)
         .then(response => {
-          // 处理 API 调用成功的情况
+          this.fetchRecord();
           console.log(response.data);
-          // 刷新数据或执行其他操作...
+          this.showAlert("確認收貨成功");
         })
         .catch(error => {
           // 处理 API 调用失败的情况
           console.error('Error completing order:', error);
         });
     },
+    showAlert() {
+    Swal.fire({
+      title: "確認收貨",
+      text: "你的商品確認收貨成功",  // 使用传入的消息参数
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  },
   },
 };
 </script>

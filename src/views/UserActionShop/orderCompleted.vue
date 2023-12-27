@@ -48,6 +48,7 @@ export default {
         .then(response => {
           console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '已完成');
+          this.fetchRecord();
 
         })
 
