@@ -117,7 +117,7 @@ export default {
     
   </div> -->
 
-  <div class="product card" v-for="(product, index) in paginatedProducts" :key="index" style="width: 15rem;">
+  <div class="product card" v-for="(product, index) in paginatedProducts" :key="index" style="width: 16rem;">
         <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" :title="product.product_name">
           <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
           <div class="card-body">
@@ -217,7 +217,7 @@ export default {
   background-color: #f5f5f5;
 
   .carousel {
-    width: 80vw;
+    width: 77vw;
     margin-bottom: 20px;
     img{
       border-radius: 10px;
@@ -226,11 +226,12 @@ export default {
 
   .productAll {
     border: 1px solid #ddd;
-    width: 80vw;
+    width: 77vw;
     height: 175vh;
-    padding: 25px;
+    padding: 10px 30px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #2c3e50;
     border-radius: 10px;
@@ -253,7 +254,6 @@ export default {
     object-fit: cover;
     border-radius: 8px;
   }
-
 
 .card {
   height: 300px;
