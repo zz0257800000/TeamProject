@@ -252,7 +252,9 @@ export default {
       </div>
       <div class="productDescrip">
         <h4>商品描述：</h4>
-        <p>{{ product.description }}</p>
+        <div class="product-description" style="white-space: pre-line;">
+  <p>{{ product.description }}</p>
+</div>
       </div>
 
       <div class="viewReplies">
@@ -271,7 +273,7 @@ export default {
 
           </div>
           <div class="secondShow">
-            <div v-if="userId !== product.user_id && product.inventory > 0">
+            <div v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
 
               <input type="text" v-model="newCommentText" placeholder="添加留言" class="textEnter">
               <button @click="addProductComment" class="commitBtn">添加留言</button>
@@ -520,7 +522,7 @@ export default {
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
-
+overflow: auto;
     p {
       font-size: 16px;
     }
