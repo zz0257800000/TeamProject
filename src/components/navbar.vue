@@ -90,12 +90,10 @@ export default {
       </div>
       <div>
 
-
-
         <div>      
           <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
 
-<span v-if="user" >使用者帳號: {{ user.email }}</span>
+        <span v-if="user" >使用者帳號: {{ user.email }}</span>
           <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
           <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
             <i class="fa-solid fa-store"></i> 我的拍賣
@@ -109,7 +107,6 @@ export default {
           </RouterLink>
         </div>
 
-
       </div>
     </div>
 
@@ -119,10 +116,7 @@ export default {
         <h1> <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i></h1>
       </RouterLink>
 
-     
       <div class="headerRight">
-
-     
 
       <div>
         <RouterLink class="btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> <i class="fa-solid fa-box"></i> 購買紀錄</RouterLink>
@@ -137,10 +131,21 @@ export default {
       </div>
  </div>
     </div>
-
-
-
   </div>
+  <div class="navbar">
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">書籍動漫</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">精選服飾</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+    </ul>
+  </div>
+
   <div class="Marquee">
     <div class="announcement">
       <!-- <p>出租男友玉翔我愛你!!!！</p> -->
@@ -148,7 +153,7 @@ export default {
       <p> 魔剣の継承者漫画、イラスト発売中!!!！ </p>
     </div>
 
-
+<!-- 
     <div class="type">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -232,11 +237,12 @@ export default {
           </div>
         </div>
       </nav>
-    </div>
+    </div> -->
     <button @click="scrollToTop" class="scroll-to-top-btn">
       <i class="fas fa-arrow-up"></i>
     </button>
   </div>
+  
 </template>
 <style lang="scss" scoped>
 .scroll-to-top-btn {
@@ -354,15 +360,12 @@ export default {
 
 .Marquee {
   width: 100vw;
-
-  height: 10vh;
-  background-color: rgb(48, 48, 48);
-
+  height: 40px;
+  background-color: #f5f5f5;
 
   //跑馬燈
   .announcement {
     position: absolute;
-    top: 23%;
     right: 100%;
     /* 初始位置在页面右侧外部 */
     background-color: #ff9800;
@@ -389,4 +392,16 @@ export default {
       right: 0;
     }
   }
-}</style>
+}
+
+.navbar{
+  background-color: rgb(92, 92, 92);
+  .nav-link{
+    font-size: 12pt;
+    color: white;
+    &:hover {
+      color:#ff9800;
+  }
+  }
+}
+</style>

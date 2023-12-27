@@ -269,10 +269,10 @@ export default {
 .search{
   border: 0px solid rgb(255, 0, 0);
   height: 10vh;
-width: 50vw;
-display: flex;
-align-items: center;
-justify-content: center;
+  width: 50vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
 }
   position: relative;
@@ -282,31 +282,33 @@ justify-content: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f5f5f5; /* 時尚科技風格的背景色 */
+  background-color: #f5f5f5;
 
   .carousel {
-    width: 70vw;
+    width: 80vw;
     margin-bottom: 20px;
-    background-color: #3498db; /* 時尚科技風格的主要顏色 */
+    img{
+      border-radius: 10px;
+    }
   }
 
   .productAll {
-  border: 1px solid #ddd;
-  width: 70vw;
-  height: 175vh;
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #2c3e50;
-  overflow: hidden;
-}
+    border: 1px solid #ddd;
+    width: 80vw;
+    height: 175vh;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #2c3e50;
+    border-radius: 10px;
+    overflow: hidden;
+  }
 
 
 
 .product {
-  
   position: relative;
   border: 1px solid #fff;
   height: 54vh;
@@ -352,8 +354,6 @@ justify-content: center;
 
 }
   }
-
- 
 
 
 }
