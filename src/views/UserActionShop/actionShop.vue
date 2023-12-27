@@ -177,10 +177,13 @@ export default {
       <div class="leftAdmin">
 
         <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單
+        </RouterLink>
         <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單
+        </RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
+        </RouterLink>
 
         <RouterLink class="btn" to=""><i class="fa-solid fa-chart-line"></i> 報表及分析</RouterLink>
         <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> 設定</RouterLink>
@@ -293,15 +296,15 @@ export default {
               <label for="productType">產品分類:</label>
               <select id="productType" v-model="editedProduct.product_type" placeholder="產品分類">
                 <option value="書籍動漫">書籍動漫</option>
-              <option value="食品專區">食品專區</option>
-              <option value="精品服飾">精品服飾</option>
-              <option value="日常用品">日常用品</option>
-              <option value="3C產品">3C產品</option>
-              <option value="寵物專區">寵物專區</option>
-              <option value="樂器專區">樂器專區</option>
+                <option value="食品專區">食品專區</option>
+                <option value="精品服飾">精品服飾</option>
+                <option value="日常用品">日常用品</option>
+                <option value="3C產品">3C產品</option>
+                <option value="寵物專區">寵物專區</option>
+                <option value="樂器專區">樂器專區</option>
 
-              <option value="機車零件">機車零件</option>
-              <option value="其他">其他</option>
+                <option value="機車零件">機車零件</option>
+                <option value="其他">其他</option>
 
               </select>
             </div>
@@ -671,5 +674,4 @@ export default {
       }
     }
   }
-}
-</style>
+}</style>
