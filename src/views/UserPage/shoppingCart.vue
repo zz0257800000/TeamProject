@@ -12,10 +12,15 @@ export default {
     };
   },
   methods: {
-  handlePlus: function (item) {
-    item.cart_count++;
-    // 使用 api.cartCreate 更新商品數量和價格
-    this.updateCartItem(item);
+    handlePlus: function (item) {
+    if (item.cart_count < item.inventory) {
+      item.cart_count++;
+      // 使用 api.cartCreate 更新商品數量和價格
+      this.updateCartItem(item);
+    } else {
+      // 庫存不足的提示，你可以自行調整
+      alert('抱歉，本商品最多購買數量為'+ item.inventory);
+    }
   },
   handleSub: function (item) {
     if (item.cart_count > 1) {
@@ -68,6 +73,7 @@ export default {
       product_name: item.product_name,
       product_type:item.product_type,
       cart_count: item.cart_count,
+      inventory: item.inventory,
       cart_amount: item.cart_amount * item.cart_count,
       user_id: sessionStorage.getItem('user_Id'), // 获取用户 ID
       product_id: item.product_id,
