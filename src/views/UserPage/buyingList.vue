@@ -141,7 +141,7 @@ export default {
                 <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
                 <h4>賣家帳號 :<router-link :to="'/UserPage/sellerStore/' + record.seller_id" class="nameRouter"
                     title="前往賣家賣場">
-                    {{ record.seller_id }}</router-link> &nbsp; </h4>
+                    {{ record.seller_name }}</router-link> &nbsp; </h4>
                 <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
                   訂單狀態 : {{ record.status }} &nbsp;
                 </h4>
@@ -439,7 +439,7 @@ export default {
             margin: 2px;
 
             .orderInfo1 {
-              border: 0px solid rgb(251, 0, 0);
+              border: 1px solid rgb(251, 0, 0);
               width: 15vw;
               margin: 2px;
 
