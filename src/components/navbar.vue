@@ -103,19 +103,14 @@ export default {
   <RouterLink class="btn" to="/">注意事項</RouterLink>
   <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> b5cadf014f1a950231c707c8c67f4127efbcad84
+
         <div class="righthead">   
           <div class="profile-image" >
               <!-- 显示预览图像 -->
               <img :src="previewImage" alt="User Photo" v-if="previewImage"/>
             </div>
           <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
-=======
   </div>
->>>>>>> 93d59305c23a6de14d8e933c4c6392cd06cd24d1
 
 <div>
 
@@ -176,7 +171,7 @@ export default {
   </button>
 
 </div>
-
+</div>
 </template>
 
 <style lang="scss" scoped>
