@@ -8,19 +8,26 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <div class="showmain">
-  <navbar />
+    <navbar />
 
-  <RouterView />
-  <navbar1/>
+    <div class="middle">
+      <RouterView />
+    </div>
 
+    <navbar1/>
 </div>
+
 </template>
 
 <style scoped>
 .showmain{
-border: 0;
-width: 100vw;
-background-color: #f5f5f5;
-
+  border: 0;
+  width: 99vw;
+  height: 100%;
+  background-color: #f5f5f5;
 }
+.middle{
+  margin-bottom: 50px;
+}
+
 </style>
