@@ -57,7 +57,7 @@ export default {
           console.error('Error fetching data:', error);
         });
     },
-  
+
 
     handleSizeChange(size) {
       // Handle page size change
@@ -69,52 +69,103 @@ export default {
 
     },
 
-    //有問題
     cancelOrder(record_id) {
-      // 调用取消订单的 API
-      axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
-        .then(response => {
-          this.fetchData();
-          this.showAlert("取消訂單成功");
+    // 弹出确认对话框
+    this.showAlert("確認取消訂單", "你確定要取消訂單嗎？", (result) => {
+        // 用户点击确认后，result 是 true，执行实际的取消交易操作
+        if (result) {
+            // 调用取消订单的 API
+            axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
+                .then(response => {
+                    // 处理 API 调用成功的情况
+                    console.log(response.data);
 
-        })
-        .catch(error => {
-          throw error;
-        });
+                    // 在取消交易后调用 showAlert2，并传递成功提示
+                    this.showAlert2("取消訂單成功");
 
-    },  
-    showAlert() {
-    Swal.fire({
-      title: "取消訂單",
-      text: "你的商品取消訂單成功",  // 使用传入的消息参数
-      icon: "success",
-      confirmButtonText: "OK",
+                    // 刷新数据或执行其他操作...
+                    this.fetchData();
+                })
+                .catch(error => {
+                    // 处理 API 调用失败的情况
+                    console.error('Error cancelling order:', error);
+                });
+        }
     });
-  },
-shipOrder(record_id) {
-        // 调用将订单状态改为已出货的 API
-        axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
-            .then(response => {
-                // 处理 API 调用成功的情况
-                console.log(response.data);
-                this.fetchData();
-                this.showAlert1("出貨成功");
-
-                // 刷新数据或执行其他操作...
-            })
-            .catch(error => {
-                // 处理 API 调用失败的情况
-                console.error('Error shipping order:', error);
-            });
-    },
-    showAlert1() {
+},
+showAlert(title, text, confirmCallback) {
     Swal.fire({
-      title: "出貨成功",
-      text: "你的商品出貨成功",  // 使用传入的消息参数
-      icon: "success",
-      confirmButtonText: "OK",
+        title: title,
+        text: text,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "確認",
+        cancelButtonText: "取消"
+    }).then((result) => {
+        // 将用户的确认结果传递给回调函数
+        if (confirmCallback && typeof confirmCallback === 'function') {
+            confirmCallback(result.isConfirmed);
+        }
     });
-  },
+},
+showAlert2(message) {
+    Swal.fire({
+        title: "確認",
+        text: message,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "確認"
+    });
+},
+    shipOrder(record_id) {
+    // 弹出确认对话框
+    this.showAlert1("確認要出貨嗎？", (result) => {
+        // 用户点击确认后，result 是 true，执行实际的出货操作
+        if (result) {
+            // 调用将订单状态改为已出货的 API
+            axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
+                .then(response => {
+                    // 处理 API 调用成功的情况
+                    console.log(response.data);
+
+                    // 弹出成功提示
+                    this.showAlert2("出貨成功");
+
+                    // 刷新数据或执行其他操作...
+                })
+                .catch(error => {
+                    // 处理 API 调用失败的情况
+                    console.error('Error shipping order:', error);
+                });
+        }
+    });
+},
+showAlert1(message, callback) {
+    Swal.fire({
+        title: "確認",
+        text: message,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "確認",
+        cancelButtonText: "取消"
+    }).then((result) => {
+        // 将用户的确认结果传递给回调函数
+        callback(result.isConfirmed);
+    });
+},
+showAlert2(message) {
+    Swal.fire({
+        title: "確認",
+        text: message,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "確認"
+    });
+},
 
   },
 };
@@ -232,7 +283,7 @@ shipOrder(record_id) {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to=""  @click="shipOrder(record.record_id)" > 出貨</RouterLink>
+                <RouterLink class="btn" to="" @click="shipOrder(record.record_id)"> 出貨</RouterLink>
 
               </div>
 

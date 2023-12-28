@@ -11,6 +11,9 @@ export default {
       recordList: [],
       showCommetModal: false,
       name: sessionStorage.getItem('name'),
+      commentStars: 5, // 默认显示五颗星
+      completedProductIds: [],
+      newCommentText: '',
 
     };
   },
@@ -43,22 +46,7 @@ export default {
     // 修改 fetchProductDetails 方法
 
 
-    fetchRecord() {
-      const userId = this.userId;
-      const apiUrl = `http://localhost:8080/record/get/user_id?id=${userId}`;
-
-      axios.get(apiUrl)
-        .then(response => {
-          console.log('API Response:', response.data);
-          this.recordList = response.data.recordList.filter(record => record.status === '已完成');
-          this.fetchRecord();
-
-        })
-
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    },
+    
 
 
     handleSizeChange(size) {
@@ -78,25 +66,72 @@ export default {
       // 关闭弹窗
       this.showCommetModal = false;
     },
-    addProductComment() {
-      axios.post(`http://localhost:8080/comment/create`, {
-        user_name: sessionStorage.getItem('name'),
-        star: 5,
-        comment: this.newCommentText, // 使用你的输入字段
-        like_count: 10,
-        dislike_count: 2,
-        user_id: sessionStorage.getItem('user_Id'),
-        product_id: this.product.productId
-      })
-        .then(response => {
-          console.log('新增的留言:', response.data);
-
-         
-        })
-        .catch(error => {
-          console.error('添加留言时出错:', error);
-        });
+    setCommentStars(stars) {
+      this.commentStars = stars;
     },
+    fetchRecord() {
+      const apiUrl = `http://localhost:8080/record/get/user_id?id=${this.userId}`;
+
+  axios.get(apiUrl)
+    .then(response => {
+      console.log('API Response:', response.data);
+      
+      // 取得所有已完成的訂單
+      const completedOrders = response.data.recordList.filter(record => record.status === '已完成');
+
+      // 初始化 hasCommented 屬性
+      completedOrders.forEach(order => {
+        order.hasCommented = false;
+      });
+
+      // 提取所有已完成訂單的 product_id
+      const productIds = completedOrders.map(order => order.product_id);
+      
+      // 將 product_id 賦值給 data 中的屬性，以供其他方法使用
+      this.completedProductIds = productIds;
+
+      // 更新 recordList 只包含已完成的訂單
+      this.recordList = completedOrders;
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+},
+addProductComment(order) {
+  console.log('Order:', order);
+
+  // 检查是否已经对该订单留过评论
+  const hasCommented = order.hasCommented;
+
+  if (!hasCommented) {
+    // 从订单中获取单个 product_id
+    const productId = order.product_id;
+
+    axios.post(`http://localhost:8080/comment/create`, {
+      user_name: sessionStorage.getItem('name'),
+      star: this.commentStars,
+      comment: this.newCommentText,
+      user_id: sessionStorage.getItem('user_Id'),
+      product_id: productId // Pass a single product_id, not an array
+    })
+    .then(response => {
+      console.log('新增的留言:', response.data);
+    })
+    .catch(error => {
+      console.error('添加留言时出错:', error);
+    });
+
+    // 标记这笔订单已经评论过
+    order.hasCommented = true;
+
+    // 这里可以进行其他更新操作，比如重新加载数据
+    this.fetchData();
+  } else {
+    console.log('已经对该订单留过评论，不能重复评论。');
+  }
+}
+
+
   },
 };
 </script>
@@ -112,9 +147,11 @@ export default {
         <RouterLink class="btn" to="/UserPage/buyingList"><i class="fa-solid fa-bars-staggered"></i> &nbsp;訂單明細
         </RouterLink>
         <RouterLink class="btn" to="/UserPage/waitingReceipt"><i class="fa-solid fa-truck"></i>&nbsp; 待收貨 </RouterLink>
-        <RouterLink class="btn" to="/UserPage/completeReceipt"><i class="fa-solid fa-flag-checkered"></i> &nbsp;訂單已完成</RouterLink>
+        <RouterLink class="btn" to="/UserPage/completeReceipt"><i class="fa-solid fa-flag-checkered"></i> &nbsp;訂單已完成
+        </RouterLink>
 
-        <RouterLink class="btn" to="/UserPage/buyCancelOrder"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
+        <RouterLink class="btn" to="/UserPage/buyCancelOrder"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
+        </RouterLink>
 
 
 
@@ -155,7 +192,7 @@ export default {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" @click="addCommet" >評價商品</button>
+                <button class="btn" @click="addCommet">評價商品</button>
               </div>
             </div>
 
@@ -242,24 +279,28 @@ export default {
           <button class="closebutton" @click="closeCommet">X</button>
         </div>
         <div class="secondShow">
-          <p>你的名字 : {{ user_name }}</p>
-          <p for="starRating">Star：</p>
-<div class="commentText">
-  <p for="newCommentText">留言：</p>
-  <input v-model="newCommentText" id="newCommentText" placeholder="添加留言" class="textEnter">
-</div>
-  <div class="star-rating">
-    <span v-for="starIndex in 5" :key="starIndex">
-      <i
-        class="fas"
-        :class="{ 'fa-star': starIndex < commentStars, 'fa-star-o': starIndex >= commentStars }"
-        @click="setCommentStars(starIndex + 1)"
-      ></i>
-    </span>
-  </div>
+          <div class="title">
+          <p>你的名字 : {{ name }}</p>&nbsp; 
 
-  <button @click="addProductComment" class="commitBtn">添加留言</button>
-</div>
+          <!-- <label for="starRating">星星評價 &nbsp; </label>
+          <div class="star-rating">
+        <span v-for="starIndex in 5" :key="starIndex">
+          <i class="fas"
+             :class="{ 'fa-star': starIndex < commentStars, 'fa-star-o': starIndex >= commentStars }"
+             @click="setCommentStars(starIndex + 1)"></i>
+        </span>
+      </div> -->
+
+        </div>
+
+          <div class="commentText">
+            <p for="newCommentText">留言：</p>
+            <input type="text" v-model="newCommentText" placeholder="添加留言" class="textEnter">
+          </div>
+       
+
+        </div>
+        <button @click="addProductComment" class="commitBtn">添加留言</button>
 
 
 
@@ -269,96 +310,136 @@ export default {
 </template>
 <style lang="scss" scoped>
 .comment-modal {
-    /* 其他样式属性... */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    /* 半透明的背景遮罩 */
-    z-index: 999;
+  /* 其他样式属性... */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* 半透明的背景遮罩 */
+  z-index: 999;
 
-    .input-field {
-      color: white;
+  .input-field {
+    color: white;
 
-    }
   }
-  .modal-content {
-    height: 50vh;
-    width: 50vw;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-    .firstshow {
-      display: flex;
-      justify-content: space-between;
+.modal-content {
+  height: 50vh;
+  width: 50vw;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-      .closebutton {
-        width: 30px;
-        /* 调整按钮的宽度 */
-        height: 30px;
-        /* 调整按钮的高度 */
-        font-size: 20px;
-        /* 设置字体大小 */
-        color: #fff;
-        /* 字体颜色 */
-        background-color: #2196F3;
-        /* 按钮蓝色 */
-        border: none;
-        border-radius: 50%;
-        /* 将按钮形状设置为圆形 */
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        outline: none;
-        /* 移除点击时的边框 */
-        transition: background-color 0.3s;
-        /* 添加过渡效果 */
+  .firstshow {
+    display: flex;
+    justify-content: space-between;
 
-      }
-
-      .closebutton:hover {
-        background-color: #2196F3;
-        /* 按钮蓝色 */
-      }
-
-    }
-
-    .secondShow {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 1px solid rgb(255, 0, 0);
-      height: 30vh;
-      justify-content: center;
-
-    }
-
-    .button-group {
-      position: fixed;
-      bottom: 25%;
-      right: 25%;
-      margin: 20px;
-      /* 距离边缘的距离，根据需要调整 */
-    }
-
-    .button-group button {
-      padding: 10px 20px;
+    .closebutton {
+      width: 30px;
+      /* 调整按钮的宽度 */
+      height: 30px;
+      /* 调整按钮的高度 */
+      font-size: 20px;
+      /* 设置字体大小 */
+      color: #fff;
+      /* 字体颜色 */
       background-color: #2196F3;
       /* 按钮蓝色 */
-      color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 50%;
+      /* 将按钮形状设置为圆形 */
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      outline: none;
+      /* 移除点击时的边框 */
+      transition: background-color 0.3s;
+      /* 添加过渡效果 */
+
+    }
+
+    .closebutton:hover {
+      background-color: #2196F3;
+      /* 按钮蓝色 */
+    }
+
+  }
+
+  .secondShow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0px solid rgb(255, 0, 0);
+    height: 30vh;
+    justify-content: center;
+    .title{
+
+      display: flex;
+    }
+    .star-rating {
+  span {
+    i {
+      &.fas {
+        &.fa-star {
+          color: rgb(46, 46, 46); // 实心星星颜色
+        }
+        &.fa-star-o {
+          color: grey; // 空心星星颜色
+        }
+      }
     }
   }
+}
+.commentText{
+
+  display: flex;
+  .textEnter{
+
+    border-radius: 5px;
+    width: 25vw;
+  }
+}
+
+  }
+  .commitBtn{
+width: 8vw;
+padding: 10px 20px;
+  background-color: #2196F3;
+  /* 按钮蓝色 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  left: 80%;
+}
+  .button-group {
+    position: fixed;
+    bottom: 25%;
+    right: 25%;
+    margin: 20px;
+    /* 距离边缘的距离，根据需要调整 */
+  }
+
+  .button-group button {
+    padding: 10px 20px;
+    background-color: #2196F3;
+    /* 按钮蓝色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
 .nameRouter {
   text-decoration: none;
 }

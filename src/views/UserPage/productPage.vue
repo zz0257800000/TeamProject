@@ -180,15 +180,15 @@ export default {
         user_name: sessionStorage.getItem('name'),
         star: 5,
         comment: this.newCommentText, // 使用你的输入字段
-        like_count: 10,
-        dislike_count: 2,
+        like_count: 0,  // 根据需要设置初始值
+    dislike_count: 0,  // 根据需要设置初始值
         user_id: sessionStorage.getItem('user_Id'),
         product_id: this.product.productId
       })
         .then(response => {
           // 根据需要处理响应
           console.log('新增的留言:', response.data);
-
+          this.newCommentText = "";
           // 可选地，在添加新留言后刷新留言
           this.fetchProductComments();
         })
@@ -196,6 +196,35 @@ export default {
           console.error('添加留言时出错:', error);
         });
     },
+    addLike(commentId) {
+  axios.post(`http://localhost:8080/comment/like?id=${commentId}`)
+    .then(response => {
+      // 处理成功响应
+      console.log('点赞成功:', response.data);
+
+        })
+    .catch(error => {
+      // 处理错误
+      console.error('点赞失败:', error);
+    });
+    alert('按讚成功！');
+
+},
+
+// 踩评论
+addDislike(commentId) {
+  axios.post(`http://localhost:8080/comment/dislike?id=${commentId}`)
+    .then(response => {
+      // 处理成功响应
+      console.log('踩成功:', response.data);
+  })
+    .catch(error => {
+      // 处理错误
+      console.error('踩失败:', error);
+    });
+    alert('倒讚成功！');
+
+},
 
 
   },
@@ -270,29 +299,29 @@ export default {
         <!-- 弹窗内容 -->
         <div class="modal-content">
           <h4>商品留言 ： </h4>
-          <div class="firstshow">
+          <div class="firstshow" >
             <!-- 顯示現有的留言 -->
             <div v-for="(comment, index) in comments.commentList" :key="index" class="commentitem">
-              <span> {{ comment.user_name }}</span>
-              <span>
-                Star:
-                <span v-for="starIndex in comment.star" :key="starIndex">
-                  <i class="fas fa-star"></i>
-                </span>
-              </span>
-
+              <span>{{ comment.user_name }}</span>
               <p>{{ comment.comment }}</p>
-              <span> <i class="fa-regular fa-thumbs-up"></i> {{ comment.like_count }}</span>&nbsp;
-              <span><i class="fa-regular fa-thumbs-down"></i> {{ comment.dislike_count }}</span>
-              <hr>
-
+              <div class="thumb"  v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
+              <span>
+                
+                <i class="fa-regular fa-thumbs-up" @click="addLike(comment.comment_id)"></i> {{ comment.like_count }}
+              </span>&nbsp;
+              <span>
+                <i class="fa-regular fa-thumbs-down" @click="addDislike(comment.comment_id)"></i> {{ comment.dislike_count }}
+              </span>
+             
             </div>
+           <hr>
+          </div>
             <!-- 新增留言的輸入框 -->
           </div>
           <div class="secondShow">
             <div v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
 
-              <input type="text" v-model="newCommentText" placeholder="添加留言" class="textEnter">
+              <input type="text" name="" id="" v-model="newCommentText" placeholder="添加留言" class="textEnter">
               <button @click="addProductComment" class="commitBtn">添加留言</button>
             </div>
           </div>
@@ -560,7 +589,7 @@ export default {
         border: 1px solid #000000;
         height: 48vh;
         overflow: auto;
-        
+
         .commentitem {
           border: 0px solid #ff0000;
           top: 10%;

@@ -68,26 +68,55 @@ export default {
 
     },
     cancelOrder(record_id) {
-      // 调用取消订单的 API
-      axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
-        .then(response => {
-          this.fetchData();
-          this.showAlert("取消訂單成功");
+    // 弹出确认对话框
+    this.showAlert("確認取消訂單", "你確定要取消訂單嗎？", (result) => {
+        // 用户点击确认后，result 是 true，执行实际的取消交易操作
+        if (result) {
+            // 调用取消订单的 API
+            axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
+                .then(response => {
+                    // 处理 API 调用成功的情况
+                    console.log(response.data);
 
-        })
-        .catch(error => {
-          throw error;
-        });
+                    // 在取消交易后调用 showAlert2，并传递成功提示
+                    this.showAlert2("取消訂單成功");
 
-    },
-    showAlert() {
-    Swal.fire({
-      title: "取消訂單",
-      text: "你的商品取消訂單成功",  // 使用传入的消息参数
-      icon: "success",
-      confirmButtonText: "OK",
+                    // 刷新数据或执行其他操作...
+                    this.fetchData();
+                })
+                .catch(error => {
+                    // 处理 API 调用失败的情况
+                    console.error('Error cancelling order:', error);
+                });
+        }
     });
-  },
+},
+showAlert(title, text, confirmCallback) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "確認",
+        cancelButtonText: "取消"
+    }).then((result) => {
+        // 将用户的确认结果传递给回调函数
+        if (confirmCallback && typeof confirmCallback === 'function') {
+            confirmCallback(result.isConfirmed);
+        }
+    });
+},
+showAlert2(message) {
+    Swal.fire({
+        title: "確認",
+        text: message,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "確認"
+    });
+},
   },
 };
 </script>

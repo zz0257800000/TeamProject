@@ -57,31 +57,62 @@ export default {
     },
 
     deleteProduct(productId) {
-      // 发送删除请求，并将 productId 作为参数传递
-      axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
-        .then(response => {
-          // 删除成功后，刷新产品列表或者做其他操作
-          console.log('Product deleted successfully:', response.data);
+  // 显示删除确认弹窗
+  this.showAlert(productId);
+},
 
-          // 刷新产品列表，可以重新调用获取产品列表的方法
-          this.fetchProducts();
-          this.showAlert("刪除成功");
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          // 处理错误，例如显示错误消息给用户
-        });
+showAlert(productId) {
+  Swal.fire({
+    title: "你確定要刪除嗎?",
+    text: "您將無法恢復此狀態！",
+    icon: "warning", // 修改为 "warning"
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "確認刪除!",
+    cancelButtonText: "取消!"
 
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // 用户点击了确认删除，执行删除操作
+      this.deleteConfirmedProduct(productId);
+    }
+  });
+},
 
-    },
-    showAlert() {
-      Swal.fire({
-        title: "刪除成功",
-        text: "你的商品刪除成功",  // 使用传入的消息参数
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-    },
+deleteConfirmedProduct(productId) {
+  // 发送删除请求，并将 productId 作为参数传递
+  axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
+    .then(response => {
+      // 删除成功后，刷新产品列表或者做其他操作
+      console.log('Product deleted successfully:', response.data);
+
+      // 刷新产品列表，可以重新调用获取产品列表的方法
+      this.fetchProducts();
+      this.showDeleteSuccessAlert();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // 处理错误，例如显示错误消息给用户
+      this.showDeleteErrorAlert();
+    });
+},
+
+showDeleteSuccessAlert() {
+  Swal.fire({
+    title: "刪除成功!",
+    text: "你的商品刪除成功",
+    icon: "success"
+  });
+},
+
+showDeleteErrorAlert() {
+  Swal.fire({
+    title: "刪除失敗",
+    text: "刪除商品時發生錯誤",
+    icon: "error"
+  });
+},
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -187,14 +218,14 @@ export default {
       this.editedProduct.shelves = !this.editedProduct.shelves;
     },
     turnToData(name, id) {
-    this.$router.push({
-      name: "productData",
-      params: {
-        product: name,
-        id: id,
-      },
-    });
-  },
+      this.$router.push({
+        name: "productData",
+        params: {
+          product: name,
+          id: id,
+        },
+      });
+    },
   },
 
 };
@@ -279,7 +310,7 @@ export default {
 
 
                 <td>{{ product.upload_time }}</td> <!-- 這裡我們假設有一個 shelfTime 屬性 -->
-                <td >
+                <td>
                   <span class="link" @click="
                     turnToData(product.product_name, product.productId)
                     ">詳細資料</span>
@@ -382,16 +413,17 @@ export default {
   </div>
 </template>
 <style lang="scss" scoped>
-  .link {
-    padding: 0.2rem 0.5rem;
-    transition: 0.3s ease;
+.link {
+  padding: 0.2rem 0.5rem;
+  transition: 0.3s ease;
 
-    &:hover {
-      background-color: #263238;
-      color: #e0e0e0;
-      cursor: pointer;
-    }
+  &:hover {
+    background-color: #263238;
+    color: #e0e0e0;
+    cursor: pointer;
   }
+}
+
 #productDescription {
   width: 400px;
   /* 设置宽度 */
@@ -487,7 +519,7 @@ export default {
   }
 
   .modal-image {
-  
+
     scale: 1.2;
     border: 0px solid rgb(255, 0, 0);
     overflow: auto;
@@ -772,4 +804,5 @@ export default {
       }
     }
   }
-}</style>
+}
+</style>

@@ -68,26 +68,55 @@ export default {
 
     },
     completeOrder(record_id) {
-      // 调用将订单状态改为已完成的 API
-      axios.post(`http://localhost:8080/record/completed?id=${record_id}`)
-        .then(response => {
-          this.fetchRecord();
-          console.log(response.data);
-          this.showAlert("確認收貨成功");
-        })
-        .catch(error => {
-          // 处理 API 调用失败的情况
-          console.error('Error completing order:', error);
-        });
-    },
-    showAlert() {
-    Swal.fire({
-      title: "確認收貨",
-      text: "你的商品確認收貨成功",  // 使用传入的消息参数
-      icon: "success",
-      confirmButtonText: "OK",
+    // 弹出确认对话框
+    this.showAlert("確認收貨成功", (result) => {
+        // 用户点击确认后，result 是 true，执行实际的确认收货操作
+        if (result) {
+            // 调用将订单状态改为已完成的 API
+            axios.post(`http://localhost:8080/record/completed?id=${record_id}`)
+                .then(response => {
+                    // 处理 API 调用成功的情况
+                    console.log(response.data);
+
+                    // 在确认收货后调用 showAlert2，并传递成功提示
+                    this.showAlert2("確認收貨成功");
+
+                    // 刷新数据或执行其他操作...
+                    this.fetchRecord();
+                })
+                .catch(error => {
+                    // 处理 API 调用失败的情况
+                    console.error('Error completing order:', error);
+                });
+        }
     });
-  },
+},
+showAlert(message, confirmCallback) {
+    Swal.fire({
+        title: "確認",
+        text: message,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "確認",
+        cancelButtonText: "取消"
+    }).then((result) => {
+        // 将用户的确认结果传递给回调函数
+        if (confirmCallback && typeof confirmCallback === 'function') {
+            confirmCallback(result.isConfirmed);
+        }
+    });
+},
+showAlert2(message) {
+    Swal.fire({
+        title: "確認",
+        text: message,
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "確認"
+    });
+},
   },
 };
 </script>
