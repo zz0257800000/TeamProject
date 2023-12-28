@@ -10,7 +10,7 @@ export default {
 
       },
       showPointsModal: false,
-        
+      imageUrl: null,
       pwdInput: ("")
     };
   },
@@ -24,7 +24,9 @@ export default {
       .then(response => {
         // 確保 response.data.user 存在
         this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
-        console.log(response.data);
+        this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
+
+        console.log('previewImage:', this.previewImage);
 
       })
       .catch(error => {
@@ -39,7 +41,8 @@ export default {
         alert('請輸入正確的密碼');
         return;
       }
-
+      // 創建一個 FormData 對象
+      const formData = new FormData();
       const req = (
         {
           id: this.user.id,
@@ -47,7 +50,7 @@ export default {
           email: this.user.email,
           address: this.user.address,
           level: 0,
-          userPhoto: this.user.userPhoto,
+          userPhoto: this.imageUrl,
           password: this.pwdInput,
           phone_number: this.user.phone_number,
           remittance_title: this.user.remittance_title,
@@ -57,9 +60,11 @@ export default {
 
         }
       )
-
-
-      // 发送 JSON 格式的请求
+      if (this.userPhotoFile) {
+        formData.append('userPhoto', this.userPhotoFile);
+      }
+      console.log(req);
+    
       axios.post(`http://localhost:8080/user/edit`, req, {
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +96,32 @@ export default {
             alert('密碼錯誤請重新登入');
           }
         });
-    }, addPoints() {
+    },
+    handleFileChange(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+        // 獲取整個 base64 圖片資料
+        const fullBase64String = event.target.result;
+
+        // 找到逗號後的位置，即真正的 base64 圖片資料的開始位置
+        const commaIndex = fullBase64String.indexOf(',');
+
+        // 切除 'data:image/jpeg;base64,' 部分，得到實際的 base64 圖片資料
+        const base64Data = fullBase64String.substring(commaIndex + 1);
+
+        // 將 base64 圖片資料設定為 imageUrl
+        this.imageUrl = base64Data;
+
+        // 記錄處理後的 base64 圖片資料
+        console.log(this.imageUrl);
+    };
+
+    reader.readAsDataURL(file);
+},
+
+    addPoints() {
       // 点击 + 點數儲值 按钮时，显示弹窗
       this.showPointsModal = true;
     },
@@ -130,7 +160,7 @@ export default {
             </div>
             <br>
             <label for="userPhoto"></label>
-            <input type="file" @change="handleImageChange" id="userPhoto" />
+            <input type="file" @change="handleFileChange" id="userPhoto" />
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
               信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
@@ -199,8 +229,8 @@ export default {
           <h3>儲值點數畫面</h3>
           <button class="closebutton" @click="closePointsModal">X</button>
         </div>
-      
-        
+
+
 
 
       </div>
@@ -430,7 +460,7 @@ export default {
 }
 
 .address-details {
-  top: 5%;
+  top: 25%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -451,7 +481,8 @@ export default {
   /* 深色输入框 */
   color: white;
   /* 字体颜色 */
-}</style>
+}
+</style>
 
 
   

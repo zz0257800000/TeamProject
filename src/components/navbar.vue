@@ -37,6 +37,7 @@ export default {
           sessionStorage.removeItem('user_Id');
           sessionStorage.removeItem('name');
           sessionStorage.removeItem('points');
+          sessionStorage.removeItem('user_photo');
 
           sessionStorage.removeItem('seller_name');
           sessionStorage.removeItem('remittance_title');
@@ -73,6 +74,8 @@ export default {
         // 確保 response.data.user 存在
         this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
         console.log(response.data);
+        this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
+        // console.log('previewImage:', this.previewImage);
 
       })
       .catch(error => {
@@ -100,7 +103,11 @@ export default {
       </div>
       <div>
 
-        <div>      
+        <div class="righthead">   
+          <div class="profile-image" >
+              <!-- 显示预览图像 -->
+              <img :src="previewImage" alt="User Photo" v-if="previewImage"/>
+            </div>
           <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
 
         <span v-if="user" >使用者帳號: {{ user.email }}</span>
@@ -255,6 +262,20 @@ export default {
   
 </template>
 <style lang="scss" scoped>
+
+
+
+.righthead{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+.profile-image img {
+  height: 50px;
+  width: 50px;
+  border: 0px solid rgb(255, 0, 0);
+
+  border-radius: 50%;
+}}
 .scroll-to-top-btn {
   position: fixed;
   bottom: 20px;

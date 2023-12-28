@@ -17,6 +17,8 @@ export default {
     mounted() {
         this.fetchProductDetails();
         this.userId = sessionStorage.getItem('user_Id');  // Get user_Id from sessionStorage
+        this.remittance_title = sessionStorage.getItem('remittance_title');  // Get user_Id from sessionStorage
+        this.remittance_number = sessionStorage.getItem('remittance_number');  // Get user_Id from sessionStorage
 
     },
     computed: {
@@ -97,13 +99,12 @@ export default {
                 shipping_method: this.selectedShipping,
                 shipping_cost: this.getShippingFee,
                 payment_method: this.paymentMethod,
-                remittance_title: "中國信託",
-                remittance_number: "812-00000087888",
+                remittance_title: this.remittance_title,
+                remittance_number: this.remittance_number,
                 remarks_column: this.remarksColumn,
                 product_amount: this.getOrderAmount,
                 record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
                 status: "準備中",
-                record_type: "下標訂單",
                 valid: true,
                 seller_id: this.product.user_id,
                 seller_name: this.product.seller_name,

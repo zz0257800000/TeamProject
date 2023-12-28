@@ -11,7 +11,6 @@ export default {
       recordList: [],
       showCommetModal: false,
       name: sessionStorage.getItem('name'),
-      commentStars: 5, // 默认显示五颗星
       completedProductIds: [],
       newCommentText: '',
 
@@ -58,8 +57,8 @@ export default {
       this.currentPage = currentPage;
 
     },
-    addCommet() {
-      // 点击 + 點數儲值 按钮时，显示弹窗
+    addCommet(record) {
+      this.record = record;
       this.showCommetModal = true;
     },
     closeCommet() {
@@ -70,12 +69,12 @@ export default {
       this.commentStars = stars;
     },
     fetchRecord() {
-      const apiUrl = `http://localhost:8080/record/get/user_id?id=${this.userId}`;
+  const apiUrl = `http://localhost:8080/record/get/user_id?id=${this.userId}`;
 
   axios.get(apiUrl)
     .then(response => {
       console.log('API Response:', response.data);
-      
+
       // 取得所有已完成的訂單
       const completedOrders = response.data.recordList.filter(record => record.status === '已完成');
 
@@ -86,53 +85,58 @@ export default {
 
       // 提取所有已完成訂單的 product_id
       const productIds = completedOrders.map(order => order.product_id);
-      
+
       // 將 product_id 賦值給 data 中的屬性，以供其他方法使用
       this.completedProductIds = productIds;
 
       // 更新 recordList 只包含已完成的訂單
       this.recordList = completedOrders;
+      this.newCommentText = "";
+      this.showCommetModal = false;
+      // Show alert after updating recordList
     })
     .catch(error => {
       console.error('Error fetching data:', error);
     });
-},
-addProductComment(order) {
-  console.log('Order:', order);
-
-  // 检查是否已经对该订单留过评论
-  const hasCommented = order.hasCommented;
-
-  if (!hasCommented) {
-    // 从订单中获取单个 product_id
-    const productId = order.product_id;
-
-    axios.post(`http://localhost:8080/comment/create`, {
-      user_name: sessionStorage.getItem('name'),
-      star: this.commentStars,
-      comment: this.newCommentText,
-      user_id: sessionStorage.getItem('user_Id'),
-      product_id: productId // Pass a single product_id, not an array
-    })
-    .then(response => {
-      console.log('新增的留言:', response.data);
-    })
-    .catch(error => {
-      console.error('添加留言时出错:', error);
-    });
-
-    // 标记这笔订单已经评论过
-    order.hasCommented = true;
-
-    // 这里可以进行其他更新操作，比如重新加载数据
-    this.fetchData();
-  } else {
-    console.log('已经对该订单留过评论，不能重复评论。');
-  }
-}
+}, 
 
 
+
+    addProductComment(record) {
+      console.log('Record:', record);
+
+      const hasCommented = record.hasCommented;
+
+      if (!hasCommented) {
+        const productId = record.product_id;
+
+        axios.post('http://localhost:8080/comment/create', {
+          user_name: sessionStorage.getItem('name'),
+          star: this.commentStars,
+          comment: this.newCommentText,
+          user_id: sessionStorage.getItem('user_Id'),
+          product_id: productId,
+        })
+        .then(response => {
+          console.log('新增的留言:', response.data);
+          alert("留言成功");
+
+        })
+        .catch(error => {
+          console.error('添加留言时出错:', error);
+        });
+
+        record.hasCommented = true;
+
+        this.fetchData(); // You may want to consider a more targeted update
+      } else {
+        console.log('已经对该订单留过评论，不能重复评论。');
+      }
+    },
   },
+
+
+
 };
 </script>
 <template>
@@ -192,7 +196,7 @@ addProductComment(order) {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" @click="addCommet">評價商品</button>
+                <button @click="addCommet(record)" class="btn">評價商品</button>
               </div>
             </div>
 
@@ -300,7 +304,7 @@ addProductComment(order) {
        
 
         </div>
-        <button @click="addProductComment" class="commitBtn">添加留言</button>
+        <button @click="addProductComment(record)" class="commitBtn">添加留言</button>
 
 
 

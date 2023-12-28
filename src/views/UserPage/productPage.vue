@@ -318,13 +318,13 @@ addDislike(commentId) {
           </div>
             <!-- 新增留言的輸入框 -->
           </div>
-          <div class="secondShow">
+          <!-- <div class="secondShow">
             <div v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
 
               <input type="text" name="" id="" v-model="newCommentText" placeholder="添加留言" class="textEnter">
               <button @click="addProductComment" class="commitBtn">添加留言</button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <h2>最新商品</h2>
