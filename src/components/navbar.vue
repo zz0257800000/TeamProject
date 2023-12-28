@@ -107,17 +107,17 @@ export default {
   <div>      
     <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
 
-  <span v-if="user" >使用者帳號: {{ user.email }}</span>
+    <span v-if="user" >使用者帳號: {{ user.email }}</span>
+
     <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
-    <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/actionShop">
-      <i class="fa-solid fa-store"></i> 我的拍賣
-    </RouterLink>
+
     <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
       <i class="fa-solid fa-user usericon"></i> 會員資料
     </RouterLink>
 
     <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
-      <i class="fa-solid fa-user usericon"></i> 會員登入
+      <i class="fa-solid fa-user usericon"></i> 
+      <p>會員登入</p>
     </RouterLink>
   </div>
 
@@ -133,13 +133,25 @@ export default {
 <div class="headerRight">
 
 <div>
-  <RouterLink class="btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> <i class="fa-solid fa-box"></i> 購買紀錄</RouterLink>
+  <div class="buyList">
+    <RouterLink class="big btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> 
+      <i class="fa-solid fa-box"></i>
+      <p>購買紀錄</p> 
+    </RouterLink>
+  </div>
 </div>
-
-
 <div>
-  <RouterLink class="btn" to="/UserPage/shoppingCart"  v-if="isLoggedIn">
-    <i class="fa-solid fa-cart-shopping usericon"></i> 購物車
+
+  <div class="forSeller btn big">
+      <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
+        <i class="fa-solid fa-store"></i> 
+        <p>賣家中心</p>
+      </RouterLink>
+    </div>
+
+  <RouterLink class="cart btn big" to="/UserPage/shoppingCart"  v-if="isLoggedIn">
+    <i class="fa-solid fa-cart-shopping usericon"></i>
+    <p>購物車</p>
     <span class="notification-badge">{{ cartTotalQuantity }}</span>
   </RouterLink>
 </div>
@@ -270,7 +282,7 @@ export default {
   height: 50px;
   border: none;
   border-radius: 50%;
-  background-color: #3498db; // 自行調整按鈕背景色
+  background-color: #ff822a; // 自行調整按鈕背景色
   color: #fff; // 自行調整按鈕文字顏色
   z-index: 99;
   font-size: 20px;
@@ -281,7 +293,7 @@ export default {
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #2980b9; // 自行調整按鈕hover時的背景色
+    background-color: #4d4d4d; // 自行調整按鈕hover時的背景色
   }
 
   i {
@@ -290,14 +302,16 @@ export default {
 }
 
 .notification-badge { //購物車內數量
+  height: 40px;
+  width: 50px;
   background-color: red;
   color: rgb(255, 255, 255);
   border-radius: 50%;
-  padding: 4px 8px;
+  padding: 2px 14px;
   font-size: 12px;
   position: relative;
-  top: -8px;
-  left: 4px;
+  top: -90px;
+  left: 25px;
 }
 
 .btn {
@@ -353,7 +367,6 @@ export default {
     white-space: nowrap;
     animation: scrollFromRight 10s linear infinite;
     font-size: 11pt;
-
     p {
       margin: 0;
     }
@@ -382,4 +395,16 @@ export default {
   }
   }
 }
+
+.big{
+    height: 70px;
+    color: white;
+    text-decoration: none;
+    i{
+      font-size: 30pt;
+    }
+    &:hover {
+      color:#4e4e4e;
+  }
+  }
 </style>

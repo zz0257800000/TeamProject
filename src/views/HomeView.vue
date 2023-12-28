@@ -159,7 +159,7 @@ export default {
   }
 
   button:hover {
-    background-color: #2980b9;
+    background-color: #4d4d4d;
   }
 }
 
@@ -262,7 +262,7 @@ export default {
 }
   .productPageRoutBtn {
     text-decoration: none;
-    color: #4d4d4d; /* 時尚科技風格的主要顏色 */
+    color: #4d4d4d; 
     font-size: 14pt;
     }
   .productPrice{
