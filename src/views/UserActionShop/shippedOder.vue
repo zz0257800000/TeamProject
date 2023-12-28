@@ -40,8 +40,8 @@ export default {
     // 修改 fetchProductDetails 方法
 
     fetchRecord() {
-  const userId = this.userId;
-  const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
+      const userId = this.userId;
+      const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
 
   axios.get(apiUrl)
     .then(response => {
