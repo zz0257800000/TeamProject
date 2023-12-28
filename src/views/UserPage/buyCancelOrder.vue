@@ -88,7 +88,6 @@ export default {
         <RouterLink class="btn" to="/UserPage/buyCancelOrder"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
 
 
-        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> &nbsp;設定</RouterLink>
 
       </div>
 

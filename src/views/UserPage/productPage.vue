@@ -20,14 +20,18 @@ export default {
       products: [], // Save products data from the API
       isImageModalOpen: false,
       userId: sessionStorage.getItem('user_Id'),
+      name: sessionStorage.getItem('name'),
+
       comments: [], // 用於存儲商品留言的陣列
-      newCommentText: '', // 新留言文本的輸入框
+      newCommentText: '',
 
     };
   },
   mounted() {
     this.fetchProducts();
     this.userId = sessionStorage.getItem('user_Id');
+    this.name = sessionStorage.getItem('name');
+
     console.log('User ID:', this.userId); // 檢查 userId 是否被設置
     this.fetchProductDetails(); // 現有的方法
     this.fetchProductComments(); // 獲取商品留言
@@ -122,7 +126,7 @@ export default {
             product_name: this.product.product_name,
             product_type: this.product.product_type,
             photo: this.product.photo,
-            seller_id:this.product.user_id,
+            seller_id: this.product.user_id,
             seller_name: this.product.seller_name,
 
           };
@@ -160,7 +164,7 @@ export default {
     fetchProductComments() {
       const productId = this.$route.params.productId;
 
-      axios.get(`http://localhost:8080/api/product/${productId}/comments`)
+      axios.get(`http://localhost:8080/comment/info?id=${productId}`)
         .then(response => {
           this.comments = response.data;
           console.log('獲取的留言:', this.comments);
@@ -170,25 +174,30 @@ export default {
         });
     },
 
-    // 為當前商品新增留言
-    addProductComment() {
-      const productId = this.$route.params.productId;
 
-      axios.post(`http://localhost:8080/api/comment/create`, {
-        text: this.newCommentText,
-        // 可以根據留言的實際結構添加其他必要的屬性
+    addProductComment() {
+      axios.post(`http://localhost:8080/comment/create`, {
+        user_name: sessionStorage.getItem('name'),
+        star: 5,
+        comment: this.newCommentText, // 使用你的输入字段
+        like_count: 10,
+        dislike_count: 2,
+        user_id: sessionStorage.getItem('user_Id'),
+        product_id: this.product.productId
       })
         .then(response => {
-          // 根據需要處理回應
+          // 根据需要处理响应
           console.log('新增的留言:', response.data);
 
-          // 可選地，在添加新留言後刷新留言
+          // 可选地，在添加新留言后刷新留言
           this.fetchProductComments();
         })
         .catch(error => {
-          console.error('添加留言時出錯:', error);
+          console.error('添加留言时出错:', error);
         });
     },
+
+
   },
 };
 </script>
@@ -219,8 +228,8 @@ export default {
             <button @click="incrementQuantity">+</button>
           </div>
           <div class="product-buttons">
-            <button v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0"
-              class="cart-button" @click="addToCartAndShowAlert">
+            <button v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0" class="cart-button"
+              @click="addToCartAndShowAlert">
               <i class="fas fa-shopping-cart"></i>加入購物車
             </button>
             <router-link v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0"
@@ -254,24 +263,31 @@ export default {
       <div class="productDescrip">
         <h4>商品描述：</h4>
         <div class="product-description" style="white-space: pre-line;">
-  <p>{{ product.description }}</p>
-</div>
+          <p>{{ product.description }}</p>
+        </div>
       </div>
-
       <div class="viewReplies">
         <!-- 弹窗内容 -->
         <div class="modal-content">
           <h4>商品留言 ： </h4>
-
           <div class="firstshow">
             <!-- 顯示現有的留言 -->
-            <div v-for="(comment, index) in comments" :key="index" class="comment-item">
-              <p>{{ comment.text }}</p>
-              <!-- 根據需要顯示其他留言屬性 -->
+            <div v-for="(comment, index) in comments.commentList" :key="index" class="commentitem">
+              <span> {{ comment.user_name }}</span>
+              <span>
+                Star:
+                <span v-for="starIndex in comment.star" :key="starIndex">
+                  <i class="fas fa-star"></i>
+                </span>
+              </span>
+
+              <p>{{ comment.comment }}</p>
+              <span> <i class="fa-regular fa-thumbs-up"></i> {{ comment.like_count }}</span>&nbsp;
+              <span><i class="fa-regular fa-thumbs-down"></i> {{ comment.dislike_count }}</span>
+              <hr>
+
             </div>
-
             <!-- 新增留言的輸入框 -->
-
           </div>
           <div class="secondShow">
             <div v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
@@ -280,9 +296,6 @@ export default {
               <button @click="addProductComment" class="commitBtn">添加留言</button>
             </div>
           </div>
-
-
-
         </div>
       </div>
       <h2>最新商品</h2>
@@ -523,7 +536,8 @@ export default {
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
-overflow: auto;
+    overflow: auto;
+
     p {
       font-size: 16px;
     }
@@ -542,10 +556,17 @@ overflow: auto;
       height: 55vh;
 
       .firstshow {
-        margin: 10px;
+        margin: 5px;
         border: 1px solid #000000;
         height: 48vh;
+        overflow: auto;
+        
+        .commentitem {
+          border: 0px solid #ff0000;
+          top: 10%;
+          margin: 5px;
 
+        }
       }
 
       .secondShow {
@@ -553,7 +574,7 @@ overflow: auto;
 
         .textEnter {
           border: 1px solid #000000;
-          width: 59vw;
+          width: 60vw;
           height: 5vh;
           border-radius: 5px;
         }

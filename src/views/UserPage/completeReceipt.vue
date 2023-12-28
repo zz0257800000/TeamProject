@@ -9,12 +9,15 @@ export default {
       record: {},
       userId: '', // Add userId to data
       recordList: [],
+      showCommetModal: false,
+      name: sessionStorage.getItem('name'),
 
     };
   },
   mounted() {
     this.userId = sessionStorage.getItem('user_Id');
     this.fetchData();
+    this.name = sessionStorage.getItem('name');
 
 
   },
@@ -67,7 +70,33 @@ export default {
       this.currentPage = currentPage;
 
     },
+    addCommet() {
+      // 点击 + 點數儲值 按钮时，显示弹窗
+      this.showCommetModal = true;
+    },
+    closeCommet() {
+      // 关闭弹窗
+      this.showCommetModal = false;
+    },
+    addProductComment() {
+      axios.post(`http://localhost:8080/comment/create`, {
+        user_name: sessionStorage.getItem('name'),
+        star: 5,
+        comment: this.newCommentText, // 使用你的输入字段
+        like_count: 10,
+        dislike_count: 2,
+        user_id: sessionStorage.getItem('user_Id'),
+        product_id: this.product.productId
+      })
+        .then(response => {
+          console.log('新增的留言:', response.data);
 
+         
+        })
+        .catch(error => {
+          console.error('添加留言时出错:', error);
+        });
+    },
   },
 };
 </script>
@@ -88,7 +117,6 @@ export default {
         <RouterLink class="btn" to="/UserPage/buyCancelOrder"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單 </RouterLink>
 
 
-        <RouterLink class="btn" to=""><i class="fa-solid fa-gear"></i> &nbsp;設定</RouterLink>
 
       </div>
 
@@ -127,7 +155,7 @@ export default {
                 </h4>
               </div>
               <div class="orderDetailsheadright">
-                <button class="btn" ></button>
+                <button class="btn" @click="addCommet" >評價商品</button>
               </div>
             </div>
 
@@ -186,7 +214,7 @@ export default {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> </RouterLink>
+                <RouterLink class="btn" to=""> </RouterLink>
 
               </div>
 
@@ -206,10 +234,131 @@ export default {
         </div>
       </div>
     </div>
+    <div class="comment-modal" v-show="showCommetModal">
+      <!-- 弹窗内容 -->
+      <div class="modal-content">
+        <div class="firstshow">
+          <h3>評論商品畫面</h3>
+          <button class="closebutton" @click="closeCommet">X</button>
+        </div>
+        <div class="secondShow">
+          <p>你的名字 : {{ user_name }}</p>
+          <p for="starRating">Star：</p>
+<div class="commentText">
+  <p for="newCommentText">留言：</p>
+  <input v-model="newCommentText" id="newCommentText" placeholder="添加留言" class="textEnter">
+</div>
+  <div class="star-rating">
+    <span v-for="starIndex in 5" :key="starIndex">
+      <i
+        class="fas"
+        :class="{ 'fa-star': starIndex < commentStars, 'fa-star-o': starIndex >= commentStars }"
+        @click="setCommentStars(starIndex + 1)"
+      ></i>
+    </span>
+  </div>
 
+  <button @click="addProductComment" class="commitBtn">添加留言</button>
+</div>
+
+
+
+      </div>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
+.comment-modal {
+    /* 其他样式属性... */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明的背景遮罩 */
+    z-index: 999;
+
+    .input-field {
+      color: white;
+
+    }
+  }
+  .modal-content {
+    height: 50vh;
+    width: 50vw;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .firstshow {
+      display: flex;
+      justify-content: space-between;
+
+      .closebutton {
+        width: 30px;
+        /* 调整按钮的宽度 */
+        height: 30px;
+        /* 调整按钮的高度 */
+        font-size: 20px;
+        /* 设置字体大小 */
+        color: #fff;
+        /* 字体颜色 */
+        background-color: #2196F3;
+        /* 按钮蓝色 */
+        border: none;
+        border-radius: 50%;
+        /* 将按钮形状设置为圆形 */
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        /* 移除点击时的边框 */
+        transition: background-color 0.3s;
+        /* 添加过渡效果 */
+
+      }
+
+      .closebutton:hover {
+        background-color: #2196F3;
+        /* 按钮蓝色 */
+      }
+
+    }
+
+    .secondShow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgb(255, 0, 0);
+      height: 30vh;
+      justify-content: center;
+
+    }
+
+    .button-group {
+      position: fixed;
+      bottom: 25%;
+      right: 25%;
+      margin: 20px;
+      /* 距离边缘的距离，根据需要调整 */
+    }
+
+    .button-group button {
+      padding: 10px 20px;
+      background-color: #2196F3;
+      /* 按钮蓝色 */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
 .nameRouter {
   text-decoration: none;
 }
@@ -375,7 +524,7 @@ export default {
             justify-content: center;
             border-radius: 10px;
             width: 10vw;
-            background-color: #ffffff;
+            background-color: #2793ff;
             /* 修改右侧头部背景颜色 */
             color: rgb(255, 255, 255);
           }
@@ -437,7 +586,7 @@ export default {
 
               font-size: 12pt;
               width: 9vw;
-              background-color: #ffffff;
+              background-color: white;
               color: white;
               transition: 0.5s;
               position: relative;

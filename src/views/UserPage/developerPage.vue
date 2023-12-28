@@ -154,7 +154,7 @@ export default {
                 <h3><i class="fa-regular fa-user"></i> :廖佳洪</h3>
                 <h5>B-boy + Developer</h5>
                 <h6>, Taiwan</h6>
-                <h3>職位:??工程師</h3>
+                <h3>職位:XX工程師</h3>
                 <hr>
                 <div class="informationTopLink">
                   <a href=""> <i class="fa-brands fa-github"></i></a>
@@ -169,18 +169,18 @@ export default {
           </div>
         </div>
       </div>
-      <div class="developerMemder">
+      <!-- <div class="developerMemder">
         <div class="informationTOP">
           <h3>離線中...</h3>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 .mainShowDetail {
   border: 0px solid rgb(255, 0, 0);
-  height: 90vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;

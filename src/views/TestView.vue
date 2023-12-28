@@ -93,18 +93,12 @@ onMounted(async () => {
         <p>{{ item.comment }}</p>
         <div class="likebar">
           <div class="like">
-            <i
-              @click="addLikeHandler(item.comment_id)"
-              class="fa-regular fa-thumbs-up likeicon"
-            ></i
-            ><span>{{ item.like_count }}</span>
+            <i @click="addLikeHandler(item.comment_id)" class="fa-regular fa-thumbs-up likeicon"></i><span>{{
+              item.like_count }}</span>
           </div>
           <div class="dislike">
-            <i
-              class="fa-regular fa-thumbs-down dislikeicon"
-              @click="addDislikeHandler(item.comment_id)"
-            ></i
-            ><span>{{ item.dislike_count }}</span>
+            <i class="fa-regular fa-thumbs-down dislikeicon" @click="addDislikeHandler(item.comment_id)"></i><span>{{
+              item.dislike_count }}</span>
           </div>
         </div>
       </div>
@@ -126,6 +120,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .commentBox {
   border: 1px solid green;
+
   .comment {
     border: 1px solid red;
   }
@@ -136,6 +131,7 @@ onMounted(async () => {
   border: 1px solid blue;
   width: 20vw;
   justify-content: space-around;
+
   .likeicon,
   .dislikeicon {
     margin-right: 0.5rem;
@@ -147,10 +143,12 @@ onMounted(async () => {
       color: orange;
     }
   }
+
   span {
     font-size: 1.2rem;
   }
 }
+
 .starBar {
   display: flex;
 }
