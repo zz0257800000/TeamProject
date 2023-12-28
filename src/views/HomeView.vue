@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import api from "../api/api";
 import { RouterLink } from 'vue-router';
 
 export default {
@@ -59,12 +60,75 @@ export default {
           console.error('Error searching products:', error);
         });
     },
+
+    // handleNavClick() {
+    //   api.searchByType(this.searchKeyword)
+    //     .then(response => {
+    //       // 處理搜索結果
+    //       this.products = response.data.products;
+    //     })
+    //     .catch(error => {
+    //       console.error('Error searching products by type:', error);
+    //     });
+    // },
+    handleNavClick(productType) {
+  axios.get(`http://localhost:8080/product/searchByType?productType=${productType}`)
+    .then(response => {
+      this.products = response.data.products;
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error('Error searching products:', error);
+    });
+},
+
   },
 };
 </script>
 
-
 <template>
+    <div class="navbar Area">
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" @click="handleNavClick('')">新品上架</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" @click="handleNavClick('書籍動漫')">書籍動漫</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('食品專區')">食品專區</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('精品服飾')">精品服飾</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('日常用品')">日常用品</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('3C產品')">3C產品</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('寵物專區')">寵物專區</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('樂器專區')">樂器專區</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('機車零件')">機車零件</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" aria-current="page" @click="handleNavClick('其他')">其他</a>
+    </li>
+  </ul>
+    </div>
+
+  <div class="Marquee">
+    <div class="announcement">
+    <!-- <p> 魔剣の継承者漫画、イラスト発売中!!! </p> -->
+      <p> 系統公告：春節活動折扣即將開跑，詳情請至活動頁面！</p>
+    </div>
+  </div>
+
   <div class="mainshow">
     <div class="search">
         <input v-model="searchResults" placeholder="輸入搜尋關鍵字">
@@ -131,6 +195,48 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.Marquee {
+  height: 32px;
+  // background-color: #f5f5f5;
+
+  //跑馬燈
+  .announcement {
+    position: absolute;
+    right: 100%;
+    background-color: #ff9800;
+    color: #fff;
+    padding: 5px 10px;
+    white-space: nowrap;
+    animation: scrollFromRight 10s linear infinite;
+    font-size: 11pt;
+    p {
+      margin: 0;
+    }
+  }
+
+  @keyframes scrollFromRight {
+    0% {
+      right: 100%;
+    }
+
+    100% {
+      right: 0;
+    }
+  }
+}
+
+.navbar{
+  background-color: rgb(255, 255, 255);
+  box-shadow: inset 0px 0px 5px #e0e0e0;
+  .nav-link{
+    font-size: 14pt;
+    color: #ff9800;
+    font-weight: 1000;
+    &:hover {
+      color:#4e4e4e;
+  }
+  }
+}
 .search {
   display: flex;
   align-items: center;
@@ -210,23 +316,23 @@ export default {
   }
 
   .productAll {
+    background-color: #e0e0e0;
     // border: 1px solid #ddd;
     // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     // background-color: #ffffff;
-    // border-radius: 10px;
+    border-radius: 10px;
     width: 75vw;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding: 10px 0;
-    justify-content: space-between;
+    padding: 10px 2px;
     overflow: hidden;
   }
 
 .product {
   position: relative;
   height: 54vh;
-  margin: 10px;
+  margin: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;

@@ -132,16 +132,6 @@ export default {
 
 <div class="headerRight">
 
-<div>
-  <div class="buyList">
-    <RouterLink class="big btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> 
-      <i class="fa-solid fa-box"></i>
-      <p>購買紀錄</p> 
-    </RouterLink>
-  </div>
-</div>
-<div>
-
   <div class="forSeller btn big">
       <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
         <i class="fa-solid fa-store"></i> 
@@ -149,126 +139,27 @@ export default {
       </RouterLink>
     </div>
 
+  <div class="buyList">
+    <RouterLink class="big btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> 
+      <i class="fa-solid fa-box"></i>
+      <p>購買紀錄</p> 
+    </RouterLink>
+    </div>
+
   <RouterLink class="cart btn big" to="/UserPage/shoppingCart"  v-if="isLoggedIn">
     <i class="fa-solid fa-cart-shopping usericon"></i>
     <p>購物車</p>
     <span class="notification-badge">{{ cartTotalQuantity }}</span>
   </RouterLink>
-</div>
+
 </div>
   </div>
     </div>
 
-  <div class="navbar Area">
-  <ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">書籍動漫</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">精選服飾</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
-  </li>
-  </ul>
-    </div>
-
-  <div class="Marquee">
-  <div class="announcement">
-  <!-- <p>出租男友玉翔我愛你!!!！</p> -->
-
-  <p> 魔剣の継承者漫画、イラスト発売中!!! </p>
-  </div>
-
-  <!-- 
-  <div class="type">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false" data-bs-auto-close="false">
-              產品分類
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <div class="accordion" id="accordionExample">
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      食品專區
-                    </button>
-                  </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      零食
-                    </div>
-                    <div class="accordion-body">
-                      泡麵
-                    </div>
-                    <div class="accordion-body">
-                      生鮮食品
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      精品服飾
-                    </button>
-                  </h2>
-                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      全部
-                    </div>
-                    <div class="accordion-body">
-                      男性服飾
-                    </div>
-                    <div class="accordion-body">
-                      女性服飾
-                    </div>
-                    <div class="accordion-body">
-                      嬰幼服飾
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      日常用品
-                    </button>
-                  </h2>
-                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      洗浴用品
-                    </div>
-                    <div class="accordion-body">
-                      生活小物
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  </div> -->
   <button @click="scrollToTop" class="scroll-to-top-btn">
   <i class="fas fa-arrow-up"></i>
   </button>
-    </div>
+
 </div>
 
 </template>
@@ -303,11 +194,11 @@ export default {
 
 .notification-badge { //購物車內數量
   height: 40px;
-  width: 50px;
-  background-color: red;
+  width: 40px;
+  background-color: rgb(253, 60, 60);
   color: rgb(255, 255, 255);
   border-radius: 50%;
-  padding: 2px 14px;
+  padding: 2px 12px;
   font-size: 12px;
   position: relative;
   top: -90px;
