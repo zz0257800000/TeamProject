@@ -134,7 +134,7 @@ export default {
 .search {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
   height: 10vh;
   width: 50vw;
 
@@ -149,7 +149,7 @@ export default {
 
   button {
     padding: 10px 20px;
-    background-color: #3498db;  
+    background-color: #ff9800;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -233,6 +233,7 @@ export default {
 
   &:hover {
     transform: scale(1.05);
+    border: 2px solid #ff822a;
   }
   img {
     width: 100%;
@@ -265,7 +266,7 @@ export default {
     font-size: 14pt;
     }
   .productPrice{
-    color: #f07a25;
+    color: #ff822a;
   }
 }
 }

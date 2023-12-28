@@ -127,7 +127,7 @@ export default {
 <div class="askHeader">
 
 <RouterLink class="logo" to="/">
-  <h1> <i class="fa-solid fa-shrimp" style="color:#ff9800;;"><b> 呱皮皮蝦</b> </i></h1>
+  <h1> <i class="fa-solid fa-shrimp" style="color:#ffffff;"><b> 呱皮皮蝦</b> </i></h1>
 </RouterLink>
 
 <div class="headerRight">
@@ -291,7 +291,7 @@ export default {
 
 .notification-badge { //購物車內數量
   background-color: red;
-  color: white;
+  color: rgb(255, 255, 255);
   border-radius: 50%;
   padding: 4px 8px;
   font-size: 12px;
@@ -302,7 +302,7 @@ export default {
 
 .btn {
   text-decoration: none;
-  color: #ff9800;
+  color: #ffffff;
   font-size: 11pt;
 
   &:hover {
@@ -311,11 +311,11 @@ export default {
 
 }
 .askUserPage {
-  background-color: rgb(255, 255, 255);
+  background-color: #ff9800;
   display: flex;
   flex-direction: column;
   border: 0px solid rgb(255, 0, 0);
-  color: #ff9800;
+  color: #ffffff;
   height: 20vh;
 
   .headerfirst {

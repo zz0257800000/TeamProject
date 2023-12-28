@@ -124,9 +124,8 @@ export default {
 
         .iconALink {
             margin-top: 15vh;
-            color: rgb(221, 221, 221);
             border: 0px solid rgb(255, 255, 255);
-            font-size: 24pt;
+            font-size: 25pt;
             display: flex;
             justify-content: space-around;
             width: 17vw;
