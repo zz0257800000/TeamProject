@@ -104,31 +104,18 @@ export default {
 
     <h1 v-if="products.length == 0">找不到查詢商品,請再次輸入</h1>
     <div class="productAll">
-  <!-- <div class="product" v-for="(product, index) in paginatedProducts" :key="index">
-    <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn">
-      <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
-    </router-link>
-      <div class="productInfo">
-        <p class="productName">{{ product.product_name }}</p>
-        <p class="productPrice">${{ product.price }}</p>
-      </div>
-     
-    
-    
-  </div> -->
-
-  <div class="product card" v-for="(product, index) in paginatedProducts" :key="index" style="width: 16rem;">
-        <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" :title="product.product_name">
-          <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
-          <div class="card-body">
-            <div class="card-text">
-            <h5 class="productName">{{ product.product_name }}</h5>
-            <p class="productPrice">${{ product.price }}</p>
+      <div class="product card" v-for="(product, index) in paginatedProducts" :key="index" style="width: 16rem;">
+            <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" :title="product.product_name">
+              <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
+              <div class="card-body">
+                <div class="card-text">
+                <h5 class="productName">{{ product.product_name }}</h5>
+                <p class="productPrice">${{ product.price }}</p>
+                </div>
             </div>
+            </router-link>
         </div>
-        </router-link>
-      </div>
-</div>
+    </div>
 
     <div class="pagination-container">
     <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
@@ -209,7 +196,6 @@ export default {
 .mainshow {
   position: relative;
   border: 0px solid rgb(255, 0, 0);
-  height: 240vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -226,12 +212,11 @@ export default {
 
   .productAll {
     border: 1px solid #ddd;
-    width: 77vw;
-    height: 175vh;
+    width: 76vw;
+    height: 100%;
     padding: 10px 30px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #2c3e50;
     border-radius: 10px;

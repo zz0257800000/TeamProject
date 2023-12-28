@@ -20,6 +20,7 @@ import { RouterLink, RouterView } from 'vue-router'
 .showmain{
 border: 0;
 width: 100vw;
+height: 100%;
 background-color: #f5f5f5;
 
 }

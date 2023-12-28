@@ -370,23 +370,19 @@ export default {
 
 .Marquee {
   width: 100vw;
-  height: 40px;
+  height: 35px;
   background-color: #f5f5f5;
 
   //跑馬燈
   .announcement {
     position: absolute;
     right: 100%;
-    /* 初始位置在页面右侧外部 */
     background-color: #ff9800;
-    /* 公告条背景颜色 */
     color: #fff;
-    /* 文字颜色 */
-    padding: 10px;
+    padding: 5px 10px;
     white-space: nowrap;
-    /* 不换行 */
     animation: scrollFromRight 10s linear infinite;
-    /* 使用动画效果 */
+    font-size: 11pt;
 
     p {
       margin: 0;
