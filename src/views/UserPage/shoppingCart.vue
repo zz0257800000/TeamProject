@@ -179,6 +179,7 @@ export default {
   margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
 }
 
 //> 符號
@@ -217,7 +218,7 @@ export default {
         width: 20px;
         border: 0;
         border-radius: 5px;
-        background-color: #2ecc71;
+        background-color: #ff9800;
         color: white;
       }
   }
@@ -255,12 +256,12 @@ export default {
   margin-bottom: 20px;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .checkout-button {
   margin-top: 20px;
-  background-color: #2ecc71;
+  background-color: #ff9800;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -270,7 +271,7 @@ export default {
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #27ae60;
+    background-color: #4d4d4d;
   }
 }
 </style>
