@@ -81,7 +81,7 @@ export default {
       .catch(error => {
         console.error('Error fetching user info:', error);
       });
-   
+
   },
   components: {
     RouterLink
@@ -91,104 +91,103 @@ export default {
 </script>
 
 <template>
-<div class="bgArea">
-  <div class="askUserPage">
+  <div class="bgArea">
+    <div class="titleUserPage">
 
-<!-- <img src="../views/askAllPage/askHome.vue" alt=""> -->
+      <!-- <img src="../views/askAllPage/askHome.vue" alt=""> -->
 
-<div class="headerfirst">
+      <div class="headerfirst">
 
-<div class="POP">
-  <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
-  <RouterLink class="btn" to="/">注意事項</RouterLink>
-  <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
+        <div class="POP">
+          <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
+          <RouterLink class="btn" to="/">注意事項</RouterLink>
+          <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
 
-
-        <div class="righthead">   
-          <div class="profile-image" >
+        </div>
+          <div class="righthead">
+            <div class="profile-image">
               <!-- 显示预览图像 -->
-              <img :src="previewImage" alt="User Photo" v-if="previewImage"/>
+              <img :src="previewImage" alt="User Photo" v-if="previewImage" />
             </div>
-          <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
-  </div>
 
-<div>
 
-  <div>      
-    <span v-if="user" >賴皮點數 : {{ user.points }}</span> &nbsp;
+            <div>
 
-    <span v-if="user" >使用者帳號: {{ user.email }}</span>
+            
+                <span v-if="user">賴皮點數 : {{ user.points }}</span> &nbsp;
 
-    <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
+                <span v-if="user">使用者帳號: {{ user.email }}</span>
 
-    <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
-      <i class="fa-solid fa-user usericon"></i> 會員資料
-    </RouterLink>
+                <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
 
-    <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
-      <i class="fa-solid fa-user usericon"></i> 
-      <p>會員登入</p>
-    </RouterLink>
-  </div>
+                <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
+                  <i class="fa-solid fa-user usericon"></i> 會員資料
+                </RouterLink>
 
-</div>
-</div>
+                <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
+                  <i class="fa-solid fa-user usericon"></i>
+                  <p>會員登入</p>
+                </RouterLink>
+             
+            </div>
+          </div>
+        
+      </div>
 
-<div class="askHeader">
+      <div class="titleHeader">
 
-<RouterLink class="logo" to="/">
-  <h1> <i class="fa-solid fa-shrimp" style="color:#ffffff;"><b> 呱皮皮蝦</b> </i></h1>
-</RouterLink>
+        <RouterLink class="logo" to="/">
+          <h1> <i class="fa-solid fa-shrimp" style="color:#ffffff;"><b> 呱皮皮蝦</b> </i></h1>
+        </RouterLink>
 
-<div class="headerRight">
+        <div class="headerRight">
 
-  <div class="forSeller btn big">
-      <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
-        <i class="fa-solid fa-store"></i> 
-        <p>賣家中心</p>
-      </RouterLink>
+          <div class="forSeller btn big">
+            <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
+              <i class="fa-solid fa-store"></i>
+              <p>賣家中心</p>
+            </RouterLink>
+          </div>
+
+          <div class="buyList">
+            <RouterLink class="big btn" to="/UserPage/buyingList" v-if="isLoggedIn">
+              <i class="fa-solid fa-box"></i>
+              <p>購買紀錄</p>
+            </RouterLink>
+          </div>
+
+          <RouterLink class="cart btn big" to="/UserPage/shoppingCart" v-if="isLoggedIn">
+            <i class="fa-solid fa-cart-shopping usericon"></i>
+            <p>購物車</p>
+            <span class="notification-badge">{{ cartTotalQuantity }}</span>
+          </RouterLink>
+
+        </div>
+      </div>
+
+
+      <button @click="scrollToTop" class="scroll-to-top-btn">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+
     </div>
-
-  <div class="buyList">
-    <RouterLink class="big btn" to="/UserPage/buyingList"  v-if="isLoggedIn"> 
-      <i class="fa-solid fa-box"></i>
-      <p>購買紀錄</p> 
-    </RouterLink>
-    </div>
-
-  <RouterLink class="cart btn big" to="/UserPage/shoppingCart"  v-if="isLoggedIn">
-    <i class="fa-solid fa-cart-shopping usericon"></i>
-    <p>購物車</p>
-    <span class="notification-badge">{{ cartTotalQuantity }}</span>
-  </RouterLink>
-
-</div>
   </div>
-    </div>
-
-  <button @click="scrollToTop" class="scroll-to-top-btn">
-  <i class="fas fa-arrow-up"></i>
-  </button>
-
-</div>
-</div>
 </template>
 
 <style lang="scss" scoped>
-
-
-
-.righthead{
+.righthead {
   display: flex;
-  justify-content: center;
   align-items: center;
-.profile-image img {
-  height: 50px;
-  width: 50px;
-  border: 0px solid rgb(255, 0, 0);
 
-  border-radius: 50%;
-}}
+  .profile-image img {
+    height: 50px;
+    width: 50px;
+    border: 0px solid rgb(255, 0, 0);
+
+    border-radius: 50%;
+  }
+}
+
 .scroll-to-top-btn {
   position: fixed;
   bottom: 20px;
@@ -216,7 +215,8 @@ export default {
   }
 }
 
-.notification-badge { //購物車內數量
+.notification-badge {
+  //購物車內數量
   height: 40px;
   width: 40px;
   background-color: rgb(253, 60, 60);
@@ -239,21 +239,26 @@ export default {
   }
 
 }
-.askUserPage {
+
+.titleUserPage {
   background-color: #ff9800;
   display: flex;
   flex-direction: column;
-  border: 0px solid rgb(255, 0, 0);
+  border: px solid rgb(255, 0, 0);
   color: #ffffff;
   height: 20vh;
 
   .headerfirst {
     display: flex;
     justify-content: space-between;
+    border: 0px solid rgb(255, 0, 0);
+
   }
 
-  .askHeader {
+  .titleHeader {
     display: flex;
+    border: 0px solid rgb(255, 0, 0);
+
     justify-content: space-between;
     align-items: center;
     font-size: 16pt;
@@ -261,7 +266,7 @@ export default {
     position: relative;
     height: 100px;
 
-    .headerRight{
+    .headerRight {
       display: flex;
     }
 
@@ -282,6 +287,7 @@ export default {
     white-space: nowrap;
     animation: scrollFromRight 10s linear infinite;
     font-size: 11pt;
+
     p {
       margin: 0;
     }
@@ -298,28 +304,32 @@ export default {
   }
 }
 
-.navbar{
+.navbar {
   background-color: rgb(255, 255, 255);
   box-shadow: inset 0px 0px 5px #e0e0e0;
-  .nav-link{
+
+  .nav-link {
     font-size: 14pt;
     color: #ff9800;
     font-weight: 1000;
+
     &:hover {
-      color:#4e4e4e;
-  }
+      color: #4e4e4e;
+    }
   }
 }
 
-.big{
-    height: 70px;
-    color: white;
-    text-decoration: none;
-    i{
-      font-size: 30pt;
-    }
-    &:hover {
-      color:#4e4e4e;
+.big {
+  height: 70px;
+  color: white;
+  text-decoration: none;
+
+  i {
+    font-size: 30pt;
   }
+
+  &:hover {
+    color: #4e4e4e;
   }
+}
 </style>

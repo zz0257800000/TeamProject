@@ -293,7 +293,7 @@ export default {
 
   .productManagement {
     background-color: #fcf7de; 
-    height: 162vh;
+    height: 161vh;
 
     .productCreate {
       display: flex;

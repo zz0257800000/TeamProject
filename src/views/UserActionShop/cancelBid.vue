@@ -309,7 +309,7 @@ export default {
   .productManagement {
     background-color: #f8bbd0;
     /* Lighter pink background color */
-    height: 162vh;
+    height: 161.2vh;
 
     .productCreate {
       display: flex;

@@ -274,6 +274,7 @@ export default {
   align-items: center;
   justify-content: center;
   margin-top: 20px;
+  height: 15vh;
 }
 
 .pagination-button {

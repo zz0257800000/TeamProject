@@ -161,6 +161,8 @@ export default {
             <br>
             <label for="userPhoto"></label>
             <input type="file" @change="handleFileChange" id="userPhoto" />
+
+            
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
               信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
