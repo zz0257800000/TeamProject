@@ -72,6 +72,7 @@ export default {
     background-image: url("./../../public/9.jpg");
     z-index: -2;
     color: rgb(197, 197, 197);
+    font-size: 10pt;
     .footerHead {
         height: 10vh;
         border: 0px solid black;
@@ -136,7 +137,6 @@ export default {
         }
 
         .rightwords {
-            color: rgb(221, 221, 221);
             border: 0px solid rgb(255, 255, 255);
             display: flex;
             align-items: center;
@@ -144,7 +144,6 @@ export default {
             width: 28vw;
             position: relative;
             left: 27%;
-            font-size: 10pt;
         }
 
     }

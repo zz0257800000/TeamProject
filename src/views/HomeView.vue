@@ -149,7 +149,7 @@ export default {
 
   button {
     padding: 10px 20px;
-    background-color: #3498db;
+    background-color: #3498db;  
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -202,7 +202,7 @@ export default {
   justify-content: center;
 
   .carousel {
-    width: 77vw;
+    width: 75vw;
     margin-bottom: 20px;
     img{
       border-radius: 10px;
@@ -210,15 +210,16 @@ export default {
   }
 
   .productAll {
-    border: 1px solid #ddd;
-    width: 76vw;
+    // border: 1px solid #ddd;
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    // background-color: #ffffff;
+    // border-radius: 10px;
+    width: 75vw;
     height: 100%;
-    padding: 10px 30px;
     display: flex;
     flex-wrap: wrap;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #2c3e50;
-    border-radius: 10px;
+    padding: 10px 0;
+    justify-content: space-between;
     overflow: hidden;
   }
 
@@ -227,6 +228,7 @@ export default {
   height: 54vh;
   margin: 10px;
   border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;
 
   &:hover {
@@ -236,7 +238,7 @@ export default {
     width: 100%;
     height: 250px;
     object-fit: cover;
-    border-radius: 8px;
+    // border-radius: 8px;
   }
 
 .card {
