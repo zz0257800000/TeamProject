@@ -138,20 +138,25 @@ export default {
       this.isEditModalOpen = false;
     },
     handleImageChange(event) {
-      const selectedFile = event.target.files[0];
+  const selectedFile = event.target.files[0];
 
-      if (selectedFile) {
-        // 使用选择的文件更新 'photo' 属性
-        this.photo = selectedFile;
+  if (selectedFile) {
+    // 使用选择的文件更新 'photo' 属性
+    this.photo = selectedFile;
 
-        // 如果您想预览图像，可以使用FileReader
-        const reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onload = () => {
-          this.editedProduct.photo = reader.result;
-        };
-      }
-    },
+    // 如果您想预览图像，可以使用FileReader
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onload = () => {
+      // 切掉前缀 'data:image/jpeg;base64,'
+      const imageDataWithoutPrefix = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
+
+      // 存储没有前缀的图像数据
+      this.editedProduct.photo = imageDataWithoutPrefix;
+    };
+  }
+},
+
 
     editProduct(index) {
       // 获取要编辑的产品数据
@@ -349,7 +354,7 @@ export default {
         <!-- 编辑表单 -->
         <div class="close-button" @click="closeEditModal">X</div>
         <div class="editPhoto">
-          <img v-if="editedProduct.photo" :src="editedProduct.photo" alt="商品圖片" class="modal-image" />
+          <img v-if="editedProduct.photo" :src="'data:image/jpeg;base64,' + editedProduct.photo" alt="商品圖片" class="modal-image" />
         </div>
         <div class="edit-form">
           <form @submit.prevent="submitForm">
