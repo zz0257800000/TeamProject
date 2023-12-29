@@ -83,8 +83,8 @@ export default {
             const phoneRegex = /^09\d{8}$/;
         const isValidPhone = phoneRegex.test(this.phone_number);
         if (!isValidPhone) {
-            alert("請輸入有效的電話號碼!!");
-            return;
+          alert("請輸入有效的電話號碼!!");
+          return;
         }
             // 获取当前时间并格式化
             const currentDate = new Date();
@@ -148,58 +148,43 @@ export default {
     },
 };
 </script>
-
 <template>
     <div class="mainshow">
+
+
         <div class="countAll">
             <div class="leftInfo">
-                <div class="productsInfo area">
+                <div class="productsInfo">
                     <h3>XXX小舖</h3>
-                    <div class="line"></div>
-                    <!-- <div class="item_header">
-                        <div class="item-image header" >商品照片</div>
-                        <div class="item-name header">商品</div>  
-                        <div class="item-type header">產品分類</div> 
-                        <div class="item-price header">單價</div>
-                        <div class="item-quantity header">數量</div>
-                        <div class="item-total header">總計</div>
-                    </div> -->
+
                     <div class="produtsrow" v-if="product">
-                        <div class="item-image">
-                            <img :src="'data:image/jpeg;base64,' + product.photo" alt="Product Image" class="item-image">
+                        <img :src="'data:image/jpeg;base64,' +  product.photo" alt="Product Image" class="product-image">
+                        <div class="product-details">
+                            <h4>{{ product.product_name }}</h4>
+                            <p>{{ product.product_type }}</p>
+                            <p>${{ product.price }}</p>
                         </div>
-                        <div class="item-name product-details">
-                            <p>{{ product.product_name }}</p>
-                        </div>
-                        <p class="item-type">{{ product.product_type }}</p>
-                        <p class="item-price">${{ product.price }}</p>
-                        <div class="item-quantity">
+                        <div class="quantity">
                             <p>數量：</p>
                             <button @click="decrementQuantity">-</button>
                             <input v-model="quantity" type="number" min="1" />
                             <button @click="incrementQuantity">+</button>
                         </div>
-                        <div class="item-total">
-                            <p class="total-value">${{ product.price * quantity }}</p>
-                        </div>
                     </div>
                 </div>
-                <div class="RecipientInformation area">
-                    <div class="info inp">
-                        收件人：<input type="input" v-model="recipientName">
-                        <label>
+                <div class="RecipientInformation">
+                    <label>
+                        收件人:<input type="input" v-model="recipientName">
+                    </label>
+                    <label>
                         電話:<input type="input" v-model="recipientPhone" maxlength="10">
                     </label>
-                    </div>
-                    <div class="address inp">
-  地址：
-  <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange"></div>
-  <input type="input" v-model="recipientAddress">
-</div>
-
+                    <label>
+                        地址:<input type="input" v-model="recipientAddress">
+                    </label>
                 </div>
-                <div class="ShippingInfo area">
-                    <h3>運送方式</h3>
+                <div class="ShippingInfo">
+                    <h3>運費方式</h3>
                     <label>
                         <input type="radio" v-model="selectedShipping" value="7-11取貨"> 7-11取貨$60
                     </label>
@@ -218,7 +203,7 @@ export default {
 
                 </div>
 
-                <div class="payment area" v-if="selectedShipping !== '貨到付款'">
+                <div class="payment" v-if="selectedShipping !== '貨到付款'">
                     <h3>付款方式</h3>
 
                     <label>
@@ -233,49 +218,59 @@ export default {
                         <input type="radio" v-model="paymentMethod" value="信用卡(一次付清)">信用卡(一次付清)
                     </label>
                 </div>
-                <div class="remarksColumnInfo area">
-                    <div class="remarks inp">
-                        備註：<input type="input" v-model="remarksColumn">
-                    </div>
+                <div class="remarksColumnInfo">
+                    <label>
+                        備註:<input type="input" v-model="remarksColumn">
+                    </label>
                 </div>
             </div>
 
-            <div class="rightCount area">
-                <p>商品總金額: $ {{ getTotalAmount }}</p>
-                <p>運費: $ {{ getShippingFee }}</p>
-                <div class="orderTotal">
-                    <h4>訂單總金額：</h4>
-                    <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
-                </div>
-                <button class="Checkout" @click="submitOrder">結帳</button>
-
+            <div class="rightCount">
+                <h3>商品總金額: ${{ getTotalAmount }}</h3>
+                <h4>運費: ${{ getShippingFee }}</h4>
+                <h2>訂單金額: ${{ getOrderAmount }}</h2>
+                <router-link :to="''" class="Checkout" @click="submitOrder">結帳</router-link>
             </div>
 
 
         </div>
     </div>
 </template>
-
+  
+ 
+  
 <style lang="scss" scoped>
-.line{
-    height: 1px;
-    background-color: #f99b58;
+.quantity {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+
+    input {
+        width: 60px;
+        text-align: center;
+    }
+
+    p {
+        margin-right: 10px;
+    }
+
+    button {
+        border: 0;
+    }
 }
-.area{
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: white;
-    padding: 15px;
-}
+
 .mainshow {
     height: 150vh;
+    background-color: #557475;
+    /* Slightly muted background color */
     display: flex;
+    justify-content: center;
     align-items: center;
 
     .countAll {
         height: 140vh;
-        width: 70vw;
-        // border: 1px solid #ccc;
+        width: 90vw;
+        border: 1px solid #ccc;
         /* Softer border color */
         display: flex;
         justify-content: space-around;
@@ -285,29 +280,34 @@ export default {
         .leftInfo {
             height: 90vh;
             width: 60vw;
+            border-right: 1px solid #ccc;
             justify-content: space-between;
             align-items: center;
 
             .productsInfo {
                 height: 45vh;
                 border-bottom: 1px solid #ccc;
-                background-color: #ffffff;
+                background-color: #f0f0f0;
                 /* Lighter background color */
-                border-radius: 5px;
                 overflow: hidden;
                 margin-bottom: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
                 .produtsrow {
-                    padding: 5px;
                     display: flex;
                     align-items: center;
                     height: 15vh;
-                    background-color: #ffffff;
+                    background-color: #d0d0d0;
                     /* Muted product row color */
                     margin: 10px;
-                    align-items: center; 
 
+                    .product-image {
+                        max-width: 90%;
+                        max-height: 90%;
+                        object-fit: contain;
+                        margin-right: 10px;
+                        margin: 5px;
+                        border-radius: 5px;
+                    }
 
                     .product-details {
                         h4 {
@@ -315,109 +315,66 @@ export default {
                             font-size: 1.5rem;
                             margin: 10px;
                         }
+
+                        p {
+                            margin: 5px 0;
+                        }
                     }
                 }
             }
 
-            .RecipientInformation { //收件資料
-                display: flex;
-                flex-direction: column;
+            .RecipientInformation {
                 height: 24vh;
+                background-color: #f0f0f0;
                 overflow: hidden;
                 margin-bottom: 10px;
             }
 
             .ShippingInfo {
                 height: 24vh;
-                background-color: #ffffff;
+                background-color: #f0f0f0;
                 overflow: hidden;
                 margin-bottom: 10px;
             }
 
             .payment {
                 height: 15vh;
+                background-color: #f0f0f0;
                 overflow: hidden;
             }
 
             .remarksColumnInfo {
                 height: 8vh;
+                background-color: #f0f0f0;
                 overflow: hidden;
             }
         }
 
-    .rightCount {
-        position: fixed;  // 將位置固定
-        top: 40vh;         // 設置固定位置的上邊距
-        right: 5vw;       // 設置固定位置的右邊距
-        padding: 20px;
-        transform: translateY(-50%);  // 使用 translateY 將位置調整到中心
-        height: 30vh;
-        width: 25vw;
-        z-index: 10;
+        .rightCount {
+            height: 50vh;
+            width: 25vw;
+            background-color: #e0e0e0;
+            border-left: 1px solid #ccc;
+            border-radius: 0 10px 10px 0;
 
-    .Checkout {
-        margin-top: 20px;
-        display: block;
-        text-align: center;
-        padding: 10px;
-        background-color: #ff822a;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        border: 0;
-    }
-}
-    }
-// .item_header{
-//     margin: 10px;
-//     padding: 5px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-around;
-//     margin-bottom: 20px;
-//     border-radius: 5px;
-//     }
-.item-image {
-    display: flex;
-    justify-content: center;
-    width: 8vw;
-    img {
-        width: 7vw;
-        height: 80px;
-        border-radius: 5px;
-    }
-    }
-.item-name {
-    margin-left: 15px;
-    width: 30vw;
-    }
-.item-type{
-    width: 8vw;
-}
-.item-price{
-    width: 8vw;
-}
-.item-quantity{
-    width: 5vw;
-}
-.item-total{
-    width: 8vw;
-}
-.orderTotal{
-    display: flex;
-    .orderAmount{
-        color: #ff822a;
-        font-weight: 1000;
-    }
-}
+            h3,
+            h4,
+            h2 {
+                color: #333;
+                margin: 10px;
+            }
 
-.address{
-    display: flex;
-
+            .Checkout {
+                display: block;
+                text-align: center;
+                padding: 10px;
+                background-color: #4caf50;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+        }
+    }
 }
-.inp{
-    margin-bottom: 20px;
-}
-
-}//
 </style>
+
