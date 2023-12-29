@@ -229,7 +229,7 @@ export default {
 
     .countAll {
         height: 140vh;
-        width: 90vw;
+        width: 70vw;
         // border: 1px solid #ccc;
         /* Softer border color */
         display: flex;
@@ -240,11 +240,11 @@ export default {
         .leftInfo {
             height: 90vh;
             width: 60vw;
-            margin-left: -10vw;
             justify-content: space-between;
             align-items: center;
 
             .productsInfo {
+                padding: 10px;
                 height: 45vh;
                 border-bottom: 1px solid #ccc;
                 background-color: #ffffff;
@@ -299,22 +299,28 @@ export default {
             }
         }
 
-        .rightCount {
-            position: absolute;
-            
-            height: 50vh;
-            width: 25vw;
-            .Checkout {
-                display: block;
-                text-align: center;
-                padding: 10px;
-                background-color: #ff822a;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                border: 0;
-            }
-        }
+    .rightCount {
+        position: fixed;  // 將位置固定
+        top: 40vh;         // 設置固定位置的上邊距
+        right: 5vw;       // 設置固定位置的右邊距
+        padding: 20px;
+        transform: translateY(-50%);  // 使用 translateY 將位置調整到中心
+        height: 30vh;
+        width: 25vw;
+        z-index: 10;
+
+    .Checkout {
+        margin-top: 20px;
+        display: block;
+        text-align: center;
+        padding: 10px;
+        background-color: #ff822a;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 0;
+    }
+}
     }
 .item_header{
     margin: 10px;
