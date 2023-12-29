@@ -79,6 +79,13 @@ export default {
                 return;
 
             }
+
+            const phoneRegex = /^09\d{8}$/;
+        const isValidPhone = phoneRegex.test(this.phone_number);
+        if (!isValidPhone) {
+          alert("請輸入有效的電話號碼!!");
+          return;
+        }
             // 获取当前时间并格式化
             const currentDate = new Date();
             const year = currentDate.getFullYear();
@@ -170,7 +177,7 @@ export default {
                         收件人:<input type="input" v-model="recipientName">
                     </label>
                     <label>
-                        電話:<input type="input" v-model="recipientPhone">
+                        電話:<input type="input" v-model="recipientPhone" maxlength="10">
                     </label>
                     <label>
                         地址:<input type="input" v-model="recipientAddress">

@@ -73,10 +73,11 @@ export default {
         .then(response => {
           console.log('User info updated successfully:', response.data);
           this.user.points = response.data.newPoints;
-
+          const responseData = response.data;
+          console.log(responseData.rtnCode);
           // 检查后端返回的数据，如果密码验证失败，显示相应的提示
-          if (response.data && response.data.rtnCode === 'PASSWORD_ERROR') {
-            alert('密碼錯誤請重新登入');
+          if (responseData.rtnCode === "PARAM_ERROR") {
+            alert("密碼錯誤，請確認密碼是否正確後重新輸入資料。");
           } else {
             // 如果密码验证成功，执行其他操作
 
@@ -89,12 +90,7 @@ export default {
 
 
           console.error('Error updating user info:', error);
-          if (error.response && error.response.status === 401) {
-            // 401 Unauthorized status typically indicates a password error
-            alert('密碼錯誤請重新登入');
-          } else {
-            alert('密碼錯誤請重新登入');
-          }
+         
         });
     },
     handleFileChange(event) {

@@ -332,7 +332,7 @@ addDislike(commentId) {
         <div v-for="(product, index) in products.slice(0, 8)" :key="index" class="related-product-item">
           <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn"
             @click="navigateToProductPage(product.productId)">
-            <img :src="product.photo" alt="商品圖片" class="related-product-image">
+            <img :src="'data:image/jpeg;base64,' +  product.photo" alt="商品圖片" class="related-product-image">
             <p class="related-product-name">{{ product.product_name }}</p>
             <p class="related-product-price">${{ product.price }}</p>
           </router-link>
@@ -358,7 +358,7 @@ addDislike(commentId) {
   display: flex;
   width: 100vw;
   height: 250vh;
-  background-color: rgb(148, 148, 148);
+  background-color: rgb(241, 241, 241);
   justify-content: center;
   align-items: center;
 }
