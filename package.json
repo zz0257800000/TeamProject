@@ -17,6 +17,7 @@
     "sass": "^1.69.5",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.10.1",
+    "twzipcode.js": "^3.0.1",
     "vue": "^3.3.4",
     "vue-awesome-swiper": "^5.0.1",
     "vue-router": "^4.2.4",
