@@ -12,11 +12,14 @@ export default {
             recipientName: '',
             recipientPhone: '',
             recipientAddress: '',
+            recipientAddress1:'',
             userId: sessionStorage.getItem('user_Id'),
             cartList:[],
+            twzipcode: null, // 添加 twzipcode 屬性
         };
     },
     mounted() {
+        // 初始化 TWzipcode
         const twzipcode = new TWzipcode();
         this.fetchProductDetails();
     },
@@ -107,6 +110,14 @@ export default {
                 });
                 this.$router.push('/UserPage/buyingList');
         },
+
+handleZipcodeChange(data) {
+    // 使用所選地址更新 recipientAddress
+    this.recipientAddress = `${data.zipcode} ${data.county} ${data.district} ${data.addr}`;
+    console.log(this.recipientAddress);
+},
+
+
     },
 };
 </script>
@@ -145,17 +156,16 @@ export default {
                     </div>
                 </div>
                 <div class="RecipientInformation area">
-                    <label>
-                        收件人:<input type="input" v-model="recipientName">
-                    </label>
-                    <label>
-                        電話:<input type="input" v-model="recipientPhone">
-                    </label>
-                    <label>
-                        地址:
-                        <div class="twzipcode"></div>
-                        <input type="input" v-model="recipientAddress">
-                    </label>
+                    <div class="info inp">
+                        收件人：<input type="input" v-model="recipientName">
+                        電話：<input type="input" v-model="recipientPhone">
+                    </div>
+                    <div class="address inp">
+  地址：
+  <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange"></div>
+  <input type="input" v-model="recipientAddress">
+</div>
+
                 </div>
                 <div class="ShippingInfo area">
                     <h3>運送方式</h3>
@@ -192,17 +202,20 @@ export default {
                         <input type="radio" v-model="paymentMethod" value="信用卡(一次付清)">信用卡(一次付清)
                     </label>
                 </div>
-                <div class="remarksColumnInfo">
-                    <label>
-                        備註:<input type="input" v-model="remarksColumn">
-                    </label>
+                <div class="remarksColumnInfo area">
+                    <div class="remarks inp">
+                        備註：<input type="input" v-model="remarksColumn">
+                    </div>
                 </div>
             </div>
 
             <div class="rightCount area">
                 <p>商品總金額: $ {{ getTotalAmount }}</p>
                 <p>運費: $ {{ getShippingFee }}</p>
-                <h4>訂單總金額: $ {{ getOrderAmount }}</h4>
+                <div class="orderTotal">
+                    <h4>訂單總金額：</h4>
+                    <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
+                </div>
                 <button class="Checkout" @click="submitOrder">結帳</button>
 
             </div>
@@ -221,6 +234,7 @@ export default {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: white;
+    padding: 15px;
 }
 .mainshow {
     height: 150vh;
@@ -244,7 +258,6 @@ export default {
             align-items: center;
 
             .productsInfo {
-                padding: 10px;
                 height: 45vh;
                 border-bottom: 1px solid #ccc;
                 background-color: #ffffff;
@@ -276,6 +289,8 @@ export default {
             }
 
             .RecipientInformation { //收件資料
+                display: flex;
+                flex-direction: column;
                 height: 24vh;
                 overflow: hidden;
                 margin-bottom: 10px;
@@ -322,15 +337,15 @@ export default {
     }
 }
     }
-.item_header{
-    margin: 10px;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    }
+// .item_header{
+//     margin: 10px;
+//     padding: 5px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-around;
+//     margin-bottom: 20px;
+//     border-radius: 5px;
+//     }
 .item-image {
     display: flex;
     justify-content: center;
@@ -357,6 +372,21 @@ export default {
 .item-total{
     width: 8vw;
 }
-    
+.orderTotal{
+    display: flex;
+    .orderAmount{
+        color: #ff822a;
+        font-weight: 1000;
+    }
 }
+
+.address{
+    display: flex;
+
+}
+.inp{
+    margin-bottom: 20px;
+}
+
+}//
 </style>
