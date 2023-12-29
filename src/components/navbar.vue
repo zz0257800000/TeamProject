@@ -109,9 +109,15 @@ export default {
       <div class="headerfirst">
 
         <div class="POP">
+<<<<<<< HEAD
           <RouterLink class="btn" to="/UserPage/complainService">客服信箱</RouterLink>
           <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
     <RouterLink v-if="user && user.id === 999" class="btn" to="/UserPage/WatchAllFeedback">觀看回饋</RouterLink>
+=======
+          <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
+          <RouterLink class="btn" to="/">注意事項</RouterLink>
+          <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
+>>>>>>> 03d972645d3ecf392cdd94fde14d87a6c6990d3b
         </div>
 
           <div class="righthead">

@@ -55,8 +55,16 @@ export default {
       reader.readAsDataURL(file);
     },
     cancelImageUpload() {
+<<<<<<< HEAD
       // 取消上传逻辑，清空 imageUrl
       this.imageUrl = '';
+=======
+      // 检查是否有已选择的图片
+      if (this.productImagePreview || this.photo) {
+        this.productImagePreview = null;
+        this.photo = null;
+      }
+>>>>>>> 03d972645d3ecf392cdd94fde14d87a6c6990d3b
     },
     submitForm() {
       if (!this.productName || !this.productDescription || !this.productPrice) {
@@ -151,6 +159,7 @@ export default {
         <h1>新增商品</h1>
         <form @submit.prevent="submitForm">
           <div class="form-group">
+<<<<<<< HEAD
             <label for="imageUrl">商品圖片:</label>
             <input type="file" id="imageUrl" accept="image/*" @change="handleImageChange" />
 
@@ -163,6 +172,19 @@ export default {
               <button type="button" class="button" @click="cancelImageUpload">取消上傳圖片</button>
             </div>
           </div>
+=======
+    <label for="imageUrl">商品圖片:</label>
+    <input type="file" id="imageUrl" accept="image/*" @change="handleImageChange" />
+    
+    <!-- 在src属性中加上前缀 -->
+    <img v-if="imageUrl" :src="getImageUrlWithPrefix" alt="商品圖片預覽" class="preview-image" @click="openImageModal" />
+
+    <!-- 取消上传按钮，只有在imageUrl存在时才显示 -->
+    <div class="form-group" v-if="imageUrl">
+      <button type="button" class="button" @click="cancelImageUpload">取消上傳圖片</button>
+    </div>
+  </div>
+>>>>>>> 03d972645d3ecf392cdd94fde14d87a6c6990d3b
           <div class="form-group">
             <label for="productName">商品名稱:</label>
             <input type="text" id="productName" v-model="productName" required />
