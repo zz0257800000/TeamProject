@@ -7,7 +7,11 @@ import axios from 'axios';
 import Swal from "sweetalert2";
 
 export default {
+  props: {
+
+  },
   data() {
+    
     return {
       searchKeyword: '',
       cartTotalQuantity: "",
@@ -18,17 +22,19 @@ export default {
   },
 
   methods: {
-
+ 
     ...mapActions('search', ['searchProduct']),
     handleSearch() {
       // 调用搜索方法
       this.searchProduct(this.searchKeyword);
-    }, scrollToTop() {
+    }, 
+    scrollToTop() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth', // 平滑滾動效果
       });
     },
+    
     logoutUser() {
       axios.post("http://localhost:8080/user/logout")
         .then(response => {
@@ -38,7 +44,7 @@ export default {
           sessionStorage.removeItem('name');
           sessionStorage.removeItem('points');
           sessionStorage.removeItem('user_photo');
-
+          sessionStorage.removeItem('level');
           sessionStorage.removeItem('seller_name');
           sessionStorage.removeItem('remittance_title');
           sessionStorage.removeItem('remittance_number');
@@ -62,6 +68,7 @@ export default {
     hasSomeData() {
       return sessionStorage.getItem('someData');
     },
+    
   },
   mounted() {
     // 使用 sessionStorage 中的 user_Id
@@ -83,6 +90,9 @@ export default {
       });
 
   },
+ 
+
+ 
   components: {
     RouterLink
 
@@ -107,14 +117,14 @@ export default {
           <div class="righthead">
             <div class="profile-image">
               <!-- 显示预览图像 -->
-              <img :src="previewImage" alt="User Photo" v-if="previewImage" />
+              <img :src="previewImage" alt="圖片未上傳" v-if="previewImage" />
             </div>
 
 
             <div>
 
             
-                <span v-if="user">賴皮點數 : {{ user.points }}</span> &nbsp;
+                <span v-if="user">餘額點數 : {{ user.points }}</span> &nbsp;
 
                 <span v-if="user">使用者帳號: {{ user.email }}</span>
 
@@ -144,7 +154,9 @@ export default {
 
           <div class="forSeller btn big">
             <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
-              <i class="fa-solid fa-store"></i>
+              <i class="fa-solid fa-store"></i>           <div>{{ orderQuantity  }}</div>
+
+
               <p>賣家中心</p>
             </RouterLink>
           </div>

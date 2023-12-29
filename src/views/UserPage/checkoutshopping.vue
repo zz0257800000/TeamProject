@@ -80,12 +80,12 @@ export default {
 
             }
 
-            const phoneRegex = /^09\d{8}$/;
-        const isValidPhone = phoneRegex.test(this.phone_number);
-        if (!isValidPhone) {
-          alert("請輸入有效的電話號碼!!");
-          return;
-        }
+        //     const phoneRegex = /^09\d{8}$/;
+        // const isValidPhone = phoneRegex.test(this.phone_number);
+        // if (!isValidPhone) {
+        //   alert("請輸入有效的電話號碼!!");
+        //   return;
+        // }
             // 获取当前时间并格式化
             const currentDate = new Date();
             const year = currentDate.getFullYear();

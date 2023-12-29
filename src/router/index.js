@@ -43,6 +43,7 @@ const router = createRouter({
       path: "/UserActionShop/bidOrder/",
       name: "bidOrder",
       component: () => import("../views/UserActionShop/bidOrder.vue"),
+      
     },
     {
       path: "/UserActionShop/cancelBid/",

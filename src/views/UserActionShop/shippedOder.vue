@@ -180,7 +180,7 @@ export default {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> </RouterLink>
+                <RouterLink class="btn" to=""> </RouterLink>
 
               </div>
 
@@ -379,7 +379,7 @@ export default {
 
         .orderDetailsThird {
           border: 1px solid #8e8e8e;
-          width: 81.3vw;
+          width: 75vw;
           margin: 10px;
           height: 20vh;
           display: flex;
@@ -389,7 +389,7 @@ export default {
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {

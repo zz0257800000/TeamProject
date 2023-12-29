@@ -1,8 +1,12 @@
+<!-- //recordList -->
+
 <script>
 import axios from 'axios'; // 記得這行要加上
 import Swal from "sweetalert2";
 
 export default {
+  props: {
+  },
   data() {
     return {
       currentPage: 1,
@@ -38,9 +42,7 @@ export default {
     fetchData() {
       this.fetchRecord();
     },
-    // 修改 fetchProductDetails 方法
-
-
+    
     fetchRecord() {
       const userId = this.userId;
       const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
@@ -49,7 +51,7 @@ export default {
         .then(response => {
           console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '準備中');
-          // this.fetchRecord();
+          console.log('Record List Length:', this.recordList.length); // 添加这行打印语句
 
         })
 
@@ -171,6 +173,7 @@ export default {
 };
 </script>
 <template>
+
   <div class="actionPage">
     <div class="actionPageLeft">
       <div class="lefttHeader">
@@ -266,6 +269,7 @@ export default {
                 <h5>地址 : {{ record.consumer_address }}</h5>
                 <h6 style="color: red;">備註 : {{ record.remarks_column }}</h6>
               </div>
+              
               <div v-if="record.shipping_method !== '貨到付款'" class="orderInfo1">
                 <h6>付款方式 : {{ record.payment_method }}</h6>
                 <h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">銀行 : {{
@@ -515,7 +519,7 @@ export default {
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {
@@ -526,7 +530,6 @@ export default {
             }
 
           }
-
 
           .orderInfo2 {
             border: 0px solid rgb(255, 0, 0);

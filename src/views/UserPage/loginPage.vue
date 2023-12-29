@@ -63,6 +63,8 @@ export default {
               sessionStorage.setItem("seller_name", responseData.user.seller_name);
               sessionStorage.setItem("remittance_title", responseData.user.remittance_title);
               sessionStorage.setItem("remittance_number", responseData.user.remittance_number);
+              sessionStorage.setItem("level", responseData.user.level);
+
               sessionStorage.setItem("phone_number", responseData.user.phone_number);
 
               this.showAlert("登入成功");

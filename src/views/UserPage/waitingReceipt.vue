@@ -463,7 +463,7 @@ showAlert2(message) {
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {

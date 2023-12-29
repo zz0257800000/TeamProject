@@ -649,7 +649,7 @@ padding: 10px 20px;
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {
