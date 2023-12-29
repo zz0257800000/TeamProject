@@ -77,8 +77,24 @@ export default {
             const seconds = currentDate.getSeconds().toString().padStart(2, '0');
 
             const orderData = {
-                user_id: this.userId,
+                user_id: this.product.user_id,
+                product_id: this.product.productId,  // 使用 this.product.product_id
+                product_name: this.product.product_name,
+                product_count: this.quantity,
+                consumer_name: this.recipientName,
                 recipientAddress: this.recipientAddress, // 添加地址信息
+                consumer_phone: this.recipientPhone,
+                shipping_method: this.selectedShipping,
+                shipping_cost: this.getShippingFee,
+                payment_method: this.paymentMethod,
+                remittance_title: "中國信託",
+                remittance_number: "812-00000087888",
+                remarks_column: this.remarksColumn,
+                product_amount: this.getOrderAmount,
+                record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+                status: "準備中",
+                record_type: "購買",
+                valid: true
 
             };
 
