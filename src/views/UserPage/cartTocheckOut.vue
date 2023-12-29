@@ -12,16 +12,11 @@ export default {
             recipientName: '',
             recipientPhone: '',
             recipientAddress: '',
-            recipientAddress1:'',
+            address2:'',
             userId: sessionStorage.getItem('user_Id'),
             cartList:[],
             twzipcode: null, // 添加 twzipcode 屬性
         };
-    },
-    mounted() {
-        // 初始化 TWzipcode
-        const twzipcode = new TWzipcode();
-        this.fetchProductDetails();
     },
     computed: {
         getShippingFee() {
@@ -66,9 +61,11 @@ export default {
         
         //欄位防呆
         submitOrder() {
+            this.recipientAddress = this.address1 + this.address2;
             // 檢查是否所有必填項目都已經填寫
             if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
                 alert('請填寫所有必填項目');
+                console.log(this.recipientAddress)
                 return;
             }
             const currentDate = new Date();
@@ -81,7 +78,8 @@ export default {
 
             const orderData = {
                 user_id: this.userId,
-                // 其他屬性...
+                recipientAddress: this.recipientAddress, // 添加地址信息
+
             };
 
             // 發送 POST 請求
@@ -111,13 +109,24 @@ export default {
                 this.$router.push('/UserPage/buyingList');
         },
 
-handleZipcodeChange(data) {
-    // 使用所選地址更新 recipientAddress
-    this.recipientAddress = `${data.zipcode} ${data.county} ${data.district} ${data.addr}`;
-    console.log(this.recipientAddress);
+        handleZipcodeChange(data) {
+    // 使用 TWzipcode.js 的方法來獲取地址信息
+    const addressInfo = this.twzipcode.get(["zipcode", "county", "district",]);
+    
+    if (addressInfo && addressInfo.length > 0) {
+        const firstAddress = addressInfo[0];
+        this.address1 = `${firstAddress.zipcode} ${firstAddress.county} ${firstAddress.district} `;
+        console.log(this.address1);
+    } else {
+        console.error("Address Info is empty or not in the expected format.");
+    }
 },
-
-
+    },
+    mounted() {
+        // 使用 TWzipcode.js 初始化地址選擇器
+        this.twzipcode = new TWzipcode();
+        this.twzipcode.init(this.$refs.twzipcodeRef);  // 修改這一行
+        this.fetchProductDetails();
     },
 };
 </script>
@@ -161,10 +170,10 @@ handleZipcodeChange(data) {
                         電話：<input type="input" v-model="recipientPhone">
                     </div>
                     <div class="address inp">
-  地址：
-  <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange"></div>
-  <input type="input" v-model="recipientAddress">
-</div>
+                        地址：
+                    <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange" ></div>
+                    <input type="input" v-model="address2">
+                    </div>
 
                 </div>
                 <div class="ShippingInfo area">
@@ -362,6 +371,7 @@ handleZipcodeChange(data) {
     }
 .item-type{
     width: 8vw;
+    margin-left: 15px;
 }
 .item-price{
     width: 8vw;
