@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-
+import TWzipcode from 'twzipcode.js'; 
 export default {
     data() {
         return {
@@ -18,6 +18,7 @@ export default {
         };
     },
     mounted() {
+        const twzipcode = new TWzipcode();
         this.fetchProductDetails();
     },
     computed: {
@@ -132,7 +133,6 @@ export default {
 
 <template>
     <div class="mainshow">
-
         <div class="countAll">
             <div class="leftInfo">
                 <div class="productsInfo">
@@ -170,7 +170,9 @@ export default {
                         電話:<input type="input" v-model="recipientPhone">
                     </label>
                     <label>
-                        地址:<input type="input" v-model="recipientAddress">
+                        地址:
+                        <div class="twzipcode"></div>
+                        <input type="input" v-model="recipientAddress">
                     </label>
                 </div>
                 <div class="ShippingInfo">
