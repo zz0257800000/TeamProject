@@ -102,37 +102,32 @@ export default {
           <RouterLink class="btn" to="/UserPage/complainService">客服人員</RouterLink>
           <RouterLink class="btn" to="/">注意事項</RouterLink>
           <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
-
         </div>
+
           <div class="righthead">
-            <div class="profile-image">
+            <div class="profile-image userInfo">
               <!-- 显示预览图像 -->
               <img :src="previewImage" alt="User Photo" v-if="previewImage" />
             </div>
-
-
-            <div>
-
             
-                <span v-if="user">賴皮點數 : {{ user.points }}</span> &nbsp;
+            <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span>
 
-                <span v-if="user">使用者帳號: {{ user.email }}</span>
+            <span class="userInfo point" v-if="user">賴皮點數 : {{ user.points }}</span> &nbsp;
+            
+            <button class="logout btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
+            
+            <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
+              <i class="fa-solid fa-user usericon"></i> 會員資料
+            </RouterLink>
 
-                <button class="btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
+            <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
+              <i class="fa-solid fa-user usericon"></i>
+              <p>會員登入</p>
+            </RouterLink>
 
-                <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
-                  <i class="fa-solid fa-user usericon"></i> 會員資料
-                </RouterLink>
-
-                <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
-                  <i class="fa-solid fa-user usericon"></i>
-                  <p>會員登入</p>
-                </RouterLink>
-             
-            </div>
           </div>
         
-      </div>
+        </div>
 
       <div class="titleHeader">
 
@@ -175,15 +170,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.userInfo{
+  margin-right: 10px;
+  text-align: center;
+}
 .righthead {
   display: flex;
   align-items: center;
 
   .profile-image img {
-    height: 50px;
-    width: 50px;
-    border: 0px solid rgb(255, 0, 0);
-
+    height: 25px;
+    width: 25px;
     border-radius: 50%;
   }
 }
