@@ -235,7 +235,7 @@ addDislike(commentId) {
   <div class="mainshow">
     <div class="productInfo">
       <div class="product">
-        <img :src="product.photo" class="photoShow" alt="..." @click="openImageModal">
+        <img :src="'data:image/jpeg;base64,' + product.photo" class="photoShow" alt="..." @click="openImageModal">
         <div class="productText">
           <div class="title">
             <p class="product-name">商品名稱：{{ product.product_name }}</p>

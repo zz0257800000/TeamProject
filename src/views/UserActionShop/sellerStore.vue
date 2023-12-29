@@ -52,7 +52,7 @@ export default {
     <div class="productsShow">
       <div class="product card" v-for="(product, index) in product" :key="index" style="width: 14rem;">
         <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" :title="product.product_name">
-          <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
+          <img :src="'data:image/jpeg;base64,' + product.photo" class="card-img-top fixed-size-image" alt="...">
           <div class="card-body">
             <div class="card-text">
             <h5 class="productName">{{ product.product_name }}</h5>

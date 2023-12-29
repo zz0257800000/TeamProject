@@ -18,19 +18,48 @@ export default {
       isImageModalOpen: false,
       photo: null,
       user_Id: null,
+      imageUrl: null,
 
     };
   },
+  computed: {
+    // 在计算属性中加上前缀
+    getImageUrlWithPrefix() {
+      return `data:image/jpeg;base64,${this.imageUrl}`;
+    },
+  },
   methods: {
     handleImageChange(event) {
-      // 处理图像更改和预览逻辑
       const file = event.target.files[0];
-      this.productImagePreview = URL.createObjectURL(file);
-      this.photo = file;
+
+      // 在這裡宣告 reader
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        // 獲取整個 base64 圖片數據
+        const fullBase64String = event.target.result;
+
+        // 找到逗號後的位置，即真正的 base64 圖片數據的開始位置
+        const commaIndex = fullBase64String.indexOf(',');
+
+        // 切除 'data:image/jpeg;base64,' 部分，得到實際的 base64 圖片數據
+        const base64Data = fullBase64String.substring(commaIndex + 1);
+
+        // 將 base64 圖片數據設置為 imageUrl
+        this.imageUrl = base64Data;
+
+        // 記錄處理後的 base64 圖片數據
+        console.log(this.imageUrl);
+      };
+
+      reader.readAsDataURL(file);
     },
     cancelImageUpload() {
-      this.productImagePreview = null;
-      this.photo = null;
+      // 检查是否有已选择的图片
+      if (this.productImagePreview || this.photo) {
+        this.productImagePreview = null;
+        this.photo = null;
+      }
     },
     submitForm() {
       if (!this.productName || !this.productDescription || !this.productPrice) {
@@ -48,7 +77,9 @@ export default {
         shelves: this.shelves,
         user_id: this.user_Id,
         seller_name: this.seller_name,
-
+        remittance_title: this.remittance_title,
+        remittance_number: this.remittance_number,
+        photo: this.imageUrl,
         upload_time: new Date(),  // 设置上传时间为当前时间
 
       };  // 如果有選擇圖片，將其轉換為 Base64 字符串
@@ -68,11 +99,14 @@ export default {
       // 从 sessionStorage 中获取 user_Id
       const user_Id = sessionStorage.getItem('user_Id');
       const seller_name = sessionStorage.getItem('seller_name');
-
+      const remittance_title = sessionStorage.getItem('remittance_title');
+      const remittance_number = sessionStorage.getItem('remittance_number');
       // 添加 user_Id 到请求数据
       data.seller_name = seller_name;
 
       data.user_id = user_Id;
+      console.log(data);
+
       axios.post('http://localhost:8080/product/create', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/json',
@@ -92,13 +126,13 @@ export default {
         });
     },
     showAlert() {
-    Swal.fire({
-      title: "商品新增",
-      text: "你的商品新增成功",  // 使用传入的消息参数
-      icon: "success",
-      confirmButtonText: "OK",
-    });
-  },
+      Swal.fire({
+        title: "商品新增",
+        text: "你的商品新增成功",  // 使用传入的消息参数
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+    },
     openImageModal() {
       this.isImageModalOpen = true;
     },
@@ -120,15 +154,17 @@ export default {
         <h1>新增商品</h1>
         <form @submit.prevent="submitForm">
           <div class="form-group">
-            <label for="productImage">商品圖片:</label>
-            <input type="file" id="productImage" accept="image/*" @change="handleImageChange" />
-            <img v-if="productImagePreview" :src="productImagePreview" alt="商品圖片預覽" class="preview-image"
-              @click="openImageModal" />
+    <label for="imageUrl">商品圖片:</label>
+    <input type="file" id="imageUrl" accept="image/*" @change="handleImageChange" />
+    
+    <!-- 在src属性中加上前缀 -->
+    <img v-if="imageUrl" :src="getImageUrlWithPrefix" alt="商品圖片預覽" class="preview-image" @click="openImageModal" />
 
-          </div>
-          <div class="form-group">
-            <button type="button" class="button" @click="cancelImageUpload">取消上傳圖片</button>
-          </div>
+    <!-- 取消上传按钮，只有在imageUrl存在时才显示 -->
+    <div class="form-group" v-if="imageUrl">
+      <button type="button" class="button" @click="cancelImageUpload">取消上傳圖片</button>
+    </div>
+  </div>
           <div class="form-group">
             <label for="productName">商品名稱:</label>
             <input type="text" id="productName" v-model="productName" required />
@@ -179,7 +215,7 @@ export default {
     </div>
   </div>
   <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
-    <img :src="productImagePreview" alt="商品圖片" class="modal-image" />
+    <img :src="getImageUrlWithPrefix" alt="商品圖片" class="modal-image" />
   </div>
 </template>
 

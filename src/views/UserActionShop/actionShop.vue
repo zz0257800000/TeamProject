@@ -30,6 +30,9 @@ export default {
     pageCount() {
       return Math.ceil(this.products.length / this.perPage);
     },
+    getImageUrlWithPrefix() {
+      return `data:image/jpeg;base64,${this.imageUrl}`;
+    },
   },
   mounted() {
     this.userId = sessionStorage.getItem('user_Id');
@@ -57,62 +60,62 @@ export default {
     },
 
     deleteProduct(productId) {
-  // 显示删除确认弹窗
-  this.showAlert(productId);
-},
+      // 显示删除确认弹窗
+      this.showAlert(productId);
+    },
 
-showAlert(productId) {
-  Swal.fire({
-    title: "你確定要刪除嗎?",
-    text: "您將無法恢復此狀態！",
-    icon: "warning", // 修改为 "warning"
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "確認刪除!",
-    cancelButtonText: "取消!"
+    showAlert(productId) {
+      Swal.fire({
+        title: "你確定要刪除嗎?",
+        text: "您將無法恢復此狀態！",
+        icon: "warning", // 修改为 "warning"
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "確認刪除!",
+        cancelButtonText: "取消!"
 
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // 用户点击了确认删除，执行删除操作
-      this.deleteConfirmedProduct(productId);
-    }
-  });
-},
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 用户点击了确认删除，执行删除操作
+          this.deleteConfirmedProduct(productId);
+        }
+      });
+    },
 
-deleteConfirmedProduct(productId) {
-  // 发送删除请求，并将 productId 作为参数传递
-  axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
-    .then(response => {
-      // 删除成功后，刷新产品列表或者做其他操作
-      console.log('Product deleted successfully:', response.data);
+    deleteConfirmedProduct(productId) {
+      // 发送删除请求，并将 productId 作为参数传递
+      axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
+        .then(response => {
+          // 删除成功后，刷新产品列表或者做其他操作
+          console.log('Product deleted successfully:', response.data);
 
-      // 刷新产品列表，可以重新调用获取产品列表的方法
-      this.fetchProducts();
-      this.showDeleteSuccessAlert();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      // 处理错误，例如显示错误消息给用户
-      this.showDeleteErrorAlert();
-    });
-},
+          // 刷新产品列表，可以重新调用获取产品列表的方法
+          this.fetchProducts();
+          this.showDeleteSuccessAlert();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // 处理错误，例如显示错误消息给用户
+          this.showDeleteErrorAlert();
+        });
+    },
 
-showDeleteSuccessAlert() {
-  Swal.fire({
-    title: "刪除成功!",
-    text: "你的商品刪除成功",
-    icon: "success"
-  });
-},
+    showDeleteSuccessAlert() {
+      Swal.fire({
+        title: "刪除成功!",
+        text: "你的商品刪除成功",
+        icon: "success"
+      });
+    },
 
-showDeleteErrorAlert() {
-  Swal.fire({
-    title: "刪除失敗",
-    text: "刪除商品時發生錯誤",
-    icon: "error"
-  });
-},
+    showDeleteErrorAlert() {
+      Swal.fire({
+        title: "刪除失敗",
+        text: "刪除商品時發生錯誤",
+        icon: "error"
+      });
+    },
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -138,10 +141,10 @@ showDeleteErrorAlert() {
       const selectedFile = event.target.files[0];
 
       if (selectedFile) {
-        // 使用選取的文件更新 'photo' 屬性
+        // 使用选择的文件更新 'photo' 属性
         this.photo = selectedFile;
 
-        // 如果您想預覽圖像，可以使用FileReader
+        // 如果您想预览图像，可以使用FileReader
         const reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onload = () => {
@@ -296,7 +299,7 @@ showDeleteErrorAlert() {
                 <td>{{ product.productId }}
                 </td>
                 <td>
-                  <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
+                  <img :src="'data:image/jpeg;base64,' + product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
                     @click="() => openImageModal(product)">
                 </td>
                 <td>{{ product.product_type }}</td>
@@ -337,7 +340,7 @@ showDeleteErrorAlert() {
       </div>
     </div>
     <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
-      <img :src="selectedImage" alt="商品圖片" class="modal-image">
+      <img :src="'data:image/jpeg;base64,' + selectedImage" alt="商品圖片" class="modal-image">
     </div>
 
 
