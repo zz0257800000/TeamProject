@@ -147,7 +147,7 @@ export default {
                     </div>
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
                         <div class="item-image">
-                            <img :src="item.photo" alt="Product Image" class="item-image">
+                            <img :src="'data:image/jpeg;base64,' + item.photo" alt="Product Image" class="item-image">
                         </div>
                         <div class="item-name product-details">
                             <p>{{ item.product_name }}</p>
