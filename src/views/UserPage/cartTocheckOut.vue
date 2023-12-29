@@ -12,7 +12,6 @@ export default {
             recipientName: '',
             recipientPhone: '',
             recipientAddress: '',
-
             userId: sessionStorage.getItem('user_Id'),
             cartList:[],
         };
@@ -58,46 +57,28 @@ export default {
                     this.product = data.cartList;
                     this.quantity = data.cartList.cart_count;
                     console.log(this.product);
-                    })
+                })
                 .catch(error => console.error('获取数据时出错:', error));
         },
         
         //欄位防呆
-        submitOrder(item) {
-        // 檢查是否所有必填項目都已經填寫
-        if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
-            alert('請填寫所有必填項目');
-        return;
-        }
-        const currentDate = new Date();
-        const year = currentDate.getFullYear();
-        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-        const day = currentDate.getDate().toString().padStart(2, '0');
-        const hours = currentDate.getHours().toString().padStart(2, '0');
-        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
-        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+        submitOrder() {
+            // 檢查是否所有必填項目都已經填寫
+            if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
+                alert('請填寫所有必填項目');
+                return;
+            }
+            const currentDate = new Date();
+            const year = currentDate.getFullYear();
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            const hours = currentDate.getHours().toString().padStart(2, '0');
+            const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+            const seconds = currentDate.getSeconds().toString().padStart(2, '0');
 
-        const orderData = {
-            user_id: this.userId,
-            product_id: item.product_id,  // 使用 this.product.product_id
-            product_name: item.product_name,
-            product_type: item.product_type,
-            product_count: item.cart_count,
-            consumer_name: this.recipientName,
-            consumer_address: this.recipientAddress,
-            consumer_phone: this.recipientPhone,
-            shipping_method: this.selectedShipping,
-            shipping_cost: this.getShippingFee,
-            payment_method: this.paymentMethod,
-            remittance_title: "中國信託",
-            remittance_number: "812-00000087888",
-            remarks_column: this.remarksColumn,
-            product_amount: this.getOrderAmount,
-            record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
-            status: "準備中",
-            seller_id: item.seller_id,
-            record_type: "購買",
-            valid: true,
+            const orderData = {
+                user_id: this.userId,
+                // 其他屬性...
             };
 
             // 發送 POST 請求
@@ -125,26 +106,27 @@ export default {
                     // 處理錯誤
                 });
                 this.$router.push('/UserPage/buyingList');
-
         },
     },
 };
 </script>
 
+
 <template>
     <div class="mainshow">
         <div class="countAll">
             <div class="leftInfo">
-                <div class="productsInfo">
+                <div class="productsInfo area">
                     <h3>XXX小舖</h3>
-                    <div class="item_header">
+                    <div class="line"></div>
+                    <!-- <div class="item_header">
                         <div class="item-image header" >商品照片</div>
                         <div class="item-name header">商品</div>  
                         <div class="item-type header">產品分類</div> 
                         <div class="item-price header">單價</div>
                         <div class="item-quantity header">數量</div>
                         <div class="item-total header">總計</div>
-                    </div>
+                    </div> -->
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
                         <div class="item-image">
                             <img :src="item.photo" alt="Product Image" class="item-image">
@@ -162,7 +144,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="RecipientInformation">
+                <div class="RecipientInformation area">
                     <label>
                         收件人:<input type="input" v-model="recipientName">
                     </label>
@@ -175,8 +157,8 @@ export default {
                         <input type="input" v-model="recipientAddress">
                     </label>
                 </div>
-                <div class="ShippingInfo">
-                    <h3>運費方式</h3>
+                <div class="ShippingInfo area">
+                    <h3>運送方式</h3>
                     <label>
                         <input type="radio" v-model="selectedShipping" value="7-11取貨"> 7-11取貨$60
                     </label>
@@ -195,7 +177,7 @@ export default {
 
                 </div>
 
-                <div class="payment" v-if="selectedShipping !== '貨到付款'">
+                <div class="payment area" v-if="selectedShipping !== '貨到付款'">
                     <h3>付款方式</h3>
 
                     <label>
@@ -217,11 +199,11 @@ export default {
                 </div>
             </div>
 
-            <div class="rightCount">
-                <h3>商品總金額: ${{ getTotalAmount }}</h3>
-                <h4>運費: ${{ getShippingFee }}</h4>
-                <h2>訂單金額: ${{ getOrderAmount }}</h2>
-                <router-link :to="''" class="Checkout" @click="submitOrder(item)" v-for="(item, index) in product" :key="item.id">結帳</router-link>
+            <div class="rightCount area">
+                <p>商品總金額: $ {{ getTotalAmount }}</p>
+                <p>運費: $ {{ getShippingFee }}</p>
+                <h4>訂單總金額: $ {{ getOrderAmount }}</h4>
+                <button class="Checkout" @click="submitOrder">結帳</button>
 
             </div>
 
@@ -231,19 +213,24 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
+.line{
+    height: 1px;
+    background-color: #f99b58;
+}
+.area{
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
 .mainshow {
     height: 150vh;
-    background-color: #557475;
-    /* Slightly muted background color */
     display: flex;
-    justify-content: center;
     align-items: center;
 
     .countAll {
         height: 140vh;
         width: 90vw;
-        border: 1px solid #ccc;
+        // border: 1px solid #ccc;
         /* Softer border color */
         display: flex;
         justify-content: space-around;
@@ -253,24 +240,26 @@ export default {
         .leftInfo {
             height: 90vh;
             width: 60vw;
-            border-right: 1px solid #ccc;
+            margin-left: -10vw;
             justify-content: space-between;
             align-items: center;
 
             .productsInfo {
                 height: 45vh;
                 border-bottom: 1px solid #ccc;
-                background-color: #f0f0f0;
+                background-color: #ffffff;
                 /* Lighter background color */
+                border-radius: 5px;
                 overflow: hidden;
                 margin-bottom: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
                 .produtsrow {
                     padding: 5px;
                     display: flex;
                     align-items: center;
                     height: 15vh;
-                    background-color: #d0d0d0;
+                    background-color: #ffffff;
                     /* Muted product row color */
                     margin: 10px;
                     align-items: center; 
@@ -286,55 +275,44 @@ export default {
                 }
             }
 
-            .RecipientInformation {
+            .RecipientInformation { //收件資料
                 height: 24vh;
-                background-color: #f0f0f0;
                 overflow: hidden;
                 margin-bottom: 10px;
             }
 
             .ShippingInfo {
                 height: 24vh;
-                background-color: #f0f0f0;
+                background-color: #ffffff;
                 overflow: hidden;
                 margin-bottom: 10px;
             }
 
             .payment {
                 height: 15vh;
-                background-color: #f0f0f0;
                 overflow: hidden;
             }
 
             .remarksColumnInfo {
                 height: 8vh;
-                background-color: #f0f0f0;
                 overflow: hidden;
             }
         }
 
         .rightCount {
+            position: absolute;
+            
             height: 50vh;
             width: 25vw;
-            background-color: #e0e0e0;
-            border-left: 1px solid #ccc;
-            border-radius: 0 10px 10px 0;
-
-            h3,
-            h4,
-            h2 {
-                color: #333;
-                margin: 10px;
-            }
-
             .Checkout {
                 display: block;
                 text-align: center;
                 padding: 10px;
-                background-color: #4caf50;
+                background-color: #ff822a;
                 color: white;
                 text-decoration: none;
                 border-radius: 5px;
+                border: 0;
             }
         }
     }
@@ -346,7 +324,6 @@ export default {
     justify-content: space-around;
     margin-bottom: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 .item-image {
     display: flex;
