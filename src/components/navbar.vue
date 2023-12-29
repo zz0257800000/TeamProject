@@ -120,11 +120,10 @@ export default {
               <img :src="previewImage" alt="圖片未上傳" v-if="previewImage" />
             </div>
             
-<<<<<<< HEAD
+
                 <span v-if="user">餘額點數 : {{ user.points }}</span> &nbsp;
-=======
+
             <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span>
->>>>>>> f64b0eabb543b9e9ff7a939456692540543e5a50
 
             <span class="userInfo point" v-if="user">賴皮點數 : {{ user.points }}</span> &nbsp;
             
