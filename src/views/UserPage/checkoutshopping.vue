@@ -81,7 +81,7 @@ export default {
             }
 
             const phoneRegex = /^09\d{8}$/;
-        const isValidPhone = phoneRegex.test(this.phone_number);
+            const isValidPhone = phoneRegex.test(this.recipientPhone);
         if (!isValidPhone) {
             alert("請輸入有效的電話號碼!!");
             return;
@@ -174,7 +174,6 @@ export default {
                         <p class="item-type">{{ product.product_type }}</p>
                         <p class="item-price">${{ product.price }}</p>
                         <div class="item-quantity">
-                            <p>數量：</p>
                             <button @click="decrementQuantity">-</button>
                             <input v-model="quantity" type="number" min="1" />
                             <button @click="incrementQuantity">+</button>
@@ -389,6 +388,7 @@ export default {
     }
 .item-name {
     margin-left: 15px;
+    margin-right: 15px;
     width: 30vw;
     }
 .item-type{
@@ -396,9 +396,6 @@ export default {
 }
 .item-price{
     width: 8vw;
-}
-.item-quantity{
-    width: 5vw;
 }
 .item-total{
     width: 8vw;
@@ -417,6 +414,22 @@ export default {
 }
 .inp{
     margin-bottom: 20px;
+}
+.item-quantity{
+    display: flex;
+    width: 7vw;
+    margin-top: -16px;
+    input{
+        width: 25px;
+        border: 0;
+    }
+    button{
+        width: 20px;
+        border: 0;
+        border-radius: 5px;
+        background-color: #ff9800;
+        color: white;
+    }
 }
 
 }//
