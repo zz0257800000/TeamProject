@@ -10,6 +10,10 @@ export default {
     methods: {
       //忘記密碼方法
       forgotPwd(){
+        if(!this.email.trim()){
+          alert("電子郵件欄位不得為空!!");
+          return;
+        }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailRegex.test(this.email);
         if (!isValidEmail) {
@@ -17,25 +21,31 @@ export default {
           return;
         }
         const url = `http://localhost:8080/user/sentForgotPwd?email=${this.email}`;
-        axios.get(url)
-        .then((response) => {
-          console.log("請求成功", response.data)
+        axios.get(url).then((response) => {
+          console.log(response.data);
+          const responseData = response.data;
+          console.log(responseData.rtnCode);
+          if(responseData.rtnCode === "EMAIL_NOT_FOUND"){
+            alert("電子郵件輸入錯誤，或此電子郵件尚未註冊!!")
+          }else{
+          console.log("請求成功", response.data);
           this.showAlert();
           this.$router.push("/UserPage/loginPage");
+          }
         })
         .catch((error) => {
           console.error('請求失敗', error);
         })
       },
-    //套件sweetalert2，忘記密碼
-    showAlert() {
+      //套件sweetalert2，忘記密碼
+      showAlert() {
     Swal.fire({
         title: "已發送一次性密碼至您的電子郵件!!",
         text: "請至email查看，在使用您的一次性密碼做登入後更改密碼，謝謝!!",
         icon: "success",
         confirmButtonText: "OK",
         });
-    },
+      },
     },
 };
 </script>
@@ -52,17 +62,16 @@ export default {
     </div>
     <div class="login-box">
         <div class="lb-header">
-            <h3>歡迎回來</h3>
+            <h2>歡迎回來</h2>
         </div>
         <br />
         <div class="change-password-container">
-        <h1>重新設定密碼</h1><br><br>
+        <h1>找回密碼</h1><br><br>
         <form @submit.prevent="submitForm" class="change-password-form">
           <div class="inputList">
             <label for="email"> 信箱 :</label>
-            <input type="email" v-model="email" required class="input-field" />
+            <input type="email" v-model="email" required class="input-field" placeholder="your-email" />
           </div><br><br>
-
           <button class="btn" type="submit" @click="forgotPwd">確定</button>
         </form>
       </div>

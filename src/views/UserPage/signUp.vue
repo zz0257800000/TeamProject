@@ -86,12 +86,12 @@ export default {
           console.log(response.data);
           const responseData = response.data;
           console.log(responseData.rtnCode);
-          if(responseData.rtnCode === "EMAIL_IS_EXIST"){
-            alert("此電子郵件已被註冊，請使用其他電子郵件註冊!!")
-          }else{
-          // 如果不是 "EMAIL_IS_EXIST"，代表註冊成功
-          this.showAlert("註冊成功!!")
-          this.$router.push("/UserPage/loginPage"); // 註冊完成導回登入頁面
+          if (responseData.rtnCode === "EMAIL_IS_EXIST") {
+            alert("此電子郵件已被註冊，請使用其他電子郵件進行註冊!!")
+          } else {
+            // 如果不是 "EMAIL_IS_EXIST"，代表註冊成功
+            this.showAlert("註冊成功!!")
+            this.$router.push("/UserPage/loginPage"); // 註冊完成導回登入頁面
           }
         })
         .catch((error) => {
@@ -145,61 +145,35 @@ export default {
       <img src="../../../public/1.jpg" width="700" height="500" alt="" />
 
       <div class="signupRight">
-        <form
-          role="form"
-          action=""
-          class="form-horizontal container jumbotron"
-          name="regForm"
-        >
+        <form role="form" action="" class="form-horizontal container jumbotron" name="regForm">
           <div class="form-group">
             <label for="userName" class="control-label col-sm-2">姓名:</label>
             <div class="col-sm-4">
-              <input
-                v-model="name"
-                type="text"
-                class="form-control"
-                name="userName"
-                maxlength=""
-                placeholder="Enter user name"
-              />
+              <input v-model="name" type="text" class="form-control" name="userName" maxlength=""
+                placeholder="Enter user name" />
             </div>
-            <span class="col-sm-6"><p id="errUName"></p></span>
+            <span class="col-sm-6">
+              <p id="errUName"></p>
+            </span>
           </div>
 
           <div class="form-group">
             <label for="email" class="control-label col-sm-2">信箱:</label>
             <div class="col-sm-4">
-              <input
-                v-model="email"
-                @input="validateEmail"
-                type="email"
-                class="form-control"
-                name="email"
-                placeholder="someone@example.com"
-              />
+              <input v-model="email" @input="validateEmail" type="email" class="form-control" name="email"
+                placeholder="someone@example.com" />
             </div>
             <!-- Email錯誤訊息的顯示 -->
             <span class="col-sm-6">
-              <p
-                id="errEmail"
-                :style="{ color: phoneError ? 'red ' : '' }"
-                ref="errEmail"
-              ></p>
+              <p id="errEmail" :style="{ color: phoneError ? 'red ' : '' }" ref="errEmail"></p>
             </span>
           </div>
 
           <div class="form-group">
             <label for="phone" class="control-label col-sm-2">電話號碼:</label>
             <div class="col-sm-4">
-              <input
-                v-model="phone_number"
-                @input="validatePhoneNumber"
-                type="tel"
-                class="form-control"
-                name="phone"
-                placeholder="0912345678"
-                maxlength="10"
-              />
+              <input v-model="phone_number" @input="validatePhoneNumber" type="tel" class="form-control" name="phone"
+                placeholder="0912345678" maxlength="10" />
             </div>
             <span class="col-sm-6">
               <p id="errPhone" :style="{ color: phoneError ? 'red ' : '' }">
@@ -212,45 +186,29 @@ export default {
             <label for="pwd" class="control-label col-sm-2">密碼:</label>
             <div class="col-sm-4">
               <div class="input-form-control">
-                <input
-                  v-model="password"
-                  :type="showPassword ? 'text' : 'password'"
-                  class="form-control"
-                  name="password"
-                  placeholder="Password"
-                />
-                <!-- <i
-                  class="fa-solid fa-eye A"
-                  @click="showPassword = !showPassword"
-                ></i> -->
+                <input v-model="password" :type="showPassword ? 'text' : 'password'" class="form-control" name="password"
+                  placeholder="Password" />
                 <input type="checkbox" @click="showPassword = !showPassword">顯示密碼
               </div>
             </div>
-            <span class="col-sm-6"><p id="errPwd"></p></span>
+            <span class="col-sm-6">
+              <p id="errPwd"></p>
+            </span>
           </div>
 
           <div class="form-group">
-            <label for="cnfrmPwd" class="control-label col-sm-2"
-              >確認密碼:</label>
+            <label for="cnfrmPwd" class="control-label col-sm-2">確認密碼:</label>
             <div class="col-sm-4">
               <div class="input-form-control">
-                <input
-                  v-model="confirmPassword"
-                  :type="showConfirmPassword ? 'text' : 'password'"
-                  class="form-control"
-                  name="confirmPassword"
-                  placeholder="Re-type password"/>
-                <!-- <i
-                  class="fa-solid fa-eye A"
-                  @click="showConfirmPassword = !showConfirmPassword"
-                ></i> -->
+                <input v-model="confirmPassword" :type="showConfirmPassword ? 'text' : 'password'" class="form-control"
+                  name="confirmPassword" placeholder="Re-type Password" />
                 <input type="checkbox" @click="showConfirmPassword = !showConfirmPassword">顯示密碼
               </div>
             </div>
-            <span class="col-sm-6"><p id="errConfirmPwd"></p></span>
+            <span class="col-sm-6">
+              <p id="errConfirmPwd"></p>
+            </span>
           </div>
-
-        
 
           <div class="submitBtn">
             <button @click.prevent="registerUser" class="btn">送出</button>
@@ -268,20 +226,19 @@ export default {
   border-radius: 10px;
   padding: 10px;
   width: 10vw;
-  background-color: rgb(223, 223, 223);
+  background-color: rgb(202, 202, 202);
 }
 
 .signup-container {
   border: 1px solid red;
   width: 100vw;
   height: 100vh;
-  background-color: rgb(156, 156, 156);
+  background-color: rgb(240, 240, 240);
   display: flex;
   flex-direction: column;
 
   .backbtn {
     border: 0px solid red;
-    background-color: rgb(156, 156, 156);
     justify-content: space-between;
     display: flex;
     align-items: center;
@@ -308,7 +265,7 @@ export default {
   width: 90vw;
   border: 0px solid red;
   align-items: center;
-  background-color: rgb(156, 156, 156);
+  background-color: rgb(240, 240, 240);
   justify-content: space-around;
 
   .signupRIG {
@@ -321,7 +278,8 @@ export default {
       label {
         display: block;
         margin-bottom: 5px;
-        color: #333; /* Dark text color */
+        color: #333;
+        /* Dark text color */
       }
 
       input[type="text"],
@@ -330,12 +288,14 @@ export default {
         padding: 10px;
         box-sizing: border-box;
         margin-bottom: 10px;
-        border: 1px solid #ddd; /* Light border color */
+        border: 1px solid #ddd;
+        /* Light border color */
         border-radius: 5px;
         transition: border-color 0.3s ease;
 
         &:focus {
-          border-color: #4caf50; /* Focus border color */
+          border-color: #4caf50;
+          /* Focus border color */
         }
       }
     }
@@ -358,7 +318,8 @@ export default {
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: #45a049; /* Hover background color */
+          background-color: #45a049;
+          /* Hover background color */
         }
       }
     }
@@ -372,6 +333,7 @@ export default {
     width: 27vw;
   }
 }
+
 .input-form-control {
   position: relative;
 

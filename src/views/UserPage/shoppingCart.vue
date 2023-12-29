@@ -124,7 +124,7 @@ export default {
       <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
         <div class="item-details">
           <div class="item-image">
-          <img :src="item.photo" alt="Product Image" class="product-image">
+          <img :src=" 'data:image/jpeg;base64,' + item.photo " alt="Product Image" class="product-image">
         </div>
           <div class="item-name">{{ item.product_name }}</div>
           <div class="item-type">{{ item.product_type }}</div>
@@ -168,6 +168,7 @@ export default {
   padding: 20px;
   font-family: 'Roboto', sans-serif;
   color: #333;
+  height: 100vh;
 }
 .page-header {
   margin-bottom: 20px;
@@ -179,6 +180,7 @@ export default {
   margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
 }
 
 //> 符號
@@ -217,7 +219,7 @@ export default {
         width: 20px;
         border: 0;
         border-radius: 5px;
-        background-color: #2ecc71;
+        background-color: #ff9800;
         color: white;
       }
   }
@@ -255,22 +257,24 @@ export default {
   margin-bottom: 20px;
   background-color: #fff;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .checkout-button {
   margin-top: 20px;
-  background-color: #2ecc71;
+  background-color: #ff9800;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   text-decoration: none;
+  left: 95%;
+  position: relative;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #27ae60;
+    background-color: #4d4d4d;
   }
 }
 </style>

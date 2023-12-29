@@ -30,6 +30,9 @@ export default {
     pageCount() {
       return Math.ceil(this.products.length / this.perPage);
     },
+    getImageUrlWithPrefix() {
+      return `data:image/jpeg;base64,${this.imageUrl}`;
+    },
   },
   mounted() {
     this.userId = sessionStorage.getItem('user_Id');
@@ -57,62 +60,62 @@ export default {
     },
 
     deleteProduct(productId) {
-  // 显示删除确认弹窗
-  this.showAlert(productId);
-},
+      // 显示删除确认弹窗
+      this.showAlert(productId);
+    },
 
-showAlert(productId) {
-  Swal.fire({
-    title: "你確定要刪除嗎?",
-    text: "您將無法恢復此狀態！",
-    icon: "warning", // 修改为 "warning"
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "確認刪除!",
-    cancelButtonText: "取消!"
+    showAlert(productId) {
+      Swal.fire({
+        title: "你確定要刪除嗎?",
+        text: "您將無法恢復此狀態！",
+        icon: "warning", // 修改为 "warning"
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "確認刪除!",
+        cancelButtonText: "取消!"
 
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // 用户点击了确认删除，执行删除操作
-      this.deleteConfirmedProduct(productId);
-    }
-  });
-},
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 用户点击了确认删除，执行删除操作
+          this.deleteConfirmedProduct(productId);
+        }
+      });
+    },
 
-deleteConfirmedProduct(productId) {
-  // 发送删除请求，并将 productId 作为参数传递
-  axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
-    .then(response => {
-      // 删除成功后，刷新产品列表或者做其他操作
-      console.log('Product deleted successfully:', response.data);
+    deleteConfirmedProduct(productId) {
+      // 发送删除请求，并将 productId 作为参数传递
+      axios.delete(`http://localhost:8080/product/delete?id=${productId}`)
+        .then(response => {
+          // 删除成功后，刷新产品列表或者做其他操作
+          console.log('Product deleted successfully:', response.data);
 
-      // 刷新产品列表，可以重新调用获取产品列表的方法
-      this.fetchProducts();
-      this.showDeleteSuccessAlert();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      // 处理错误，例如显示错误消息给用户
-      this.showDeleteErrorAlert();
-    });
-},
+          // 刷新产品列表，可以重新调用获取产品列表的方法
+          this.fetchProducts();
+          this.showDeleteSuccessAlert();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          // 处理错误，例如显示错误消息给用户
+          this.showDeleteErrorAlert();
+        });
+    },
 
-showDeleteSuccessAlert() {
-  Swal.fire({
-    title: "刪除成功!",
-    text: "你的商品刪除成功",
-    icon: "success"
-  });
-},
+    showDeleteSuccessAlert() {
+      Swal.fire({
+        title: "刪除成功!",
+        text: "你的商品刪除成功",
+        icon: "success"
+      });
+    },
 
-showDeleteErrorAlert() {
-  Swal.fire({
-    title: "刪除失敗",
-    text: "刪除商品時發生錯誤",
-    icon: "error"
-  });
-},
+    showDeleteErrorAlert() {
+      Swal.fire({
+        title: "刪除失敗",
+        text: "刪除商品時發生錯誤",
+        icon: "error"
+      });
+    },
     handleSizeChange(size) {
       // Handle page size change
       this.perPage = size;
@@ -135,20 +138,25 @@ showDeleteErrorAlert() {
       this.isEditModalOpen = false;
     },
     handleImageChange(event) {
-      const selectedFile = event.target.files[0];
+  const selectedFile = event.target.files[0];
 
-      if (selectedFile) {
-        // 使用選取的文件更新 'photo' 屬性
-        this.photo = selectedFile;
+  if (selectedFile) {
+    // 使用选择的文件更新 'photo' 属性
+    this.photo = selectedFile;
 
-        // 如果您想預覽圖像，可以使用FileReader
-        const reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onload = () => {
-          this.editedProduct.photo = reader.result;
-        };
-      }
-    },
+    // 如果您想预览图像，可以使用FileReader
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onload = () => {
+      // 切掉前缀 'data:image/jpeg;base64,'
+      const imageDataWithoutPrefix = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
+
+      // 存储没有前缀的图像数据
+      this.editedProduct.photo = imageDataWithoutPrefix;
+    };
+  }
+},
+
 
     editProduct(index) {
       // 获取要编辑的产品数据
@@ -239,11 +247,11 @@ showDeleteErrorAlert() {
 
       <div class="leftAdmin">
 
-        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i>  &nbsp;產品管理</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> &nbsp; 銷售訂單
         </RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>  &nbsp;出貨訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>  &nbsp;完成訂單
         </RouterLink>
         <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
         </RouterLink>
@@ -296,7 +304,7 @@ showDeleteErrorAlert() {
                 <td>{{ product.productId }}
                 </td>
                 <td>
-                  <img :src="product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
+                  <img :src="'data:image/jpeg;base64,' + product.photo" alt="商品圖片" class="card-img-top fixed-size-image"
                     @click="() => openImageModal(product)">
                 </td>
                 <td>{{ product.product_type }}</td>
@@ -337,7 +345,7 @@ showDeleteErrorAlert() {
       </div>
     </div>
     <div v-if="isImageModalOpen" class="image-modal" @click="closeImageModal">
-      <img :src="selectedImage" alt="商品圖片" class="modal-image">
+      <img :src="'data:image/jpeg;base64,' + selectedImage" alt="商品圖片" class="modal-image">
     </div>
 
 
@@ -346,22 +354,22 @@ showDeleteErrorAlert() {
         <!-- 编辑表单 -->
         <div class="close-button" @click="closeEditModal">X</div>
         <div class="editPhoto">
-          <img v-if="editedProduct.photo" :src="editedProduct.photo" alt="商品圖片" class="modal-image" />
+          <img v-if="editedProduct.photo" :src="'data:image/jpeg;base64,' + editedProduct.photo" alt="商品圖片" class="modal-image" />
         </div>
         <div class="edit-form">
           <form @submit.prevent="submitForm">
             <div class="form-group">
-              <label for="productImage">商品圖片:</label>
+              <label for="productImage">商品圖片: &nbsp;</label>
               <input type="file" @change="handleImageChange" id="productImage" class="form-productImage" />
             </div>
 
             <div class="form-group">
-              <label for="productName">商品名稱:</label>
+              <label for="productName">商品名稱: &nbsp;</label>
               <input v-model="editedProduct.product_name" id="productName" placeholder="商品名称" class="productName" />
             </div>
             <div class="form-group">
 
-              <label for="productType">產品分類:</label>
+              <label for="productType">產品分類:  &nbsp;</label>
               <select id="productType" v-model="editedProduct.product_type" placeholder="產品分類">
                 <option value="書籍動漫">書籍動漫</option>
                 <option value="食品專區">食品專區</option>
@@ -378,23 +386,23 @@ showDeleteErrorAlert() {
             </div>
 
             <div class="form-group">
-              <label for="description">商品描述:</label>
+              <label for="description">商品描述: &nbsp;</label>
               <textarea v-model="editedProduct.description" id="productDescription" placeholder="商品描述"
                 @input="adjustTextareaHeight"></textarea>
             </div>
 
             <div class="form-group">
-              <label for="inventory">庫存:</label>
+              <label for="inventory">庫存: &nbsp;</label>
               <input v-model="editedProduct.inventory" id="inventory" placeholder="庫存" />
             </div>
 
             <div class="form-group">
-              <label for="price">售價:</label>
+              <label for="price">售價: &nbsp;</label>
               <input v-model="editedProduct.price" id="productPrice" placeholder="售價" />
             </div>
 
             <div class="form-group">
-              <label>是否上架商品:</label>
+              <label>是否上架商品: &nbsp;</label>
               <button type="button" @click="toggleShelves"
                 :style="{ backgroundColor: editedProduct.shelves ? 'red' : 'green', color: 'white', padding: '10px', border: 'none', borderRadius: '5px', cursor: 'pointer', fontSize: '16px', transition: 'background-color 0.3s ease' }">
                 {{ editedProduct.shelves ? '關閉商品' : '開啟商品' }}

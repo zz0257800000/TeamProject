@@ -49,7 +49,7 @@ export default {
         .then(response => {
           // console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '準備中');
-          this.fetchRecord();
+          // this.fetchRecord();
         })
 
         .catch(error => {
@@ -463,7 +463,7 @@ showAlert2(message) {
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {

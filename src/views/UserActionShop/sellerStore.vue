@@ -39,20 +39,19 @@ export default {
         <h3>賣場資訊</h3>
       </div>
       <!-- <h4>賣家名稱：</h4> -->
-      <h4>賣家名稱：
-        <router-link :to="'/UserPage/sellerStore/' + userId" class="productPageRoutBtn" title="前往賣家賣場" >
-          {{ userId }}
-        </router-link>
-      </h4>
+      <h4 v-if="product && product.length > 0">賣家名稱：
+  <router-link :to="'/UserPage/sellerStore/' + userId" class="productPageRoutBtn" title="前往賣家賣場" >
+    {{ product[0].seller_name }}
+  </router-link>
+</h4>
       <h4>全部商品：{{ productCount }}
       </h4>
-      <h4>賣場評價：</h4>
     </div>
     <!-- <div class="productsShow"></div> -->
     <div class="productsShow">
       <div class="product card" v-for="(product, index) in product" :key="index" style="width: 14rem;">
         <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn" :title="product.product_name">
-          <img :src="product.photo" class="card-img-top fixed-size-image" alt="...">
+          <img :src="'data:image/jpeg;base64,' + product.photo" class="card-img-top fixed-size-image" alt="...">
           <div class="card-body">
             <div class="card-text">
             <h5 class="productName">{{ product.product_name }}</h5>
@@ -75,15 +74,15 @@ export default {
   display: flex;
   width: 100vw;
   height: 115vh;
-  border: 2px solid rgb(255, 0, 0);
-  background-color: rgb(148, 148, 148);
+  border: 0px solid rgb(255, 0, 0);
+  background-color: rgb(241, 241, 241);
 
   .sellinfo {
     width: 15vw;
     /* 設置正方形橫條的寬度 */
     height: 30vh;
     /* 設置正方形橫條的高度 */
-    border: 1px solid #ff0000;
+    border: 0px solid #ff0000;
     /* 添加邊框效果，可以根據需要進行調整 */
     top: 4%;
     left: 1%;
@@ -91,18 +90,18 @@ export default {
     background-color: rgb(225, 225, 225);
 
     .sellinfHeader {
-      background-color: rgb(104, 104, 104);
+      background-color: rgb(198, 198, 198);
       height: 7vh;
       /* 設置正方形橫條的高度 */
       display: flex;
       align-items: center;
       left: 5%;
-
+      
     }
   }
 
   .productsShow {
-    border: 1px solid #ff0000;
+    border: 0px solid #ff0000;
     /* 添加邊框效果，可以根據需要進行調整 */
     width: 80vw;
     /* 設置正方形橫條的寬度 */
@@ -110,7 +109,7 @@ export default {
     /* 設置正方形橫條的高度 */
     top: 4%;
     left: 3%;
-    background-color: rgb(104, 104, 104);
+    background-color: rgb(224, 224, 224);
     position: relative;
     display: flex;
     flex-wrap: wrap;

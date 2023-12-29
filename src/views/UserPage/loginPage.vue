@@ -53,14 +53,18 @@ export default {
           switch (responseData.rtnCode) { //判斷rtnCode 以下判斷rtnCode的訊息做分類
             case "SUCCESSFUL": // 登入成功
               console.log(responseData);
+              console.log("User Photo:", responseData.user.user_photo);
+
               sessionStorage.setItem("loggedIn", "TRUE");
               sessionStorage.setItem("user_Id", responseData.user.id);
               sessionStorage.setItem("name", responseData.user.name);
               sessionStorage.setItem("points", responseData.user.points);
-
+              sessionStorage.setItem("user_photo", responseData.user.user_photo);
               sessionStorage.setItem("seller_name", responseData.user.seller_name);
               sessionStorage.setItem("remittance_title", responseData.user.remittance_title);
               sessionStorage.setItem("remittance_number", responseData.user.remittance_number);
+              sessionStorage.setItem("level", responseData.user.level);
+
               sessionStorage.setItem("phone_number", responseData.user.phone_number);
 
               this.showAlert("登入成功");
@@ -150,11 +154,11 @@ export default {
         </div>
       </form>
       <div class="social-login">
-        <a href="#">
+        <!-- <a href="#">
           <i class="fa-brands fa-facebook"></i>
           Login facebook
         </a>
-        <a href="#"> <i class="fa-brands fa-google"></i> Login Google </a>
+        <a href="#"> <i class="fa-brands fa-google"></i> Login Google </a> -->
       </div>
     </div>
   </div>

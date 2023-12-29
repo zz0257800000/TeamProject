@@ -14,6 +14,10 @@ export default {
   methods: {
     // 改密碼方法
     changePwd() {
+      if(!this.email.trim() || !this.oldPassword.trim() || !this.newPassword.trim()){
+        alert("請填寫所有欄位的資料!!");
+        return;
+      }
       // 檢查電子郵件是否為空且符合格式
       if (!this.email || !this.email.trim()) {
         alert("電子郵件欄位不得為空!!");
@@ -35,23 +39,30 @@ export default {
       const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
       // 檢查密碼是否符合要求
       if (!passwordRegex.test(this.newPassword)) {
-        alert(
-          "密碼至少要包含8個字元，要有英文+數字，其中需包含至少一個字母及一個數字!!"
-        );
+        alert("密碼至少要包含8個字元，要有英文+數字，其中需包含至少一個字母及一個數字!!");
         return;
       }
+      if (this.oldPassword === this.newPassword) {
+        alert("密碼不能與新密碼相同，請確認後重新原输入。");
+        return;
+      } 
       //更改密碼方法，通過所有條件才可更改密碼
       const userData = {
         email: this.email,
         old_password: this.oldPassword,
         new_password: this.newPassword,
       };
-      axios
-        .post("http://localhost:8080/user/changePwd", userData)
+      axios.post("http://localhost:8080/user/changePwd", userData)
         .then((response) => {
           console.log(response.data);
+          const responseData = response.data;
+          console.log(responseData.rtnCode);
+          if(responseData.rtnCode === "EMAIL_NOT_FOUND"){
+            alert("電子郵件錯誤，請確認您的電子郵件是否正確!!")
+          }else{
           this.showAlert("更改密碼成功!!");
-          this.$router.push("/");
+          this.$router.push("/"); //更改密碼成功後碼導回首頁
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -82,7 +93,7 @@ export default {
         <h1>更改密碼</h1>
         <br />
         <form @submit.prevent="submitForm" class="change-password-form">
-          <div class="inputList" style="margin-bottom: 20px;">
+          <div class="inputList" style="margin-bottom: 15px;">
             <label for="email">信箱:</label>
             <input
               type="email"
@@ -93,18 +104,17 @@ export default {
             />
           </div>
 
-
           <div class="inputList">
             <label for="oldPassword">原密碼:</label>
             <input
               :type="showConfirmPassword ? 'text' : 'password'"
               v-model="oldPassword"
-              placeholder="oldPassword"
+              placeholder="OldPassword"
               required
               class="input-field"
             />
           </div>
-          <div class="box" style="margin-right: 27%" >
+          <div class="box" style="margin-right: 27%; margin-top: -5px;"  >
             <input type="checkbox" v-model="showConfirmPassword" />
             <label>顯示密碼</label>
           </div>
@@ -119,7 +129,7 @@ export default {
               class="input-field"
             />
           </div>
-          <div class="box" style="margin-right: 27%">
+          <div class="box" style="margin-right: 27%; margin-top: -5px;">
             <input type="checkbox" v-model="showPassword" />
             <label>顯示密碼</label>
           </div>

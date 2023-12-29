@@ -1,8 +1,12 @@
+<!-- //recordList -->
+
 <script>
 import axios from 'axios'; // 記得這行要加上
 import Swal from "sweetalert2";
 
 export default {
+  props: {
+  },
   data() {
     return {
       currentPage: 1,
@@ -38,9 +42,7 @@ export default {
     fetchData() {
       this.fetchRecord();
     },
-    // 修改 fetchProductDetails 方法
-
-
+    
     fetchRecord() {
       const userId = this.userId;
       const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
@@ -49,7 +51,7 @@ export default {
         .then(response => {
           console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '準備中');
-          this.fetchRecord();
+          console.log('Record List Length:', this.recordList.length); // 添加这行打印语句
 
         })
 
@@ -70,31 +72,31 @@ export default {
     },
 
     cancelOrder(record_id) {
-    // 弹出确认对话框
-    this.showAlert("確認取消訂單", "你確定要取消訂單嗎？", (result) => {
+      // 弹出确认对话框
+      this.showAlert("確認取消訂單", "你確定要取消訂單嗎？", (result) => {
         // 用户点击确认后，result 是 true，执行实际的取消交易操作
         if (result) {
-            // 调用取消订单的 API
-            axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
-                .then(response => {
-                    // 处理 API 调用成功的情况
-                    console.log(response.data);
+          // 调用取消订单的 API
+          axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
+            .then(response => {
+              // 处理 API 调用成功的情况
+              console.log(response.data);
 
-                    // 在取消交易后调用 showAlert2，并传递成功提示
-                    this.showAlert2("取消訂單成功");
+              // 在取消交易后调用 showAlert2，并传递成功提示
+              this.showAlert2("取消訂單成功");
 
-                    // 刷新数据或执行其他操作...
-                    this.fetchData();
-                })
-                .catch(error => {
-                    // 处理 API 调用失败的情况
-                    console.error('Error cancelling order:', error);
-                });
+              // 刷新数据或执行其他操作...
+              this.fetchData();
+            })
+            .catch(error => {
+              // 处理 API 调用失败的情况
+              console.error('Error cancelling order:', error);
+            });
         }
-    });
-},
-showAlert(title, text, confirmCallback) {
-    Swal.fire({
+      });
+    },
+    showAlert(title, text, confirmCallback) {
+      Swal.fire({
         title: title,
         text: text,
         icon: "warning",
@@ -103,47 +105,47 @@ showAlert(title, text, confirmCallback) {
         cancelButtonColor: "#d33",
         confirmButtonText: "確認",
         cancelButtonText: "取消"
-    }).then((result) => {
+      }).then((result) => {
         // 将用户的确认结果传递给回调函数
         if (confirmCallback && typeof confirmCallback === 'function') {
-            confirmCallback(result.isConfirmed);
+          confirmCallback(result.isConfirmed);
         }
-    });
-},
-showAlert2(message) {
-    Swal.fire({
+      });
+    },
+    showAlert2(message) {
+      Swal.fire({
         title: "確認",
         text: message,
         icon: "success",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "確認"
-    });
-},
+      });
+    },
     shipOrder(record_id) {
-    // 弹出确认对话框
-    this.showAlert1("確認要出貨嗎？", (result) => {
+      // 弹出确认对话框
+      this.showAlert1("確認要出貨嗎？", (result) => {
         // 用户点击确认后，result 是 true，执行实际的出货操作
         if (result) {
-            // 调用将订单状态改为已出货的 API
-            axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
-                .then(response => {
-                    // 处理 API 调用成功的情况
-                    console.log(response.data);
+          // 调用将订单状态改为已出货的 API
+          axios.post(`http://localhost:8080/record/shipping?id=${record_id}`)
+            .then(response => {
+              // 处理 API 调用成功的情况
+              console.log(response.data);
 
-                    // 弹出成功提示
-                    this.showAlert2("出貨成功");
+              // 弹出成功提示
+              this.showAlert2("出貨成功");
 
-                    // 刷新数据或执行其他操作...
-                })
-                .catch(error => {
-                    // 处理 API 调用失败的情况
-                    console.error('Error shipping order:', error);
-                });
+              // 刷新数据或执行其他操作...
+            })
+            .catch(error => {
+              // 处理 API 调用失败的情况
+              console.error('Error shipping order:', error);
+            });
         }
-    });
-},
-showAlert1(message, callback) {
-    Swal.fire({
+      });
+    },
+    showAlert1(message, callback) {
+      Swal.fire({
         title: "確認",
         text: message,
         icon: "warning",
@@ -152,25 +154,26 @@ showAlert1(message, callback) {
         cancelButtonColor: "#d33",
         confirmButtonText: "確認",
         cancelButtonText: "取消"
-    }).then((result) => {
+      }).then((result) => {
         // 将用户的确认结果传递给回调函数
         callback(result.isConfirmed);
-    });
-},
-showAlert2(message) {
-    Swal.fire({
+      });
+    },
+    showAlert2(message) {
+      Swal.fire({
         title: "確認",
         text: message,
         icon: "success",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "確認"
-    });
-},
+      });
+    },
 
   },
 };
 </script>
 <template>
+
   <div class="actionPage">
     <div class="actionPageLeft">
       <div class="lefttHeader">
@@ -266,6 +269,7 @@ showAlert2(message) {
                 <h5>地址 : {{ record.consumer_address }}</h5>
                 <h6 style="color: red;">備註 : {{ record.remarks_column }}</h6>
               </div>
+              
               <div v-if="record.shipping_method !== '貨到付款'" class="orderInfo1">
                 <h6>付款方式 : {{ record.payment_method }}</h6>
                 <h6 v-if="record.payment_method !== '餘額付款' && record.payment_method !== '信用卡(一次付清)'">銀行 : {{
@@ -407,7 +411,7 @@ showAlert2(message) {
 
   .productManagement {
     background-color: #c8d5d8;
-    height: 162vh;
+    height: 161vh;
 
     .productCreate {
       display: flex;
@@ -515,7 +519,7 @@ showAlert2(message) {
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {
@@ -526,7 +530,6 @@ showAlert2(message) {
             }
 
           }
-
 
           .orderInfo2 {
             border: 0px solid rgb(255, 0, 0);

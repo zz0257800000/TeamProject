@@ -40,13 +40,13 @@ export default {
     // 修改 fetchProductDetails 方法
 
     fetchRecord() {
-  const userId = this.userId;
-  const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
+      const userId = this.userId;
+      const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
 
   axios.get(apiUrl)
     .then(response => {
       console.log('API Response:', response.data);
-      this.fetchRecord();
+      // this.fetchRecord();
 
       // 直接过滤出状态为 '出貨中' 的订单
       this.recordList = response.data.recordList.filter(record => record.status === '出貨中');
@@ -180,7 +180,7 @@ export default {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> </RouterLink>
+                <RouterLink class="btn" to=""> </RouterLink>
 
               </div>
 
@@ -293,7 +293,7 @@ export default {
 
   .productManagement {
     background-color: #fcf7de; 
-    height: 162vh;
+    height: 161vh;
 
     .productCreate {
       display: flex;
@@ -379,7 +379,7 @@ export default {
 
         .orderDetailsThird {
           border: 1px solid #8e8e8e;
-          width: 81.3vw;
+          width: 75vw;
           margin: 10px;
           height: 20vh;
           display: flex;
@@ -389,7 +389,7 @@ export default {
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {

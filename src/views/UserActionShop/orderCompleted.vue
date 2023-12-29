@@ -48,7 +48,7 @@ export default {
         .then(response => {
           console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '已完成');
-          this.fetchRecord();
+          // this.fetchRecord();
 
         })
 
@@ -304,7 +304,7 @@ export default {
 
   .productManagement {
     background-color: #171c1d; /* 深灰色背景 */
-    height: 162.3vh;
+    height: 161.2vh;
 
     .productCreate {
       display: flex;
@@ -394,7 +394,7 @@ export default {
 
         .orderDetailsThird {
           border: 1px solid #8e8e8e;
-          width: 81.3vw;
+          width: 82vw;
           margin: 10px;
           height: 20vh;
           display: flex;
@@ -404,7 +404,7 @@ export default {
 
           .orderInfo {
             border: 0px solid rgb(255, 0, 0);
-            width: 54vw;
+            width: 40vw;
             margin: 2px;
 
             .orderInfo1 {

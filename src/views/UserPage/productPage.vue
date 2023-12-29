@@ -235,7 +235,7 @@ addDislike(commentId) {
   <div class="mainshow">
     <div class="productInfo">
       <div class="product">
-        <img :src="product.photo" class="photoShow" alt="..." @click="openImageModal">
+        <img :src="'data:image/jpeg;base64,' + product.photo" class="photoShow" alt="..." @click="openImageModal">
         <div class="productText">
           <div class="title">
             <p class="product-name">商品名稱：{{ product.product_name }}</p>
@@ -318,13 +318,13 @@ addDislike(commentId) {
           </div>
             <!-- 新增留言的輸入框 -->
           </div>
-          <div class="secondShow">
+          <!-- <div class="secondShow">
             <div v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
 
               <input type="text" name="" id="" v-model="newCommentText" placeholder="添加留言" class="textEnter">
               <button @click="addProductComment" class="commitBtn">添加留言</button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <h2>最新商品</h2>
@@ -332,7 +332,7 @@ addDislike(commentId) {
         <div v-for="(product, index) in products.slice(0, 8)" :key="index" class="related-product-item">
           <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn"
             @click="navigateToProductPage(product.productId)">
-            <img :src="product.photo" alt="商品圖片" class="related-product-image">
+            <img :src="'data:image/jpeg;base64,' +  product.photo" alt="商品圖片" class="related-product-image">
             <p class="related-product-name">{{ product.product_name }}</p>
             <p class="related-product-price">${{ product.price }}</p>
           </router-link>
@@ -341,7 +341,7 @@ addDislike(commentId) {
     </div>
     <div v-if="isImageModalOpen" class="image-modal-overlay" @click="closeImageModal">
       <div class="image-modal-container">
-        <img :src="product.photo" class="image-modal-content" alt="放大後的圖片">
+        <img :src="'data:image/jpeg;base64,' + product.photo" class="image-modal-content" alt="放大後的圖片">
       </div>
     </div>
 
@@ -358,7 +358,7 @@ addDislike(commentId) {
   display: flex;
   width: 100vw;
   height: 250vh;
-  background-color: rgb(148, 148, 148);
+  background-color: rgb(241, 241, 241);
   justify-content: center;
   align-items: center;
 }

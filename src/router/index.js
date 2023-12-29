@@ -43,6 +43,7 @@ const router = createRouter({
       path: "/UserActionShop/bidOrder/",
       name: "bidOrder",
       component: () => import("../views/UserActionShop/bidOrder.vue"),
+      
     },
     {
       path: "/UserActionShop/cancelBid/",
@@ -155,6 +156,11 @@ const router = createRouter({
       path: "/:product/:id/data",
       name: "productData",
       component: () => import("../views/UserActionShop/ProductSaleData.vue"),
+    },
+    {
+      path: "/UserPage/WatchAllFeedback",
+      name: "WatchAllFeedback",
+      component: () => import("../views/UserPage/WatchAllFeedback.vue"),
     },
   ],
 });

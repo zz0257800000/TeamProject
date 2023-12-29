@@ -17,6 +17,8 @@ export default {
     mounted() {
         this.fetchProductDetails();
         this.userId = sessionStorage.getItem('user_Id');  // Get user_Id from sessionStorage
+        this.remittance_title = sessionStorage.getItem('remittance_title');  // Get user_Id from sessionStorage
+        this.remittance_number = sessionStorage.getItem('remittance_number');  // Get user_Id from sessionStorage
 
     },
     computed: {
@@ -77,6 +79,13 @@ export default {
                 return;
 
             }
+
+        //     const phoneRegex = /^09\d{8}$/;
+        // const isValidPhone = phoneRegex.test(this.phone_number);
+        // if (!isValidPhone) {
+        //   alert("請輸入有效的電話號碼!!");
+        //   return;
+        // }
             // 获取当前时间并格式化
             const currentDate = new Date();
             const year = currentDate.getFullYear();
@@ -97,13 +106,12 @@ export default {
                 shipping_method: this.selectedShipping,
                 shipping_cost: this.getShippingFee,
                 payment_method: this.paymentMethod,
-                remittance_title: "中國信託",
-                remittance_number: "812-00000087888",
+                remittance_title: this.remittance_title,
+                remittance_number: this.remittance_number,
                 remarks_column: this.remarksColumn,
                 product_amount: this.getOrderAmount,
                 record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
                 status: "準備中",
-                record_type: "下標訂單",
                 valid: true,
                 seller_id: this.product.user_id,
                 seller_name: this.product.seller_name,
@@ -150,7 +158,7 @@ export default {
                     <h3>XXX小舖</h3>
 
                     <div class="produtsrow" v-if="product">
-                        <img :src="product.photo" alt="Product Image" class="product-image">
+                        <img :src="'data:image/jpeg;base64,' +  product.photo" alt="Product Image" class="product-image">
                         <div class="product-details">
                             <h4>{{ product.product_name }}</h4>
                             <p>{{ product.product_type }}</p>
@@ -169,7 +177,7 @@ export default {
                         收件人:<input type="input" v-model="recipientName">
                     </label>
                     <label>
-                        電話:<input type="input" v-model="recipientPhone">
+                        電話:<input type="input" v-model="recipientPhone" maxlength="10">
                     </label>
                     <label>
                         地址:<input type="input" v-model="recipientAddress">
