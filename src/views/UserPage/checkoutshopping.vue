@@ -151,7 +151,7 @@ export default {
                     <h3>XXX小舖</h3>
 
                     <div class="produtsrow" v-if="product">
-                        <img :src="product.photo" alt="Product Image" class="product-image">
+                        <img :src="'data:image/jpeg;base64,' +  product.photo" alt="Product Image" class="product-image">
                         <div class="product-details">
                             <h4>{{ product.product_name }}</h4>
                             <p>{{ product.product_type }}</p>

@@ -341,7 +341,7 @@ addDislike(commentId) {
     </div>
     <div v-if="isImageModalOpen" class="image-modal-overlay" @click="closeImageModal">
       <div class="image-modal-container">
-        <img :src="product.photo" class="image-modal-content" alt="放大後的圖片">
+        <img :src="'data:image/jpeg;base64,' + product.photo" class="image-modal-content" alt="放大後的圖片">
       </div>
     </div>
 
