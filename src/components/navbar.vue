@@ -122,11 +122,10 @@ export default {
             </div>
             
 
-                <span v-if="user">餘額點數 : {{ user.points }}</span> &nbsp;
+                <span class="userInfo point" v-if="user" >餘額點數 : {{ user.points }}</span> &nbsp;
 
-            <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span>
+            <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span> 
 
-            <span class="userInfo point" v-if="user">賴皮點數 : {{ user.points }}</span> &nbsp;
             
             <button class="logout btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
             
@@ -146,7 +145,7 @@ export default {
       <div class="titleHeader">
 
         <RouterLink class="logo" to="/">
-          <h1> <i class="fa-solid fa-shrimp" style="color:#ffffff;"><b> 呱皮皮蝦</b> </i></h1>
+          <h1> <i class="fa-solid fa-shrimp" style="color:#ffffff;"><b> 皮皮蝦購物</b> </i></h1>
         </RouterLink>
 
         <div class="headerRight">

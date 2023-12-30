@@ -78,11 +78,11 @@ export default {
 
       <div class="leftAdmin">
 
-        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i>  &nbsp;產品管理</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> &nbsp; 銷售訂單
         </RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>  &nbsp;出貨訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>  &nbsp;完成訂單
         </RouterLink>
         <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
         </RouterLink>
@@ -122,7 +122,8 @@ export default {
                   訂單狀態 : {{ record.status }} &nbsp;
                 </h4>
               </div>
-              
+              <div class="orderDetailsheadright">
+              </div>
             </div>
 
             <!-- 商品信息 -->
@@ -219,24 +220,28 @@ export default {
   width: 15vw;
   display: flex;
   flex-direction: column;
-  background-color: #f9a825; /* 黃色主題 */
+  background-color: #37474f;
+  /* Dark teal background color */
   height: 170vh;
 
   .lefttHeader {
     height: 4vw;
-    background-color: #ffcc80; /* 淺桔黃色 */
+    background-color: #3b4c53;
+    /* Teal background color */
     display: flex;
     align-items: center;
     justify-content: center;
 
     h2 {
-      color: #263238; /* 深灰色文字 */
+      color: #eceff1;
+      /* Light text color */
       margin: 0;
     }
   }
 
   .leftAdmin {
-    background-color: #ffb74d; /* 桔黃色 */
+    background-color: #546e7a;
+    /* Teal background color */
     height: 42vw;
     flex-direction: column;
     display: flex;
@@ -246,8 +251,10 @@ export default {
       align-items: center;
       justify-content: center;
       width: 80%;
-      color: #263238; /* 深灰色文字 */
-      background-color: #ff9800; /* 橙色 */
+      color: #eceff1;
+      /* Light text color */
+      background-color: #263238;
+      /* Darker teal */
       padding: 10px;
       margin: 10px auto;
       border-radius: 5px;
@@ -255,7 +262,8 @@ export default {
       text-align: center;
 
       &:hover {
-        background-color: #fb8c00; /* 深橙色 */
+        background-color: #37474f;
+        /* Dark teal on hover */
       }
     }
   }
@@ -266,12 +274,14 @@ export default {
 
   .RightHeader {
     height: 4vw;
-    background-color: #ffef61; 
+    background-color: #bdc3c7;
+    /* Light gray background color */
 
     .secondtitle2 {
       justify-content: space-between;
       display: flex;
       border: 0px solid #e74c3c;
+      /* Border color */
       width: 82vw;
       height: 10vh;
       align-items: center;
@@ -282,9 +292,11 @@ export default {
         transition: all 0.5s ease;
         text-decoration: none;
         color: #34495e;
+        /* Dark text color */
 
         &:hover {
-          color: #f3c968;
+          color: #e74c3c;
+          /* Hover color */
           background-color: rgba(118, 118, 117, 0.5);
         }
       }
@@ -292,7 +304,7 @@ export default {
   }
 
   .productManagement {
-    background-color: #fcf7de; 
+    background-color: #f5f5f5;
     height: 161vh;
 
     .productCreate {
@@ -303,7 +315,8 @@ export default {
 
       h1 {
         margin: 0;
-        color: #857739;
+        color: #37474f;
+        /* 修改标题颜色 */
       }
 
       .btn {
@@ -312,14 +325,16 @@ export default {
         justify-content: center;
         width: 20%;
         color: #ecf0f1;
-        background-color: #c3ac38; 
+        background-color: #2c3e50;
+        /* 修改按钮颜色 */
         padding: 10px;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;
 
         &:hover {
-          background-color: #ffe250; /* 珊瑚橙色 */
+          background-color: #34495e;
+          /* 修改按钮悬停颜色 */
         }
       }
     }
@@ -332,18 +347,19 @@ export default {
       .orderDetails {
         height: 55vh;
         border: 1px solid #808080;
-        background-color: #ffffa0;
+        background-color: #fbfffc;
         transition: 0.5s;
         margin-bottom: 20px;
+        /* 添加20px的底部间隔 */
 
         &:hover {
-          box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+          box-shadow: 0 0 20px rgba(65, 65, 65, 0.8);
         }
 
         .orderDetailshead {
           border: 0px solid #e74c3c;
           margin: 10px;
-          justify-content: space-between;
+          justify-content: space-around;
           display: flex;
 
           .orderDetailsheadleft {
@@ -354,7 +370,12 @@ export default {
 
           .orderDetailsheadright {
             display: flex;
-
+            justify-content: center;
+            border-radius: 10px;
+            width: 10vw;
+            background-color: #fbfffc;
+            /* 修改右侧头部背景颜色 */
+            color: rgb(255, 255, 255);
           }
         }
 
@@ -371,6 +392,7 @@ export default {
             th,
             td {
               border: 1px solid #aaaaaa;
+              /* 将 border 值更改为 1px，颜色为 #ddd */
               padding: 8px;
               text-align: left;
             }
@@ -379,11 +401,13 @@ export default {
 
         .orderDetailsThird {
           border: 1px solid #8e8e8e;
-          width: 75vw;
+          width: 81.3vw;
           margin: 10px;
           height: 20vh;
           display: flex;
           justify-content: space-around;
+
+
           border: 0px solid rgb(255, 0, 0);
           display: flex;
 
@@ -396,7 +420,9 @@ export default {
               border: 0px solid rgb(251, 0, 0);
               width: 15vw;
               margin: 2px;
+
             }
+
           }
 
           .orderInfo2 {
@@ -405,12 +431,22 @@ export default {
 
             .btn {
               border: 0px solid rgb(255, 0, 0);
-              
+
+              font-size: 12pt;
+              width: 9vw;
+              background-color: #fbfffc;
+              color: white;
+              transition: 0.5s;
+              position: relative;
+              top: 70%;
+              right: 10%;
+
             }
           }
 
           .totalCount {
             border: 0px solid rgb(255, 0, 0);
+
             margin: 2px;
             padding: 2px;
             width: 17vw;
@@ -419,6 +455,7 @@ export default {
       }
     }
   }
+
 }
 
 .pagination-container {
@@ -429,16 +466,16 @@ export default {
 }
 
 .pagination-button {
-  background-color: #f3b468; 
+  background-color: #409eff;
   color: #fff;
-  border: 1px solid #f3c568; 
+  border: 1px solid #409eff;
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .pagination-button:hover {
-  background-color: #fff650; 
+  background-color: #66b1ff;
 }
 
 .pagination-button:disabled {
@@ -451,5 +488,4 @@ export default {
   margin: 0 10px;
   font-size: 16px;
 }
-
 </style>

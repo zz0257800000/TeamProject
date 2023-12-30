@@ -181,15 +181,14 @@ export default {
       </div>
 
       <div class="leftAdmin">
-        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i> 產品管理</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> 銷售訂單
+        <RouterLink class="btn" to="/UserPage/actionShop"><i class="fa-solid fa-wrench"></i>  &nbsp;產品管理</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/bidOrder/"><i class="fa-solid fa-bars-staggered"></i> &nbsp; 銷售訂單
         </RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>出貨訂單</RouterLink>
-        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>完成訂單
+        <RouterLink class="btn" to="/UserActionShop/shippedOder/"><i class="fa-solid fa-truck"></i>  &nbsp;出貨訂單</RouterLink>
+        <RouterLink class="btn" to="/UserActionShop/orderCompleted/"><i class="fa-solid fa-flag-checkered"></i>  &nbsp;完成訂單
         </RouterLink>
         <RouterLink class="btn" to="/UserActionShop/cancelBid/"><i class="fa-regular fa-rectangle-xmark"></i> &nbsp; 取消訂單
         </RouterLink>
-
 
       </div>
 
@@ -410,7 +409,7 @@ export default {
   }
 
   .productManagement {
-    background-color: #c8d5d8;
+    background-color: #f5f5f5;
     height: 161vh;
 
     .productCreate {
@@ -421,7 +420,7 @@ export default {
 
       h1 {
         margin: 0;
-        color: #000000;
+        color: #37474f;
         /* 修改标题颜色 */
       }
 
