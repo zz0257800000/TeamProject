@@ -201,8 +201,7 @@ export default {
         .then(response => {
           console.log('Response:', response.data);
           this.isEditModalOpen = false;
-          this.showAlert2("編輯成功");
-
+          alert("編輯成功");
 
         })
         .catch(error => {
@@ -213,14 +212,7 @@ export default {
           // 在弹窗关闭后执行页面跳转
           this.$router.go(0);
         });
-    }, showAlert2() {
-      Swal.fire({
-        title: "編輯成功",
-        text: "你的商品編輯成功",  // 使用传入的消息参数
-        icon: "success",
-        confirmButtonText: "OK",
-      });
-    },
+    }, 
 
     toggleShelves() {
       this.editedProduct.shelves = !this.editedProduct.shelves;
