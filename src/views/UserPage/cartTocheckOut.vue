@@ -60,7 +60,7 @@ export default {
         },
         
         //欄位防呆
-        submitOrder() {
+        submitOrder(item) {
             this.recipientAddress = this.address1 + this.address2;
             // 檢查是否所有必填項目都已經填寫
             if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
@@ -76,26 +76,27 @@ export default {
             const minutes = currentDate.getMinutes().toString().padStart(2, '0');
             const seconds = currentDate.getSeconds().toString().padStart(2, '0');
 
-            const orderData = {
-                user_id: this.product.user_id,
-                product_id: this.product.productId,  // 使用 this.product.product_id
-                product_name: this.product.product_name,
-                product_count: this.quantity,
-                consumer_name: this.recipientName,
-                recipientAddress: this.recipientAddress, // 添加地址信息
-                consumer_phone: this.recipientPhone,
-                shipping_method: this.selectedShipping,
-                shipping_cost: this.getShippingFee,
-                payment_method: this.paymentMethod,
-                remittance_title: "中國信託",
-                remittance_number: "812-00000087888",
-                remarks_column: this.remarksColumn,
-                product_amount: this.getOrderAmount,
-                record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
-                status: "準備中",
-                record_type: "購買",
-                valid: true
-
+        const orderData = {
+            user_id: this.userId,
+            product_id: item.product_id,  // 使用 this.product.product_id
+            product_name: item.product_name,
+            product_type: item.product_type,
+            product_count: item.cart_count,
+            consumer_name: this.recipientName,
+            consumer_address: this.recipientAddress,
+            consumer_phone: this.recipientPhone,
+            shipping_method: this.selectedShipping,
+            shipping_cost: this.getShippingFee,
+            payment_method: this.paymentMethod,
+            remittance_title: "中國信託",
+            remittance_number: "812-00000087888",
+            remarks_column: this.remarksColumn,
+            product_amount: this.getOrderAmount,
+            record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+            status: "準備中",
+            seller_id: item.seller_id,
+            record_type: "購買",
+            valid: true,
             };
 
             // 發送 POST 請求
@@ -241,7 +242,7 @@ export default {
                     <h4>訂單總金額：</h4>
                     <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
                 </div>
-                <button class="Checkout" @click="submitOrder">結帳</button>
+                <router-link :to="''" class="Checkout" @click="submitOrder(item)" v-for="(item) in product" :key="item.id">結帳</router-link>
 
             </div>
 
