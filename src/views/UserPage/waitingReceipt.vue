@@ -49,6 +49,7 @@ export default {
         .then(response => {
           console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '出貨中');
+          sessionStorage.setItem("UsershippingList",JSON.stringify(this.recordList.length));
 
         })
 

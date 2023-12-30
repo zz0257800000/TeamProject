@@ -59,6 +59,7 @@ export default {
 
         // 提取所有的 product_name
         const productName = data.cartList.map(item => item.product_name);
+        sessionStorage.setItem("cartTotalQuantity",JSON.stringify(this.cartList.length));
 
         // 在这里可以使用 productNames，例如打印到控制台
         console.log('商品資訊:', this.cartList);

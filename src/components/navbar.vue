@@ -17,6 +17,9 @@ export default {
       cartTotalQuantity: "",
       isUserLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE',
       user: null, // 初始化为 null 或一个空对象
+      orderQuantity:0,
+      UserorderQuantity:0,
+      cartTotalQuantity:0,
 
     }
   },
@@ -89,6 +92,22 @@ export default {
         console.error('Error fetching user info:', error);
       });
 
+      //判斷交易中訂單數量(提示訊息)
+      const bid = JSON.parse(sessionStorage.getItem("bidList"));
+      const shipping = JSON.parse(sessionStorage.getItem("shippingList"));
+
+      this.orderQuantity = bid + shipping;
+      // console.log("訂單數量:"+ this.orderQuantity )
+      const Userbid = JSON.parse(sessionStorage.getItem("UserbidList"));
+      const Usershipping = JSON.parse(sessionStorage.getItem("UsershippingList"));
+
+      this.UserorderQuantity = Userbid + Usershipping;
+
+      const cartTotalQuantity = JSON.parse(sessionStorage.getItem("cartTotalQuantity"));
+
+      this.cartTotalQuantity = cartTotalQuantity;
+
+
   },
  
 
@@ -152,10 +171,11 @@ export default {
 
           <div class="forSeller btn big">
             <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
-              <i class="fa-solid fa-store"></i>           <div>{{ orderQuantity  }}</div>
+              <i class="fa-solid fa-store"></i>
 
 
               <p>賣家中心</p>
+              <span class="notification-badge" v-if="orderQuantity != 0">{{ orderQuantity }}</span>
             </RouterLink>
           </div>
 
@@ -163,13 +183,16 @@ export default {
             <RouterLink class="big btn" to="/UserPage/buyingList" v-if="isLoggedIn">
               <i class="fa-solid fa-box"></i>
               <p>購買紀錄</p>
+              <span class="notification-badge" v-if="UserorderQuantity != 0">{{ UserorderQuantity }}</span>
+
             </RouterLink>
           </div>
 
           <RouterLink class="cart btn big" to="/UserPage/shoppingCart" v-if="isLoggedIn">
             <i class="fa-solid fa-cart-shopping usericon"></i>
             <p>購物車</p>
-            <span class="notification-badge">{{ cartTotalQuantity }}</span>
+            <span class="notification-badge" v-if="cartTotalQuantity != 0">{{ cartTotalQuantity }}</span>
+
           </RouterLink>
 
         </div>

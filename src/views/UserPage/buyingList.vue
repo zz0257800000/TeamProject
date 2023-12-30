@@ -49,7 +49,7 @@ export default {
         .then(response => {
           // console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '準備中');
-          // this.fetchRecord();
+          sessionStorage.setItem("UserbidList",JSON.stringify(this.recordList.length));
         })
 
         .catch(error => {

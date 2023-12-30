@@ -50,6 +50,7 @@ export default {
 
       // 直接过滤出状态为 '出貨中' 的订单
       this.recordList = response.data.recordList.filter(record => record.status === '出貨中');
+      sessionStorage.setItem("shippingList",JSON.stringify(this.recordList.length));
     })
     .catch(error => {
       console.error('Error fetching data:', error);

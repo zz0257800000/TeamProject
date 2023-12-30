@@ -52,7 +52,7 @@ export default {
           console.log('API Response:', response.data);
           this.recordList = response.data.recordList.filter(record => record.status === '準備中');
           console.log('Record List Length:', this.recordList.length); // 添加这行打印语句
-
+          sessionStorage.setItem("bidList",JSON.stringify(this.recordList.length));
         })
 
         .catch(error => {
