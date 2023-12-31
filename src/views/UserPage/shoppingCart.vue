@@ -124,7 +124,7 @@ export default {
       <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
         <div class="item-details">
           <div class="item-image">
-          <img :src=" 'data:image/jpeg;base64,' + item.photo " alt="Product Image" class="product-image">
+          <img :src=" 'data:image/jpeg;base64,' + item.photo " alt="Product Image" class="product-image" style="width: 7vw;">
         </div>
           <div class="item-name">{{ item.product_name }}</div>
           <div class="item-type">{{ item.product_type }}</div>

@@ -284,7 +284,7 @@ export default {
             align-items: center;
 
             .productsInfo {
-                height: 45vh;
+                height: 60vh;
                 border-bottom: 1px solid #ccc;
                 background-color: #ffffff;
                 /* Lighter background color */
