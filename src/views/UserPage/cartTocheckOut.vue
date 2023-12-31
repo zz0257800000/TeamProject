@@ -97,6 +97,7 @@ export default {
                 record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
                 status: "準備中",
                 seller_name: item.seller_name,
+                seller_id:item.seller_id,
                 record_type: "購買",
                 valid: true,
             };

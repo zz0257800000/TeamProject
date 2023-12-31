@@ -4,7 +4,6 @@ import api from "../../api/api";
 export default {
   data() {
     return {
-
       del:"",
       // cartTotalQuantity:[],
       cartList:[],
@@ -79,6 +78,8 @@ export default {
       product_id: item.product_id,
       photo: item.photo,
       seller_id:item.seller_id,
+      price:item.price,
+      seller_name:item.seller_name,
     })
     .then(response => {
       // 处理 API 响应，如果需要的话

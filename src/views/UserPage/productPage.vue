@@ -128,7 +128,7 @@ export default {
             photo: this.product.photo,
             seller_id: this.product.user_id,
             seller_name: this.product.seller_name,
-
+            price:this.product.price,
           };
           console.log('User ID:', this.user_id);
           console.log('User ID:', this.userId);
