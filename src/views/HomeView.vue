@@ -88,7 +88,7 @@ export default {
 
 <template>
     <div class="navbar Area">
-  <ul class="nav justify-content-center">
+      <ul class="nav justify-content-center">
     <li class="nav-item">
       <a class="nav-link active" aria-current="page" @click="handleNavClick('')">新品上架</a>
     </li>
@@ -118,8 +118,12 @@ export default {
     </li>
     <li class="nav-item">
       <a class="nav-link" aria-current="page" @click="handleNavClick('其他')">其他</a>
-    </li>
+    </li> 
   </ul>
+  <div class="search">
+        <input v-model="searchResults" placeholder="輸入搜尋關鍵字">
+        <button @click="handleSearch">搜尋</button>
+      </div>  
     </div>
 
   <div class="Marquee">
@@ -130,22 +134,17 @@ export default {
   </div>
 
   <div class="mainshow">
-    <div class="search">
-        <input v-model="searchResults" placeholder="輸入搜尋關鍵字">
-        <button @click="handleSearch">搜尋</button>
-      </div>
+
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
           aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
           aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="../../public/stock1.jpg" class="d-block w-100" alt="...">
+          <img src="../../public/2024.jpg" class="d-block w-100" alt="...">
         </div>
         <div class="carousel-item">
           <img src="../../public/stock1.jpg" class="d-block w-100" alt="...">
@@ -239,10 +238,10 @@ export default {
 }
 .search {
   display: flex;
-  align-items: center;
-  margin: 20px 0;
-  height: 10vh;
-  width: 50vw;
+  // align-items: center;
+  height: 5vh;
+  width: 25vw;
+  margin-right: 20px;
 
   input {
     flex: 1;
@@ -310,7 +309,7 @@ export default {
 
   .carousel {
     width: 75vw;
-    margin-bottom: 20px;
+    margin: 20px;
     img{
       border-radius: 10px;
     }
