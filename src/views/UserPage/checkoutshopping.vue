@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+import TWzipcode from 'twzipcode.js'; 
 
 export default {
     data() {
@@ -12,6 +13,8 @@ export default {
             recipientName: '',
             recipientPhone: '',
             recipientAddress: '',
+            address2:'',
+            twzipcode: null, // 添加 twzipcode 屬性
         };
     },
     mounted() {
@@ -19,6 +22,9 @@ export default {
         this.userId = sessionStorage.getItem('user_Id');  // Get user_Id from sessionStorage
         this.remittance_title = sessionStorage.getItem('remittance_title');  // Get user_Id from sessionStorage
         this.remittance_number = sessionStorage.getItem('remittance_number');  // Get user_Id from sessionStorage
+        // 使用 TWzipcode.js 初始化地址選擇器
+        this.twzipcode = new TWzipcode();
+        this.twzipcode.init(this.$refs.twzipcodeRef);  // 修改這一行
 
     },
     computed: {
@@ -73,6 +79,7 @@ export default {
             this.quantity++;
         },
         submitOrder() {
+            this.recipientAddress = this.address1 + this.address2;
             // 檢查是否所有必填項目都已經填寫
             if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
                 alert('請填寫所有必填項目');
@@ -145,6 +152,17 @@ export default {
 
 
         },
+        handleZipcodeChange(data) {
+    // 使用 TWzipcode.js 的方法來獲取地址信息
+    const addressInfo = this.twzipcode.get(["zipcode", "county", "district",]);
+    
+    if (addressInfo && addressInfo.length > 0) {
+        const firstAddress = addressInfo[0];
+        this.address1 = `${firstAddress.zipcode} ${firstAddress.county} ${firstAddress.district} `;
+        console.log(this.address1);
+    } else {
+        console.error("Address Info is empty or not in the expected format.");
+    }},
     },
 };
 </script>
@@ -191,10 +209,11 @@ export default {
                     </label>
                     </div>
                     <div class="address inp">
-  地址：
-  <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange"></div>
-  <input type="input" v-model="recipientAddress">
-</div>
+                        地址：
+                    <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange" ></div>
+                    <input type="input" v-model="address2">
+                    </div>
+
 
                 </div>
                 <div class="ShippingInfo area">

@@ -67,6 +67,12 @@ export default {
             alert('請填寫所有必填項目');
             return;
         }
+        const phoneRegex = /^09\d{8}$/;
+            const isValidPhone = phoneRegex.test(this.recipientPhone);
+        if (!isValidPhone) {
+            alert("請輸入有效的電話號碼!!");
+            return;
+        }
 
         const currentDate = new Date();
         const year = currentDate.getFullYear();
@@ -128,7 +134,7 @@ export default {
         this.$router.push('/UserPage/buyingList');
     },
 
-        handleZipcodeChange(data) {
+    handleZipcodeChange(data) {
     // 使用 TWzipcode.js 的方法來獲取地址信息
     const addressInfo = this.twzipcode.get(["zipcode", "county", "district",]);
     
