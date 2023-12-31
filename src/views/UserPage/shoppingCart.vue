@@ -4,7 +4,6 @@ import api from "../../api/api";
 export default {
   data() {
     return {
-
       del:"",
       // cartTotalQuantity:[],
       cartList:[],
@@ -80,6 +79,8 @@ export default {
       product_id: item.product_id,
       photo: item.photo,
       seller_id:item.seller_id,
+      price:item.price,
+      seller_name:item.seller_name,
     })
     .then(response => {
       // 处理 API 响应，如果需要的话
@@ -125,7 +126,7 @@ export default {
       <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
         <div class="item-details">
           <div class="item-image">
-          <img :src=" 'data:image/jpeg;base64,' + item.photo " alt="Product Image" class="product-image">
+          <img :src=" 'data:image/jpeg;base64,' + item.photo " alt="Product Image" class="product-image" style="width: 7vw;">
         </div>
           <div class="item-name">{{ item.product_name }}</div>
           <div class="item-type">{{ item.product_type }}</div>

@@ -12,16 +12,11 @@ export default {
             recipientName: '',
             recipientPhone: '',
             recipientAddress: '',
-            recipientAddress1:'',
+            address2:'',
             userId: sessionStorage.getItem('user_Id'),
             cartList:[],
             twzipcode: null, // 添加 twzipcode 屬性
         };
-    },
-    mounted() {
-        // 初始化 TWzipcode
-        const twzipcode = new TWzipcode();
-        this.fetchProductDetails();
     },
     computed: {
         getShippingFee() {
@@ -66,22 +61,51 @@ export default {
         
         //欄位防呆
         submitOrder() {
-            // 檢查是否所有必填項目都已經填寫
-            if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
-                alert('請填寫所有必填項目');
-                return;
-            }
-            const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-            const day = currentDate.getDate().toString().padStart(2, '0');
-            const hours = currentDate.getHours().toString().padStart(2, '0');
-            const minutes = currentDate.getMinutes().toString().padStart(2, '0');
-            const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+            this.recipientAddress = this.address1 + this.address2;
+        // 檢查是否所有必填項目都已經填寫
+        if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
+            alert('請填寫所有必填項目');
+            return;
+        }
+        const phoneRegex = /^09\d{8}$/;
+            const isValidPhone = phoneRegex.test(this.recipientPhone);
+        if (!isValidPhone) {
+            alert("請輸入有效的電話號碼!!");
+            return;
+        }
 
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        const hours = currentDate.getHours().toString().padStart(2, '0');
+        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+        // 遍歷購物車中的每個商品
+        this.product.forEach(item => {
             const orderData = {
                 user_id: this.userId,
-                // 其他屬性...
+                product_id: item.product_id,
+                product_name: item.product_name,
+                product_type: item.product_type,
+                product_count: item.cart_count,
+                consumer_name: this.recipientName,
+                consumer_address: this.recipientAddress,
+                consumer_phone: this.recipientPhone,
+                shipping_method: this.selectedShipping,
+                shipping_cost: this.getShippingFee,
+                payment_method: this.paymentMethod,
+                remittance_title: "中國信託",
+                remittance_number: "812-00000087888",
+                remarks_column: this.remarksColumn,
+                product_amount: this.getOrderAmount,
+                record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+                status: "準備中",
+                seller_name: item.seller_name,
+                seller_id:item.seller_id,
+                record_type: "購買",
+                valid: true,
             };
 
             // 發送 POST 請求
@@ -92,32 +116,42 @@ export default {
                 },
                 body: JSON.stringify(orderData),
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Success:', data);
-                    console.log(orderData)
-                    // 處理成功響應
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    console.log(orderData);
-                    // 處理錯誤
-                });
-                this.$router.push('/UserPage/buyingList');
-        },
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
 
-handleZipcodeChange(data) {
-    // 使用所選地址更新 recipientAddress
-    this.recipientAddress = `${data.zipcode} ${data.county} ${data.district} ${data.addr}`;
-    console.log(this.recipientAddress);
+        // 處理完所有商品後，導航到相應的頁面
+        this.$router.push('/UserPage/buyingList');
+    },
+
+    handleZipcodeChange(data) {
+    // 使用 TWzipcode.js 的方法來獲取地址信息
+    const addressInfo = this.twzipcode.get(["zipcode", "county", "district",]);
+    
+    if (addressInfo && addressInfo.length > 0) {
+        const firstAddress = addressInfo[0];
+        this.address1 = `${firstAddress.zipcode} ${firstAddress.county} ${firstAddress.district} `;
+        console.log(this.address1);
+    } else {
+        console.error("Address Info is empty or not in the expected format.");
+    }
 },
-
-
+    },
+    mounted() {
+        // 使用 TWzipcode.js 初始化地址選擇器
+        this.twzipcode = new TWzipcode();
+        this.twzipcode.init(this.$refs.twzipcodeRef);  // 修改這一行
+        this.fetchProductDetails();
     },
 };
 </script>
@@ -161,10 +195,10 @@ handleZipcodeChange(data) {
                         電話：<input type="input" v-model="recipientPhone">
                     </div>
                     <div class="address inp">
-  地址：
-  <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange"></div>
-  <input type="input" v-model="recipientAddress">
-</div>
+                        地址：
+                    <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange" ></div>
+                    <input type="input" v-model="address2">
+                    </div>
 
                 </div>
                 <div class="ShippingInfo area">
@@ -216,7 +250,7 @@ handleZipcodeChange(data) {
                     <h4>訂單總金額：</h4>
                     <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
                 </div>
-                <button class="Checkout" @click="submitOrder">結帳</button>
+                <router-link to="" class="Checkout" @click="submitOrder(product)">結帳</router-link>
 
             </div>
 
@@ -258,7 +292,7 @@ handleZipcodeChange(data) {
             align-items: center;
 
             .productsInfo {
-                height: 45vh;
+                height: 60vh;
                 border-bottom: 1px solid #ccc;
                 background-color: #ffffff;
                 /* Lighter background color */
@@ -362,6 +396,7 @@ handleZipcodeChange(data) {
     }
 .item-type{
     width: 8vw;
+    margin-left: 15px;
 }
 .item-price{
     width: 8vw;
