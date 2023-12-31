@@ -60,43 +60,45 @@ export default {
         },
         
         //欄位防呆
-        submitOrder(item) {
+        submitOrder() {
             this.recipientAddress = this.address1 + this.address2;
-            // 檢查是否所有必填項目都已經填寫
-            if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
-                alert('請填寫所有必填項目');
-                console.log(this.recipientAddress)
-                return;
-            }
-            const currentDate = new Date();
-            const year = currentDate.getFullYear();
-            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-            const day = currentDate.getDate().toString().padStart(2, '0');
-            const hours = currentDate.getHours().toString().padStart(2, '0');
-            const minutes = currentDate.getMinutes().toString().padStart(2, '0');
-            const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+        // 檢查是否所有必填項目都已經填寫
+        if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
+            alert('請填寫所有必填項目');
+            return;
+        }
 
-        const orderData = {
-            user_id: this.userId,
-            product_id: item.product_id,  // 使用 this.product.product_id
-            product_name: item.product_name,
-            product_type: item.product_type,
-            product_count: item.cart_count,
-            consumer_name: this.recipientName,
-            consumer_address: this.recipientAddress,
-            consumer_phone: this.recipientPhone,
-            shipping_method: this.selectedShipping,
-            shipping_cost: this.getShippingFee,
-            payment_method: this.paymentMethod,
-            remittance_title: "中國信託",
-            remittance_number: "812-00000087888",
-            remarks_column: this.remarksColumn,
-            product_amount: this.getOrderAmount,
-            record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
-            status: "準備中",
-            seller_id: item.seller_id,
-            record_type: "購買",
-            valid: true,
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = currentDate.getDate().toString().padStart(2, '0');
+        const hours = currentDate.getHours().toString().padStart(2, '0');
+        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
+        // 遍歷購物車中的每個商品
+        this.product.forEach(item => {
+            const orderData = {
+                user_id: this.userId,
+                product_id: item.product_id,
+                product_name: item.product_name,
+                product_type: item.product_type,
+                product_count: item.cart_count,
+                consumer_name: this.recipientName,
+                consumer_address: this.recipientAddress,
+                consumer_phone: this.recipientPhone,
+                shipping_method: this.selectedShipping,
+                shipping_cost: this.getShippingFee,
+                payment_method: this.paymentMethod,
+                remittance_title: "中國信託",
+                remittance_number: "812-00000087888",
+                remarks_column: this.remarksColumn,
+                product_amount: this.getOrderAmount,
+                record_date: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+                status: "準備中",
+                seller_name: item.seller_name,
+                record_type: "購買",
+                valid: true,
             };
 
             // 發送 POST 請求
@@ -107,24 +109,23 @@ export default {
                 },
                 body: JSON.stringify(orderData),
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Success:', data);
-                    console.log(orderData)
-                    // 處理成功響應
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    console.log(orderData);
-                    // 處理錯誤
-                });
-                this.$router.push('/UserPage/buyingList');
-        },
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        // 處理完所有商品後，導航到相應的頁面
+        this.$router.push('/UserPage/buyingList');
+    },
 
         handleZipcodeChange(data) {
     // 使用 TWzipcode.js 的方法來獲取地址信息
@@ -242,7 +243,7 @@ export default {
                     <h4>訂單總金額：</h4>
                     <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
                 </div>
-                <router-link :to="''" class="Checkout" @click="submitOrder(item)" v-for="(item) in product" :key="item.id">結帳</router-link>
+                <router-link to="" class="Checkout" @click="submitOrder(product)">結帳</router-link>
 
             </div>
 
