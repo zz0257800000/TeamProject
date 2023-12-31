@@ -113,7 +113,11 @@ export default {
       <span class="current-page">購物車</span>
     </div>
 
-    <div class="cart-items">
+    <div v-if="cartList.length === 0" class="empty-cart-message">
+      <p>您的購物車是空的，請先加入商品！</p>
+    </div>
+
+    <div v-else class="cart-items">
       <div class="item_header">
         <div class="item-image header">商品照片</div>
         <div class="item-name header">商品</div> 
