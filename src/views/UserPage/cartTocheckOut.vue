@@ -109,7 +109,7 @@ export default {
             }];
 
             // 發送 POST 請求
-            fetch('http://localhost:8080/record/createAll', {
+            fetch('http://localhost:8080/records/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
