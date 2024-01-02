@@ -91,10 +91,23 @@ export default {
       console.error('Error updating item in cart:', error);
     });
   },
+  groupBySeller(cartList) {
+    const grouped = {};
+    cartList.forEach(item => {
+      const sellerId = item.seller_id;
+      if (!grouped[sellerId]) {
+        grouped[sellerId] = [];
+      }
+      grouped[sellerId].push(item);
+    });
+    return grouped;
+  },
   },
   
   computed: {
-
+    groupedCart() {
+      return this.groupBySeller(this.cartList);
+    },
   },
   mounted() {
     this.searchList();
@@ -127,32 +140,35 @@ export default {
         <div class="item-total header">總計</div>
         <div class="operate header">操作</div>
       </div>
-      <div class="cart-item" v-for="(item, index) in cartList" :key="item.id" >
-        <div class="item-details">
-          <div class="item-image">
-          <img :src=" 'data:image/jpeg;base64,' + item.photo " alt="Product Image" class="product-image" style="width: 7vw;">
-        </div>
-          <div class="item-name">{{ item.product_name }}</div>
-          <div class="item-type">{{ item.product_type }}</div>
-          <div class="item-price">
-            <span class="price-value">{{ item.cart_amount }}</span>
+
+      <div v-for="(sellerItems, sellerId) in groupedCart" :key="sellerId">
+        <h4>{{ sellerItems[0].seller_name }} 的商品</h4>
+        <div class="cart-item" v-for="(item, index) in sellerItems" :key="index">
+          <div class="item-details">
+            <div class="item-image">
+              <img :src="'data:image/jpeg;base64,' + item.photo" alt="Product Image" class="product-image" style="width: 7vw;">
+            </div>
+            <div class="item-name">{{ item.product_name }}</div>
+            <div class="item-type">{{ item.product_type }}</div>
+            <div class="item-price">
+              <span class="price-value">{{ item.cart_amount }}</span>
+            </div>
+            <div class="item-quantity">
+              <button @click="handleSub(item)"> - </button>
+              <span class="quantity-value">{{ " " + item.cart_count + " " }}</span>
+              <button @click="handlePlus(item)"> + </button>
+            </div>
+            <div class="item-total">
+              <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
+            </div>
+            <button @click="handledelete(index)" class="operate delete-button">刪除</button>
           </div>
-          <div class="item-quantity">
-            <button @click="handleSub(item)"> - </button>
-            <span class="quantity-value">{{ " " + item.cart_count + " " }}</span>
-            <button @click="handlePlus(item)"> + </button>
-          </div>
-          <div class="item-total">
-            <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
-          </div>
-          <button @click="handledelete(index)" class="operate delete-button">刪除</button>
         </div>
       </div>
+
       <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
     </div>
-
   </div>
-
 </template>
 
 <style lang="scss" scoped>
