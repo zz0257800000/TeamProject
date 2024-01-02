@@ -162,8 +162,8 @@ export default {
         <div class="countAll">
             <div class="leftInfo">
                 <div class="productsInfo area">
-                    <h3>XXX小舖</h3>
-                    <div class="line"></div>
+                    <!-- <h3>XXX小舖</h3> -->
+
                     <!-- <div class="item_header">
                         <div class="item-image header" >商品照片</div>
                         <div class="item-name header">商品</div>  
@@ -173,6 +173,8 @@ export default {
                         <div class="item-total header">總計</div>
                     </div> -->
                     <div class="produtsrow" v-for="(item, index) in product" :key="item.id">
+                        <!-- <p>{{ item.seller_name }}</p> -->
+                        <div class="line"></div>
                         <div class="item-image">
                             <img :src="'data:image/jpeg;base64,' + item.photo" alt="Product Image" class="item-image">
                         </div>
