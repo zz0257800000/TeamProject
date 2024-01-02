@@ -106,7 +106,14 @@ export default {
       console.log('Record:', record);
 
       const hasCommented = record.hasCommented;
-
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = currentDate.getDate().toString().padStart(2, '0');
+  const hours = currentDate.getHours().toString().padStart(2, '0');
+  const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+  const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+  
       if (!hasCommented) {
         const productId = record.product_id;
 
@@ -114,6 +121,8 @@ export default {
           user_name: sessionStorage.getItem('name'),
           star: this.commentStars,
           comment: this.newCommentText,
+          comment_time: `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`,
+
           user_id: sessionStorage.getItem('user_Id'),
           product_id: productId,
         })

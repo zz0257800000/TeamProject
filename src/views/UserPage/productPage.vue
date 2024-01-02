@@ -21,6 +21,7 @@ export default {
       isImageModalOpen: false,
       userId: sessionStorage.getItem('user_Id'),
       name: sessionStorage.getItem('name'),
+      points: sessionStorage.getItem('points'),
 
       comments: [], // 用於存儲商品留言的陣列
       newCommentText: '',
@@ -31,6 +32,7 @@ export default {
     this.fetchProducts();
     this.userId = sessionStorage.getItem('user_Id');
     this.name = sessionStorage.getItem('name');
+    this.points = sessionStorage.getItem('points');
 
     console.log('User ID:', this.userId); // 檢查 userId 是否被設置
     this.fetchProductDetails(); // 現有的方法
@@ -111,6 +113,11 @@ export default {
     addToCartAndShowAlert() {
       // 调用 cartCreat 函数
       // const user_id = sessionStorage.getItem('user_Id');
+      if (this.points < this.product.price * this.quantity) {
+        // 使用者點數不足的提示，你可以自行調整
+        alert('您的點數不足以購買此商品');
+        return;
+    }
 
       const addToCart = async () => {
         try {
@@ -224,6 +231,19 @@ addDislike(commentId) {
     });
     alert('倒讚成功！');
 
+},  handleBuyNowClick() {
+  // 檢查使用者的點數是否足夠支付商品總金額
+  if (this.points < this.product.price * this.quantity) {
+    // 使用者點數不足的提示，你可以自行調整
+    alert('您的點數不足以購買此商品');
+    return; // 如果點數不足，直接結束函數的執行，不進行後續的跳轉操作
+  }
+
+  // 如果需要額外的邏輯，可以在這裡添加
+  // ...
+
+  // 跳轉到結帳頁面
+  this.$router.push(`/UserPage/checkoutshopping/${this.product.productId}`);
 },
 
 
@@ -250,23 +270,20 @@ addDislike(commentId) {
           <div class="title">
             <h5>上架時間：{{ product.upload_time }}</h5>
           </div>
-          <div class="quantity" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
+          <div class="quantity" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity">
             <p>數量：</p>
             <button @click="decrementQuantity">-</button>
             <input v-model="quantity" type="number" min="1" />
             <button @click="incrementQuantity">+</button>
           </div>
-          <div class="product-buttons">
-            <button v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0" class="cart-button"
-              @click="addToCartAndShowAlert">
-              <i class="fas fa-shopping-cart"></i>加入購物車
-            </button>
-            <router-link v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0"
-              :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button">
-              <i class="fas fa-credit-card"></i> 立即購買
-            </router-link>
-
-          </div>
+          <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity">
+  <button class="cart-button" @click="addToCartAndShowAlert">
+    <i class="fas fa-shopping-cart"></i>加入購物車
+  </button>
+  <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" @click="handleBuyNowClick">
+    <i class="fas fa-credit-card"></i> 立即購買
+  </router-link>
+</div>
           <h1>
             <div v-if="!userId || userId === product.user_id " class="not-logged-in-message">
               請先登入以購買產品
@@ -303,7 +320,8 @@ addDislike(commentId) {
           <div class="firstshow" >
             <!-- 顯示現有的留言 -->
             <div v-for="(comment, index) in comments.commentList" :key="index" class="commentitem">
-              <span>{{ comment.user_name }}</span>
+              <span>{{ comment.user_name }}</span>               <span>{{ comment.comment_time }}</span>
+
               <p>{{ comment.comment }}</p>
               <div class="thumb"  v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
               <span>

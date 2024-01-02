@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import TWzipcode from 'twzipcode.js'; 
+import TWzipcode from 'twzipcode.js';
 
 export default {
     data() {
@@ -13,8 +13,10 @@ export default {
             recipientName: '',
             recipientPhone: '',
             recipientAddress: '',
-            address2:'',
+            address2: '',
             twzipcode: null, // 添加 twzipcode 屬性
+            points: sessionStorage.getItem('points'),
+
         };
     },
     mounted() {
@@ -25,6 +27,7 @@ export default {
         // 使用 TWzipcode.js 初始化地址選擇器
         this.twzipcode = new TWzipcode();
         this.twzipcode.init(this.$refs.twzipcodeRef);  // 修改這一行
+        this.points = sessionStorage.getItem('points');
 
     },
     computed: {
@@ -44,14 +47,15 @@ export default {
             }
         },
         getTotalAmount() {
-            if (this.product) {
-                return this.product.price * this.quantity;
-            }
-            return 0;
-        },
-        getOrderAmount() {
-            return this.getTotalAmount + this.getShippingFee;
-        },
+        if (this.product) {
+            return this.product.price * this.quantity;
+        }
+        return 0;
+    },
+
+    getOrderAmount() {
+        return this.getTotalAmount + this.getShippingFee;
+    },
     },
     methods: {
         fetchProductDetails() {
@@ -78,7 +82,10 @@ export default {
         incrementQuantity() {
             this.quantity++;
         },
+     
         submitOrder() {
+          
+
             this.recipientAddress = this.address1 + this.address2;
             // 檢查是否所有必填項目都已經填寫
             if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
@@ -86,13 +93,13 @@ export default {
                 return;
 
             }
-
+          
             const phoneRegex = /^09\d{8}$/;
             const isValidPhone = phoneRegex.test(this.recipientPhone);
-        if (!isValidPhone) {
-            alert("請輸入有效的電話號碼!!");
-            return;
-        }
+            if (!isValidPhone) {
+                alert("請輸入有效的電話號碼!!");
+                return;
+            }
             // 获取当前时间并格式化
             const currentDate = new Date();
             const year = currentDate.getFullYear();
@@ -148,21 +155,22 @@ export default {
                     // 處理錯誤
                 });
             this.$router.push('/UserPage/buyingList');
-            
+
 
 
         },
         handleZipcodeChange(data) {
-    // 使用 TWzipcode.js 的方法來獲取地址信息
-    const addressInfo = this.twzipcode.get(["zipcode", "county", "district",]);
-    
-    if (addressInfo && addressInfo.length > 0) {
-        const firstAddress = addressInfo[0];
-        this.address1 = `${firstAddress.zipcode} ${firstAddress.county} ${firstAddress.district} `;
-        console.log(this.address1);
-    } else {
-        console.error("Address Info is empty or not in the expected format.");
-    }},
+            // 使用 TWzipcode.js 的方法來獲取地址信息
+            const addressInfo = this.twzipcode.get(["zipcode", "county", "district",]);
+
+            if (addressInfo && addressInfo.length > 0) {
+                const firstAddress = addressInfo[0];
+                this.address1 = `${firstAddress.zipcode} ${firstAddress.county} ${firstAddress.district} `;
+                console.log(this.address1);
+            } else {
+                console.error("Address Info is empty or not in the expected format.");
+            }
+        },
     },
 };
 </script>
@@ -171,8 +179,8 @@ export default {
     <div class="mainshow">
         <div class="countAll">
             <div class="leftInfo">
-                <div class="productsInfo area">
-                    <h3>XXX小舖</h3>
+                <div class="productsInfo area" v-if="product">
+                    <h3>{{ product.seller_name }}</h3>
                     <div class="line"></div>
                     <!-- <div class="item_header">
                         <div class="item-image header" >商品照片</div>
@@ -205,13 +213,13 @@ export default {
                     <div class="info inp">
                         收件人：<input type="input" v-model="recipientName">
                         <label>
-                        電話:<input type="input" v-model="recipientPhone" maxlength="10">
-                    </label>
+                            電話:<input type="input" v-model="recipientPhone" maxlength="10">
+                        </label>
                     </div>
                     <div class="address inp">
                         地址：
-                    <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange" ></div>
-                    <input type="input" v-model="address2">
+                        <div class="twzipcode" ref="twzipcodeRef" @change="handleZipcodeChange"></div>
+                        <input type="input" v-model="address2">
                     </div>
 
 
@@ -239,17 +247,17 @@ export default {
                 <div class="payment area" v-if="selectedShipping !== '貨到付款'">
                     <h3>付款方式</h3>
 
-                    <label>
+                    <!-- <label>
                         <input type="radio" v-model="paymentMethod" value="ATM轉帳">ATM轉帳
-                    </label>
+                    </label> -->
 
                     <label>
                         <input type="radio" v-model="paymentMethod" value="餘額付款">餘額付款
                     </label>
 
-                    <label>
+                    <!-- <label>
                         <input type="radio" v-model="paymentMethod" value="信用卡(一次付清)">信用卡(一次付清)
-                    </label>
+                    </label> -->
                 </div>
                 <div class="remarksColumnInfo area">
                     <div class="remarks inp">
@@ -258,16 +266,15 @@ export default {
                 </div>
             </div>
 
-            <div class="rightCount area">
-                <p>商品總金額: $ {{ getTotalAmount }}</p>
-                <p>運費: $ {{ getShippingFee }}</p>
-                <div class="orderTotal">
-                    <h4>訂單總金額：</h4>
-                    <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
-                </div>
-                <button class="Checkout" @click="submitOrder">結帳</button>
-
-            </div>
+            <div class="rightCount area" v-if="product">
+    <p>商品總金額: $ {{ getTotalAmount }}</p>
+    <p>運費: $ {{ getShippingFee }}</p>
+    <div class="orderTotal">
+        <h4>訂單總金額：</h4>
+        <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
+    </div>
+    <button  class="Checkout" @click="submitOrder">結帳</button>
+</div>
 
 
         </div>
@@ -275,16 +282,18 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.line{
+.line {
     height: 1px;
     background-color: #f99b58;
 }
-.area{
+
+.area {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     padding: 15px;
 }
+
 .mainshow {
     height: 150vh;
     display: flex;
@@ -324,7 +333,7 @@ export default {
                     background-color: #ffffff;
                     /* Muted product row color */
                     margin: 10px;
-                    align-items: center; 
+                    align-items: center;
 
 
                     .product-details {
@@ -337,7 +346,8 @@ export default {
                 }
             }
 
-            .RecipientInformation { //收件資料
+            .RecipientInformation {
+                //收件資料
                 display: flex;
                 flex-direction: column;
                 height: 24vh;
@@ -363,93 +373,106 @@ export default {
             }
         }
 
-    .rightCount {
-        position: fixed;  // 將位置固定
-        top: 40vh;         // 設置固定位置的上邊距
-        right: 5vw;       // 設置固定位置的右邊距
-        padding: 20px;
-        transform: translateY(-50%);  // 使用 translateY 將位置調整到中心
-        height: 30vh;
-        width: 25vw;
-        z-index: 10;
+        .rightCount {
+            position: fixed; // 將位置固定
+            top: 40vh; // 設置固定位置的上邊距
+            right: 5vw; // 設置固定位置的右邊距
+            padding: 20px;
+            transform: translateY(-50%); // 使用 translateY 將位置調整到中心
+            height: 30vh;
+            width: 25vw;
+            z-index: 10;
 
-    .Checkout {
-        margin-top: 20px;
-        display: block;
-        text-align: center;
-        padding: 10px;
-        background-color: #ff822a;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        border: 0;
+            .Checkout {
+                margin-top: 20px;
+                display: block;
+                text-align: center;
+                padding: 10px;
+                background-color: #ff822a;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                border: 0;
+            }
+        }
     }
-}
+
+    // .item_header{
+    //     margin: 10px;
+    //     padding: 5px;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-around;
+    //     margin-bottom: 20px;
+    //     border-radius: 5px;
+    //     }
+    .item-image {
+        display: flex;
+        justify-content: center;
+        width: 8vw;
+
+        img {
+            width: 7vw;
+            height: 80px;
+            border-radius: 5px;
+        }
     }
-// .item_header{
-//     margin: 10px;
-//     padding: 5px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-around;
-//     margin-bottom: 20px;
-//     border-radius: 5px;
-//     }
-.item-image {
-    display: flex;
-    justify-content: center;
-    width: 8vw;
-    img {
+
+    .item-name {
+        margin-left: 15px;
+        margin-right: 15px;
+        width: 30vw;
+    }
+
+    .item-type {
+        width: 8vw;
+    }
+
+    .item-price {
+        width: 8vw;
+    }
+
+    .item-total {
+        width: 8vw;
+    }
+
+    .orderTotal {
+        display: flex;
+
+        .orderAmount {
+            color: #ff822a;
+            font-weight: 1000;
+        }
+    }
+
+    .address {
+        display: flex;
+
+    }
+
+    .inp {
+        margin-bottom: 20px;
+    }
+
+    .item-quantity {
+        display: flex;
         width: 7vw;
-        height: 80px;
-        border-radius: 5px;
-    }
-    }
-.item-name {
-    margin-left: 15px;
-    margin-right: 15px;
-    width: 30vw;
-    }
-.item-type{
-    width: 8vw;
-}
-.item-price{
-    width: 8vw;
-}
-.item-total{
-    width: 8vw;
-}
-.orderTotal{
-    display: flex;
-    .orderAmount{
-        color: #ff822a;
-        font-weight: 1000;
-    }
-}
+        margin-top: -16px;
 
-.address{
-    display: flex;
+        input {
+            width: 25px;
+            border: 0;
+        }
+
+        button {
+            width: 20px;
+            border: 0;
+            border-radius: 5px;
+            background-color: #ff9800;
+            color: white;
+        }
+    }
 
 }
-.inp{
-    margin-bottom: 20px;
-}
-.item-quantity{
-    display: flex;
-    width: 7vw;
-    margin-top: -16px;
-    input{
-        width: 25px;
-        border: 0;
-    }
-    button{
-        width: 20px;
-        border: 0;
-        border-radius: 5px;
-        background-color: #ff9800;
-        color: white;
-    }
-}
 
-}//
-</style>
+//</style>
