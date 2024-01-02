@@ -230,9 +230,9 @@ export default {
                     <label>
                         <input type="radio" v-model="selectedShipping" value="宅配"> 宅配/快遞$80
                     </label>
-                    <label>
+                    <!-- <label>
                         <input type="radio" v-model="selectedShipping" value="貨到付款"> 貨到付款$100
-                    </label>
+                    </label> -->
 
                 </div>
 

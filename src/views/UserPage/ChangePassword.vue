@@ -85,7 +85,7 @@ export default {
   <div class="mainLoginShow">
     <div class="leftShow">
       <h1>
-        <i class="fa-solid fa-shrimp"><b> 呱皮皮蝦</b> </i>
+        <i class="fa-solid fa-shrimp"><b> 皮皮蝦</b> </i>
       </h1>
     </div>
     <div class="login-box">

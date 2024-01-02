@@ -318,7 +318,7 @@ export default {
 
   .productAll {
     // background-color: #e0e0e0;
-    border: 1px solid #ff0000;
+    border: 0px solid #ff0000;
     // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     // background-color: #ffffff;
     border-radius: 10px;
@@ -328,9 +328,9 @@ export default {
     flex-wrap: wrap;
     padding: 10px 2px;
     overflow: hidden;
-
+    position: relative;
+    left: 4%;
     // justify-content: center;
-    justify-content: flex-start; // 將商品第二排對齊到最左邊
   }
 
 .product {
