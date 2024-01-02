@@ -268,9 +268,10 @@ addDislike(commentId) {
 
           </div>
           <h1>
-            <div v-if="!userId || userId === product.user_id || product.inventory <= 0" class="not-logged-in-message">
+            <div v-if="!userId || userId === product.user_id " class="not-logged-in-message">
               請先登入以購買產品
             </div>
+            
           </h1>
         </div>
       </div>

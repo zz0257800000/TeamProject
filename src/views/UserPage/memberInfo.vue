@@ -81,9 +81,9 @@ export default {
           } else {
             // 如果密码验证成功，执行其他操作
 
+            this.pwdInput = '';
             alert('資料修改成功');
 
-            this.pwdInput = '';
           }
         })
         .catch(error => {
@@ -153,10 +153,11 @@ export default {
             <div class="profile-image" v-if="previewImage">
               <!-- 显示预览图像 -->
               <img :src="previewImage" alt="User Photo" />
-            </div>
-            <br>
+              <br>
             <label for="userPhoto"></label>
             <input type="file" @change="handleFileChange" id="userPhoto" />
+            </div>
+            
 
             
             <div class="detail-group" v-if="user">
@@ -367,6 +368,7 @@ export default {
     height: 10vh;
     position: relative;
     left: 94%;
+    top: 2%;
     width: 5vw;
     border: 0px solid rgb(255, 0, 0);
 
@@ -418,6 +420,8 @@ export default {
 
 .profile-image {
   margin-right: 20px;
+  border: 0px solid rgb(255, 0, 0);
+height: 25vh;
 }
 
 .profile-image img {
@@ -458,7 +462,7 @@ export default {
 }
 
 .address-details {
-  top: 25%;
+  top: 23%;
   position: relative;
   display: flex;
   flex-direction: column;

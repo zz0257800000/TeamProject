@@ -370,7 +370,6 @@ export default {
                 <option value="3C產品">3C產品</option>
                 <option value="寵物專區">寵物專區</option>
                 <option value="樂器專區">樂器專區</option>
-
                 <option value="機車零件">機車零件</option>
                 <option value="其他">其他</option>
 
