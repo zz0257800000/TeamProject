@@ -84,7 +84,7 @@ export default {
 
         // 遍歷購物車中的每個商品
         this.product.forEach(item => {
-            const orderData = {
+            const orderData = [{
                 user_id: this.userId,
                 product_id: item.product_id,
                 product_name: item.product_name,
@@ -106,10 +106,10 @@ export default {
                 seller_id:item.seller_id,
                 record_type: "購買",
                 valid: true,
-            };
+            }];
 
             // 發送 POST 請求
-            fetch('http://localhost:8080/record/create', {
+            fetch('http://localhost:8080/record/createAll', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
