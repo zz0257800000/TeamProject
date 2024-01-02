@@ -15,24 +15,28 @@ export default {
     };
   },
   mounted() {
-    // 使用 sessionStorage 中的 user_Id
-    const userId = sessionStorage.getItem('user_Id');
-    console.log(userId);
+  // 使用 sessionStorage 中的 user_Id
+  const userId = sessionStorage.getItem('user_Id');
+  console.log(userId);
 
-    // 调用获取用户信息的 API
-    axios.get(`http://localhost:8080/user/info?id=${userId}`)
-      .then(response => {
-        // 確保 response.data.user 存在
-        this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
-        this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
+  // 调用获取用户信息的 API
+  axios.get(`http://localhost:8080/user/info?id=${userId}`)
+    .then(response => {
+      // Ensure that response.data.user exists
+      this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
+      this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
+      this.imageUrl = response.data.user.userPhoto; // 设置 imageUrl
 
-        console.log('previewImage:', this.previewImage);
+      console.log('previewImage:', this.previewImage);
 
-      })
-      .catch(error => {
-        console.error('Error fetching user info:', error);
-      });
-  },
+      // 显示预览图像，这里调用 handleFileChange
+      this.handleFileChange({ target: { files: [] } }); // 传递一个空的 files 数组触发预览
+
+    })
+    .catch(error => {
+      console.error('Error fetching user info:', error);
+    });
+},
   methods: {
 
 
@@ -56,7 +60,7 @@ export default {
           remittance_title: this.user.remittance_title,
           remittance_number: this.user.remittance_number,
           seller_name: this.user.seller_name,
-          points: this.user.points,
+          points: this.points,
 
         }
       )
@@ -64,7 +68,7 @@ export default {
         formData.append('userPhoto', this.userPhotoFile);
       }
       console.log(req);
-    
+
       axios.post(`http://localhost:8080/user/edit`, req, {
         headers: {
           'Content-Type': 'application/json',
@@ -80,6 +84,7 @@ export default {
             alert("密碼錯誤，請確認密碼是否正確後重新輸入資料。");
           } else {
             // 如果密码验证成功，执行其他操作
+            this.user.points = '';
 
             this.pwdInput = '';
             alert('資料修改成功');
@@ -90,14 +95,14 @@ export default {
 
 
           console.error('Error updating user info:', error);
-         
+
         });
     },
     handleFileChange(event) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+      const file = event.target.files[0];
+      const reader = new FileReader();
 
-    reader.onload = (event) => {
+      reader.onload = (event) => {
         // 獲取整個 base64 圖片資料
         const fullBase64String = event.target.result;
 
@@ -112,10 +117,10 @@ export default {
 
         // 記錄處理後的 base64 圖片資料
         console.log(this.imageUrl);
-    };
+      };
 
-    reader.readAsDataURL(file);
-},
+      reader.readAsDataURL(file);
+    },
 
     addPoints() {
       // 点击 + 點數儲值 按钮时，显示弹窗
@@ -151,15 +156,15 @@ export default {
 
           <div class="user-details">
             <div class="profile-image" v-if="previewImage">
-              <!-- 显示预览图像 -->
-              <img :src="previewImage" alt="User Photo" />
-              <br>
-            <label for="userPhoto"></label>
-            <input type="file" @change="handleFileChange" id="userPhoto" />
-            </div>
-            
+  <!-- 显示预览图像 -->
+  <img :src="'data:image/jpeg;base64,' + imageUrl" alt="User Photo" />
+  <br>
+  <label for="userPhoto"></label>
+  <input type="file" @change="handleFileChange" id="userPhoto" />
+</div>
 
-            
+
+
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
               信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
@@ -200,9 +205,9 @@ export default {
             填寫銀行帳號: &nbsp;
             <input type="text" name="" id="" class="input-field" v-model="user.remittance_number" maxlength="12" />
           </div>
-          <div class="detail-group" v-if="user">
+          <div class="detail-group" >
             <i class="far fa-user"></i>
-            點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="user.points">
+            點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="points">
           </div>
           <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
@@ -421,7 +426,7 @@ export default {
 .profile-image {
   margin-right: 20px;
   border: 0px solid rgb(255, 0, 0);
-height: 25vh;
+  height: 25vh;
 }
 
 .profile-image img {
