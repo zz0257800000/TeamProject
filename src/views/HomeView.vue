@@ -350,6 +350,7 @@ export default {
     height: 250px;
     object-fit: cover;
     // border-radius: 8px;
+    
   }
 
 .card {
