@@ -328,8 +328,13 @@ export default {
     flex-wrap: wrap;
     padding: 10px 2px;
     overflow: hidden;
+<<<<<<< HEAD
     // position: relative;
     // left: 1%;
+=======
+    // justify-content: center;
+    justify-content: flex-start; // 將商品第二排對齊到最左邊
+>>>>>>> d856225209e212d238be48b33301058699e8a560
   }
 
 .product {
