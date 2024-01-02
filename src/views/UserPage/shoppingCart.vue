@@ -7,6 +7,7 @@ export default {
       del:"",
       // cartTotalQuantity:[],
       cartList:[],
+      selectedSellers: [],
       userId: sessionStorage.getItem('user_Id'),
     };
   },
@@ -108,6 +109,9 @@ export default {
     groupedCart() {
       return this.groupBySeller(this.cartList);
     },
+    canCheckout() {
+    return this.selectedSellers.length === 1;
+  },
   },
   mounted() {
     this.searchList();
@@ -142,6 +146,7 @@ export default {
       </div>
 
       <div v-for="(sellerItems, sellerId) in groupedCart" :key="sellerId">
+        <input type="checkbox" v-model="selectedSellers" :value="sellerId" />
         <h4>{{ sellerItems[0].seller_name }} 的商品</h4>
         <div class="cart-item" v-for="(item, index) in sellerItems" :key="index">
           <div class="item-details">
@@ -166,7 +171,7 @@ export default {
         </div>
       </div>
 
-      <RouterLink class="checkout-button" to="/UserPage/cartToCheckOut/">結帳</RouterLink>
+      <RouterLink :to="canCheckout ? '/UserPage/cartToCheckOut/' : '#'">結帳</RouterLink>
     </div>
   </div>
 </template>

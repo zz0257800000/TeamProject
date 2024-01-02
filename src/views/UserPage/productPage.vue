@@ -393,16 +393,12 @@ addDislike(commentId) {
 
     img {
       border: 0px solid #ff0000;
-      max-width: 100%;
-      /* 图片最大宽度为容器宽度 */
+      max-width: 600px;
       max-height: 100%;
-      /* 图片最大高度为容器高度 */
       overflow: hidden;
-      /* 添加溢出隐藏，以确保内容不会突破边界 */
       display: inline-block;
-      /* 设置为行内块级元素 */
       vertical-align: middle;
-      /* 设置垂直对齐方式为居中 */
+      object-fit: contain;
     }
 
     .productText {
