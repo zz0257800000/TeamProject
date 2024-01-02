@@ -231,6 +231,7 @@ export default {
     font-size: 14pt;
     color: #ff9800;
     font-weight: 1000;
+    cursor: pointer;
     &:hover {
       color:#4e4e4e;
   }
@@ -316,7 +317,7 @@ export default {
   }
 
   .productAll {
-    background-color: #e0e0e0;
+    // background-color: #e0e0e0;
     // border: 1px solid #ddd;
     // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     // background-color: #ffffff;

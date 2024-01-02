@@ -11,33 +11,33 @@ export default {
 
   },
   data() {
-    
+
     return {
       searchKeyword: '',
       cartTotalQuantity: "",
       isUserLoggedIn: sessionStorage.getItem('loggedIn') === 'TRUE',
       user: null, // 初始化为 null 或一个空对象
-      orderQuantity:0,
-      UserorderQuantity:0,
-      cartTotalQuantity:0,
+      orderQuantity: 0,
+      UserorderQuantity: 0,
+      cartTotalQuantity: 0,
 
     }
   },
 
   methods: {
- 
+
     ...mapActions('search', ['searchProduct']),
     handleSearch() {
       // 调用搜索方法
       this.searchProduct(this.searchKeyword);
-    }, 
+    },
     scrollToTop() {
       window.scrollTo({
         top: 0,
         behavior: 'smooth', // 平滑滾動效果
       });
     },
-    
+
     logoutUser() {
       axios.post("http://localhost:8080/user/logout")
         .then(response => {
@@ -71,7 +71,7 @@ export default {
     hasSomeData() {
       return sessionStorage.getItem('someData');
     },
-    
+
   },
   mounted() {
     // 使用 sessionStorage 中的 user_Id
@@ -92,26 +92,26 @@ export default {
         console.error('Error fetching user info:', error);
       });
 
-      //判斷交易中訂單數量(提示訊息)
-      const bid = JSON.parse(sessionStorage.getItem("bidList"));
-      const shipping = JSON.parse(sessionStorage.getItem("shippingList"));
+    //判斷交易中訂單數量(提示訊息)
+    const bid = JSON.parse(sessionStorage.getItem("bidList"));
+    const shipping = JSON.parse(sessionStorage.getItem("shippingList"));
 
-      this.orderQuantity = bid + shipping;
-      // console.log("訂單數量:"+ this.orderQuantity )
-      const Userbid = JSON.parse(sessionStorage.getItem("UserbidList"));
-      const Usershipping = JSON.parse(sessionStorage.getItem("UsershippingList"));
+    this.orderQuantity = bid + shipping;
+    // console.log("訂單數量:"+ this.orderQuantity )
+    const Userbid = JSON.parse(sessionStorage.getItem("UserbidList"));
+    const Usershipping = JSON.parse(sessionStorage.getItem("UsershippingList"));
 
-      this.UserorderQuantity = Userbid + Usershipping;
+    this.UserorderQuantity = Userbid + Usershipping;
 
-      const cartTotalQuantity = JSON.parse(sessionStorage.getItem("cartTotalQuantity"));
+    const cartTotalQuantity = JSON.parse(sessionStorage.getItem("cartTotalQuantity"));
 
-      this.cartTotalQuantity = cartTotalQuantity;
+    this.cartTotalQuantity = cartTotalQuantity;
 
 
   },
- 
 
- 
+
+
   components: {
     RouterLink
 
@@ -130,36 +130,36 @@ export default {
         <div class="POP">
           <RouterLink class="btn" to="/UserPage/complainService">客服信箱</RouterLink>
           <RouterLink class="btn" to="/UserPage/developerPage"><i class="fa-solid fa-dragon"></i>開發人員</RouterLink>
-    <RouterLink v-if="user && user.id === 999" class="btn" to="/UserPage/WatchAllFeedback">觀看回饋</RouterLink>
+          <RouterLink v-if="user && user.id === 999" class="btn" to="/UserPage/WatchAllFeedback">觀看回饋</RouterLink>
 
         </div>
 
-          <div class="righthead">
-            <div class="profile-image userInfo">
-              <!-- 显示预览图像 -->
-              <img :src="previewImage" alt="圖片未上傳" v-if="previewImage" />
-            </div>
-            
-
-                <span class="userInfo point" v-if="user" >餘額點數 : {{ user.points }}</span> &nbsp;
-
-            <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span> 
-
-            
-            <button class="logout btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
-            
-            <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
-              <i class="fa-solid fa-user usericon"></i> 會員資料
-            </RouterLink>
-
-            <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
-              <i class="fa-solid fa-user usericon"></i>
-              <p>會員登入</p>
-            </RouterLink>
-
+        <div class="righthead">
+          <div class="profile-image userInfo">
+            <!-- 显示预览图像 -->
+            <img :src="previewImage" alt="圖片未上傳" v-if="previewImage" />
           </div>
-        
+
+
+          <span class="userInfo point" v-if="user">餘額點數 : {{ user.points }}</span> &nbsp;
+
+          <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span>
+
+
+          <button class="logout btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
+
+          <RouterLink class="btn" v-if="isLoggedIn" to="/UserPage/memberInfo">
+            <i class="fa-solid fa-user usericon"></i> 會員資料
+          </RouterLink>
+
+          <RouterLink v-if="!isLoggedIn" class="btn" to="/UserPage/loginPage">
+            <i class="fa-solid fa-user usericon"></i>
+            <p>會員登入</p>
+          </RouterLink>
+
         </div>
+
+      </div>
 
       <div class="titleHeader">
 
@@ -208,10 +208,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.userInfo{
+.userInfo {
   margin-right: 10px;
   text-align: center;
 }
+
 .righthead {
   display: flex;
   align-items: center;
@@ -242,7 +243,9 @@ export default {
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #4d4d4d; // 自行調整按鈕hover時的背景色
+    // background-color: rgba(245, 142, 24, 0.4); // 自行調整按鈕hover時的背景色
+    // color: rgb(254, 165, 64);
+     background-color: #4e4e4e; // 自行調整按鈕hover時的背景色
   }
 
   i {
