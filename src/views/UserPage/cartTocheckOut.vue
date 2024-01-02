@@ -194,7 +194,7 @@ export default {
                 <div class="RecipientInformation area">
                     <div class="info inp">
                         收件人：<input type="input" v-model="recipientName">
-                        電話：<input type="input" v-model="recipientPhone">
+                        電話：<input type="input" v-model="recipientPhone" maxlength="10">
                     </div>
                     <div class="address inp">
                         地址：
@@ -217,26 +217,26 @@ export default {
                     <label>
                         <input type="radio" v-model="selectedShipping" value="宅配"> 宅配/快遞$80
                     </label>
-                    <label>
+                    <!-- <label>
                         <input type="radio" v-model="selectedShipping" value="貨到付款"> 貨到付款$100
-                    </label>
+                    </label> -->
 
                 </div>
 
                 <div class="payment area" v-if="selectedShipping !== '貨到付款'">
                     <h3>付款方式</h3>
 
-                    <label>
+                    <!-- <label>
                         <input type="radio" v-model="paymentMethod" value="ATM轉帳">ATM轉帳
-                    </label>
+                    </label> -->
 
                     <label>
                         <input type="radio" v-model="paymentMethod" value="餘額付款">餘額付款
                     </label>
 
-                    <label>
+                    <!-- <label>
                         <input type="radio" v-model="paymentMethod" value="信用卡(一次付清)">信用卡(一次付清)
-                    </label>
+                    </label> -->
                 </div>
                 <div class="remarksColumnInfo area">
                     <div class="remarks inp">

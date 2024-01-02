@@ -38,7 +38,7 @@ export default {
           <img src="../../../public/3.jpg" height=150px>
         </div>
         <h3><i class="fa-regular fa-user"></i> :郭晴甄</h3>
-        <h5>B-boy + Developer</h5>
+        <h5>B-girl + Developer</h5>
         <h6>Tainan, Taiwan</h6>
         <h3>職位:前端工程師</h3>
         <hr>

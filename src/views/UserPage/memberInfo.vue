@@ -15,28 +15,28 @@ export default {
     };
   },
   mounted() {
-  // 使用 sessionStorage 中的 user_Id
-  const userId = sessionStorage.getItem('user_Id');
-  console.log(userId);
+    // 使用 sessionStorage 中的 user_Id
+    const userId = sessionStorage.getItem('user_Id');
+    console.log(userId);
 
-  // 调用获取用户信息的 API
-  axios.get(`http://localhost:8080/user/info?id=${userId}`)
-    .then(response => {
-      // Ensure that response.data.user exists
-      this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
-      this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
-      this.imageUrl = response.data.user.userPhoto; // 设置 imageUrl
+    // 调用获取用户信息的 API
+    axios.get(`http://localhost:8080/user/info?id=${userId}`)
+      .then(response => {
+        // Ensure that response.data.user exists
+        this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
+        this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
+        this.imageUrl = response.data.user.userPhoto; // 设置 imageUrl
 
-      console.log('previewImage:', this.previewImage);
+        console.log('previewImage:', this.previewImage);
 
-      // 显示预览图像，这里调用 handleFileChange
-      this.handleFileChange({ target: { files: [] } }); // 传递一个空的 files 数组触发预览
+        // 显示预览图像，这里调用 handleFileChange
+        this.handleFileChange({ target: { files: [] } }); // 传递一个空的 files 数组触发预览
 
-    })
-    .catch(error => {
-      console.error('Error fetching user info:', error);
-    });
-},
+      })
+      .catch(error => {
+        console.error('Error fetching user info:', error);
+      });
+  },
   methods: {
 
 
@@ -129,6 +129,13 @@ export default {
     closePointsModal() {
       // 关闭弹窗
       this.showPointsModal = false;
+    },incrementQuantity() {
+      if (this.quantity < this.product.inventory) {
+        this.quantity++;
+      } else {
+        // 庫存不足的提示，你可以自行調整
+        alert('已達到庫存上限');
+      }
     },
 
 
@@ -156,12 +163,12 @@ export default {
 
           <div class="user-details">
             <div class="profile-image" v-if="previewImage">
-  <!-- 显示预览图像 -->
-  <img :src="'data:image/jpeg;base64,' + imageUrl" alt="User Photo" />
-  <br>
-  <label for="userPhoto"></label>
-  <input type="file" @change="handleFileChange" id="userPhoto" />
-</div>
+              <!-- 显示预览图像 -->
+              <img :src="'data:image/jpeg;base64,' + imageUrl" alt="User Photo" />
+              <br>
+              <label for="userPhoto"></label>
+              <input type="file" @change="handleFileChange" id="userPhoto" />
+            </div>
 
 
 
@@ -205,7 +212,7 @@ export default {
             填寫銀行帳號: &nbsp;
             <input type="text" name="" id="" class="input-field" v-model="user.remittance_number" maxlength="12" />
           </div>
-          <div class="detail-group" >
+          <div class="detail-group">
             <i class="far fa-user"></i>
             點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="points">
           </div>

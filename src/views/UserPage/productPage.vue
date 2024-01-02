@@ -270,12 +270,12 @@ addDislike(commentId) {
           <div class="title">
             <h5>上架時間：{{ product.upload_time }}</h5>
           </div>
-          <div class="quantity" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity">
+          <!-- <div class="quantity" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity">
             <p>數量：</p>
             <button @click="decrementQuantity">-</button>
             <input v-model="quantity" type="number" min="1" />
             <button @click="incrementQuantity">+</button>
-          </div>
+          </div> -->
           <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity">
   <button class="cart-button" @click="addToCartAndShowAlert">
     <i class="fas fa-shopping-cart"></i>加入購物車

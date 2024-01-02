@@ -47,15 +47,15 @@ export default {
             }
         },
         getTotalAmount() {
-        if (this.product) {
-            return this.product.price * this.quantity;
-        }
-        return 0;
-    },
+            if (this.product) {
+                return this.product.price * this.quantity;
+            }
+            return 0;
+        },
 
-    getOrderAmount() {
-        return this.getTotalAmount + this.getShippingFee;
-    },
+        getOrderAmount() {
+            return this.getTotalAmount + this.getShippingFee;
+        },
     },
     methods: {
         fetchProductDetails() {
@@ -75,16 +75,21 @@ export default {
                 });
         },
         decrementQuantity() {
-            if (this.quantity > 1) {
-                this.quantity--;
-            }
-        },
-        incrementQuantity() {
-            this.quantity++;
-        },
-     
+      if (this.quantity > 1) {
+        this.quantity--;
+      }
+    },
+    incrementQuantity() {
+      if (this.quantity < this.product.inventory) {
+        this.quantity++;
+      } else {
+        // 庫存不足的提示，你可以自行調整
+        alert('已達到庫存上限');
+      }
+    },
+
         submitOrder() {
-          
+
 
             this.recipientAddress = this.address1 + this.address2;
             // 檢查是否所有必填項目都已經填寫
@@ -93,7 +98,7 @@ export default {
                 return;
 
             }
-          
+
             const phoneRegex = /^09\d{8}$/;
             const isValidPhone = phoneRegex.test(this.recipientPhone);
             if (!isValidPhone) {
@@ -267,14 +272,14 @@ export default {
             </div>
 
             <div class="rightCount area" v-if="product">
-    <p>商品總金額: $ {{ getTotalAmount }}</p>
-    <p>運費: $ {{ getShippingFee }}</p>
-    <div class="orderTotal">
-        <h4>訂單總金額：</h4>
-        <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
-    </div>
-    <button  class="Checkout" @click="submitOrder">結帳</button>
-</div>
+                <p>商品總金額: $ {{ getTotalAmount }}</p>
+                <p>運費: $ {{ getShippingFee }}</p>
+                <div class="orderTotal">
+                    <h4>訂單總金額：</h4>
+                    <h4 class="orderAmount"> ${{ getOrderAmount }}</h4>
+                </div>
+                <button class="Checkout" @click="submitOrder">結帳</button>
+            </div>
 
 
         </div>
@@ -475,4 +480,5 @@ export default {
 
 }
 
-//</style>
+//
+</style>
