@@ -142,7 +142,7 @@ export default {
       </h6>
     </div>
     <div class="signup">
-      <img src="../../../public/1.jpg" width="700" height="500" alt="" />
+      <img src="../../../public/8.jpg" width="700" height="500" alt="" />
 
       <div class="signupRight">
         <form role="form" action="" class="form-horizontal container jumbotron" name="regForm">
@@ -230,7 +230,7 @@ export default {
 }
 
 .signup-container {
-  border: 1px solid red;
+  border: 0px solid red;
   width: 100vw;
   height: 100vh;
   background-color: rgb(240, 240, 240);
