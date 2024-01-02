@@ -180,7 +180,7 @@ export default {
         </div>
     </div>
 
-    <div class="pagination-container">
+    <!-- <div class="pagination-container">
     <button class="pagination-button" @click="handleCurrentChange(currentPage - 1)" :disabled="currentPage === 1">
       上一頁
     </button>
@@ -188,7 +188,7 @@ export default {
     <button class="pagination-button" @click="handleCurrentChange(currentPage + 1)" :disabled="currentPage === pageCount">
       下一頁
     </button>
-  </div>
+  </div> -->
   </div>
 
 </template>
