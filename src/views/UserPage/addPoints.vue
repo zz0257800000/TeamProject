@@ -1,169 +1,100 @@
-<script>
-import axios from 'axios';
+<script setup>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import api from "../../api/api.js";
+import Swal from "sweetalert2";
 
-export default {
-  data() {
-    return {
-      user: {
-        name: '', // 初始值
-        userPhoto: null, // 添加 userPhoto 属性用于保存图像文件
-        pwdInput:null,
+const router = useRouter();
 
-      },
-      showPointsModal: false,
-      imageUrl: null,
-      pwdInput: ("")
-    };
-  },
-  mounted() {
-    // 使用 sessionStorage 中的 user_Id
-    const userId = sessionStorage.getItem('user_Id');
-    console.log(userId);
+const { getUserEmail, getMail, addPoints } = api;
 
-    // 调用获取用户信息的 API
-    axios.get(`http://localhost:8080/user/info?id=${userId}`)
-      .then(response => {
-        // Ensure that response.data.user exists
-        this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
+//取得user_id
+const userId = JSON.parse(sessionStorage.getItem("user_Id"));
+console.log(userId)
+//取得user_email
+let email = "";
+//v-model
+const cash = ref(0);
+const verifyInput = ref("");
 
-      })
-      .catch(error => {
-        console.error('Error fetching user info:', error);
+//點擊點數卡，送出郵件
+const getEailHandeler = async () => {
+
+  if (cash.value < 0) {
+      // 儲值點數小於 0 時的處理
+      Swal.fire({
+        title: "儲值點數不能為負值!",
+        icon: "error",
+        confirmButtonText: "OK",
       });
-  },
-  methods: {
-    saveUserInfo() {
-      if (!this.pwdInput || this.pwdInput.trim() === '') {
-        alert('請輸入正確的密碼');
-        return;
-      }
-      // 創建一個 FormData 對象
-      const formData = new FormData();
-      const req = (
-        {
-          id: this.user.id,
-          name: this.user.name,
-          email: this.user.email,
-          address: this.user.address,
-          level: 0,
-          userPhoto: this.imageUrl,
-          password: this.pwdInput,
-          phone_number: this.user.phone_number,
-          remittance_title: this.user.remittance_title,
-          remittance_number: this.user.remittance_number,
-          seller_name: this.user.seller_name,
-          points: this.points,
-
-        }
-      )
-      if (this.userPhotoFile) {
-        formData.append('userPhoto', this.userPhotoFile);
-      }
-      console.log(req);
-
-      axios.post(`http://localhost:8080/user/edit`, req, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => {
-          console.log('User info updated successfully:', response.data);
-          this.user.points = response.data.newPoints;
-          const responseData = response.data;
-          console.log(responseData.rtnCode);
-          // 检查后端返回的数据，如果密码验证失败，显示相应的提示
-          if (responseData.rtnCode === "PARAM_ERROR") {
-            alert("密碼錯誤，請確認密碼是否正確後重新輸入資料。");
-          } else {
-            // 如果密码验证成功，执行其他操作
-            this.user.points = '';
-
-            this.pwdInput = '';
-            alert('儲值成功！');
-
-          }
-        })
-        .catch(error => {
+  const code = await getMail(email);
+  sessionStorage.setItem("verify", JSON.stringify(code));
+  sessionStorage.setItem("cash", JSON.stringify(cash.value));
+};}
 
 
-          console.error('Error updating user info:', error);
-
-        });
-    },
 
 
-    addPoints() {
-      // 点击 + 點數儲值 按钮时，显示弹窗
-      this.showPointsModal = true;
-    },
-    closePointsModal() {
-      // 关闭弹窗
-      this.showPointsModal = false;
-    },incrementQuantity() {
-      if (this.quantity < this.product.inventory) {
-        this.quantity++;
-      } else {
-        // 庫存不足的提示，你可以自行調整
-        alert('已達到庫存上限');
-      }
-    },
-
-
-  },
-
+//點擊取消按鈕
+const turnToBack = async () => {
+  // router.push("/stored/points");
 };
+
+const checkVerify = () => {
+  // 取得 session storage 資料
+  const pointValue = JSON.parse(sessionStorage.getItem("cash"));
+  const verifyCode = JSON.parse(sessionStorage.getItem("verify"));
+  console.log(pointValue);
+
+  if (!verifyInput.value) {
+    Swal.fire({
+      title: "請輸入序號!!",
+      icon: "warning",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+
+  if (verifyInput.value !== verifyCode) {
+    Swal.fire({
+      title: "輸入錯誤!請再次確認!",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+
+  if (verifyInput.value == verifyCode) {
+    // 儲值點數大於等於 0 時的處理
+    addPoints(userId, pointValue);
+      sessionStorage.removeItem("verify");
+
+      Swal.fire({
+        title: "儲值成功! 新增" + pointValue + "點!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      return;
+    } 
+};
+
+onMounted(async () => {
+  email = await getUserEmail(userId);
+});
 </script>
 
 
 <template>
-  <!-- {{ user }} -->
-  <div class="main-show">
-    <div class="info-show">
-      <div class="info-header">
-        <h2 class="title">儲值點數</h2>
-        <div class="button-group">
-          <!-- <button class="save-button" @click="addPoints">+ 點數儲值</button> -->
+  <h1>儲值</h1>
+  <label for="">點數序號</label>
+  <input type="number" v-model="cash" placeholder="請輸入欲儲值點數數量" min="0" />
+  <button @click="getEailHandeler()">送出</button>
 
-          <!-- <button class="cancel-button">取消</button> -->
-        </div>
-      </div>
-      <div class="info-content">
-        <div class="address-details">
-          <div class="detail-group">
-            <i class="far fa-user"></i>
-            點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="points">
-          </div>
-          <div class="detail-group" v-if="user">
-            <i class="fa-regular fa-user"></i>
-            確認密碼:&nbsp; <input type="password" name="" id="" class="input-field" v-model="this.pwdInput" autocomplete="off">
-          </div>
-
-        </div>
-
-      </div>
-      <div class="info-footer">
-
-        <div class="button-group">
-            <button class="button-group save-button" @click="saveUserInfo">儲存</button>
-
-        </div>
-
-      </div>
-    </div>
-    <div class="points-modal" v-show="showPointsModal">
-      <!-- 弹窗内容 -->
-      <div class="modal-content">
-        <div class="firstshow">
-          <h3>儲值點數畫面</h3>
-          <button class="closebutton" @click="closePointsModal">X</button>
-        </div>
-
-
-
-
-      </div>
-    </div>
-  </div>
+  <label for="">點數序號</label>
+  <input type="text" v-model="verifyInput" placeholder="請輸入點數序號" />
+  <button type="button" @click="turnToBack()">取消</button>
+  <button type="button" @click="checkVerify()">確認</button>
 </template>
 
 <style scoped>

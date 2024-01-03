@@ -168,7 +168,10 @@ export default {
         <div class="headerRight">
 
           <div class="forSeller btn big">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 05656c7cdf94f2855514b5dabaeab71234be1646
             <RouterLink class="big" :to="'/UserPage/actionShop'" v-if="isLoggedIn">
               <i class="fa-solid fa-store"></i>
 
@@ -207,7 +210,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 05656c7cdf94f2855514b5dabaeab71234be1646
 .logo{
   width: 300px;
   height: 60px;
