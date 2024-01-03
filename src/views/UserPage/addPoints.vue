@@ -25,13 +25,6 @@ export default {
       .then(response => {
         // Ensure that response.data.user exists
         this.user = response.data.user; // 将获取到的用户信息存储在组件的数据中
-        this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
-        this.imageUrl = response.data.user.userPhoto; // 设置 imageUrl
-
-        // console.log('previewImage:', this.previewImage);
-
-        // 显示预览图像，这里调用 handleFileChange
-        this.handleFileChange({ target: { files: [] } }); // 传递一个空的 files 数组触发预览
 
       })
       .catch(error => {
@@ -86,7 +79,7 @@ export default {
             this.user.points = '';
 
             this.pwdInput = '';
-            alert('資料修改成功');
+            alert('儲值成功！');
 
           }
         })
@@ -97,29 +90,7 @@ export default {
 
         });
     },
-    handleFileChange(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
 
-      reader.onload = (event) => {
-        // 獲取整個 base64 圖片資料
-        const fullBase64String = event.target.result;
-
-        // 找到逗號後的位置，即真正的 base64 圖片資料的開始位置
-        const commaIndex = fullBase64String.indexOf(',');
-
-        // 切除 'data:image/jpeg;base64,' 部分，得到實際的 base64 圖片資料
-        const base64Data = fullBase64String.substring(commaIndex + 1);
-
-        // 將 base64 圖片資料設定為 imageUrl
-        this.imageUrl = base64Data;
-
-        // 記錄處理後的 base64 圖片資料
-        console.log(this.imageUrl);
-      };
-
-      reader.readAsDataURL(file);
-    },
 
     addPoints() {
       // 点击 + 點數儲值 按钮时，显示弹窗
@@ -149,7 +120,7 @@ export default {
   <div class="main-show">
     <div class="info-show">
       <div class="info-header">
-        <h2 class="title">修改會員資料</h2>
+        <h2 class="title">儲值點數</h2>
         <div class="button-group">
           <!-- <button class="save-button" @click="addPoints">+ 點數儲值</button> -->
 
@@ -157,69 +128,14 @@ export default {
         </div>
       </div>
       <div class="info-content">
-        <div class="user-profile">
-
-
-          <div class="user-details">
-            <div class="profile-image" v-if="previewImage">
-              <!-- 显示预览图像 -->
-              <img :src="'data:image/jpeg;base64,' + imageUrl" alt="User Photo" />
-              <br>
-              <label for="userPhoto"></label>
-              <input type="file" @change="handleFileChange" id="userPhoto" />
-            </div>
-
-
-
-            <div class="detail-group" v-if="user">
-              <i class="fa-regular fa-user"></i>
-              信箱: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.email" disabled>
-            </div>
-
-            <div class="detail-group" v-if="user">
-              <i class="fa-regular fa-user"></i>
-              更改名字: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.name">
-            </div>
-            <div class="detail-group" v-if="user">
-              <i class="fa-regular fa-user"></i>
-              更改電話:&nbsp; <input type="text" name="" id="" class="input-field" v-model="user.phone_number">
-            </div>
-
-            <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
-
-              填寫地址: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.address">
-            </div>
-          </div>
-        </div>
         <div class="address-details">
-          <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
-
-            賣場名: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
-          </div>
-          <div class="detail-group" v-if="user">
-            <i class="fa-regular fa-user"></i>
-            選擇匯款銀行:
-            <select v-model="user.remittance_title">
-              <option value="">請選擇銀行</option>
-
-              <option value="台灣銀行 - 004">台灣銀行 - 004</option>
-              <option value="中國信託 - 812">中國信託 - 812</option>
-            </select>
-          </div>
-          <div class="detail-group" v-if="user">
-            <i class="fa-regular fa-user"></i>
-            填寫銀行帳號: &nbsp;
-            <input type="text" name="" id="" class="input-field" v-model="user.remittance_number" maxlength="12" />
-          </div>
           <div class="detail-group">
             <i class="far fa-user"></i>
             點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="points">
           </div>
           <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
-
             確認密碼:&nbsp; <input type="password" name="" id="" class="input-field" v-model="this.pwdInput" autocomplete="off">
-
           </div>
 
         </div>
@@ -228,7 +144,8 @@ export default {
       <div class="info-footer">
 
         <div class="button-group">
-          <button class="save-button" @click="saveUserInfo">儲存</button>
+            <button class="button-group save-button" @click="saveUserInfo">儲存</button>
+
         </div>
 
       </div>
@@ -253,7 +170,6 @@ export default {
 .main-show {
   width: 100vw;
   height: 85vh;
-  background-color: #121212;
   /* 深色背景 */
   display: flex;
   align-items: center;
@@ -285,7 +201,7 @@ export default {
     z-index: 999;
 
     .input-field {
-      color: white;
+      color: rgb(0, 0, 0);
 
     }
   }
@@ -334,16 +250,6 @@ export default {
 
     }
 
-    .secondshow {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 0px solid rgb(255, 0, 0);
-      height: 30vh;
-      justify-content: center;
-
-    }
-
     .button-group {
       position: fixed;
       bottom: 25%;
@@ -366,13 +272,13 @@ export default {
 }
 
 .info-show {
-
   width: 85vw;
   height: 80vh;
-  background-color: #1e1e1e;
+  background-color: #ffffff;
   /* 深色卡片背景 */
   padding: 20px;
   border-radius: 10px;
+  color: #1e1e1e;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border: 0px solid rgb(255, 0, 0);
 

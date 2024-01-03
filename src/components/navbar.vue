@@ -141,7 +141,7 @@ export default {
           </div>
 
 
-          <span class="userInfo point" v-if="user">餘額點數 : {{ user.points }}</span> &nbsp;
+        <RouterLink class="btn" to="/UserPage/addPoints"><span class="userInfo point" v-if="user" >餘額點數 : {{ user.points }}</span> &nbsp;</RouterLink>
 
           <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span>
 
