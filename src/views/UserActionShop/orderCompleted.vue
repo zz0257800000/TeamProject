@@ -404,9 +404,9 @@ justify-content: space-around;
         margin-bottom: 20px;
         /* 添加20px的底部间隔 */
 
-        &:hover {
-          box-shadow: 0 0 20px rgba(65, 65, 65, 0.8);
-        }
+        // &:hover {
+        //   box-shadow: 0 0 20px rgba(65, 65, 65, 0.8);
+        // }
 
         .orderDetailshead {
           border: 0px solid #e74c3c;
