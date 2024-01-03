@@ -89,6 +89,19 @@ export default {
     },
 
         submitOrder() {
+            // 判斷總金額是否小於使用者點數
+            const points = sessionStorage.getItem('points');
+            if (points && this.getOrderAmount > points) {
+                // 使用 confirm 方法显示确认对话框
+                const confirmResult = window.confirm('點數不足，是否進行儲值？');
+                
+                if (confirmResult) {
+                    this.$router.push('/UserPage/addPoints');
+                    return;
+                } else {
+                    return;
+                }
+            }
 
 
             this.recipientAddress = this.address1 + this.address2;
