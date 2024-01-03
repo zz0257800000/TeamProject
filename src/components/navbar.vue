@@ -175,7 +175,7 @@ export default {
         <div class="headerRight">
 
           <div class="forSeller btn big">
-            <RouterLink class="big" :to="'/UserPage/actionShop'">
+            <RouterLink class="big" :to="'/UserPage/actionShop'" v-if="isLoggedIn">
               <i class="fa-solid fa-store"></i>
               <p>賣家中心</p>
               <span class="notification-badge" v-if="orderQuantity != 0">{{ orderQuantity }}</span>
@@ -212,6 +212,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.logo{
+  width: 300px;
+  height: 60px;
+  text-align: center;
+  // background-color: aqua;
+}
 .bgArea{
   width: 100vw;
 }

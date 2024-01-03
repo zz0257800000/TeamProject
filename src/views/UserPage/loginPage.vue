@@ -101,7 +101,10 @@ export default {
         text: "歡迎回來皮皮蝦!!",
         icon: "success",
         confirmButtonText: "OK",
-      });
+      }).then(() => {
+      // 关闭弹窗后重新加载页面
+      location.reload();
+    });
       },
    //套件sweetalert2，引導更改密碼
     showAlert1() {
