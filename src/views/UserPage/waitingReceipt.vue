@@ -116,6 +116,9 @@ showAlert2(message) {
         icon: "success",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "確認"
+      }).then(() => {
+      // 关闭弹窗后重新加载页面
+      location.reload();
     });
 },
   },

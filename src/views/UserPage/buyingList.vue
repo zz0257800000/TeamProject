@@ -234,7 +234,7 @@ showAlert2(message) {
               </div>
               <div class="orderInfo2">
 
-                <RouterLink class="btn" to="/"> </RouterLink>
+                <RouterLink class="btn" to=""> </RouterLink>
 
               </div>
 
@@ -485,16 +485,13 @@ showAlert2(message) {
 
               font-size: 12pt;
               width: 9vw;
-              background-color: #ffffff;
               color: white;
               transition: 0.5s;
               position: relative;
               top: 70%;
               right: 10%;
 
-              &:hover {
-                background-color: #517a53;
-              }
+             
             }
           }
 
