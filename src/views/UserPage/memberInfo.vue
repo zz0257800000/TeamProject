@@ -261,7 +261,6 @@ export default {
   color: white;
 
   .info-content {
-    width: 80vw;
     border: 0px solid rgb(255, 0, 0);
     display: flex;
     flex-direction: column;
