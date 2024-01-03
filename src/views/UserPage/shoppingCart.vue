@@ -135,7 +135,7 @@ export default {
           <div class="item-name">{{ item.product_name }}</div>
           <div class="item-type">{{ item.product_type }}</div>
           <div class="item-price">
-            <span class="price-value">{{ item.cart_amount }}</span>
+            <span class="price-value">{{ item.price }}</span>
           </div>
           <div class="item-quantity">
             <button @click="handleSub(item)"> - </button>
@@ -143,7 +143,7 @@ export default {
             <button @click="handlePlus(item)"> + </button>
           </div>
           <div class="item-total">
-            <span class="total-value">{{ item.cart_amount * item.cart_count }}</span>
+            <span class="total-value">{{ item.price * item.cart_count }}</span>
           </div>
           <button @click="handledelete(index)" class="operate delete-button">刪除</button>
         </div>

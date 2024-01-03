@@ -139,12 +139,10 @@ export default {
             <!-- 显示预览图像 -->
             <img :src="previewImage" alt="圖片未上傳" v-if="previewImage" />
           </div>
-
-
-          <span class="userInfo point" v-if="user">餘額點數 : {{ user.points }}</span> &nbsp;
-
           <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span>
 
+
+        <RouterLink class="btn" to="/UserPage/addPoints"><span class="point" v-if="user" >餘額點數 : {{ user.points }}</span> &nbsp;</RouterLink>
 
           <button class="logout btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
 
@@ -170,7 +168,11 @@ export default {
         <div class="headerRight">
 
           <div class="forSeller btn big">
+<<<<<<< HEAD
             <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
+=======
+            <RouterLink class="big" :to="'/UserPage/actionShop'" v-if="isLoggedIn">
+>>>>>>> 8274c927b1c8af77565c155a69f68184252b211c
               <i class="fa-solid fa-store"></i>
 
 
@@ -208,7 +210,16 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+<<<<<<< HEAD
 
+=======
+.logo{
+  width: 300px;
+  height: 60px;
+  text-align: center;
+  // background-color: aqua;
+}
+>>>>>>> 8274c927b1c8af77565c155a69f68184252b211c
 .bgArea{
 
   width: 100vw;
