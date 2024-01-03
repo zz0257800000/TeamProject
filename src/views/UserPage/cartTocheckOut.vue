@@ -61,6 +61,15 @@ export default {
         
         //欄位防呆
         submitOrder() {
+            // 判斷總金額是否小於使用者點數
+            const points = sessionStorage.getItem('points');
+            if (points && this.getOrderAmount > points) {
+            alert('點數不足，是否進行儲值？');
+            // 使用 Vue Router 導航到其他頁面
+            this.$router.push('/UserPage/addPoints');
+            return;
+    }
+
             this.recipientAddress = this.address1 + this.address2;
         // 檢查是否所有必填項目都已經填寫
         if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
@@ -152,6 +161,8 @@ export default {
         this.twzipcode = new TWzipcode();
         this.twzipcode.init(this.$refs.twzipcodeRef);  // 修改這一行
         this.fetchProductDetails();
+        const points = sessionStorage.getItem('points');
+        console.log("點數為" + points);
     },
 };
 </script>
