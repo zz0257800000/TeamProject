@@ -13,20 +13,27 @@ const userId = JSON.parse(sessionStorage.getItem("user_Id"));
 console.log(userId)
 //取得user_email
 let email = "";
+//v-model
+const cash = ref(0);
+const verifyInput = ref("");
 
 //點擊點數卡，送出郵件
 const getEailHandeler = async () => {
-  const code = await getMail(email);
-  console.log(code);
-  sessionStorage.setItem("verify", JSON.stringify(code));
-};
 
-//取得sessionStorage資料
-//const pointValue = JSON.parse(sessionStorage.getItem("verify"));
-const verifyCode = JSON.parse(sessionStorage.getItem("verify"));
-console.log(verifyCode);
-//v-model
-const verifyInput = ref("");
+  if (cash.value < 0) {
+      // 儲值點數小於 0 時的處理
+      Swal.fire({
+        title: "儲值點數不能為負值!",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+  const code = await getMail(email);
+  sessionStorage.setItem("verify", JSON.stringify(code));
+  sessionStorage.setItem("cash", JSON.stringify(cash.value));
+};}
+
+
+
 
 //點擊取消按鈕
 const turnToBack = async () => {
@@ -34,6 +41,11 @@ const turnToBack = async () => {
 };
 
 const checkVerify = () => {
+  // 取得 session storage 資料
+  const pointValue = JSON.parse(sessionStorage.getItem("cash"));
+  const verifyCode = JSON.parse(sessionStorage.getItem("verify"));
+  console.log(pointValue);
+
   if (!verifyInput.value) {
     Swal.fire({
       title: "請輸入序號!!",
@@ -53,16 +65,19 @@ const checkVerify = () => {
   }
 
   if (verifyInput.value == verifyCode) {
-    addPoints(userId, 50);
+    // 儲值點數大於等於 0 時的處理
+    addPoints(userId, pointValue);
+      sessionStorage.removeItem("verify");
 
-    Swal.fire({
-      title: "儲值成功!新增" + 500 + "點!",
-      icon: "success",
-      confirmButtonText: "OK",
-    });
-    return;
-  }
-};  
+      Swal.fire({
+        title: "儲值成功! 新增" + pointValue + "點!",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      return;
+    } 
+};
 
 onMounted(async () => {
   email = await getUserEmail(userId);
@@ -72,7 +87,9 @@ onMounted(async () => {
 
 <template>
   <h1>儲值</h1>
-  <div @click="getEailHandeler()"><p>按我儲值$$500</p></div>
+  <label for="">點數序號</label>
+  <input type="number" v-model="cash" placeholder="請輸入欲儲值點數數量" min="0" />
+  <button @click="getEailHandeler()">送出</button>
 
   <label for="">點數序號</label>
   <input type="text" v-model="verifyInput" placeholder="請輸入點數序號" />
