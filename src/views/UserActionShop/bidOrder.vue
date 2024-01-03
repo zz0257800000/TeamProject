@@ -14,12 +14,13 @@ export default {
       record: {},
       userId: '', // Add userId to data
       recordList: [],
-
+      userInfo: null,
     };
   },
   mounted() {
     this.userId = sessionStorage.getItem('user_Id');
     this.fetchData();
+    this.showUserInfo();
 
 
   },
@@ -39,6 +40,64 @@ export default {
     },
   },
   methods: {
+    showUserInfo(record) {
+  // Check if the record has a valid user_id
+  if (!record || !record.user_id) {
+    console.error('Invalid user ID');
+    return;
+  }
+
+  const buyId = record.user_id;
+
+  axios.get(`http://localhost:8080/user/info?id=${buyId}`)
+    .then(response => {
+      console.log(response.data);
+      const userData = response.data.user;
+      const imageBase64 = `data:image/jpeg;base64, ${userData.user_photo}`;
+
+      Swal.fire({
+        title: '此買家帳號資料',
+        html: `
+        <p>買家ID: ${userData.id}</p>
+          <p>買家姓名: ${userData.name}</p>
+          <p>買家電話: ${userData.phone_number}</p>
+          <p>買家郵箱: ${userData.email}</p>
+          <img src="${imageBase64}" alt="User Image" style="max-width: 100%; max-height: 200px;"/>
+
+        `,
+        confirmButtonText: 'Close',
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching user info:', error);
+    });
+},
+    
+    // Modify the existing code to call showUserInfo when user_id is clicked
+    cancelOrder(record_id) {
+      // 弹出确认对话框
+      this.showAlert("確認取消訂單", "你確定要取消訂單嗎？", (result) => {
+        // 用户点击确认后，result 是 true，执行实际的取消交易操作
+        if (result) {
+          // 调用取消订单的 API
+          axios.post(`http://localhost:8080/record/cancel?id=${record_id}`)
+            .then(response => {
+              // 处理 API 调用成功的情况
+              console.log(response.data);
+
+              // 在取消交易后调用 showAlert2，并传递成功提示
+              this.showAlert2("取消訂單成功");
+
+              // 刷新数据或执行其他操作...
+              this.fetchData();
+            })
+            .catch(error => {
+              // 处理 API 调用失败的情况
+              console.error('Error cancelling order:', error);
+            });
+        }
+      });
+    },
     fetchData() {
       this.fetchRecord();
     },
@@ -218,9 +277,8 @@ export default {
             <div class="orderDetailshead">
               <div class="orderDetailsheadleft">
                 <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
-                <h4>買家帳號 :<router-link :to="'/UserPage/sellerStore/' + record.seller_id" class="nameRouter"
-                    title="前往賣家賣場">
-                    {{ record.seller_name }}</router-link> &nbsp; </h4>
+                <h4 @click="showUserInfo(record)" style="color: rgb(68, 153, 192); font-weight: bold; ">買家帳號ID: {{ record.user_id }} &nbsp;</h4>
+
                 <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
                   訂單狀態 : {{ record.status }} &nbsp;
                 </h4>

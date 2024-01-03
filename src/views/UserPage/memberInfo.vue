@@ -436,6 +436,8 @@ export default {
   border: 0px solid rgb(255, 0, 0);
   height: 25vh;
   margin-bottom: 40px;
+  position: relative;
+  right: 35%;
 }
 
 .profile-image img {
