@@ -31,6 +31,46 @@ const login = (req) => {
     });
 };
 
+//取得user資料
+const getUserEmail = (id) => {
+  return axios
+    .get(`http://localhost:8080/user/info?id=${id}`)
+    .then((res) => {
+      //console.log(res.data.user.email);
+      return res.data.user.email;
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+//取得點數驗證信
+const getMail = (email) => {
+  return axios
+    .get(`http://localhost:8080/verify/sent?mail=${email}`)
+    .then((res) => {
+      //console.log(res.data);
+      return res.data;
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
+//儲值點數
+const addPoints = (id, points) => {
+  return axios({
+    method: "post",
+    url: `http://localhost:8080/user/point/edit?id=${id}&points=${points}`,
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((e) => {
+      throw e;
+    });
+};
+
 //加入購物車
 const cartCreat = (req) => {
   return axios({
@@ -160,6 +200,9 @@ const addDislike = (id) => {
 export default {
   signUp,
   login,
+  getUserEmail,
+  getMail,
+  addPoints,
   cartCreat,
   cartDelete,
   getCartInfoByUserId,
