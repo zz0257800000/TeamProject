@@ -245,6 +245,7 @@ export default {
   height: 5vh;
   width: 25vw;
   margin-right: 20px;
+  text-align: center;
 
   input {
     flex: 1;
@@ -256,7 +257,7 @@ export default {
   }
 
   button {
-    padding: 10px 20px;
+    padding: 3px 20px;
     background-color: #ff9800;
     color: #fff;
     border: none;

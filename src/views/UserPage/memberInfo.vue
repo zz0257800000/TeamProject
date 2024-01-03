@@ -158,19 +158,17 @@ export default {
         </div>
       </div>
       <div class="info-content">
-        <div class="user-profile">
 
-
-          <div class="user-details">
-            <div class="profile-image" v-if="previewImage">
+        <div class="profile-image" v-if="previewImage">
               <!-- 显示预览图像 -->
               <img :src="'data:image/jpeg;base64,' + imageUrl" alt="User Photo" />
               <br>
               <label for="userPhoto"></label>
               <input type="file" @change="handleFileChange" id="userPhoto" />
             </div>
+        <div class="user-profile">
 
-
+          <div class="user-details">
 
             <div class="detail-group" v-if="user">
               <i class="fa-regular fa-user"></i>
@@ -191,7 +189,7 @@ export default {
               填寫地址: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.address">
             </div>
           </div>
-        </div>
+
         <div class="address-details">
           <div class="detail-group" v-if="user"> <i class="fa-regular fa-user"></i>
 
@@ -200,8 +198,8 @@ export default {
           <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
             選擇匯款銀行:
-            <select v-model="user.remittance_title">
-              <option value="">請選擇銀行</option>
+            <select v-model="user.remittance_title" class="input-field">
+              <option value="" >請選擇銀行</option>
 
               <option value="台灣銀行 - 004">台灣銀行 - 004</option>
               <option value="中國信託 - 812">中國信託 - 812</option>
@@ -212,17 +210,19 @@ export default {
             填寫銀行帳號: &nbsp;
             <input type="text" name="" id="" class="input-field" v-model="user.remittance_number" maxlength="12" />
           </div>
-          <div class="detail-group">
+          <!-- <div class="detail-group">
             <i class="far fa-user"></i>
             點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="points">
-          </div>
+          </div> -->
           <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
 
             確認密碼:&nbsp; <input type="password" name="" id="" class="input-field" v-model="pwdInput">
           </div>
 
-        </div>
+          </div>
+
+      </div>
 
       </div>
       <div class="info-footer">
@@ -264,6 +264,7 @@ export default {
     width: 80vw;
     border: 0px solid rgb(255, 0, 0);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 60vh;
@@ -366,7 +367,6 @@ export default {
 }
 
 .info-show {
-
   width: 85vw;
   height: 80vh;
   background-color: #1e1e1e;
@@ -381,7 +381,7 @@ export default {
     position: relative;
     left: 94%;
     top: 2%;
-    width: 5vw;
+    width: 300px;
     border: 0px solid rgb(255, 0, 0);
 
 
@@ -425,7 +425,6 @@ export default {
   justify-content: center;
   align-items: center;
   border: 0px solid rgb(255, 0, 0);
-  width: 40vw;
   height: 60vh;
 
 }
@@ -434,12 +433,12 @@ export default {
   margin-right: 20px;
   border: 0px solid rgb(255, 0, 0);
   height: 25vh;
+  margin-bottom: 40px;
 }
 
 .profile-image img {
   height: 150px;
   width: 150px;
-
   border-radius: 50%;
   margin-bottom: 10px;
 }
@@ -456,32 +455,31 @@ export default {
 }
 
 .user-details {
-
   display: flex;
   flex-direction: column;
+  width: 40vw;
 }
 
 .detail-group {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 35vw;
+  height: 50px;
+  text-align: center;
   margin-bottom: 10px;
 }
 
 .detail-group i {
-  margin-right: 10px;
+  /* margin-right: 10px; */
   color: #64b5f6;
   /* 蓝色图标 */
 }
 
 .address-details {
-  top: 23%;
-  position: relative;
   display: flex;
   flex-direction: column;
-  border: 0px solid rgb(255, 0, 0);
   width: 40vw;
-
-
 
 }
 
