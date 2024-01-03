@@ -162,6 +162,11 @@ const router = createRouter({
       name: "WatchAllFeedback",
       component: () => import("../views/UserPage/WatchAllFeedback.vue"),
     },
+    {
+      path: "/UserPage/addPoints",
+      name: "addPoints",
+      component: () => import("../views/UserPage/addPoints.vue"),
+    },
   ],
 });
 

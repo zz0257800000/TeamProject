@@ -37,7 +37,7 @@ export default {
         getTotalAmount() {
             if (this.product && this.product.length > 0) {
                 return this.product.reduce((total, item) => {
-                    return total + (item.cart_amount * item.cart_count);
+                    return total + (item.price * item.cart_count);
                 }, 0);
             }
             return 0;
@@ -61,6 +61,20 @@ export default {
         
         //欄位防呆
         submitOrder() {
+            // 判斷總金額是否小於使用者點數
+            const points = sessionStorage.getItem('points');
+            if (points && this.getOrderAmount > points) {
+                // 使用 confirm 方法显示确认对话框
+                const confirmResult = window.confirm('點數不足，是否進行儲值？');
+                
+                if (confirmResult) {
+                    this.$router.push('/UserPage/addPoints');
+                    return;
+                } else {
+                    return;
+                }
+            }
+
             this.recipientAddress = this.address1 + this.address2;
         // 檢查是否所有必填項目都已經填寫
         if (!this.product || !this.recipientName || !this.recipientPhone || !this.recipientAddress || !this.selectedShipping) {
@@ -152,6 +166,8 @@ export default {
         this.twzipcode = new TWzipcode();
         this.twzipcode.init(this.$refs.twzipcodeRef);  // 修改這一行
         this.fetchProductDetails();
+        const points = sessionStorage.getItem('points');
+        console.log("點數為" + points);
     },
 };
 </script>
@@ -182,12 +198,12 @@ export default {
                             <p>{{ item.product_name }}</p>
                         </div>
                         <p class="item-type">{{ item.product_type }}</p>
-                        <p class="item-price">${{ item.cart_amount }}</p>
+                        <p class="item-price">${{ item.price }}</p>
                         <div class="item-quantity">
                             <p>{{ item.cart_count }}</p>
                         </div>
                         <div class="item-total">
-                            <p class="total-value">${{ item.cart_amount * item.cart_count }}</p>
+                            <p class="total-value">${{ item.price * item.cart_count }}</p>
                         </div>
                     </div>
                 </div>

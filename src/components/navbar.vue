@@ -146,12 +146,10 @@ export default {
             <!-- 显示预览图像 -->
             <img :src="previewImage" alt="圖片未上傳" v-if="previewImage" />
           </div>
-
-
-          <span class="userInfo point" v-if="user">餘額點數 : {{ user.points }}</span> &nbsp;
-
           <span class="userInfo account" v-if="user">使用者帳號: {{ user.email }}</span>
 
+
+        <RouterLink class="btn" to="/UserPage/addPoints"><span class="point" v-if="user" >餘額點數 : {{ user.points }}</span> &nbsp;</RouterLink>
 
           <button class="logout btn" @click="logoutUser" v-if="isLoggedIn">登出</button>
 
