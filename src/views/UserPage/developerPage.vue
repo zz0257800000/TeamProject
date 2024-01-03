@@ -185,6 +185,8 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  width: 100vw;
+  background-color: rgb(246, 246, 246);
 
   .secondtitle2 {
     justify-content: space-between;

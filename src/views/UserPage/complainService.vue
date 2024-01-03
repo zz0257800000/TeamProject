@@ -108,6 +108,8 @@ export default {
 
 <style lang="scss" scoped>
 .contactPosition {
+  width: 100vw;
+  background-color: rgb(246, 246, 246);
   .contact {
     display: flex;
 

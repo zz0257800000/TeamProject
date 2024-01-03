@@ -176,10 +176,7 @@ export default {
   color: #333;
   height: 100vh;
   width: 100vw;
-  border: 0px solid rgb(255, 0, 0);
-
-  background-color: #f7f7f7;
-
+  background-color: rgb(246, 246, 246);
 }
 .page-header {
   margin-bottom: 20px;
@@ -213,7 +210,6 @@ export default {
       height: 80px;
       border-radius: 5px;
       border: 2px solid#c9c9c9;
-      
     }
   }
   .item-name {
@@ -263,7 +259,6 @@ export default {
 }
 
 .cart-item {
-  
   display: flex;
   justify-content: center;
   align-items: center;

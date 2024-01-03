@@ -196,8 +196,8 @@ export default {
 <style lang="scss" scoped>
 .Marquee {
   height: 32px;
-  // background-color: #f5f5f5;
-
+  width: 100vw;
+  background-color: rgb(246, 246, 246);
   //跑馬燈
   .announcement {
     position: absolute;
@@ -227,6 +227,8 @@ export default {
 .navbar{
   background-color: rgb(255, 255, 255);
   box-shadow: inset 0px 0px 5px #e0e0e0;
+  width: 100vw;
+  background-color: rgb(246, 246, 246);
   .nav-link{
     font-size: 14pt;
     color: #ff9800;
@@ -307,7 +309,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  width: 100vw;
+  background-color: rgb(246, 246, 246);
   .carousel {
     width: 75vw;
     margin: 20px;

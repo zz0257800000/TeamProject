@@ -9,8 +9,6 @@ export default {
       record: {},
       userId: '', // Add userId to data
       recordList: [],
-      startDate: "", // Initialize startDate
-      endDate: "", // Initialize endDate
 
     };
   },
@@ -41,22 +39,7 @@ export default {
     },
     // 修改 fetchProductDetails 方法
 
-    searchByDate() {
-      
-    const apiUrl = `http://localhost:8080/record/get/date?id=${this.userId}&startDate=${this.startDate}&endDate=${this.endDate}&status=已完成`;
 
-    axios.get(apiUrl)
-      .then(response => {
-        console.log('API Response:', response.data);
-        const completedOrders = response.data.recordList.filter(record => record.status === '已完成');
-        this.updateRecordList(completedOrders);
-        this.startDate = "";
-      this.endDate = "";
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  },
     fetchRecord() {
       const userId = this.userId;
       const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
@@ -112,16 +95,6 @@ export default {
 
     <div class="actionPageRight">
       <div class="RightHeader">
-        <div class="dateSearch" >
-    <label for="startDate">開始日期:</label>
-    <input type="date" id="startDate" v-model="startDate">
-
-    <label for="endDate">結束日期:</label>
-    <input type="date" id="endDate" v-model="endDate">
-
-    <button @click="searchByDate" class="searchBtn">搜尋</button>
-
-  </div>
         <div class="secondtitle2">
           <h3>
           </h3>
@@ -304,39 +277,16 @@ export default {
   .RightHeader {
     height: 4vw;
     background-color: #bdc3c7;
-    border: 0px solid #e74c3c;
+    /* Light gray background color */
 
-    /* Light gray background color */
-    display: flex;
-    align-items: center;
-    width: 85vw;
-    /* Light gray background color */
-    .dateSearch{
-  display: flex;
-  border: 0px solid #e74c3c;
-width: 50vw;
-height: 5vh;
-align-items: center;
-justify-content: space-around;
-.searchBtn{
-  padding: 7px 20px;
-      background-color: #2196F3;
-      /* 按钮蓝色 */
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-}
-}
     .secondtitle2 {
       justify-content: space-between;
       display: flex;
       border: 0px solid #e74c3c;
       /* Border color */
-      width: 33vw;
+      width: 82vw;
       height: 10vh;
       align-items: center;
-      border: 0px solid #e74c3c;
 
       a {
         border-radius: 10px;
@@ -404,9 +354,9 @@ justify-content: space-around;
         margin-bottom: 20px;
         /* 添加20px的底部间隔 */
 
-        // &:hover {
-        //   box-shadow: 0 0 20px rgba(65, 65, 65, 0.8);
-        // }
+        &:hover {
+          box-shadow: 0 0 20px rgba(65, 65, 65, 0.8);
+        }
 
         .orderDetailshead {
           border: 0px solid #e74c3c;

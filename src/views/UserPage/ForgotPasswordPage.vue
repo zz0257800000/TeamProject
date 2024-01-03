@@ -86,7 +86,8 @@ export default {
   display: flex;
 
   border: 0px solid rgb(255, 0, 0);
-  width: 98vw;
+  width: 100vw;
+  background-color: rgb(246, 246, 246);
   height: 10vh;
   align-items: center;
   .backbtn {
@@ -120,7 +121,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 100vw;
+  background-color: rgb(246, 246, 246);
   .leftShow {
     background-color: rgb(0, 0, 0);
     height: 70vh;

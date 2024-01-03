@@ -40,6 +40,9 @@ export default {
 </script>
 
 <template>
+  <div class="ALL">
+
+
   <div class="feedback-list">
     <h2 style="text-align: center;">★用戶意見與回饋★</h2>
     <ul class="feedback-items">
@@ -58,12 +61,17 @@ export default {
         </div>
       </li>
     </ul>
-  </div>
+  </div>  </div>
 </template>
 
 
 
   <style scoped>
+  .ALL{
+
+     width: 100vw;
+  background-color: rgb(246, 246, 246);
+  }
   .feedback-list {
     margin: 20px;
     height: 100vh;

@@ -76,13 +76,6 @@ export default {
   mounted() {
     // 使用 sessionStorage 中的 user_Id
     const userId = sessionStorage.getItem('user_Id');
-    const seller_name = sessionStorage.getItem('seller_name');
-    const remittance_title = sessionStorage.getItem('remittance_title');
-    const remittance_number = sessionStorage.getItem('remittance_number');
-    console.log(seller_name);
-    console.log(remittance_title);
-    console.log(remittance_number);
-
     console.log(userId);
 
     // 调用获取用户信息的 API
@@ -177,12 +170,13 @@ export default {
         <div class="headerRight">
 
           <div class="forSeller btn big">
-            <RouterLink class="big" :to="'/UserPage/actionShop'">
+            <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
               <i class="fa-solid fa-store"></i>
+
+
               <p>賣家中心</p>
               <span class="notification-badge" v-if="orderQuantity != 0">{{ orderQuantity }}</span>
             </RouterLink>
-
           </div>
 
           <div class="buyList">
@@ -214,7 +208,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
 .bgArea{
+
   width: 100vw;
 }
 .userInfo {
@@ -225,6 +221,7 @@ export default {
 .righthead {
   display: flex;
   align-items: center;
+  border: 0px solid rgb(255, 0, 0);
 
   .profile-image img {
     height: 25px;
@@ -254,7 +251,7 @@ export default {
   &:hover {
     // background-color: rgba(245, 142, 24, 0.4); // 自行調整按鈕hover時的背景色
     // color: rgb(254, 165, 64);
-    background-color: #4e4e4e; // 自行調整按鈕hover時的背景色
+     background-color: #4e4e4e; // 自行調整按鈕hover時的背景色
   }
 
   i {
@@ -291,7 +288,7 @@ export default {
   background-color: #ff9800;
   display: flex;
   flex-direction: column;
-  border: px solid rgb(255, 0, 0);
+  border: 0px solid rgb(255, 0, 0);
   color: #ffffff;
   height: 20vh;
 
@@ -299,7 +296,7 @@ export default {
     display: flex;
     justify-content: space-between;
     border: 0px solid rgb(255, 0, 0);
-
+width: 99vw;
   }
 
   .titleHeader {
