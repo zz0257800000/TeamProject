@@ -38,8 +38,6 @@ export default {
       });
   },
   methods: {
-
-
     saveUserInfo() {
       if (!this.pwdInput || this.pwdInput.trim() === '') {
         alert('請輸入正確的密碼');
@@ -88,7 +86,7 @@ export default {
 
             this.pwdInput = '';
             alert('資料修改成功');
-
+            location.reload();
           }
         })
         .catch(error => {
