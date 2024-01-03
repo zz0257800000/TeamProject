@@ -20,7 +20,7 @@ export default {
       orderQuantity: 0,
       UserorderQuantity: 0,
       cartTotalQuantity: 0,
-
+      sellerNameExists: true, 
     }
   },
 
@@ -36,22 +36,15 @@ export default {
         top: 0,
         behavior: 'smooth', // 平滑滾動效果
       });
-    },
+    }, 
+     
 
     logoutUser() {
       axios.post("http://localhost:8080/user/logout")
         .then(response => {
           // 清除前端的用户状态
-          sessionStorage.removeItem('loggedIn');
-          sessionStorage.removeItem('user_Id');
-          sessionStorage.removeItem('name');
-          sessionStorage.removeItem('points');
-          sessionStorage.removeItem('user_photo');
-          sessionStorage.removeItem('level');
-          sessionStorage.removeItem('seller_name');
-          sessionStorage.removeItem('remittance_title');
-          sessionStorage.removeItem('remittance_number');
-          sessionStorage.removeItem('phone_number');
+          sessionStorage.clear();
+
 
           alert('用戶登出成功');
           window.location.reload();
@@ -71,7 +64,7 @@ export default {
     hasSomeData() {
       return sessionStorage.getItem('someData');
     },
-
+    
   },
   mounted() {
     // 使用 sessionStorage 中的 user_Id
@@ -86,7 +79,8 @@ export default {
         console.log(response.data);
         this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
         // console.log('previewImage:', this.previewImage);
-
+        const newPointsValue = response.data.user.points;
+      sessionStorage.setItem('points', newPointsValue.toString());
       })
       .catch(error => {
         console.error('Error fetching user info:', error);
@@ -107,7 +101,19 @@ export default {
 
     this.cartTotalQuantity = cartTotalQuantity;
 
+    const sellerName = sessionStorage.getItem('seller_name');
 
+// 检查 seller_name 是否为 null
+// if (sellerName === null) {
+//   // 如果 seller_name 为 null，禁用链接并显示提示信息
+//   Swal.fire({
+//     icon: 'error',
+//     title: '請先新增商家名稱',
+//     text: '請到會員資料中新增商家名稱。',
+//   });
+//   this.sellerNameExists = false;
+
+// }
   },
 
 
@@ -169,13 +175,12 @@ export default {
 
           <div class="forSeller btn big">
 
-            <RouterLink class="big" :to="'/UserPage/actionShop'" v-if="isLoggedIn">
-              <i class="fa-solid fa-store"></i>
+            <RouterLink class="big" :to="'/UserPage/actionShop'" v-if="isLoggedIn && sellerNameExists">
+    <i class="fa-solid fa-store"></i>
+    <p>賣家中心</p>
+    <span class="notification-badge" v-if="orderQuantity !== 0">{{ orderQuantity }}</span>
+  </RouterLink>
 
-
-              <p>賣家中心</p>
-              <span class="notification-badge" v-if="orderQuantity != 0">{{ orderQuantity }}</span>
-            </RouterLink>
           </div>
 
           <div class="buyList">

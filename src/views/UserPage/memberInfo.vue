@@ -86,8 +86,9 @@ export default {
 
             this.pwdInput = '';
             sessionStorage.setItem("seller_name", JSON.stringify(this.user.seller_name));
-            sessionStorage.setItem("seller_name", JSON.stringify(this.user.remittance_title));
-            sessionStorage.setItem("seller_name", JSON.stringify(this.user.remittance_number));
+            sessionStorage.setItem("remittance_title", JSON.stringify(this.user.remittance_title));
+            sessionStorage.setItem("remittance_number", JSON.stringify(this.user.remittance_number));
+            sessionStorage.setItem("points", JSON.stringify(this.user.points));
 
             alert('資料修改成功');
             location.reload();

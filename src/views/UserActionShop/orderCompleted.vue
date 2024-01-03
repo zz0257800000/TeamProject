@@ -9,7 +9,8 @@ export default {
       record: {},
       userId: '', // Add userId to data
       recordList: [],
-
+      startDate: '',
+      endDate: '',
     };
   },
   mounted() {
@@ -95,6 +96,16 @@ export default {
 
     <div class="actionPageRight">
       <div class="RightHeader">
+        <!-- <div class="dateSearch" >
+    <label for="startDate">開始日期:</label>
+    <input type="date" id="startDate" v-model="startDate">
+
+    <label for="endDate">結束日期:</label>
+    <input type="date" id="endDate" v-model="endDate">
+
+    <button @click="searchByDate" class="searchBtn">搜尋</button>
+
+  </div> -->
         <div class="secondtitle2">
           <h3>
           </h3>

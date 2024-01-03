@@ -13,7 +13,9 @@ export default {
       name: sessionStorage.getItem('name'),
       completedProductIds: [],
       newCommentText: '',
-
+      startDate: '',
+      endDate: '',
+      searchResult: null,
     };
   },
   mounted() {
@@ -45,7 +47,7 @@ export default {
     // 修改 fetchProductDetails 方法
 
 
-    
+
 
 
     handleSizeChange(size) {
@@ -68,52 +70,73 @@ export default {
     setCommentStars(stars) {
       this.commentStars = stars;
     },
-    fetchRecord() {
-  const apiUrl = `http://localhost:8080/record/get/user_id?id=${this.userId}`;
-
-  axios.get(apiUrl)
-    .then(response => {
-      console.log('API Response:', response.data);
-
-      // 取得所有已完成的訂單
-      const completedOrders = response.data.recordList.filter(record => record.status === '已完成');
-
-      // 初始化 hasCommented 屬性
-      completedOrders.forEach(order => {
-        order.hasCommented = false;
-      });
-
-      // 提取所有已完成訂單的 product_id
-      const productIds = completedOrders.map(order => order.product_id);
-
-      // 將 product_id 賦值給 data 中的屬性，以供其他方法使用
-      this.completedProductIds = productIds;
-
-      // 更新 recordList 只包含已完成的訂單
-      this.recordList = completedOrders;
-      this.newCommentText = "";
-      this.showCommetModal = false;
-      // Show alert after updating recordList
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
+    // 提取公共逻辑为一个方法
+  updateRecordList(records) {
+    // 初始化 hasCommented 屬性
+    records.forEach(record => {
+      record.hasCommented = false;
     });
-}, 
 
+    // 提取所有已完成訂單的 product_id
+    const productIds = records.map(record => record.product_id);
 
+    // 將 product_id 賦值給 data 中的屬性，以供其他方法使用
+    this.completedProductIds = productIds;
+
+    // 更新 recordList
+    this.recordList = records;
+    this.newCommentText = "";
+    this.showCommetModal = false;
+
+    // Show alert after updating recordList
+    // ...
+
+    // 重置 currentPage
+    this.currentPage = 1;
+  },
+
+  fetchRecord() {
+    const apiUrl = `http://localhost:8080/record/get/user_id?id=${this.userId}`;
+
+    axios.get(apiUrl)
+      .then(response => {
+        console.log('API Response:', response.data);
+        const completedOrders = response.data.recordList.filter(record => record.status === '已完成');
+        this.updateRecordList(completedOrders);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  },
+
+  searchByDate() {
+    const apiUrl = `http://localhost:8080/record/get/date?id=${this.userId}&startDate=${this.startDate}&endDate=${this.endDate}&status=已完成`;
+
+    axios.get(apiUrl)
+      .then(response => {
+        console.log('API Response:', response.data);
+        const completedOrders = response.data.recordList.filter(record => record.status === '已完成');
+        this.updateRecordList(completedOrders);
+        this.startDate = "";
+      this.endDate = "";
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  },
 
     addProductComment(record) {
       console.log('Record:', record);
 
       const hasCommented = record.hasCommented;
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-  const day = currentDate.getDate().toString().padStart(2, '0');
-  const hours = currentDate.getHours().toString().padStart(2, '0');
-  const minutes = currentDate.getMinutes().toString().padStart(2, '0');
-  const seconds = currentDate.getSeconds().toString().padStart(2, '0');
-  
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = currentDate.getDate().toString().padStart(2, '0');
+      const hours = currentDate.getHours().toString().padStart(2, '0');
+      const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+      const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+
       if (!hasCommented) {
         const productId = record.product_id;
 
@@ -126,14 +149,14 @@ export default {
           user_id: sessionStorage.getItem('user_Id'),
           product_id: productId,
         })
-        .then(response => {
-          console.log('新增的留言:', response.data);
-          alert("留言成功");
+          .then(response => {
+            console.log('新增的留言:', response.data);
+            alert("留言成功");
 
-        })
-        .catch(error => {
-          console.error('添加留言时出错:', error);
-        });
+          })
+          .catch(error => {
+            console.error('添加留言时出错:', error);
+          });
 
         record.hasCommented = true;
 
@@ -142,6 +165,7 @@ export default {
         console.log('已经对该订单留过评论，不能重复评论。');
       }
     },
+   
   },
 
 
@@ -174,6 +198,16 @@ export default {
 
     <div class="actionPageRight">
       <div class="RightHeader">
+        <div class="dateSearch" >
+    <label for="startDate">開始日期:</label>
+    <input type="date" id="startDate" v-model="startDate">
+
+    <label for="endDate">結束日期:</label>
+    <input type="date" id="endDate" v-model="endDate">
+
+    <button @click="searchByDate" class="searchBtn">搜尋</button>
+
+  </div>
         <div class="secondtitle2">
           <h3>
           </h3>
@@ -293,9 +327,9 @@ export default {
         </div>
         <div class="secondShow">
           <div class="title">
-          <p>你的名字 : {{ name }}</p>&nbsp; 
+            <p>你的名字 : {{ name }}</p>&nbsp;
 
-          <!-- <label for="starRating">星星評價 &nbsp; </label>
+            <!-- <label for="starRating">星星評價 &nbsp; </label>
           <div class="star-rating">
         <span v-for="starIndex in 5" :key="starIndex">
           <i class="fas"
@@ -304,13 +338,13 @@ export default {
         </span>
       </div> -->
 
-        </div>
+          </div>
 
           <div class="commentText">
             <p for="newCommentText">留言：</p>
             <input type="text" v-model="newCommentText" placeholder="添加留言" class="textEnter">
           </div>
-       
+
 
         </div>
         <button @click="addProductComment(record)" class="commitBtn">添加留言</button>
@@ -393,47 +427,54 @@ export default {
     border: 0px solid rgb(255, 0, 0);
     height: 30vh;
     justify-content: center;
-    .title{
+
+    .title {
 
       display: flex;
     }
+
     .star-rating {
-  span {
-    i {
-      &.fas {
-        &.fa-star {
-          color: rgb(46, 46, 46); // 实心星星颜色
-        }
-        &.fa-star-o {
-          color: grey; // 空心星星颜色
+      span {
+        i {
+          &.fas {
+            &.fa-star {
+              color: rgb(46, 46, 46); // 实心星星颜色
+            }
+
+            &.fa-star-o {
+              color: grey; // 空心星星颜色
+            }
+          }
         }
       }
     }
+
+    .commentText {
+
+      display: flex;
+
+      .textEnter {
+
+        border-radius: 5px;
+        width: 25vw;
+      }
+    }
+
   }
-}
-.commentText{
 
-  display: flex;
-  .textEnter{
-
+  .commitBtn {
+    width: 8vw;
+    padding: 10px 20px;
+    background-color: #2196F3;
+    /* 按钮蓝色 */
+    color: white;
+    border: none;
     border-radius: 5px;
-    width: 25vw;
+    cursor: pointer;
+    position: relative;
+    left: 80%;
   }
-}
 
-  }
-  .commitBtn{
-width: 8vw;
-padding: 10px 20px;
-  background-color: #2196F3;
-  /* 按钮蓝色 */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  position: relative;
-  left: 80%;
-}
   .button-group {
     position: fixed;
     bottom: 25%;
@@ -516,20 +557,39 @@ padding: 10px 20px;
 
 .actionPageRight {
   width: 85vw;
-  border: 0px solid #e74c3c;
 
   .RightHeader {
     height: 4vw;
     background-color: #bdc3c7;
     /* Light gray background color */
+    display: flex;
+    align-items: center;
+    width: 85vw;
 
+.dateSearch{
+  display: flex;
+  border: 0px solid #e74c3c;
+width: 50vw;
+height: 5vh;
+align-items: center;
+justify-content: space-around;
+.searchBtn{
+  padding: 7px 20px;
+      background-color: #2196F3;
+      /* 按钮蓝色 */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+}
+}
     .secondtitle2 {
       justify-content: space-between;
       display: flex;
       border: 0px solid #e74c3c;
       /* Border color */
-      width: 82vw;
-      height: 10vh;
+      width: 33vw;
+      height: 5vh;
       align-items: center;
 
       a {
@@ -737,5 +797,4 @@ padding: 10px 20px;
 .pagination-current-page {
   margin: 0 10px;
   font-size: 16px;
-}
-</style>
+}</style>
