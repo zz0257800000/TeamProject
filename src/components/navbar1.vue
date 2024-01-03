@@ -67,7 +67,7 @@ export default {
 .footer {
     display: flex;
     height: 40vh;
-    width: 99vw;
+    width: 100vw;
     border: 0px solid rgb(255, 0, 0);
     background-image: url("./../../public/9.jpg");
     z-index: -2;

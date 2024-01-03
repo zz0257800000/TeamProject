@@ -76,6 +76,13 @@ export default {
   mounted() {
     // 使用 sessionStorage 中的 user_Id
     const userId = sessionStorage.getItem('user_Id');
+    const seller_name = sessionStorage.getItem('seller_name');
+    const remittance_title = sessionStorage.getItem('remittance_title');
+    const remittance_number = sessionStorage.getItem('remittance_number');
+    console.log(seller_name);
+    console.log(remittance_title);
+    console.log(remittance_number);
+
     console.log(userId);
 
     // 调用获取用户信息的 API
@@ -170,13 +177,12 @@ export default {
         <div class="headerRight">
 
           <div class="forSeller btn big">
-            <RouterLink class="big" v-if="isLoggedIn" to="/UserPage/actionShop">
+            <RouterLink class="big" :to="'/UserPage/actionShop'">
               <i class="fa-solid fa-store"></i>
-
-
               <p>賣家中心</p>
               <span class="notification-badge" v-if="orderQuantity != 0">{{ orderQuantity }}</span>
             </RouterLink>
+
           </div>
 
           <div class="buyList">
@@ -208,6 +214,9 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.bgArea{
+  width: 100vw;
+}
 .userInfo {
   margin-right: 10px;
   text-align: center;
@@ -245,7 +254,7 @@ export default {
   &:hover {
     // background-color: rgba(245, 142, 24, 0.4); // 自行調整按鈕hover時的背景色
     // color: rgb(254, 165, 64);
-     background-color: #4e4e4e; // 自行調整按鈕hover時的背景色
+    background-color: #4e4e4e; // 自行調整按鈕hover時的背景色
   }
 
   i {

@@ -299,10 +299,10 @@ addDislike(commentId) {
           </router-link>
           <div class="divider"></div>
         </div>
-        <div class="seller-details">
+        <!-- <div class="seller-details">
           <h4>全部商品：</h4>
           <div class="divider"></div>
-        </div>
+        </div> -->
         <div class="seller-details" @click="openViewReplies">
           <div></div>
         </div>
