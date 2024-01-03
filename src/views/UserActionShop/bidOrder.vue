@@ -53,8 +53,8 @@ export default {
     .then(response => {
       console.log(response.data);
       const userData = response.data.user;
-      const imageBase64 = `data:image/jpeg;base64, ${userData.user_photo}`;
-
+      this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
+      // console.log('previewImage:', this.previewImage);
       Swal.fire({
         title: '此買家帳號資料',
         html: `
@@ -62,7 +62,7 @@ export default {
           <p>買家姓名: ${userData.name}</p>
           <p>買家電話: ${userData.phone_number}</p>
           <p>買家郵箱: ${userData.email}</p>
-          <img src="${imageBase64}" alt="User Image" style="max-width: 100%; max-height: 200px;"/>
+          <img src="${this.previewImage}" alt="User Image" style="max-width: 100%; max-height: 200px;"/>
 
         `,
         confirmButtonText: 'Close',

@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios'; // 記得這行要加上
+import Swal from 'sweetalert2';
 
 export default {
   data() {
@@ -11,11 +12,14 @@ export default {
       recordList: [],
       startDate: '',
       endDate: '',
+      userInfo: null,
+
     };
   },
   mounted() {
     this.userId = sessionStorage.getItem('user_Id');
     this.fetchData();
+    this.showUserInfo();
 
 
   },
@@ -40,7 +44,39 @@ export default {
     },
     // 修改 fetchProductDetails 方法
 
+    showUserInfo(record) {
+  // Check if the record has a valid user_id
+  if (!record || !record.user_id) {
+    console.error('Invalid user ID');
+    return;
+  }
 
+  const buyId = record.user_id;
+
+  axios.get(`http://localhost:8080/user/info?id=${buyId}`)
+    .then(response => {
+      console.log(response.data);
+      const userData = response.data.user;
+      this.previewImage = `data:image/jpeg;base64,${response.data.user.userPhoto}`;
+      // console.log('previewImage:', this.previewImage);
+      Swal.fire({
+        title: '此買家帳號資料',
+        html: `
+        <p>買家ID: ${userData.id}</p>
+          <p>買家姓名: ${userData.name}</p>
+          <p>買家電話: ${userData.phone_number}</p>
+          <p>買家郵箱: ${userData.email}</p>
+          <img src="${this.previewImage}" alt="User Image" style="max-width: 100%; max-height: 200px;"/>
+
+        `,
+        confirmButtonText: 'Close',
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching user info:', error);
+      alert('此用戶不存在');
+    });
+},
     fetchRecord() {
       const userId = this.userId;
       const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;
@@ -128,8 +164,8 @@ export default {
             <div class="orderDetailshead">
               <div class="orderDetailsheadleft">
                 <h4>訂單編號 : {{ record.record_id }} &nbsp; </h4>
-                <h4>買家帳號ID :
-                    {{ record.user_id }} &nbsp; </h4>
+                <h4 @click="showUserInfo(record)" style="color: rgb(68, 153, 192); font-weight: bold; ">買家帳號ID: {{ record.user_id }} &nbsp;</h4>
+
                 <h4 :style="{ color: record.status === '準備中' ? 'green' : (record.status === '出貨中' ? 'red' : 'black') }">
                   訂單狀態 : {{ record.status }} &nbsp;
                 </h4>

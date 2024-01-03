@@ -45,16 +45,30 @@ export default {
           // 清除前端的用户状态
           sessionStorage.clear();
 
+          this.showAlert("用戶登出成功");
 
-          alert('用戶登出成功');
-          window.location.reload();
+         
+
 
         })
         .catch(error => {
           console.error(error);
           // 处理错误，显示错误消息等
         });
-    }
+    },
+    showAlert() {
+      Swal.fire({
+        title: "登出成功!!",
+        text: "用戶登出成功!!",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        window.location.reload();
+
+        this.$router.push("/UserPage/loginPage");
+
+    });
+      },
 
   },
   computed: {
