@@ -136,9 +136,9 @@ export default {
 
       <form class="email-login">
         <div class="u-form-group">
-          <i class="fa-solid fa-user" style="margin-right: 2%;"></i> &nbsp;
-          <input type="email" placeholder="Email" v-model="email" />
-        </div>
+          <i class="fa-solid fa-user" style="margin-right: 2%;"></i> &nbsp; 
+          <input type="email" placeholder="Email" v-model="email"/>
+        </div><br>
         <div class="u-form-group">
           <i class="fa-solid fa-lock" style="margin-right: 5%;"></i>
         <input :type="showPassword ? 'text' : 'password'" placeholder="Password" v-model="password" class="pwd"/>
