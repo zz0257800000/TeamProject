@@ -74,9 +74,17 @@ export default {
     })
     .catch(error => {
       console.error('Error fetching user info:', error);
-      alert('此用戶不存在');
+      this.showAlert1("此用戶不存在");
+
     });
 },
+showAlert1() {
+  Swal.fire({
+  title: "此用戶不存在",
+  text: "用戶不存在請關閉",
+  icon: "question"
+});
+      },
     fetchRecord() {
       const userId = this.userId;
       const apiUrl = `http://localhost:8080/record/get/seller_id?id=${userId}`;

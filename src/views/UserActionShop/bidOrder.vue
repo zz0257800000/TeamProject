@@ -70,9 +70,17 @@ export default {
     })
     .catch(error => {
       console.error('Error fetching user info:', error);
+      this.showAlert3("此用戶不存在");
+
     });
 },
-    
+showAlert3() {
+  Swal.fire({
+  title: "此用戶不存在",
+  text: "用戶不存在請關閉",
+  icon: "question"
+});
+      },
     // Modify the existing code to call showUserInfo when user_id is clicked
     cancelOrder(record_id) {
       // 弹出确认对话框
@@ -178,7 +186,12 @@ export default {
         icon: "success",
         confirmButtonColor: "#3085d6",
         confirmButtonText: "確認"
+
+      }).then(() => {
+      // 关闭弹窗后重新加载页面
+      location.reload();
       });
+      
     },
     shipOrder(record_id) {
       // 弹出确认对话框
@@ -193,6 +206,7 @@ export default {
 
               // 弹出成功提示
               this.showAlert2("出貨成功");
+              location.reload();
 
               // 刷新数据或执行其他操作...
             })

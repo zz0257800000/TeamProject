@@ -54,7 +54,6 @@ export default {
             case "SUCCESSFUL": // 登入成功
               console.log(responseData);
               console.log("User Photo:", responseData.user.user_photo);
-
               sessionStorage.setItem("loggedIn", "TRUE");
               sessionStorage.setItem("user_Id", responseData.user.id);
               sessionStorage.setItem("name", responseData.user.name);
@@ -64,7 +63,6 @@ export default {
               sessionStorage.setItem("remittance_title", responseData.user.remittance_title);
               sessionStorage.setItem("remittance_number", responseData.user.remittance_number);
               sessionStorage.setItem("level", responseData.user.level);
-
               sessionStorage.setItem("phone_number", responseData.user.phone_number);
 
               this.showAlert("登入成功");

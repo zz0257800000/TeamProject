@@ -172,10 +172,9 @@ export default {
                     console.error('Error:', error);
                     // 處理錯誤
                 });
-            this.$router.push('/UserPage/buyingList');
+                alert("結帳成功！");
 
-
-
+                this.$router.push('/UserPage/buyingList');
         },
         handleZipcodeChange(data) {
             // 使用 TWzipcode.js 的方法來獲取地址信息
@@ -478,7 +477,7 @@ export default {
         margin-top: -16px;
 
         input {
-            width: 25px;
+            width: 50px;
             border: 0;
         }
 

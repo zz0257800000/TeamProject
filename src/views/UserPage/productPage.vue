@@ -113,11 +113,11 @@ export default {
     addToCartAndShowAlert() {
       // 调用 cartCreat 函数
       // const user_id = sessionStorage.getItem('user_Id');
-      if (this.points < this.product.price * this.quantity) {
-        // 使用者點數不足的提示，你可以自行調整
-        alert('您的點數不足以購買此商品');
-        return;
-    }
+    //   if (this.points < this.product.price * this.quantity) {
+    //     // 使用者點數不足的提示，你可以自行調整
+    //     alert('您的點數不足以購買此商品');
+    //     return;
+    // }
 
       const addToCart = async () => {
         try {
@@ -276,13 +276,17 @@ addDislike(commentId) {
             <input v-model="quantity" type="number" min="1" />
             <button @click="incrementQuantity">+</button>
           </div> -->
-          <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity">
+          <!-- <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity" -->
+          <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 ">
   <button class="cart-button" @click="addToCartAndShowAlert">
     <i class="fas fa-shopping-cart"></i>加入購物車
   </button>
-  <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" @click="handleBuyNowClick">
+  <!-- <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" @click="handleBuyNowClick">
     <i class="fas fa-credit-card"></i> 立即購買
-  </router-link>
+  </router-link> -->
+  <button class="buy-now-button" @click="handleBuyNowClick">
+    <i class="fas fa-credit-card"></i> 立即購買
+  </button>
 </div>
           <h1>
             <div v-if="!userId || userId === product.user_id " class="not-logged-in-message">

@@ -57,7 +57,7 @@ export default {
             alert("電子郵件錯誤，請確認您的電子郵件是否正確!!")
           }else{
           this.showAlert("更改密碼成功!!");
-          this.$router.push("/"); //更改密碼成功後碼導回首頁
+          this.$router.push("/UserPage/loginPage"); //更改密碼成功後碼導回首頁
           }
         })
         .catch((error) => {
