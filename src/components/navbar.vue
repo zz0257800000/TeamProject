@@ -64,8 +64,7 @@ export default {
         confirmButtonText: "OK",
       }).then(() => {
         window.location.reload();
-
-        this.$router.push("/UserPage/loginPage");
+        this.$router.push('/');
 
     });
       },
@@ -117,18 +116,17 @@ export default {
 
     const sellerName = sessionStorage.getItem('seller_name');
 
-// 检查 seller_name 是否为 null
-// if (sellerName === null) {
-//   // 如果 seller_name 为 null，禁用链接并显示提示信息
-//   Swal.fire({
-//     icon: 'error',
-//     title: '請先新增商家名稱',
-//     text: '請到會員資料中新增商家名稱。',
-//   });
-//   this.sellerNameExists = false;
-
-// }
-  },
+// // 检查 seller_name 是否为 null
+//   if (this.sellerName == null) {
+//     // 如果 seller_name 为 null，禁用链接并显示提示信息
+//     Swal.fire({
+//       icon: 'error',
+//       title: '請先新增商家名稱',
+//       text: '請到會員資料中新增商家名稱。',
+//     });
+//     this.sellerNameExists = false;
+//   }
+    },
 
 
 

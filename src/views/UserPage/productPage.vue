@@ -233,11 +233,23 @@ addDislike(commentId) {
 
 },  handleBuyNowClick() {
   // 檢查使用者的點數是否足夠支付商品總金額
-  if (this.points < this.product.price * this.quantity) {
-    // 使用者點數不足的提示，你可以自行調整
-    alert('您的點數不足以購買此商品');
-    return; // 如果點數不足，直接結束函數的執行，不進行後續的跳轉操作
-  }
+  // if (this.points < this.product.price * this.quantity) {
+  //   // 使用者點數不足的提示，你可以自行調整
+  //   alert('您的點數不足以購買此商品');
+  //   return; // 如果點數不足，直接結束函數的執行，不進行後續的跳轉操作
+  // }
+
+  // if (this.points < this.product.price * this.quantity) {
+  //               // 使用 confirm 方法显示确认对话框
+  //               const confirmResult = window.confirm('點數不足以購買此商品，是否進行儲值？');
+                
+  //               if (confirmResult) {
+  //                   this.$router.push('/UserPage/addPoints');
+  //                   return;
+  //               } else {
+  //                   return;
+  //               }
+  //           }
 
   // 如果需要額外的邏輯，可以在這裡添加
   // ...

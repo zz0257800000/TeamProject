@@ -204,7 +204,7 @@ export default {
     position: relative;
     margin: 10px;
     width: 700px;
-    height: 67vh;
+    height: 70vh;
     background-color: #fff;
     padding: 10px;
     border-radius: 3px;

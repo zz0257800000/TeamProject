@@ -229,8 +229,8 @@ export default {
 
       </div>
       <div class="info-footer">
-
         <div class="button-group">
+          <router-link to="/UserPage/ChangePassword" class="change-button">變更密碼</router-link>
           <button class="save-button" @click="saveUserInfo">儲存</button>
         </div>
 
@@ -347,17 +347,10 @@ export default {
 
     }
 
-    .button-group {
-      position: fixed;
-      bottom: 25%;
-      right: 25%;
-      margin: 20px;
-      /* 距离边缘的距离，根据需要调整 */
-    }
+
 
     .button-group button {
       padding: 10px 20px;
-      background-color: #2196F3;
       /* 按钮蓝色 */
       color: white;
       border: none;
@@ -381,11 +374,12 @@ export default {
   .info-footer {
     height: 10vh;
     position: relative;
-    left: 94%;
+    left: 80%;
     top: 2%;
     width: 300px;
     border: 0px solid rgb(255, 0, 0);
-
+    display: flex;
+    justify-content: space-around;
 
   }
 
@@ -414,7 +408,7 @@ export default {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .cancel-button {
@@ -498,6 +492,7 @@ export default {
   color: white;
   /* 字体颜色 */
 }
+
 </style>
 
 
