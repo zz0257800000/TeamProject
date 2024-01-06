@@ -198,7 +198,7 @@ export default {
 
             賣場名: &nbsp; <input type="text" name="" id="" class="input-field" v-model="user.seller_name">
           </div>
-          <div class="detail-group" v-if="user">
+          <!-- <div class="detail-group" v-if="user">
             <i class="fa-regular fa-user"></i>
             選擇匯款銀行:
             <select v-model="user.remittance_title" class="input-field">
@@ -212,7 +212,7 @@ export default {
             <i class="fa-regular fa-user"></i>
             填寫銀行帳號: &nbsp;
             <input type="text" name="" id="" class="input-field" v-model="user.remittance_number" maxlength="12" />
-          </div>
+          </div> -->
           <!-- <div class="detail-group">
             <i class="far fa-user"></i>
             點數儲值: &nbsp; <input type="number" name="" id="" class="input-field" v-model="points">
@@ -455,6 +455,7 @@ export default {
 .user-details {
   display: flex;
   flex-direction: column;
+  border: 0px solid red;
   width: 40vw;
 }
 
@@ -479,6 +480,9 @@ export default {
   flex-direction: column;
   width: 40vw;
 
+  position: relative;
+  
+  bottom: 23%;
 }
 
 .input-field {

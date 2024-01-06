@@ -165,7 +165,7 @@ export default {
             </div>
             <!-- Email錯誤訊息的顯示 -->
             <span class="col-sm-6">
-              <p id="errEmail" :style="{ color: phoneError ? 'red ' : '' }" ref="errEmail"></p>
+              <p id="errEmail" :style="{ color: phoneError ?  ''  : 'red ' }" ref="errEmail"></p>
             </span>
           </div>
 
