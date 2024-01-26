@@ -113,11 +113,11 @@ export default {
     addToCartAndShowAlert() {
       // 调用 cartCreat 函数
       // const user_id = sessionStorage.getItem('user_Id');
-    //   if (this.points < this.product.price * this.quantity) {
-    //     // 使用者點數不足的提示，你可以自行調整
-    //     alert('您的點數不足以購買此商品');
-    //     return;
-    // }
+      //   if (this.points < this.product.price * this.quantity) {
+      //     // 使用者點數不足的提示，你可以自行調整
+      //     alert('您的點數不足以購買此商品');
+      //     return;
+      // }
 
       const addToCart = async () => {
         try {
@@ -135,10 +135,10 @@ export default {
             photo: this.product.photo,
             seller_id: this.product.user_id,
             seller_name: this.product.seller_name,
-            price:this.product.price,
+            price: this.product.price,
           };
           console.log('User ID:', this.user_id);
-         
+
 
           // 调用 cartCreat 函数
           await api.cartCreat(req);
@@ -188,7 +188,7 @@ export default {
         star: 5,
         comment: this.newCommentText, // 使用你的输入字段
         like_count: 0,  // 根据需要设置初始值
-    dislike_count: 0,  // 根据需要设置初始值
+        dislike_count: 0,  // 根据需要设置初始值
         user_id: sessionStorage.getItem('user_Id'),
         product_id: this.product.productId
       })
@@ -204,59 +204,69 @@ export default {
         });
     },
     addLike(commentId) {
-  axios.post(`http://localhost:8080/comment/like?id=${commentId}`)
-    .then(response => {
-      // 处理成功响应
-      console.log('点赞成功:', response.data);
+      axios.post(`http://localhost:8080/comment/like?id=${commentId}`)
+        .then(response => {
+          // 处理成功响应
+          console.log('点赞成功:', response.data);
 
         })
-    .catch(error => {
-      // 处理错误
-      console.error('点赞失败:', error);
-    });
-    alert('按讚成功！');
+        .catch(error => {
+          // 处理错误
+          console.error('点赞失败:', error);
+        })
 
-},
+        .finally(() => {
+          // 在弹窗关闭后执行页面跳转
+          alert('按讚成功！')
+          this.$router.go(0);
+        });
 
-// 踩评论
-addDislike(commentId) {
-  axios.post(`http://localhost:8080/comment/dislike?id=${commentId}`)
-    .then(response => {
-      // 处理成功响应
-      console.log('踩成功:', response.data);
-  })
-    .catch(error => {
-      // 处理错误
-      console.error('踩失败:', error);
-    });
-    alert('倒讚成功！');
+    },
 
-},  handleBuyNowClick() {
-  // 檢查使用者的點數是否足夠支付商品總金額
-  // if (this.points < this.product.price * this.quantity) {
-  //   // 使用者點數不足的提示，你可以自行調整
-  //   alert('您的點數不足以購買此商品');
-  //   return; // 如果點數不足，直接結束函數的執行，不進行後續的跳轉操作
-  // }
+    // 踩评论
+    addDislike(commentId) {
+      axios.post(`http://localhost:8080/comment/dislike?id=${commentId}`)
+        .then(response => {
+          // 处理成功响应
+          console.log('踩成功:', response.data);
+        })
+        .catch(error => {
+          // 处理错误
+          console.error('踩失败:', error);
+        })
 
-  // if (this.points < this.product.price * this.quantity) {
-  //               // 使用 confirm 方法显示确认对话框
-  //               const confirmResult = window.confirm('點數不足以購買此商品，是否進行儲值？');
-                
-  //               if (confirmResult) {
-  //                   this.$router.push('/UserPage/addPoints');
-  //                   return;
-  //               } else {
-  //                   return;
-  //               }
-  //           }
+        .finally(() => {
+          // 在弹窗关闭后执行页面跳转
+          alert('倒讚成功！')
+          this.$router.go(0);
+        });
 
-  // 如果需要額外的邏輯，可以在這裡添加
-  // ...
+    }, handleBuyNowClick() {
+      // 檢查使用者的點數是否足夠支付商品總金額
+      // if (this.points < this.product.price * this.quantity) {
+      //   // 使用者點數不足的提示，你可以自行調整
+      //   alert('您的點數不足以購買此商品');
+      //   return; // 如果點數不足，直接結束函數的執行，不進行後續的跳轉操作
+      // }
 
-  // 跳轉到結帳頁面
-  this.$router.push(`/UserPage/checkoutshopping/${this.product.productId}`);
-},
+      // if (this.points < this.product.price * this.quantity) {
+      //               // 使用 confirm 方法显示确认对话框
+      //               const confirmResult = window.confirm('點數不足以購買此商品，是否進行儲值？');
+
+      //               if (confirmResult) {
+      //                   this.$router.push('/UserPage/addPoints');
+      //                   return;
+      //               } else {
+      //                   return;
+      //               }
+      //           }
+
+      // 如果需要額外的邏輯，可以在這裡添加
+      // ...
+
+      // 跳轉到結帳頁面
+      this.$router.push(`/UserPage/checkoutshopping/${this.product.productId}`);
+    },
 
 
   },
@@ -272,6 +282,8 @@ addDislike(commentId) {
           <div class="title">
             <p class="product-name">商品名稱：{{ product.product_name }}</p>
           </div>
+          <div class="divider"></div>
+
           <p class="product-category">產品分類：{{ product.product_type }}</p>
           <div class="price">
             <p>價格：${{ product.price }}</p>
@@ -289,22 +301,22 @@ addDislike(commentId) {
             <button @click="incrementQuantity">+</button>
           </div> -->
           <!-- <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 && points >= product.price * quantity" -->
-          <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0 ">
-  <button class="cart-button" @click="addToCartAndShowAlert">
-    <i class="fas fa-shopping-cart"></i>加入購物車
-  </button>
-  <!-- <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" @click="handleBuyNowClick">
+          <div class="product-buttons" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
+            <button class="cart-button" @click="addToCartAndShowAlert">
+              <i class="fas fa-shopping-cart"></i>加入購物車
+            </button>
+            <!-- <router-link :to="'/UserPage/checkoutshopping/' + product.productId" class="buy-now-button" @click="handleBuyNowClick">
     <i class="fas fa-credit-card"></i> 立即購買
   </router-link> -->
-  <button class="buy-now-button" @click="handleBuyNowClick">
-    <i class="fas fa-credit-card"></i> 立即購買
-  </button>
-</div>
+            <button class="buy-now-button" @click="handleBuyNowClick">
+              <i class="fas fa-credit-card"></i> 立即購買
+            </button>
+          </div>
           <h1>
-            <div v-if="!userId || userId === product.user_id " class="not-logged-in-message">
+            <div v-if="!userId || userId === product.user_id" class="not-logged-in-message">
               請先登入以購買產品
             </div>
-            
+
           </h1>
         </div>
       </div>
@@ -315,7 +327,7 @@ addDislike(commentId) {
           </router-link>
           <div class="divider"></div>
         </div>
-        
+
         <!-- <div class="seller-details">
           <h4>全部商品：</h4>
           <div class="divider"></div>
@@ -326,7 +338,8 @@ addDislike(commentId) {
       </div>
       <div class="productDescrip">
         <h4>商品描述：</h4>
-        <div class="product-description" style="white-space: pre-line;">
+        <div class="divider"></div>
+        <div class="productDes" style="white-space: pre-line;">
           <p>{{ product.description }}</p>
         </div>
       </div>
@@ -334,24 +347,27 @@ addDislike(commentId) {
         <!-- 弹窗内容 -->
         <div class="modal-content">
           <h4>商品留言 ： </h4>
-          <div class="firstshow" >
+          <div class="divider"></div>
+
+          <div class="firstshow">
             <!-- 顯示現有的留言 -->
             <div v-for="(comment, index) in comments.commentList" :key="index" class="commentitem">
-              <span>{{ comment.user_name }}</span>               <span>{{ comment.comment_time }}</span>
+              <span>{{ comment.user_name }}</span> <span>{{ comment.comment_time }}</span>
 
               <p>{{ comment.comment }}</p>
-              <div class="thumb"  v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
-              <span>
-                
-                <i class="fa-regular fa-thumbs-up" @click="addLike(comment.comment_id)"></i> {{ comment.like_count }}
-              </span>&nbsp;
-              <span>
-                <i class="fa-regular fa-thumbs-down" @click="addDislike(comment.comment_id)"></i> {{ comment.dislike_count }}
-              </span>
-             
+              <div class="thumb" v-if="this.userId > 0 && this.userId != product.user_id && product.inventory > 0">
+                <span>
+
+                  <i class="fa-regular fa-thumbs-up" @click="addLike(comment.comment_id)"></i> {{ comment.like_count }}
+                </span>&nbsp;
+                <span>
+                  <i class="fa-regular fa-thumbs-down" @click="addDislike(comment.comment_id)"></i> {{
+                    comment.dislike_count }}
+                </span>
+
+              </div>
+              <hr>
             </div>
-           <hr>
-          </div>
             <!-- 新增留言的輸入框 -->
           </div>
           <!-- <div class="secondShow">
@@ -368,7 +384,7 @@ addDislike(commentId) {
         <div v-for="(product, index) in products.slice(0, 8)" :key="index" class="related-product-item">
           <router-link :to="'/UserPage/productPage/' + product.productId" class="productPageRoutBtn"
             @click="navigateToProductPage(product.productId)">
-            <img :src="'data:image/jpeg;base64,' +  product.photo" alt="商品圖片" class="related-product-image">
+            <img :src="'data:image/jpeg;base64,' + product.photo" alt="商品圖片" class="related-product-image">
             <p class="related-product-name">{{ product.product_name }}</p>
             <p class="related-product-price">${{ product.price }}</p>
           </router-link>
@@ -385,6 +401,12 @@ addDislike(commentId) {
 </template>
 
 <style lang="scss" scoped>
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, #3498db, #ecf0f1);
+  margin: 10px 0;
+}
+
 .photoShow {
 
   scale: 1.0;
@@ -597,10 +619,17 @@ addDislike(commentId) {
     border-radius: 10px;
     padding: 20px;
     margin-top: 20px;
-    overflow: auto;
 
     p {
       font-size: 16px;
+    }
+
+    .productDes {
+      overflow: auto;
+      border: 0px solid #ff0000;
+      height: 40vh;
+      width: 68vw;
+
     }
   }
 
@@ -618,7 +647,9 @@ addDislike(commentId) {
 
       .firstshow {
         margin: 5px;
-        border: 1px solid #000000;
+        width: 67.7vw;
+
+        border: 0px solid #000000;
         height: 48vh;
         overflow: auto;
 
@@ -734,5 +765,4 @@ addDislike(commentId) {
   height: 100%;
   object-fit: contain;
 
-}
-</style>
+}</style>
