@@ -150,9 +150,12 @@ export default {
     reader.onload = () => {
       // 切掉前缀 'data:image/jpeg;base64,'
       const imageDataWithoutPrefix = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
+      // console.log('ImageDataWithoutPrefix:', imageDataWithoutPrefix); // 添加此行
 
       // 存储没有前缀的图像数据
       this.editedProduct.photo = imageDataWithoutPrefix;
+      // this.sendData(this.editedProduct);
+
     };
   }
 },
@@ -168,29 +171,42 @@ export default {
       this.isEditModalOpen = true;
     },
     submitForm() {
-      if (!this.editedProduct.product_name || !this.editedProduct.description || !this.editedProduct.price) {
-        alert('請填寫所有必填欄位');
-        return;
-      }
-      // 确保 'shelves' 属性已定义，如果未定义，则设置默认值
-      if (!this.editedProduct.hasOwnProperty('shelves')) {
-        this.$set(this.editedProduct, 'shelves', true); // 默认为 true，你可以根据需要设置其他默认值
-      }
-      const formData = { ...this.editedProduct };
+  if (!this.editedProduct.product_name || !this.editedProduct.description || !this.editedProduct.price) {
+    alert('請填寫所有必填欄位');
+    return;
+  }
 
-      // 將上傳時間設置為當前日期
-      formData.upload_time = new Date();
-      if (this.photo) {
-        const reader = new FileReader();
-        reader.readAsDataURL(this.photo);
-        reader.onload = () => {
-          formData.photo = reader.result;
-          this.sendData(formData);
-        };
-      } else {
-        this.sendData(formData);
-      }
-    },
+  // 确保 'shelves' 属性已定义，如果未定义，则设置默认值
+  if (!this.editedProduct.hasOwnProperty('shelves')) {
+    this.$set(this.editedProduct, 'shelves', true); // 默认为 true，你可以根据需要设置其他默认值
+  }
+
+  const formData = { ...this.editedProduct };
+  // 将上传时间设置为当前日期
+  formData.upload_time = new Date();
+
+  // 保存 Vue 组件实例的引用
+  const self = this;
+
+  if (this.photo) {
+    const reader = new FileReader();
+    reader.readAsDataURL(this.photo);
+    reader.onload = () => {
+      // 切掉前缀 'data:image/jpeg;base64,'
+      const imageDataWithoutPrefix = reader.result.replace(/^data:image\/(png|jpeg);base64,/, '');
+      console.log('ImageDataWithoutPrefix:', imageDataWithoutPrefix);
+
+      // 将没有前缀的图像数据存储到 formData 中
+      formData.photo = imageDataWithoutPrefix;
+
+      // 使用保存的 Vue 组件实例引用调用 sendData 方法
+      self.sendData(formData);
+      console.log('FormData:', formData); // 添加此行
+    };
+  } else {
+    this.sendData(formData);
+  }
+},
 
     sendData(data) {
       axios.post('http://localhost:8080/product/create', JSON.stringify(data), {
@@ -202,6 +218,7 @@ export default {
           console.log('Response:', response.data);
           this.isEditModalOpen = false;
           alert("編輯成功");
+           console.log('Product deleted successfully:', response.data);
 
         })
         .catch(error => {
@@ -346,7 +363,7 @@ export default {
         <!-- 编辑表单 -->
         <div class="close-button" @click="closeEditModal">X</div>
         <div class="editPhoto">
-          <img v-if="editedProduct.photo" :src="'data:image/jpeg;base64,' + editedProduct.photo" alt="商品圖片" class="modal-image" />
+          <img v-if="this.editedProduct.photo" :src="'data:image/jpeg;base64,' + this.editedProduct.photo" alt="商品圖片" class="modal-image" />
         </div>
         <div class="edit-form">
           <form @submit.prevent="submitForm">
